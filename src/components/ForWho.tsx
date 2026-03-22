@@ -40,7 +40,7 @@ export default function ForWho() {
       <div
         className="absolute top-[-100px] right-[-100px] w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(212,169,48,0.2) 0%, rgba(201,107,46,0.08) 50%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,200,64,0.25) 0%, rgba(232,123,53,0.1) 50%, transparent 70%)",
           filter: "blur(80px)",
         }}
       />
@@ -88,7 +88,7 @@ export default function ForWho() {
             >
               <span
                 className="text-xs font-semibold tracking-widest uppercase block mb-4"
-                style={{ color: "#D4A930" }}
+                style={{ color: "#E8C840" }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>

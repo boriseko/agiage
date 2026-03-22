@@ -50,7 +50,7 @@ export default function Pricing() {
       <div
         className="absolute top-[30%] left-[-50px] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(212,169,48,0.2) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,200,64,0.25) 0%, transparent 70%)",
           filter: "blur(100px)",
         }}
       />
@@ -94,7 +94,7 @@ export default function Pricing() {
                   ? {
                       background: "rgba(255,255,255,0.8)",
                       backdropFilter: "blur(40px)",
-                      border: "1.5px solid rgba(212,169,48,0.3)",
+                      border: "1.5px solid rgba(232,200,64,0.35)",
                       boxShadow: "0 8px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(212,169,48,0.1)",
                     }
                   : {
@@ -113,7 +113,7 @@ export default function Pricing() {
                 <span
                   className="inline-block self-start px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider mb-5"
                   style={{
-                    background: tier.highlighted ? "#1A1A1A" : "#7C5CC6",
+                    background: tier.highlighted ? "#1A1A1A" : "#8B5CF6",
                     color: "#fff",
                   }}
                 >
@@ -132,7 +132,7 @@ export default function Pricing() {
               <ul className="space-y-3 mb-8 flex-1">
                 {tier.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-3">
-                    <svg className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#D4A930" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <svg className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#E8C840" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 13l4 4L19 7" />
                     </svg>
                     <span className="text-sm" style={{ color: "#6B6B6B" }}>{f}</span>

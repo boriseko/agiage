@@ -23,7 +23,7 @@ export default function Results() {
       <div
         className="absolute bottom-[-50px] right-[-100px] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(201,107,46,0.15) 0%, rgba(124,92,198,0.08) 50%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(232,123,53,0.2) 0%, rgba(139,92,246,0.1) 50%, transparent 70%)",
           filter: "blur(80px)",
         }}
       />
@@ -60,7 +60,7 @@ export default function Results() {
             >
               <span
                 className="text-xs font-semibold tracking-widest mt-1 shrink-0"
-                style={{ color: "#D4A930" }}
+                style={{ color: "#E8C840" }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
