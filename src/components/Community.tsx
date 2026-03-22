@@ -49,7 +49,7 @@ export default function Community() {
 
         <motion.p
           className="text-base mb-14 text-center max-w-lg mx-auto"
-          style={{ color: "#6B6B6B" }}
+          style={{ color: "#666" }}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease }}
@@ -67,7 +67,7 @@ export default function Community() {
               transition={{ duration: 0.6, delay: 0.12 * i, ease }}
             >
               <h3 className="text-sm font-bold mb-1 tracking-tight">{perk.title}</h3>
-              <p className="text-xs" style={{ color: "#999" }}>{perk.desc}</p>
+              <p className="text-xs" style={{ color: "#888" }}>{perk.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -79,7 +79,7 @@ export default function Community() {
           transition={{ duration: 0.7, delay: 0.5, ease }}
         >
           <p className="text-base font-bold mb-1 tracking-tight">Закрытый Telegram-чат</p>
-          <p className="text-sm" style={{ color: "#6B6B6B" }}>
+          <p className="text-sm" style={{ color: "#666" }}>
             Автор курса регулярно на связи.
           </p>
         </motion.div>

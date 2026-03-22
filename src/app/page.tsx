@@ -3,6 +3,7 @@ import ForWho from "@/components/ForWho";
 import Results from "@/components/Results";
 import Cases from "@/components/Cases";
 import Program from "@/components/Program";
+import Author from "@/components/Author";
 import Pricing from "@/components/Pricing";
 import Community from "@/components/Community";
 import FAQ from "@/components/FAQ";
@@ -17,6 +18,7 @@ export default function Home() {
       <Results />
       <Cases />
       <Program />
+      <Author />
       <Pricing />
       <Community />
       <FAQ />

@@ -33,7 +33,7 @@ export default function Results() {
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.p
           className="text-sm font-medium uppercase tracking-widest mb-4"
-          style={{ color: "#C9A030" }}
+          style={{ color: "#B8940A" }}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease }}
@@ -62,7 +62,7 @@ export default function Results() {
             >
               <span
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0"
-                style={{ background: "rgba(232,200,64,0.15)", color: "#C9A030" }}
+                style={{ background: "rgba(232,200,64,0.15)", color: "#B8940A" }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -70,7 +70,7 @@ export default function Results() {
                 <h3 className="text-base font-bold leading-snug tracking-tight">
                   {item.text}
                 </h3>
-                <p className="text-sm mt-1" style={{ color: "#999" }}>
+                <p className="text-sm mt-1" style={{ color: "#888" }}>
                   {item.sub}
                 </p>
               </div>

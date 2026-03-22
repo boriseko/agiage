@@ -108,11 +108,12 @@ function LessonAccordion({
     >
       <button
         onClick={toggle}
+        aria-expanded={isOpen}
         className="w-full flex items-center gap-4 md:gap-8 py-6 md:py-8 text-left group rounded-2xl px-4 md:px-6 transition-colors"
         style={{ background: isOpen ? "rgba(232,200,64,0.06)" : "transparent" }}
       >
         <span
-          className="text-2xl md:text-4xl font-bold font-mono shrink-0 transition-colors"
+          className="text-2xl md:text-4xl font-bold tabular-nums shrink-0 transition-colors"
           style={{ color: isOpen ? "#E8C840" : "rgba(0,0,0,0.15)" }}
         >
           {lesson.num}
@@ -121,14 +122,14 @@ function LessonAccordion({
           <h3 className="text-lg md:text-xl font-bold leading-snug">
             {lesson.title}
           </h3>
-          <p className="text-sm mt-1" style={{ color: "#999" }}>
+          <p className="text-sm mt-1" style={{ color: "#888" }}>
             {lesson.subtitle}
           </p>
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          style={{ color: "#999" }}
+          style={{ color: "#888" }}
           className="shrink-0"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -199,7 +200,7 @@ export default function Program() {
             className="text-sm font-medium uppercase tracking-widest mb-4"
             style={{ color: "#C9A030" }}
           >
-            Программа
+            7 уроков
           </p>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
             Программа курса
@@ -237,7 +238,7 @@ export default function Program() {
           <a href="#pricing" className="btn-primary text-lg">
             Записаться на курс
           </a>
-          <p className="text-sm mt-4" style={{ color: "#999" }}>
+          <p className="text-sm mt-4" style={{ color: "#888" }}>
             7 уроков, которые изменят то, как вы работаете
           </p>
         </motion.div>

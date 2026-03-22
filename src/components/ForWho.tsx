@@ -69,7 +69,7 @@ export default function ForWho() {
 
         <motion.p
           className="text-lg mb-16 max-w-lg leading-relaxed"
-          style={{ color: "#6B6B6B" }}
+          style={{ color: "#666" }}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease }}
@@ -89,14 +89,14 @@ export default function ForWho() {
             >
               <span
                 className="text-xs font-semibold tracking-widest uppercase block mb-4"
-                style={{ color: "#E8C840" }}
+                style={{ color: "#C9A030" }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="text-base font-bold mb-2 leading-snug tracking-tight">
                 {card.title}
               </h3>
-              <p className="text-sm leading-relaxed" style={{ color: "#6B6B6B" }}>
+              <p className="text-sm leading-relaxed" style={{ color: "#666" }}>
                 {card.desc}
               </p>
             </motion.div>

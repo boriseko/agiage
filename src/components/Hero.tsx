@@ -18,6 +18,7 @@ const smooth: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 export default function Hero() {
   const [stage, setStage] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const timers = [
@@ -37,7 +38,7 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{ background: "#FAFAF7" }}
     >
-      {/* Main blob — pure CSS, visible immediately */}
+      {/* Main blob */}
       <div
         className="absolute hero-blob w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full"
         style={{
@@ -48,7 +49,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Purple blob — pure CSS */}
+      {/* Purple blob */}
       <div
         className="absolute top-[15%] right-[8%] w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full hero-blob"
         style={{
@@ -59,27 +60,27 @@ export default function Hero() {
         }}
       />
 
-      {/* Header */}
+      {/* Header — appears at stage 1 */}
       <motion.div
         className="absolute top-8 left-8 md:top-12 md:left-16 z-20"
         initial={{ opacity: 0 }}
-        animate={finalStage ? { opacity: 1 } : {}}
-        transition={{ duration: 1, delay: 0.3, ease: smooth }}
+        animate={showText ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, delay: 0.2, ease: smooth }}
       >
         <span
           className="text-lg md:text-xl font-medium tracking-[0.3em] uppercase"
-          style={{ color: "rgba(26,26,26,0.35)" }}
+          style={{ color: "rgba(26,26,26,0.5)" }}
         >
           АГИ
         </span>
       </motion.div>
 
-      {/* Nav */}
+      {/* Nav — appears at stage 1 */}
       <motion.nav
-        className="absolute top-8 right-8 md:top-12 md:right-16 z-20 flex gap-6 md:gap-8 items-center"
+        className="absolute top-8 right-8 md:top-12 md:right-16 z-30 flex gap-4 md:gap-8 items-center"
         initial={{ opacity: 0 }}
-        animate={finalStage ? { opacity: 1 } : {}}
-        transition={{ duration: 1, delay: 0.5, ease: smooth }}
+        animate={showText ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, delay: 0.3, ease: smooth }}
       >
         <a href="#program" className="text-sm font-medium hidden md:block" style={{ color: "#555" }}>
           Программа
@@ -93,12 +94,58 @@ export default function Hero() {
         <a href="#pricing" className="btn-primary !py-2.5 !px-6 !text-sm">
           Записаться
         </a>
+        {/* Mobile burger */}
+        <button
+          className="md:hidden w-8 h-8 flex items-center justify-center"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Открыть меню"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {menuOpen ? (
+              <path d="M18 6L6 18M6 6l12 12" />
+            ) : (
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </motion.nav>
+
+      {/* Mobile menu dropdown */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="absolute top-20 right-8 z-30 glass-card-strong p-4 flex flex-col gap-1 md:hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            {[
+              { href: "#program", label: "Программа" },
+              { href: "#pricing", label: "Тарифы" },
+              { href: "#faq", label: "FAQ" },
+              { href: "#contact", label: "Контакты" },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+                style={{ color: "#555" }}
+                onClick={() => setMenuOpen(false)}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.03)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              >
+                {link.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Text area */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
-        <div className="relative" style={{ height: "clamp(100px, 20vw, 200px)" }}>
-          {/* Layer 1: ВАЙБ-КОДИНГ centered as whole phrase */}
+        <div className="relative" style={{ height: "clamp(120px, 22vw, 250px)" }}>
+          {/* Layer 1: ВАЙБ-КОДИНГ centered */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -113,7 +160,6 @@ export default function Hero() {
               layout
               transition={{ layout: { duration: 0.8, ease: smooth } }}
             >
-              {/* ВАЙБ — stays, smoothly recenters via layout */}
               <motion.span
                 layout
                 className="font-black"
@@ -123,7 +169,6 @@ export default function Hero() {
                 ВАЙБ
               </motion.span>
 
-              {/* Dash + КОДИНГ — popLayout removes from flow instantly */}
               <AnimatePresence mode="popLayout">
                 {!lettersGone && (
                   <motion.span
@@ -172,7 +217,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Layer 2: Big gradient ВАЙБ — fades in at stage 3 */}
+          {/* Layer 2: Big gradient ВАЙБ */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.85 }}
@@ -188,24 +233,24 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Subtitle */}
-        <motion.p
-          className="text-lg md:text-xl max-w-xl leading-relaxed"
+        {/* H1 Subtitle — appears at stage 1 */}
+        <motion.h1
+          className="text-lg md:text-xl max-w-xl leading-relaxed font-normal"
           style={{ color: "#555" }}
           initial={{ opacity: 0, y: 20 }}
-          animate={finalStage ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4, ease: smooth }}
+          animate={showText ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5, ease: smooth }}
         >
           Научись решать любые задачи с помощью ИИ
           <br />
-          <span style={{ color: "#999" }}>без кода · без опыта · без запары</span>
-        </motion.p>
+          <span style={{ color: "#888" }}>без кода · без опыта · без запары</span>
+        </motion.h1>
 
-        {/* CTA */}
+        {/* CTA — appears at stage 1 */}
         <motion.div
           className="mt-10 flex flex-col sm:flex-row gap-4 items-center"
           initial={{ opacity: 0, y: 20 }}
-          animate={finalStage ? { opacity: 1, y: 0 } : {}}
+          animate={showText ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.7, ease: smooth }}
         >
           <a href="#pricing" className="btn-primary">
@@ -216,29 +261,29 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Info */}
+        {/* Info — appears at stage 1 */}
         <motion.p
           className="mt-8 text-sm"
-          style={{ color: "#999" }}
+          style={{ color: "#888" }}
           initial={{ opacity: 0 }}
-          animate={finalStage ? { opacity: 1 } : {}}
+          animate={showText ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 1.0, ease: smooth }}
         >
           7 уроков · Закрытое комьюнити · Для любой профессии
         </motion.p>
       </div>
 
-      {/* Scroll */}
+      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
-        animate={finalStage ? { opacity: 0.3, y: [0, 6, 0] } : {}}
+        animate={showText ? { opacity: 0.5, y: [0, 6, 0] } : {}}
         transition={{
           opacity: { delay: 1.5, duration: 0.8 },
           y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
         }}
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
         </svg>
       </motion.div>

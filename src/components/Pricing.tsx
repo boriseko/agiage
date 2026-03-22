@@ -8,7 +8,7 @@ const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 const tiers = [
   {
     name: "Базовый",
-    price: "Скоро",
+    price: "4 990 ₽",
     features: [
       "Доступ ко всем 7 урокам",
       "Записи уроков навсегда",
@@ -19,7 +19,7 @@ const tiers = [
   },
   {
     name: "С поддержкой",
-    price: "Скоро",
+    price: "9 990 ₽",
     features: [
       "Всё из «Базового»",
       "Обратная связь по проектам",
@@ -31,7 +31,7 @@ const tiers = [
   },
   {
     name: "Персональный",
-    price: "Скоро",
+    price: "24 990 ₽",
     features: [
       "Всё из «С поддержкой»",
       "1-на-1 созвон с автором",
@@ -78,7 +78,7 @@ export default function Pricing() {
         </motion.h2>
         <motion.p
           className="text-base mb-16 text-center"
-          style={{ color: "#6B6B6B" }}
+          style={{ color: "#666" }}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease }}
@@ -125,28 +125,29 @@ export default function Pricing() {
 
               {!tier.badge && <div className="mb-5 h-[26px]" />}
 
-              <h3 className="text-xl font-bold mb-1 tracking-tight">{tier.name}</h3>
+              <h3 className="text-xl font-bold mb-2 tracking-tight">{tier.name}</h3>
 
-              <p className="text-sm mb-6" style={{ color: "#A0A0A0" }}>
+              <p className="text-3xl font-bold mb-6 tracking-tight">
                 {tier.price}
               </p>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {tier.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-3">
-                    <svg className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#E8C840" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <svg className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#E8C840" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                       <path d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-sm" style={{ color: "#6B6B6B" }}>{f}</span>
+                    <span className="text-sm" style={{ color: "#666" }}>{f}</span>
                   </li>
                 ))}
               </ul>
 
-              <button
-                className={tier.highlighted ? "btn-primary w-full !py-3 !px-0 text-center" : "btn-secondary w-full text-center"}
+              <a
+                href="#contact"
+                className={tier.highlighted ? "btn-primary w-full text-center !py-3" : "btn-secondary w-full text-center"}
               >
-                Купить
-              </button>
+                Записаться
+              </a>
             </motion.div>
           ))}
         </div>

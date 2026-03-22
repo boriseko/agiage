@@ -53,6 +53,7 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                aria-expanded={openIndex === i}
                 className="w-full flex items-center justify-between p-6 text-left group"
               >
                 <span className="font-bold text-base md:text-lg pr-4 leading-snug">

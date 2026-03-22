@@ -69,7 +69,7 @@ export default function Cases() {
 
         <motion.p
           className="text-base mb-14 max-w-md leading-relaxed"
-          style={{ color: "#6B6B6B" }}
+          style={{ color: "#666" }}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease }}
@@ -87,7 +87,7 @@ export default function Cases() {
               transition={{ duration: 0.6, delay: 0.15 * i, ease }}
             >
               <div className="flex items-center justify-between mb-5">
-                <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#A0A0A0" }}>
+                <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#888" }}>
                   Кейс {String(i + 1).padStart(2, "0")}
                 </span>
                 <span
@@ -99,13 +99,13 @@ export default function Cases() {
               </div>
 
               <h3 className="text-xl font-bold mb-3 tracking-tight">{c.title}</h3>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: "#6B6B6B" }}>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "#666" }}>
                 {c.desc}
               </p>
 
               <span
                 className="px-3 py-1 rounded-full text-xs font-medium"
-                style={{ background: "rgba(0,0,0,0.04)", color: "#6B6B6B" }}
+                style={{ background: "rgba(0,0,0,0.04)", color: "#666" }}
               >
                 {c.who}
               </span>

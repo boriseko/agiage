@@ -4,10 +4,10 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start gap-10">
           <div>
-            <span className="text-lg font-medium tracking-[0.2em] uppercase" style={{ color: "rgba(26,26,26,0.4)" }}>
+            <span className="text-lg font-medium tracking-[0.2em] uppercase" style={{ color: "rgba(26,26,26,0.55)" }}>
               АГИ
             </span>
-            <p className="text-sm mt-2 max-w-xs" style={{ color: "#999" }}>
+            <p className="text-sm mt-2 max-w-xs" style={{ color: "#888" }}>
               Курс по использованию AI-агентов для решения любых задач
             </p>
           </div>
@@ -21,7 +21,7 @@ export default function Footer() {
                 { href: "#faq", label: "FAQ" },
                 { href: "#contact", label: "Контакты" },
               ].map((link) => (
-                <a key={link.href} href={link.href} className="block text-sm transition-colors hover:opacity-100" style={{ color: "#999" }}>
+                <a key={link.href} href={link.href} className="block text-sm transition-colors hover:opacity-100" style={{ color: "#888" }}>
                   {link.label}
                 </a>
               ))}
@@ -30,7 +30,7 @@ export default function Footer() {
             <div className="space-y-3">
               <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: "#555" }}>Документы</p>
               {["Политика конфиденциальности", "Пользовательское соглашение", "Оферта"].map((doc) => (
-                <a key={doc} href="#" className="block text-sm transition-colors hover:opacity-100" style={{ color: "#999" }}>
+                <a key={doc} href="#" className="block text-sm transition-colors hover:opacity-100" style={{ color: "#888" }}>
                   {doc}
                 </a>
               ))}
@@ -39,8 +39,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
-          <p className="text-xs" style={{ color: "#999" }}>&copy; 2026 AGI Age. Все права защищены.</p>
-          <p className="text-xs" style={{ color: "#999" }}>Согласие на обработку персональных данных</p>
+          <p className="text-xs" style={{ color: "#888" }}>&copy; 2026 AGI Age. Все права защищены.</p>
+          <p className="text-xs" style={{ color: "#888" }}>Согласие на обработку персональных данных</p>
         </div>
       </div>
     </footer>
