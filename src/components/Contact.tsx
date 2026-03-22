@@ -3,45 +3,56 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section className="section relative" id="contact" ref={ref} style={{ background: "#FAFAF7" }}>
-      {/* Blob */}
       <div
-        className="absolute bottom-[-50px] left-[30%] w-[500px] h-[500px] rounded-full pointer-events-none"
+        className="absolute bottom-[-50px] left-[30%] w-[400px] h-[400px] rounded-full pointer-events-none hero-blob"
         style={{
-          background: "radial-gradient(circle, rgba(242,217,104,0.3) 0%, rgba(232,123,53,0.1) 50%, transparent 70%)",
-          filter: "blur(80px)",
+          background: "radial-gradient(circle, rgba(242,217,104,0.25) 0%, rgba(232,123,53,0.08) 50%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
       <div className="max-w-2xl mx-auto relative z-10 text-center">
+        <motion.p
+          className="text-sm font-medium uppercase tracking-widest mb-4"
+          style={{ color: "#C9A030" }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease }}
+        >
+          Контакты
+        </motion.p>
+
         <motion.h2
           className="text-4xl md:text-6xl font-bold mb-4 tracking-tight"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
         >
           Остались вопросы?
         </motion.h2>
         <motion.p
           className="text-lg mb-12"
           style={{ color: "#555" }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.7, delay: 0.2, ease }}
         >
-          Напиши нам — ответим быстро
+          Напиши нам — <strong style={{ color: "#444" }}>ответим быстро</strong>
         </motion.p>
 
         <motion.div
           className="glass-card-strong p-8 md:p-10 space-y-4"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.7, delay: 0.3, ease }}
         >
           <a
             href="#"

@@ -3,6 +3,8 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const lessons = [
   {
     num: "01",
@@ -92,12 +94,10 @@ const lessons = [
 
 function LessonAccordion({
   lesson,
-  index,
   isOpen,
   toggle,
 }: {
   lesson: (typeof lessons)[0];
-  index: number;
   isOpen: boolean;
   toggle: () => void;
 }) {
@@ -118,7 +118,7 @@ function LessonAccordion({
           {lesson.num}
         </span>
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg md:text-xl font-semibold leading-snug">
+          <h3 className="text-lg md:text-xl font-bold leading-snug">
             {lesson.title}
           </h3>
           <p className="text-sm mt-1" style={{ color: "#999" }}>
@@ -180,49 +180,59 @@ export default function Program() {
 
   return (
     <section className="section relative" id="program" ref={ref} style={{ background: "#FAFAF7" }}>
-      {/* Blob */}
       <div
-        className="absolute top-[10%] right-[-50px] w-[400px] h-[400px] rounded-full pointer-events-none"
+        className="absolute top-[10%] right-[-50px] w-[350px] h-[350px] rounded-full pointer-events-none hero-blob"
         style={{
-          background: "radial-gradient(circle, rgba(242,217,104,0.4) 0%, rgba(232,123,53,0.15) 50%, transparent 70%)",
-          filter: "blur(80px)",
+          background: "radial-gradient(circle, rgba(242,217,104,0.3) 0%, rgba(232,123,53,0.12) 50%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           className="mb-16"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease }}
         >
+          <p
+            className="text-sm font-medium uppercase tracking-widest mb-4"
+            style={{ color: "#C9A030" }}
+          >
+            Программа
+          </p>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight">
             Программа курса
           </h2>
           <p className="text-lg mt-4" style={{ color: "#555" }}>
-            7 уроков от нуля до своего продукта
+            <strong>7 уроков</strong> от нуля до своего продукта
           </p>
         </motion.div>
 
-        {isInView && (
-          <div className="glass-card-strong p-4 md:p-6">
-            {lessons.map((lesson, i) => (
-              <LessonAccordion
-                key={i}
-                lesson={lesson}
-                index={i}
-                isOpen={openIndex === i}
-                toggle={() => setOpenIndex(openIndex === i ? null : i)}
-              />
-            ))}
-          </div>
-        )}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2, ease }}
+        >
+          {isInView && (
+            <div className="glass-card-strong p-4 md:p-6">
+              {lessons.map((lesson, i) => (
+                <LessonAccordion
+                  key={i}
+                  lesson={lesson}
+                  isOpen={openIndex === i}
+                  toggle={() => setOpenIndex(openIndex === i ? null : i)}
+                />
+              ))}
+            </div>
+          )}
+        </motion.div>
 
         <motion.div
           className="mt-14 text-center"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.4, ease }}
         >
           <a href="#pricing" className="btn-primary text-lg">
             Записаться на курс

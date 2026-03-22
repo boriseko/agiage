@@ -21,9 +21,9 @@ export default function Hero() {
 
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStage(1), 1000),
-      setTimeout(() => setStage(2), 3500),
-      setTimeout(() => setStage(3), 5500),
+      setTimeout(() => setStage(1), 500),
+      setTimeout(() => setStage(2), 2800),
+      setTimeout(() => setStage(3), 4500),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -37,38 +37,25 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{ background: "#FAFAF7" }}
     >
-      {/* Main blob */}
-      <motion.div
-        className="absolute w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full"
+      {/* Main blob — pure CSS, visible immediately */}
+      <div
+        className="absolute hero-blob w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(242,217,104,0.45) 0%, rgba(232,123,53,0.2) 40%, rgba(139,92,246,0.1) 70%, transparent 100%)",
-          filter: "blur(80px)",
-        }}
-        initial={{ scale: 0.6, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1, y: [0, -12, 0] }}
-        transition={{
-          scale: { duration: 2.5, ease: smooth },
-          opacity: { duration: 2 },
-          y: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+            "radial-gradient(circle, rgba(242,217,104,0.4) 0%, rgba(232,123,53,0.18) 40%, rgba(139,92,246,0.08) 70%, transparent 100%)",
+          filter: "blur(60px)",
+          animation: "blob-breathe 8s ease-in-out infinite",
         }}
       />
 
-      {/* Purple blob */}
-      <motion.div
-        className="absolute top-[15%] right-[8%] w-[250px] h-[250px] md:w-[350px] md:h-[350px] rounded-full"
+      {/* Purple blob — pure CSS */}
+      <div
+        className="absolute top-[15%] right-[8%] w-[200px] h-[200px] md:w-[300px] md:h-[300px] rounded-full hero-blob"
         style={{
           background:
-            "radial-gradient(circle, rgba(139,92,246,0.3) 0%, rgba(109,40,217,0.1) 50%, transparent 100%)",
-          filter: "blur(60px)",
-        }}
-        initial={{ scale: 0.6, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1, x: [0, 10, 0], y: [0, -8, 0] }}
-        transition={{
-          scale: { duration: 2.5, delay: 0.5, ease: smooth },
-          opacity: { duration: 2, delay: 0.5 },
-          x: { duration: 10, repeat: Infinity, ease: "easeInOut" },
-          y: { duration: 7, repeat: Infinity, ease: "easeInOut" },
+            "radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(109,40,217,0.08) 50%, transparent 100%)",
+          filter: "blur(50px)",
+          animation: "blob-drift 10s ease-in-out infinite",
         }}
       />
 
@@ -110,104 +97,89 @@ export default function Hero() {
 
       {/* Text area */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
-        <div
-          className="relative flex items-center justify-center mb-6"
-          style={{ minHeight: "clamp(120px, 25vw, 200px)" }}
-        >
+        <div className="relative" style={{ height: "clamp(100px, 20vw, 200px)" }}>
+          {/* Layer 1: ВАЙБ-КОДИНГ — fades out at stage 3 */}
           <motion.div
-            className="flex items-baseline justify-center"
-            layout
+            className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={showText ? { opacity: 1, scale: 1 } : {}}
-            transition={{
-              opacity: { duration: 1.2, ease: smooth },
-              scale: { duration: 1.2, ease: smooth },
-              layout: { duration: 1, ease: smooth },
+            animate={{
+              opacity: finalStage ? 0 : showText ? 1 : 0,
+              scale: showText ? 1 : 0.95,
             }}
+            transition={{ duration: 0.8, ease: smooth }}
           >
-            {/* ВАЙБ — persistent, scales up + gets gradient at stage 3 */}
-            <motion.span
-              className="font-black inline-block"
-              style={{
-                fontSize: "clamp(3rem, 8vw, 6rem)",
-                lineHeight: 1,
-                position: "relative",
-              }}
-              layout
-              animate={
-                finalStage
-                  ? { scale: 1.6, letterSpacing: "-0.05em" }
-                  : { scale: 1, letterSpacing: "-0.025em" }
-              }
-              transition={{
-                scale: { duration: 1.4, ease: smooth },
-                letterSpacing: { duration: 1.4, ease: smooth },
-                layout: { duration: 1, ease: smooth },
-              }}
-            >
-              {/* Normal text — fades out at stage 3 */}
-              <motion.span
-                style={{ display: "inline-block" }}
-                animate={{ opacity: finalStage ? 0 : 1 }}
-                transition={{ duration: 0.6, ease: smooth }}
+            <div className="relative inline-flex items-baseline">
+              <span
+                className="font-black"
+                style={{ fontSize: "clamp(3rem, 8vw, 6rem)", lineHeight: 1 }}
               >
                 ВАЙБ
-              </motion.span>
-              {/* Gradient overlay — fades in at stage 3 */}
-              <motion.span
-                className="gradient-text"
-                style={{ position: "absolute", left: 0, top: 0 }}
-                animate={{ opacity: finalStage ? 1 : 0 }}
-                transition={{ duration: 0.8, ease: smooth }}
+              </span>
+              {/* Dash + КОДИНГ — absolute, right of ВАЙБ */}
+              <div
+                className="absolute left-full top-0 flex items-baseline"
+                style={{ whiteSpace: "nowrap" }}
               >
-                ВАЙБ
-              </motion.span>
-            </motion.span>
+                <AnimatePresence>
+                  {!lettersGone && (
+                    <motion.span
+                      key="dash"
+                      className="font-bold mx-1 md:mx-2"
+                      style={{
+                        color: "rgba(0,0,0,0.18)",
+                        fontSize: "clamp(1.8rem, 5vw, 3.5rem)",
+                      }}
+                      exit={{
+                        opacity: 0,
+                        transition: { duration: 0.5, ease: smooth },
+                      }}
+                    >
+                      -
+                    </motion.span>
+                  )}
+                  {!lettersGone &&
+                    codingLetters.map((letter, i) => (
+                      <motion.span
+                        key={`k-${i}`}
+                        className="font-black inline-block"
+                        style={{
+                          color: "rgba(0,0,0,0.65)",
+                          fontSize: "clamp(3rem, 8vw, 6rem)",
+                          lineHeight: 1,
+                        }}
+                        exit={{
+                          opacity: 0,
+                          x: letterExits[i].x,
+                          y: letterExits[i].y,
+                          rotate: letterExits[i].rotate,
+                          transition: {
+                            duration: 1.2,
+                            delay: 0.05 + i * 0.07,
+                            ease: smooth,
+                          },
+                        }}
+                      >
+                        {letter}
+                      </motion.span>
+                    ))}
+                </AnimatePresence>
+              </div>
+            </div>
+          </motion.div>
 
-            {/* Dash + КОДИНГ — fly away with AnimatePresence */}
-            <AnimatePresence>
-              {!lettersGone && (
-                <motion.span
-                  key="dash"
-                  className="font-bold mx-1 md:mx-2"
-                  style={{
-                    color: "rgba(0,0,0,0.18)",
-                    fontSize: "clamp(1.8rem, 5vw, 3.5rem)",
-                  }}
-                  exit={{
-                    opacity: 0,
-                    transition: { duration: 0.6, ease: smooth },
-                  }}
-                >
-                  -
-                </motion.span>
-              )}
-              {!lettersGone &&
-                codingLetters.map((letter, i) => (
-                  <motion.span
-                    key={`k-${i}`}
-                    className="font-black inline-block"
-                    style={{
-                      color: "rgba(0,0,0,0.65)",
-                      fontSize: "clamp(3rem, 8vw, 6rem)",
-                      lineHeight: 1,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      x: letterExits[i].x,
-                      y: letterExits[i].y,
-                      rotate: letterExits[i].rotate,
-                      transition: {
-                        duration: 1.2,
-                        delay: 0.05 + i * 0.07,
-                        ease: smooth,
-                      },
-                    }}
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
-            </AnimatePresence>
+          {/* Layer 2: Big gradient ВАЙБ — fades in at stage 3 */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={finalStage ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 1.2, ease: smooth }}
+          >
+            <span
+              className="gradient-text font-black tracking-tighter leading-none"
+              style={{ fontSize: "clamp(5rem, 15vw, 12rem)" }}
+            >
+              ВАЙБ
+            </span>
           </motion.div>
         </div>
 
@@ -215,9 +187,9 @@ export default function Hero() {
         <motion.p
           className="text-lg md:text-xl max-w-xl leading-relaxed"
           style={{ color: "#555" }}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={finalStage ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.6, ease: smooth }}
+          transition={{ duration: 0.8, delay: 0.4, ease: smooth }}
         >
           Научись решать любые задачи с помощью ИИ
           <br />
@@ -227,9 +199,9 @@ export default function Hero() {
         {/* CTA */}
         <motion.div
           className="mt-10 flex flex-col sm:flex-row gap-4 items-center"
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={finalStage ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.9, ease: smooth }}
+          transition={{ duration: 0.8, delay: 0.7, ease: smooth }}
         >
           <a href="#pricing" className="btn-primary">
             Хочу на курс
@@ -245,7 +217,7 @@ export default function Hero() {
           style={{ color: "#999" }}
           initial={{ opacity: 0 }}
           animate={finalStage ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.3, ease: smooth }}
+          transition={{ duration: 0.6, delay: 1.0, ease: smooth }}
         >
           7 уроков · Закрытое комьюнити · Для любой профессии
         </motion.p>
@@ -257,7 +229,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={finalStage ? { opacity: 0.3, y: [0, 6, 0] } : {}}
         transition={{
-          opacity: { delay: 2, duration: 0.8 },
+          opacity: { delay: 1.5, duration: 0.8 },
           y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
         }}
       >

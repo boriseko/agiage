@@ -3,6 +3,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const results = [
   { text: "Собрать сайт или лендинг с нуля", sub: "без дизайнера, без верстальщика, за вечер" },
   { text: "Создать Telegram-бота", sub: "который делает то, что тебе нужно" },
@@ -16,34 +18,34 @@ const results = [
 
 export default function Results() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section className="section relative" style={{ background: "#FAFAF7" }} ref={ref}>
       <div
-        className="absolute bottom-[-50px] right-[-100px] w-[500px] h-[500px] rounded-full pointer-events-none"
+        className="absolute bottom-[-50px] right-[-100px] w-[400px] h-[400px] rounded-full pointer-events-none hero-blob"
         style={{
-          background: "radial-gradient(circle, rgba(232,123,53,0.2) 0%, rgba(139,92,246,0.1) 50%, transparent 70%)",
-          filter: "blur(80px)",
+          background: "radial-gradient(circle, rgba(232,123,53,0.15) 0%, rgba(139,92,246,0.08) 50%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.p
-          className="text-sm font-medium uppercase tracking-widest mb-6"
-          style={{ color: "#A0A0A0" }}
-          initial={{ opacity: 0, y: 20 }}
+          className="text-sm font-medium uppercase tracking-widest mb-4"
+          style={{ color: "#C9A030" }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7, ease }}
         >
           Результат
         </motion.p>
 
         <motion.h2
           className="text-4xl md:text-6xl font-bold mb-16 tracking-tight"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
         >
           После курса{" "}
           <span className="gradient-text">ты сможешь:</span>
@@ -54,21 +56,21 @@ export default function Results() {
             <motion.div
               key={i}
               className="glass-card flex items-start gap-4 p-5"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.05 * i }}
+              transition={{ duration: 0.6, delay: 0.1 * i, ease }}
             >
               <span
-                className="text-xs font-semibold tracking-widest mt-1 shrink-0"
-                style={{ color: "#E8C840" }}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold shrink-0"
+                style={{ background: "rgba(232,200,64,0.15)", color: "#C9A030" }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <h3 className="text-base font-semibold leading-snug tracking-tight">
+                <h3 className="text-base font-bold leading-snug tracking-tight">
                   {item.text}
                 </h3>
-                <p className="text-sm mt-1" style={{ color: "#A0A0A0" }}>
+                <p className="text-sm mt-1" style={{ color: "#999" }}>
                   {item.sub}
                 </p>
               </div>
@@ -78,12 +80,13 @@ export default function Results() {
 
         <motion.div
           className="mt-16 glass-card-strong p-8 md:p-10 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.8, delay: 0.5, ease }}
         >
           <p className="text-lg md:text-xl font-medium leading-relaxed tracking-tight">
-            И самое главное — ты получишь навык, который будет только дорожать.
+            И самое главное — ты получишь навык, который будет{" "}
+            <strong>только дорожать</strong>.
             <br />
             <span className="gradient-text font-bold">
               Потому что так скоро будут работать все.

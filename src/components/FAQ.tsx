@@ -3,6 +3,8 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const questions = [
   { q: "Мне нужно уметь программировать?", a: "Нет. Курс создан для людей без технического опыта. Мы учим ставить задачи AI-агенту — это ближе к навыку управления, чем к программированию." },
   { q: "Я уже пробовал ChatGPT и мне не зашло. Чем это отличается?", a: "ChatGPT — это чат. Мы работаем с агентными системами, которые могут сами создавать файлы, писать код, запускать сервисы. Это принципиально другой уровень — попробуйте и удивитесь." },
@@ -21,11 +23,21 @@ export default function FAQ() {
   return (
     <section className="section relative" id="faq" ref={ref} style={{ background: "#F0ECE4" }}>
       <div className="max-w-3xl mx-auto relative z-10">
+        <motion.p
+          className="text-sm font-medium uppercase tracking-widest mb-4 text-center"
+          style={{ color: "#C9A030" }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease }}
+        >
+          FAQ
+        </motion.p>
+
         <motion.h2
           className="text-4xl md:text-6xl font-bold mb-16 tracking-tight text-center"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
         >
           Частые <span className="gradient-text">вопросы</span>
         </motion.h2>
@@ -35,15 +47,15 @@ export default function FAQ() {
             <motion.div
               key={i}
               className="glass-card overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 35 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.06 * i }}
+              transition={{ duration: 0.6, delay: 0.1 * i, ease }}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full flex items-center justify-between p-6 text-left group"
               >
-                <span className="font-semibold text-base md:text-lg pr-4 leading-snug">
+                <span className="font-bold text-base md:text-lg pr-4 leading-snug">
                   {item.q}
                 </span>
                 <motion.div

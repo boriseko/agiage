@@ -3,6 +3,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const tiers = [
   {
     name: "Базовый",
@@ -48,38 +50,38 @@ export default function Pricing() {
   return (
     <section className="section relative" id="pricing" ref={ref} style={{ background: "#F0ECE4" }}>
       <div
-        className="absolute top-[30%] left-[-50px] w-[500px] h-[500px] rounded-full pointer-events-none"
+        className="absolute top-[30%] left-[-50px] w-[400px] h-[400px] rounded-full pointer-events-none hero-blob"
         style={{
-          background: "radial-gradient(circle, rgba(232,200,64,0.25) 0%, transparent 70%)",
-          filter: "blur(100px)",
+          background: "radial-gradient(circle, rgba(232,200,64,0.2) 0%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.p
-          className="text-sm font-medium uppercase tracking-widest mb-6 text-center"
-          style={{ color: "#A0A0A0" }}
-          initial={{ opacity: 0, y: 20 }}
+          className="text-sm font-medium uppercase tracking-widest mb-4 text-center"
+          style={{ color: "#C9A030" }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7, ease }}
         >
           Тарифы
         </motion.p>
 
         <motion.h2
           className="text-4xl md:text-6xl font-bold mb-4 tracking-tight text-center"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
         >
           Выбери свой формат
         </motion.h2>
         <motion.p
           className="text-base mb-16 text-center"
           style={{ color: "#6B6B6B" }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.7, delay: 0.2, ease }}
         >
           От самостоятельного до персонального
         </motion.p>
@@ -104,9 +106,9 @@ export default function Pricing() {
                       boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
                     }
               }
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.12 * i }}
+              transition={{ duration: 0.7, delay: 0.15 * i, ease }}
               whileHover={{ y: -4 }}
             >
               {tier.badge && (

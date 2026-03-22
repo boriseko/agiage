@@ -3,6 +3,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+
 const cases = [
   {
     title: "Лендинг для мероприятия",
@@ -32,47 +34,47 @@ const cases = [
 
 export default function Cases() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section className="section relative" style={{ background: "#F0ECE4" }} ref={ref}>
       <div
-        className="absolute top-[20%] left-[-80px] w-[400px] h-[400px] rounded-full pointer-events-none"
+        className="absolute top-[20%] left-[-80px] w-[350px] h-[350px] rounded-full pointer-events-none hero-blob"
         style={{
-          background: "radial-gradient(circle, rgba(201,107,46,0.15) 0%, transparent 70%)",
-          filter: "blur(80px)",
+          background: "radial-gradient(circle, rgba(201,107,46,0.12) 0%, transparent 70%)",
+          filter: "blur(60px)",
         }}
       />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.p
-          className="text-sm font-medium uppercase tracking-widest mb-6"
-          style={{ color: "#A0A0A0" }}
-          initial={{ opacity: 0, y: 20 }}
+          className="text-sm font-medium uppercase tracking-widest mb-4"
+          style={{ color: "#C9A030" }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.7, ease }}
         >
           Кейсы
         </motion.p>
 
         <motion.h2
-          className="text-4xl md:text-6xl font-bold mb-6 tracking-tight"
-          initial={{ opacity: 0, y: 40 }}
+          className="text-4xl md:text-6xl font-bold mb-5 tracking-tight"
+          initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
         >
           Вот что можно собрать{" "}
           <span className="gradient-text">с помощью AI</span>
         </motion.h2>
 
         <motion.p
-          className="text-base mb-14 max-w-md"
+          className="text-base mb-14 max-w-md leading-relaxed"
           style={{ color: "#6B6B6B" }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.7, delay: 0.2, ease }}
         >
-          Обычные люди, без опыта в программировании.
+          <strong style={{ color: "#444" }}>Обычные люди</strong>, без опыта в программировании.
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -80,13 +82,19 @@ export default function Cases() {
             <motion.div
               key={i}
               className="glass-card p-7"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 * i }}
+              transition={{ duration: 0.6, delay: 0.15 * i, ease }}
             >
-              <div className="flex items-center gap-4 mb-5">
+              <div className="flex items-center justify-between mb-5">
                 <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#A0A0A0" }}>
                   Кейс {String(i + 1).padStart(2, "0")}
+                </span>
+                <span
+                  className="px-3 py-1 rounded-full text-xs font-bold"
+                  style={{ background: "rgba(232,200,64,0.2)", color: "#B8940A" }}
+                >
+                  {c.time}
                 </span>
               </div>
 
@@ -95,29 +103,21 @@ export default function Cases() {
                 {c.desc}
               </p>
 
-              <div className="flex flex-wrap gap-2">
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ background: "rgba(0,0,0,0.04)", color: "#6B6B6B" }}
-                >
-                  {c.time}
-                </span>
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ background: "rgba(0,0,0,0.04)", color: "#6B6B6B" }}
-                >
-                  {c.who}
-                </span>
-              </div>
+              <span
+                className="px-3 py-1 rounded-full text-xs font-medium"
+                style={{ background: "rgba(0,0,0,0.04)", color: "#6B6B6B" }}
+              >
+                {c.who}
+              </span>
             </motion.div>
           ))}
         </div>
 
         <motion.div
           className="mt-14 text-center"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.6, ease }}
         >
           <a href="#pricing" className="btn-primary">
             Хочу так же
