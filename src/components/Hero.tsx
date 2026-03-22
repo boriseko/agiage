@@ -23,7 +23,7 @@ export default function Hero() {
     const timers = [
       setTimeout(() => setStage(1), 500),
       setTimeout(() => setStage(2), 2800),
-      setTimeout(() => setStage(3), 4500),
+      setTimeout(() => setStage(3), 4800),
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -98,7 +98,7 @@ export default function Hero() {
       {/* Text area */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
         <div className="relative" style={{ height: "clamp(100px, 20vw, 200px)" }}>
-          {/* Layer 1: ВАЙБ-КОДИНГ — fades out at stage 3 */}
+          {/* Layer 1: ВАЙБ-КОДИНГ centered as whole phrase */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -108,63 +108,68 @@ export default function Hero() {
             }}
             transition={{ duration: 0.8, ease: smooth }}
           >
-            <div className="relative inline-flex items-baseline">
-              <span
+            <motion.div
+              className="flex items-baseline justify-center"
+              layout
+              transition={{ layout: { duration: 0.8, ease: smooth } }}
+            >
+              {/* ВАЙБ — stays, smoothly recenters via layout */}
+              <motion.span
+                layout
                 className="font-black"
                 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", lineHeight: 1 }}
+                transition={{ layout: { duration: 0.8, ease: smooth } }}
               >
                 ВАЙБ
-              </span>
-              {/* Dash + КОДИНГ — absolute, right of ВАЙБ */}
-              <div
-                className="absolute left-full top-0 flex items-baseline"
-                style={{ whiteSpace: "nowrap" }}
-              >
-                <AnimatePresence>
-                  {!lettersGone && (
+              </motion.span>
+
+              {/* Dash + КОДИНГ — popLayout removes from flow instantly */}
+              <AnimatePresence mode="popLayout">
+                {!lettersGone && (
+                  <motion.span
+                    key="dash"
+                    layout
+                    className="font-bold mx-1 md:mx-2"
+                    style={{
+                      color: "rgba(0,0,0,0.18)",
+                      fontSize: "clamp(1.8rem, 5vw, 3.5rem)",
+                    }}
+                    exit={{
+                      opacity: 0,
+                      transition: { duration: 0.5, ease: smooth },
+                    }}
+                  >
+                    -
+                  </motion.span>
+                )}
+                {!lettersGone &&
+                  codingLetters.map((letter, i) => (
                     <motion.span
-                      key="dash"
-                      className="font-bold mx-1 md:mx-2"
+                      key={`k-${i}`}
+                      layout
+                      className="font-black inline-block"
                       style={{
-                        color: "rgba(0,0,0,0.18)",
-                        fontSize: "clamp(1.8rem, 5vw, 3.5rem)",
+                        color: "rgba(0,0,0,0.65)",
+                        fontSize: "clamp(3rem, 8vw, 6rem)",
+                        lineHeight: 1,
                       }}
                       exit={{
                         opacity: 0,
-                        transition: { duration: 0.5, ease: smooth },
+                        x: letterExits[i].x,
+                        y: letterExits[i].y,
+                        rotate: letterExits[i].rotate,
+                        transition: {
+                          duration: 1.2,
+                          delay: 0.05 + i * 0.07,
+                          ease: smooth,
+                        },
                       }}
                     >
-                      -
+                      {letter}
                     </motion.span>
-                  )}
-                  {!lettersGone &&
-                    codingLetters.map((letter, i) => (
-                      <motion.span
-                        key={`k-${i}`}
-                        className="font-black inline-block"
-                        style={{
-                          color: "rgba(0,0,0,0.65)",
-                          fontSize: "clamp(3rem, 8vw, 6rem)",
-                          lineHeight: 1,
-                        }}
-                        exit={{
-                          opacity: 0,
-                          x: letterExits[i].x,
-                          y: letterExits[i].y,
-                          rotate: letterExits[i].rotate,
-                          transition: {
-                            duration: 1.2,
-                            delay: 0.05 + i * 0.07,
-                            ease: smooth,
-                          },
-                        }}
-                      >
-                        {letter}
-                      </motion.span>
-                    ))}
-                </AnimatePresence>
-              </div>
-            </div>
+                  ))}
+              </AnimatePresence>
+            </motion.div>
           </motion.div>
 
           {/* Layer 2: Big gradient ВАЙБ — fades in at stage 3 */}
