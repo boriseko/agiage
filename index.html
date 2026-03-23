@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FAFAF7">
+<title>AGI Age — Вайб. Научись решать любые задачи с помощью ИИ</title>
+<meta name="description" content="Курс для всех, кто хочет использовать AI-агентов для решения любых задач — без кода, без опыта, без запары. 7 уроков от нуля до своего продукта.">
+<!-- Open Graph -->
+<meta property="og:title" content="AGI Age — Вайб">
+<meta property="og:description" content="Научись решать любые задачи с помощью ИИ — без кода, без опыта, без запары">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="AGI Age">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AGI Age — Вайб">
+<meta name="twitter:description" content="Научись решать любые задачи с помощью ИИ — без кода, без опыта, без запары">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-main: #FAFAF7;
+  --bg-alt: #F0ECE4;
+  --text-primary: #1A1A1A;
+  --text-secondary: #5A5A52;
+  --text-muted: #8A8A7E;
+  --gold: #C9A030;
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: rgba(0, 0, 0, 0.04);
+  --gradient: linear-gradient(135deg, #E8C840, #E87B35, #8B5CF6);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.display-font {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Section padding */
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+}
+
+.section-alt {
+  background: var(--bg-alt);
+}
+
+/* Label */
+.section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+/* Section title */
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* Glass cards */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 4px 24px var(--glass-shadow), 0 1px 2px rgba(0,0,0,0.02);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0,0,0,0.03);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  border-radius: 60px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  letter-spacing: -0.01em;
+}
+
+.btn-primary {
+  background: var(--text-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid rgba(26, 26, 26, 0.2);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.btn-accent {
+  background: var(--gradient);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 123, 53, 0.3);
+}
+
+/* Scroll animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ============== STICKY NAV ============== */
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(250, 250, 247, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transform: translateY(-100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 0 24px;
+}
+
+.sticky-nav.visible {
+  transform: translateY(0);
+}
+
+.sticky-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.sticky-nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.6;
+}
+
+.sticky-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.sticky-nav-links a {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sticky-nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.sticky-nav-links .btn {
+  padding: 10px 24px;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .sticky-nav-links {
+    gap: 16px;
+  }
+  .sticky-nav-links .nav-text {
+    display: none;
+  }
+}
+
+/* ============== BURGER MENU ============== */
+.burger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-primary);
+}
+
+.burger-btn svg {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .burger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(250, 250, 247, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 16px 24px;
+  list-style: none;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-menu li a {
+  display: block;
+  padding: 14px 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: color 0.2s;
+}
+
+.mobile-menu li:last-child a {
+  border-bottom: none;
+}
+
+.mobile-menu li a:hover {
+  color: var(--text-primary);
+}
+
+/* Hero burger - inside .hero-top */
+.hero-burger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-primary);
+}
+
+.hero-burger-btn svg {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .hero-burger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.hero-mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(250, 250, 247, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 16px 24px;
+  list-style: none;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
+.hero-mobile-menu.open {
+  display: flex;
+}
+
+.hero-mobile-menu li a {
+  display: block;
+  padding: 14px 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: color 0.2s;
+}
+
+.hero-mobile-menu li:last-child a {
+  border-bottom: none;
+}
+
+.hero-mobile-menu li a:hover {
+  color: var(--text-primary);
+}
+
+/* ============== FOCUS VISIBLE ============== */
+*:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.glass-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ============== HERO ============== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-main);
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  position: relative;
+}
+
+.hero-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.5;
+}
+
+.hero-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.hero-nav a {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.hero-nav a:hover {
+  color: var(--text-primary);
+}
+
+.hero-nav .btn {
+  padding: 10px 24px;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .hero-nav .nav-text-link {
+    display: none;
+  }
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 0 80px;
+  position: relative;
+  z-index: 2;
+}
+
+/* === THE ONE ВАЙБ ELEMENT === */
+#theVayb {
+  position: fixed;
+  z-index: 10000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: var(--text-primary);
+  -webkit-text-fill-color: var(--text-primary);
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#theVayb.gradient {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#theVayb.landed {
+  position: absolute;
+  z-index: 2;
+  transition: none;
+}
+
+/* Intro overlay */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-main);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease;
+}
+.intro-overlay.done {
+  opacity: 0;
+  pointer-events: none;
+}
+/* КОДИНГ text next to ВАЙБ in intro */
+.intro-companions {
+  position: fixed;
+  z-index: 10000;
+  top: 50%;
+  display: flex;
+  align-items: baseline;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.intro-dash {
+  color: rgba(0,0,0,0.15);
+  font-weight: 400;
+  margin: 0 0.08em;
+  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.intro-coding {
+  color: var(--text-secondary);
+  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  display: inline-block;
+}
+.intro-coding.fade-out {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(-40px) scale(0.8);
+}
+.intro-dash.fade-out {
+  opacity: 0;
+  filter: blur(8px);
+}
+
+/* Hero elements hidden until intro finishes */
+.hero-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease var(--d, 0s), transform 0.7s ease var(--d, 0s);
+}
+.hero-fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-top, .blob {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hero-top.show, .blob.show { opacity: 1; }
+.blob.show.blob-1 { opacity: 0.35; }
+.blob.show.blob-2 { opacity: 0.35; }
+.blob.show.blob-3 { opacity: 0.35; }
+
+.hero-giant {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(5rem, 15vw, 12rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  margin-bottom: 8px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: heroGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.08); }
+}
+
+.hero-sub-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.hero-sub-title span {
+  opacity: 0.45;
+  font-weight: 400;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+/* H1 styled as subtitle size */
+h1.hero-subtitle {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+}
+
+.hero-tags {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Blobs */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #E8C840 0%, transparent 70%);
+  top: 10%;
+  left: -10%;
+  animation: blobFloat1 12s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #E87B35 0%, transparent 70%);
+  top: 30%;
+  right: -5%;
+  animation: blobFloat2 15s ease-in-out infinite alternate;
+}
+
+.blob-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #8B5CF6 0%, transparent 70%);
+  bottom: 5%;
+  left: 20%;
+  animation: blobFloat3 10s ease-in-out infinite alternate;
+}
+
+@keyframes blobFloat1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, -40px) scale(1.15); }
+}
+
+@keyframes blobFloat2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-50px, 50px) scale(1.1); }
+}
+
+@keyframes blobFloat3 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, -60px) scale(1.2); }
+}
+
+/* ============== FOR WHO ============== */
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .who-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .who-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.who-card {
+  position: relative;
+  padding: 28px;
+}
+
+.who-card-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-bottom: 12px;
+}
+
+.who-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+.who-card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* ============== RESULTS ============== */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+@media (max-width: 700px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px;
+}
+
+.result-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+  line-height: 1;
+  min-width: 38px;
+}
+
+.result-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.result-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.results-closing {
+  margin-top: 48px;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-secondary);
+  max-width: 680px;
+  line-height: 1.7;
+}
+
+/* ============== CASES ============== */
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+@media (max-width: 700px) {
+  .cases-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.case-card {
+  padding: 32px;
+}
+
+.case-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.case-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.case-time {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(201, 160, 48, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.case-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.case-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.55;
+}
+
+.case-tag {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.04);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.cases-btn {
+  margin-top: 48px;
+  text-align: center;
+}
+
+/* ============== PROGRAM ============== */
+.program-list {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.program-item {
+  cursor: pointer;
+  padding: 24px 28px;
+  user-select: none;
+}
+
+.program-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.program-item-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.program-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.15);
+  min-width: 36px;
+  transition: color 0.3s ease;
+  line-height: 1.2;
+}
+
+.program-item.open .program-num {
+  color: #E8C840;
+}
+
+.program-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.program-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.program-arrow {
+  font-size: 20px;
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.program-item.open .program-arrow {
+  transform: rotate(180deg);
+}
+
+.program-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 0 0 0 56px;
+}
+
+.program-item.open .program-body {
+  max-height: 400px;
+}
+
+.program-body-inner {
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+
+.program-body-inner ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.program-body-inner ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.program-body-inner ul li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #E8C840;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.program-item.open {
+  background: rgba(232,200,64,0.06);
+}
+
+.program-btn {
+  margin-top: 48px;
+  text-align: center;
+}
+
+/* ============== AUTHOR ============== */
+.author-card {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px;
+}
+
+.author-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.author-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.author-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.author-stat {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.author-stat strong {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+/* ============== PRICING ============== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.pricing-card {
+  padding: 36px 32px;
+  text-align: center;
+  position: relative;
+}
+
+.pricing-card.recommended {
+  border: 2px solid transparent;
+  background-image: linear-gradient(var(--glass-bg), var(--glass-bg)), var(--gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 16px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pricing-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.pricing-price {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+}
+
+.pricing-price span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.pricing-features {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.pricing-features li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pricing-features li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.pricing-card .btn {
+  width: 100%;
+}
+
+.pricing-limited {
+  font-size: 12px;
+  color: var(--gold);
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* ============== COMMUNITY ============== */
+.community-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 40px 0;
+}
+
+@media (max-width: 700px) {
+  .community-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.community-item {
+  text-align: center;
+  padding: 28px 20px;
+}
+
+.community-item-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.community-footer {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ============== FAQ ============== */
+.faq-list {
+  margin-top: 48px;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+}
+
+.faq-question {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.faq-question-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.faq-icon {
+  font-size: 20px;
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.05);
+}
+
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+  background: rgba(232,200,64,0.2);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+}
+
+.faq-answer-inner {
+  padding-bottom: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ============== CONTACT ============== */
+.contact-section {
+  text-align: center;
+}
+
+.contact-links {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-link:hover {
+  color: var(--text-primary);
+}
+
+/* ============== FOOTER ============== */
+.footer {
+  background: var(--bg-alt);
+  padding: 48px 0 32px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+
+.footer-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-col a {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover {
+  color: var(--text-primary);
+}
+
+.footer-bottom {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Section blobs for depth */
+.section-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section > .container {
+  position: relative;
+  z-index: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- Sticky Nav -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="sticky-nav-inner">
+    <div class="sticky-nav-logo">АГИ</div>
+    <ul class="sticky-nav-links">
+      <li><a href="#program" class="nav-text">Программа</a></li>
+      <li><a href="#pricing" class="nav-text">Тарифы</a></li>
+      <li><a href="#faq" class="nav-text">FAQ</a></li>
+      <li><a href="#contact" class="btn btn-primary">Записаться</a></li>
+    </ul>
+    <button class="burger-btn" id="stickyBurger" aria-label="Меню" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 12h18M3 6h18M3 18h18"/>
+      </svg>
+    </button>
+  </div>
+  <ul class="mobile-menu" id="stickyMobileMenu">
+    <li><a href="#program">Программа</a></li>
+    <li><a href="#pricing">Тарифы</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+</nav>
+
+<!-- ============== HERO ============== -->
+<!-- THE ONE AND ONLY ВАЙБ -->
+<div id="theVayb">ВАЙБ</div>
+
+<!-- INTRO: overlay + КОДИНГ companion -->
+<div class="intro-overlay" id="introOverlay"></div>
+<div class="intro-companions" id="introCompanions">
+  <span class="intro-dash" id="introDash" aria-hidden="true">&mdash;</span>
+  <span class="intro-coding" id="introCoding">КОДИНГ</span>
+</div>
+
+<section class="hero section" id="hero">
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="blob blob-3" aria-hidden="true"></div>
+  <div class="container" style="flex:1;display:flex;flex-direction:column;">
+    <header class="hero-top">
+      <div class="hero-logo">АГИ</div>
+      <nav>
+        <ul class="hero-nav">
+          <li><a href="#program" class="nav-text-link">Программа</a></li>
+          <li><a href="#pricing" class="nav-text-link">Тарифы</a></li>
+          <li><a href="#faq" class="nav-text-link">FAQ</a></li>
+          <li><a href="#contact" class="btn btn-primary">Записаться</a></li>
+        </ul>
+      </nav>
+      <button class="hero-burger-btn" id="heroBurger" aria-label="Меню" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+      <ul class="hero-mobile-menu" id="heroMobileMenu">
+        <li><a href="#program">Программа</a></li>
+        <li><a href="#pricing">Тарифы</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+    </header>
+    <div class="hero-content">
+      <!-- placeholder to reserve space for ВАЙБ -->
+      <div class="hero-giant display-font" id="vaybTarget" style="visibility:hidden" aria-hidden="true">ВАЙБ</div>
+      <h1 class="hero-subtitle hero-fade" style="--d:0s">Научись решать любые задачи с помощью ИИ</h1>
+      <p class="hero-tags hero-fade" style="--d:0.15s">без кода &middot; без опыта &middot; без запары</p>
+      <div class="hero-buttons hero-fade" style="--d:0.3s">
+        <a href="#contact" class="btn btn-primary">Хочу на курс</a>
+        <a href="#program" class="btn btn-secondary">Программа</a>
+      </div>
+      <p class="hero-meta hero-fade" style="--d:0.45s">7 уроков &middot; Закрытое комьюнити &middot; Для любой профессии</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOR WHO ============== -->
+<section class="section section-alt" id="for-who">
+  <div class="section-blob" style="width:400px;height:400px;background:radial-gradient(circle,#E8C840,transparent 70%);top:20%;right:-5%;" aria-hidden="true"></div>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Для кого</p>
+      <h2 class="section-title display-font">Этот курс для тебя, <span class="gradient-text">если...</span></h2>
+      <p class="section-subtitle">Неважно кто ты по профессии. Важно, что ты хочешь <strong>делать больше — быстрее, проще</strong> и своими руками.</p>
+    </div>
+    <div class="who-grid">
+      <div class="glass-card who-card reveal reveal-delay-1">
+        <div class="who-card-num">01</div>
+        <div class="who-card-title">У тебя есть идея, но нет технических навыков</div>
+        <div class="who-card-desc">Хочешь сделать сайт, бота, сервис — но не знаешь с чего начать</div>
+      </div>
+      <div class="glass-card who-card reveal reveal-delay-2">
+        <div class="who-card-num">02</div>
+        <div class="who-card-title">Ты пробовал ChatGPT и разочаровался</div>
+        <div class="who-card-desc">Думал «ну и хайп», получал средние ответы и забил. Сейчас всё по-другому</div>
+      </div>
+      <div class="glass-card who-card reveal reveal-delay-3">
+        <div class="who-card-num">03</div>
+        <div class="who-card-title">Ты предприниматель или фрилансер</div>
+        <div class="who-card-desc">И хочешь делать за час то, на что раньше уходила неделя и бюджет на подрядчика</div>
+      </div>
+      <div class="glass-card who-card reveal reveal-delay-1">
+        <div class="who-card-num">04</div>
+        <div class="who-card-title">Хочешь проверить бизнес-идею быстро</div>
+        <div class="who-card-desc">Собрать MVP, протестировать гипотезу, запустить лендинг — без команды</div>
+      </div>
+      <div class="glass-card who-card reveal reveal-delay-2">
+        <div class="who-card-num">05</div>
+        <div class="who-card-title">Слышал про AI-агентов, но не понимаешь как начать</div>
+        <div class="who-card-desc">Cursor, Claude Code, Codex — звучит сложно, но на деле проще чем кажется</div>
+      </div>
+      <div class="glass-card who-card reveal reveal-delay-3">
+        <div class="who-card-num">06</div>
+        <div class="who-card-title">Ты дизайнер, маркетолог, менеджер — кто угодно</div>
+        <div class="who-card-desc">И хочешь добавить себе суперсилу, которая кратно ускоряет работу</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== RESULTS ============== -->
+<section class="section" id="results">
+  <div class="section-blob" style="width:350px;height:350px;background:radial-gradient(circle,#8B5CF6,transparent 70%);bottom:10%;left:-5%;" aria-hidden="true"></div>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Результат</p>
+      <h2 class="section-title display-font">После курса <span class="gradient-text">ты сможешь:</span></h2>
+    </div>
+    <div class="results-grid">
+      <div class="glass-card result-card reveal reveal-delay-1">
+        <div class="result-num">01</div>
+        <div>
+          <div class="result-title">Собрать сайт или лендинг с нуля</div>
+          <div class="result-desc">без дизайнера, без верстальщика, за вечер</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-2">
+        <div class="result-num">02</div>
+        <div>
+          <div class="result-title">Создать Telegram-бота</div>
+          <div class="result-desc">который делает то, что тебе нужно</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-1">
+        <div class="result-num">03</div>
+        <div>
+          <div class="result-title">Запустить проект на сервер</div>
+          <div class="result-desc">чтобы он работал 24/7 и был доступен всем</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-2">
+        <div class="result-num">04</div>
+        <div>
+          <div class="result-title">Проверить любую бизнес-идею</div>
+          <div class="result-desc">собрать MVP за дни, а не месяцы</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-1">
+        <div class="result-num">05</div>
+        <div>
+          <div class="result-title">Подключать внешние инструменты к AI</div>
+          <div class="result-desc">базы данных, API, сервисы</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-2">
+        <div class="result-num">06</div>
+        <div>
+          <div class="result-title">Думать по-новому</div>
+          <div class="result-desc">ставить задачи AI так, чтобы получать результат с первого раза</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-1">
+        <div class="result-num">07</div>
+        <div>
+          <div class="result-title">Не попадать в ловушки</div>
+          <div class="result-desc">знать, где AI врёт, где опасно, как проверять результат</div>
+        </div>
+      </div>
+      <div class="glass-card result-card reveal reveal-delay-2">
+        <div class="result-num">08</div>
+        <div>
+          <div class="result-title">Автоматизировать рутину</div>
+          <div class="result-desc">отчёты, обработка данных, парсинг, рассылки</div>
+        </div>
+      </div>
+    </div>
+    <p class="results-closing reveal">И самое главное — ты получишь навык, который будет только дорожать. Потому что так скоро будут работать все.</p>
+  </div>
+</section>
+
+<!-- ============== CASES ============== -->
+<section class="section section-alt" id="cases">
+  <div class="section-blob" style="width:400px;height:400px;background:radial-gradient(circle,#E87B35,transparent 70%);top:15%;left:-8%;" aria-hidden="true"></div>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Кейсы</p>
+      <h2 class="section-title display-font">Вот что можно собрать <span class="gradient-text">с помощью AI</span></h2>
+      <p class="section-subtitle"><strong>Обычные люди</strong>, без опыта в программировании.</p>
+    </div>
+    <div class="cases-grid">
+      <div class="glass-card case-card reveal reveal-delay-1">
+        <div class="case-top">
+          <span class="case-label">Кейс 01</span>
+          <span class="case-time">2 часа</span>
+        </div>
+        <div class="case-title">Лендинг для мероприятия</div>
+        <div class="case-desc">Полностью адаптивный сайт с формой регистрации, анимациями и подключением к базе данных</div>
+        <span class="case-tag">Нулевой опыт в вёрстке</span>
+      </div>
+      <div class="glass-card case-card reveal reveal-delay-2">
+        <div class="case-top">
+          <span class="case-label">Кейс 02</span>
+          <span class="case-time">3 часа</span>
+        </div>
+        <div class="case-title">Telegram-бот для бизнеса</div>
+        <div class="case-desc">Бот с обработкой заказов, уведомлениями и интеграцией с Google Sheets</div>
+        <span class="case-tag">Никогда не писал код</span>
+      </div>
+      <div class="glass-card case-card reveal reveal-delay-1">
+        <div class="case-top">
+          <span class="case-label">Кейс 03</span>
+          <span class="case-time">1 вечер</span>
+        </div>
+        <div class="case-title">Мини-сервис автоматизации</div>
+        <div class="case-desc">Автоматический парсинг конкурентов с отправкой отчётов в Telegram каждый день</div>
+        <span class="case-tag">Маркетолог</span>
+      </div>
+      <div class="glass-card case-card reveal reveal-delay-2">
+        <div class="case-top">
+          <span class="case-label">Кейс 04</span>
+          <span class="case-time">4 часа</span>
+        </div>
+        <div class="case-title">Персональный AI-инструмент</div>
+        <div class="case-desc">Внутренний инструмент для генерации ТЗ из голосовых заметок с AI-обработкой</div>
+        <span class="case-tag">Дизайнер</span>
+      </div>
+    </div>
+    <div class="cases-btn reveal">
+      <a href="#contact" class="btn btn-primary">Хочу так же</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROGRAM ============== -->
+<section class="section" id="program">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">7 уроков</p>
+      <h2 class="section-title display-font">Программа курса</h2>
+      <p class="section-subtitle"><strong>7 уроков</strong> от нуля до своего продукта</p>
+    </div>
+    <div class="program-list">
+
+      <div class="glass-card program-item reveal reveal-delay-1">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">01</span>
+            <div>
+              <div class="program-title">Что произошло с ИИ и почему «вайб» — новая грамотность</div>
+              <div class="program-subtitle">Ломаем старую картину мира</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Почему ваш прошлый опыт с AI уже неактуален</li>
+              <li>Что изменилось за последние месяцы и почему это важно</li>
+              <li>Агентные системы — не чат-бот, а цифровой исполнитель</li>
+              <li>Новая грамотность: задача &rarr; контекст &rarr; проверка &rarr; результат</li>
+              <li>Что теперь реально возможно — конкретные примеры</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card program-item reveal reveal-delay-2">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">02</span>
+            <div>
+              <div class="program-title">Интерфейс и навигация — «куда нажимать, чтобы работало»</div>
+              <div class="program-subtitle">Перестаём бояться и начинаем делать</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Обзор агентных систем: что выбрать и почему</li>
+              <li>Первые шаги: от установки до первого результата</li>
+              <li>Как переключаться между сценариями</li>
+              <li>Какие инструменты реально нужны, а какие — шум</li>
+              <li>Практика: делаем первую задачу вместе</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card program-item reveal reveal-delay-3">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">03</span>
+            <div>
+              <div class="program-title">База для нетехнаря: домены, серверы, запуски</div>
+              <div class="program-subtitle">Снимаем блок «это не для меня»</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Что такое домен, хостинг, сервер — на пальцах</li>
+              <li>Как купить, арендовать, настроить — или попросить AI</li>
+              <li>Что значит «задеплоить» и почему это не страшно</li>
+              <li>Даёшь агенту доступ — он разворачивает всё сам</li>
+              <li>Практика: запускаем что-то реальное в интернет</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card program-item reveal reveal-delay-1">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">04</span>
+            <div>
+              <div class="program-title">Скиллы, MCP, расширения — агент с руками</div>
+              <div class="program-subtitle">Из чат-бота в полноценную систему</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Что такое MCP и зачем он нужен</li>
+              <li>Расширения и внешние подключения</li>
+              <li>Какие сценарии это открывает</li>
+              <li>Когда подключать, а когда не усложнять</li>
+              <li>Практика: подключаем и видим разницу</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card program-item reveal reveal-delay-2">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">05</span>
+            <div>
+              <div class="program-title">Лайв: собираем продукт с нуля</div>
+              <div class="program-subtitle">Настоящая сборка в реальном времени</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Голосование: вы выбираете что собираем</li>
+              <li>С нуля до работающего продукта за одну сессию</li>
+              <li>Ошибки, тупики, правки — всё как в жизни</li>
+              <li>Где AI справляется сам, а где нужна ваша голова</li>
+              <li>Результат: работающий продукт, который можно потрогать</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card program-item reveal reveal-delay-3">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">06</span>
+            <div>
+              <div class="program-title">Применение, ограничения, безопасность</div>
+              <div class="program-subtitle">Зрелая позиция: мощь + ответственность</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Какие задачи AI решает идеально, а какие — нет</li>
+              <li>Где агент врёт, ломает и фантазирует</li>
+              <li>Как не слить ключи, деньги и данные</li>
+              <li>Как проверять результат перед запуском</li>
+              <li>Чек-лист безопасности для каждого проекта</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card program-item reveal reveal-delay-1">
+        <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
+          <div class="program-item-left">
+            <span class="program-num">07</span>
+            <div>
+              <div class="program-title">Демо-день и выпускной</div>
+              <div class="program-subtitle">Показываем результаты, планируем дальше</div>
+            </div>
+          </div>
+          <span class="program-arrow" aria-hidden="true">&#8964;</span>
+        </div>
+        <div class="program-body">
+          <div class="program-body-inner">
+            <ul>
+              <li>Участники показывают свои проекты</li>
+              <li>Разбор: что получилось, где сложности</li>
+              <li>Финальные рекомендации и вектор развития</li>
+              <li>Доступ в закрытое комьюнити</li>
+              <li>Следующий шаг: что делать после курса</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="program-btn reveal">
+      <a href="#contact" class="btn btn-primary">Записаться на курс</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== AUTHOR ============== -->
+<section class="section" id="author">
+  <div class="container">
+    <div class="glass-card author-card reveal">
+      <div class="author-avatar" aria-hidden="true">E</div>
+      <div class="author-name display-font">Егор</div>
+      <div class="author-desc">Разработчик и предприниматель. Каждый день строю продукты с помощью AI-агентов — и учу других делать то же самое.</div>
+      <div class="author-stats">
+        <div class="author-stat">
+          <strong>5+ лет</strong>
+          в разработке
+        </div>
+        <div class="author-stat">
+          <strong>50+ проектов</strong>
+          с AI
+        </div>
+        <div class="author-stat">
+          <strong>24/7</strong>
+          на связи в чате
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PRICING ============== -->
+<section class="section section-alt" id="pricing">
+  <div class="section-blob" style="width:450px;height:450px;background:radial-gradient(circle,#E8C840,transparent 70%);bottom:10%;right:-10%;" aria-hidden="true"></div>
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Тарифы</p>
+      <h2 class="section-title display-font">Выбери <span class="gradient-text">свой формат</span></h2>
+      <p class="section-subtitle">От самостоятельного до персонального</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="glass-card pricing-card reveal reveal-delay-1">
+        <div class="pricing-name display-font">Базовый</div>
+        <div class="pricing-price">4 990 <span>&#8381;</span></div>
+        <ul class="pricing-features">
+          <li>Доступ ко всем 7 урокам</li>
+          <li>Записи уроков навсегда</li>
+          <li>Доступ в закрытый чат</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary">Записаться</a>
+      </div>
+      <div class="glass-card pricing-card recommended reveal reveal-delay-2">
+        <span class="pricing-badge">Рекомендуем</span>
+        <div class="pricing-name display-font">С поддержкой</div>
+        <div class="pricing-price">9 990 <span>&#8381;</span></div>
+        <ul class="pricing-features">
+          <li>Всё из «Базового»</li>
+          <li>Обратная связь по проектам</li>
+          <li>Доп. материалы и шаблоны</li>
+          <li>Приоритетные ответы</li>
+        </ul>
+        <a href="#contact" class="btn btn-accent">Записаться</a>
+      </div>
+      <div class="glass-card pricing-card reveal reveal-delay-3">
+        <div class="pricing-name display-font">Персональный</div>
+        <div class="pricing-price">24 990 <span>&#8381;</span></div>
+        <ul class="pricing-features">
+          <li>Всё из «С поддержкой»</li>
+          <li>1-на-1 созвон с автором</li>
+          <li>Разбор вашей задачи</li>
+          <li>Помощь с запуском</li>
+        </ul>
+        <a href="#contact" class="btn btn-secondary">Записаться</a>
+        <div class="pricing-limited">Ограниченное количество мест</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== COMMUNITY ============== -->
+<section class="section" id="community">
+  <div class="container" style="text-align:center;">
+    <div class="reveal">
+      <h2 class="section-title display-font">После курса ты не один</h2>
+      <p class="section-subtitle" style="margin:0 auto;">Все выпускники попадают в закрытую группу</p>
+    </div>
+    <div class="community-items">
+      <div class="glass-card community-item reveal reveal-delay-1">
+        <div class="community-item-title">Делись проектами</div>
+      </div>
+      <div class="glass-card community-item reveal reveal-delay-2">
+        <div class="community-item-title">Задавай вопросы</div>
+      </div>
+      <div class="glass-card community-item reveal reveal-delay-3">
+        <div class="community-item-title">Будь в курсе</div>
+      </div>
+      <div class="glass-card community-item reveal reveal-delay-4">
+        <div class="community-item-title">Находи людей</div>
+      </div>
+    </div>
+    <p class="community-footer reveal">Закрытый Telegram-чат. Автор курса регулярно на связи.</p>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title display-font">Частые <span class="gradient-text">вопросы</span></h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Мне нужно уметь программировать?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Нет. Курс создан для людей без технического опыта. Мы учим ставить задачи AI-агенту — это ближе к навыку управления, чем к программированию.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Я уже пробовал ChatGPT и мне не зашло. Чем это отличается?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">ChatGPT — это чат. Мы работаем с агентными системами, которые могут сами создавать файлы, писать код, запускать сервисы. Это принципиально другой уровень — попробуйте и удивитесь.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-3">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Какие инструменты понадобятся?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Компьютер (Mac / Windows / Linux) и подписка на одну из агентных систем. На курсе подскажем какую выбрать и как настроить.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Сколько времени нужно на курс?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">7 уроков, каждый можно проходить в своём темпе. Средняя скорость: 1–2 недели.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Будут ли записи?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Да, все уроки доступны в записи навсегда.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-3">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Мне нужно будет платить за AI-инструменты отдельно?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Да, подписка на агентную систему оплачивается отдельно (обычно $20–50/мес). Мы покажем как выбрать оптимальный вариант.</div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
+          <span class="faq-question-text">Я смогу реально что-то запустить?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Да. На 5-м уроке мы собираем продукт в реальном времени, а на 7-м участники показывают свои проекты. Это практический курс.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== CONTACT ============== -->
+<section class="section section-alt contact-section" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <h2 class="section-title display-font">Остались вопросы?</h2>
+      <p class="section-subtitle" style="margin:0 auto;">Напиши нам — <span class="gradient-text">ответим быстро</span></p>
+    </div>
+    <div class="contact-links reveal reveal-delay-1">
+      <a href="https://t.me/agiage" class="contact-link" target="_blank" rel="noopener">Telegram — @agiage</a>
+      <a href="mailto:hello@agiage.ru" class="contact-link">hello@agiage.ru</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">АГИ</div>
+        <p class="footer-desc">Курс по использованию AI-агентов для решения любых задач</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <a href="#program">Программа</a>
+          <a href="#pricing">Тарифы</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Контакты</a>
+        </div>
+        <div class="footer-col">
+          <a href="#">Политика конфиденциальности</a>
+          <a href="#">Пользовательское соглашение</a>
+          <a href="#">Оферта</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 AGI Age. Все права защищены.</div>
+  </div>
+</footer>
+
+<script>
+// === INTRO ANIMATION ===
+// #theVayb is ONE element. Starts centered, moves to hero, stays forever.
+(function() {
+  var vayb = document.getElementById('theVayb');
+  var overlay = document.getElementById('introOverlay');
+  var companions = document.getElementById('introCompanions');
+  var coding = document.getElementById('introCoding');
+  var dash = document.getElementById('introDash');
+  var target = document.getElementById('vaybTarget');
+
+  // Measure companions width, then offset ВАЙБ left so the whole phrase is centered
+  var compW = companions.getBoundingClientRect().width;
+  vayb.style.transform = 'translate(calc(-50% - ' + (compW / 2) + 'px), -50%)';
+
+  // Reposition companions right after ВАЙБ
+  requestAnimationFrame(function() {
+    var vr = vayb.getBoundingClientRect();
+    companions.style.left = (vr.right + 2) + 'px';
+  });
+
+  // Phase 0 (800ms): Nav/top bar appears early
+  setTimeout(function() {
+    document.querySelector('.hero-top').classList.add('show');
+  }, 800);
+
+  // Phase 1 (1.5s): "—КОДИНГ" fades out + hero CTA/subtitle/meta appear
+  setTimeout(function() {
+    coding.classList.add('fade-out');
+    dash.classList.add('fade-out');
+
+    // Show blobs and hero fade elements early (CTA, subtitle, meta)
+    document.querySelectorAll('.blob').forEach(function(b) { b.classList.add('show'); });
+    document.querySelectorAll('.hero-fade').forEach(function(el) { el.classList.add('show'); });
+  }, 1500);
+
+  // Phase 3 (2.8s): ВАЙБ → gradient + move to hero target
+  setTimeout(function() {
+    var tr = target.getBoundingClientRect();
+    var scale = tr.width / vayb.getBoundingClientRect().width;
+
+    vayb.classList.add('gradient');
+    vayb.style.top = (tr.top + tr.height / 2) + 'px';
+    vayb.style.left = (tr.left + tr.width / 2) + 'px';
+    vayb.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+  }, 2800);
+
+  // Phase 4 (4.2s): Overlay fades, companions removed
+  setTimeout(function() {
+    overlay.classList.add('done');
+    companions.style.transition = 'opacity 0.5s';
+    companions.style.opacity = '0';
+  }, 4200);
+
+  // Phase 5 (5.2s): Land ВАЙБ into hero DOM (fixed → absolute)
+  setTimeout(function() {
+    var tr = target.getBoundingClientRect();
+    var heroEl = document.getElementById('hero');
+    var hr = heroEl.getBoundingClientRect();
+
+    vayb.style.transition = 'none';
+    vayb.classList.add('landed');
+    vayb.style.top = (tr.top - hr.top + tr.height / 2) + 'px';
+    vayb.style.left = (tr.left - hr.left + tr.width / 2) + 'px';
+    vayb.style.transform = 'translate(-50%, -50%)';
+    vayb.style.fontSize = getComputedStyle(target).fontSize;
+
+    heroEl.appendChild(vayb);
+    overlay.remove();
+    companions.remove();
+  }, 5200);
+})();
+
+// Sticky nav
+var stickyNav = document.getElementById('stickyNav');
+var heroSection = document.getElementById('hero');
+
+var heroObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (!entry.isIntersecting) {
+      stickyNav.classList.add('visible');
+    } else {
+      stickyNav.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+heroObserver.observe(heroSection);
+
+// Scroll reveal
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(function(el) {
+  revealObserver.observe(el);
+});
+
+// FAQ accordion
+function toggleFaq(item) {
+  var wasOpen = item.classList.contains('open');
+  var btn = item.querySelector('.faq-question');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(function(el) {
+    el.classList.remove('open');
+    var b = el.querySelector('.faq-question');
+    if (b) b.setAttribute('aria-expanded', 'false');
+  });
+  // Open clicked if it wasn't open
+  if (!wasOpen) {
+    item.classList.add('open');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Program accordion
+function toggleProgram(item) {
+  var wasOpen = item.classList.contains('open');
+  var header = item.querySelector('.program-item-header');
+  document.querySelectorAll('.program-item.open').forEach(function(el) {
+    el.classList.remove('open');
+    var h = el.querySelector('.program-item-header');
+    if (h) h.setAttribute('aria-expanded', 'false');
+  });
+  if (!wasOpen) {
+    item.classList.add('open');
+    if (header) header.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Keyboard support for program accordion headers
+document.querySelectorAll('.program-item-header[role="button"]').forEach(function(header) {
+  header.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleProgram(header.parentNode);
+    }
+  });
+});
+
+// Smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    var targetId = this.getAttribute('href');
+    var targetEl = document.querySelector(targetId);
+    if (targetEl) {
+      var offset = stickyNav.classList.contains('visible') ? 70 : 0;
+      var y = targetEl.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+    // Close mobile menus on nav click
+    closeMobileMenus();
+  });
+});
+
+// === BURGER MENUS ===
+var stickyBurger = document.getElementById('stickyBurger');
+var stickyMobileMenu = document.getElementById('stickyMobileMenu');
+var heroBurger = document.getElementById('heroBurger');
+var heroMobileMenu = document.getElementById('heroMobileMenu');
+
+function closeMobileMenus() {
+  stickyMobileMenu.classList.remove('open');
+  stickyBurger.setAttribute('aria-expanded', 'false');
+  heroMobileMenu.classList.remove('open');
+  heroBurger.setAttribute('aria-expanded', 'false');
+}
+
+stickyBurger.addEventListener('click', function() {
+  var isOpen = stickyMobileMenu.classList.toggle('open');
+  stickyBurger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  // Close other menu
+  heroMobileMenu.classList.remove('open');
+  heroBurger.setAttribute('aria-expanded', 'false');
+});
+
+heroBurger.addEventListener('click', function() {
+  var isOpen = heroMobileMenu.classList.toggle('open');
+  heroBurger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  // Close other menu
+  stickyMobileMenu.classList.remove('open');
+  stickyBurger.setAttribute('aria-expanded', 'false');
+});
+</script>
+
+</body>
+</html>
