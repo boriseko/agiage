@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="Научись решать любые задачи с помощью ИИ — без кода, без опыта, без запары">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after {
   margin: 0;
@@ -33,10 +33,10 @@
   --text-secondary: #5A5A52;
   --text-muted: #8A8A7E;
   --gold: #C9A030;
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.6);
+  --gradient: linear-gradient(135deg, #E8C840, #D4722A);
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.2);
   --glass-shadow: rgba(0, 0, 0, 0.04);
-  --gradient: linear-gradient(135deg, #E8C840, #E87B35, #8B5CF6);
 }
 
 html {
@@ -46,15 +46,11 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
   background: var(--bg-main);
   line-height: 1.6;
   overflow-x: hidden;
-}
-
-.display-font {
-  font-family: 'Space Grotesk', sans-serif;
 }
 
 /* Gradient text */
@@ -90,7 +86,6 @@ body {
 
 /* Label */
 .section-label {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -101,7 +96,6 @@ body {
 
 /* Section title */
 .section-title {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -114,23 +108,49 @@ body {
   color: var(--text-secondary);
   max-width: 600px;
   line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Glass pill */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  padding: 10px 24px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Onest', sans-serif;
+}
+.glass-pill:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 /* Glass cards */
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
   padding: 32px;
-  box-shadow: 0 4px 24px var(--glass-shadow), 0 1px 2px rgba(0,0,0,0.02);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
 }
 
 .glass-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0,0,0,0.03);
+  transform: translateY(-4px) rotateX(2deg);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Buttons */
@@ -140,7 +160,7 @@ body {
   justify-content: center;
   padding: 16px 36px;
   border-radius: 60px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Onest', sans-serif;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
@@ -179,7 +199,7 @@ body {
 
 .btn-accent:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(232, 123, 53, 0.3);
+  box-shadow: 0 8px 30px rgba(212, 114, 42, 0.3);
 }
 
 /* Scroll animations */
@@ -230,7 +250,6 @@ body {
 }
 
 .sticky-nav-logo {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -248,6 +267,7 @@ body {
 
 .sticky-nav-links a {
   font-size: 14px;
+  font-weight: 600;
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.2s;
@@ -257,7 +277,7 @@ body {
   color: var(--text-primary);
 }
 
-.sticky-nav-links .btn {
+.sticky-nav-links .glass-pill {
   padding: 10px 24px;
   font-size: 13px;
 }
@@ -332,7 +352,7 @@ body {
   color: var(--text-primary);
 }
 
-/* Hero burger - inside .hero-top */
+/* Hero burger */
 .hero-burger-btn {
   display: none;
   background: none;
@@ -401,7 +421,8 @@ body {
   border-radius: 4px;
 }
 
-.btn:focus-visible {
+.btn:focus-visible,
+.glass-pill:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
@@ -424,42 +445,31 @@ body {
 .hero-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 28px 0;
   position: relative;
 }
 
 .hero-logo {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--text-primary);
   opacity: 0.5;
+  position: absolute;
+  left: 0;
 }
 
 .hero-nav {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 12px;
   list-style: none;
 }
 
-.hero-nav a {
+.hero-nav .glass-pill {
   font-size: 14px;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.hero-nav a:hover {
-  color: var(--text-primary);
-}
-
-.hero-nav .btn {
-  padding: 10px 24px;
-  font-size: 13px;
 }
 
 @media (max-width: 640px) {
@@ -475,17 +485,17 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 40px 0 80px;
+  padding: 20px 0 80px;
   position: relative;
   z-index: 2;
 }
 
-/* === THE ONE ВАЙБ ELEMENT === */
+/* === THE ONE VAYB ELEMENT === */
 #theVayb {
   position: fixed;
   z-index: 10000;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+  font-family: 'Onest', sans-serif;
+  font-weight: 900;
   font-size: clamp(3rem, 8vw, 6rem);
   letter-spacing: -0.04em;
   line-height: 0.9;
@@ -496,17 +506,33 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  opacity: 0;
+}
+#theVayb.show-initial {
+  opacity: 1;
 }
 #theVayb.gradient {
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: none;
+}
+#theVayb.glow {
+  filter: drop-shadow(0 0 80px rgba(232, 200, 64, 0.4)) drop-shadow(0 0 160px rgba(212, 114, 42, 0.2));
 }
 #theVayb.landed {
   position: absolute;
   z-index: 2;
   transition: none;
+}
+#theVayb.float-anim {
+  animation: vaybFloat 6s ease-in-out infinite;
+}
+
+@keyframes vaybFloat {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-1deg); }
+  50% { transform: translate(-50%, -50%) rotate(1deg) translateY(-5px); }
 }
 
 /* Intro overlay */
@@ -524,21 +550,26 @@ body {
   opacity: 0;
   pointer-events: none;
 }
-/* КОДИНГ text next to ВАЙБ in intro */
+
+/* CODING text next to VAYB in intro */
 .intro-companions {
   position: fixed;
   z-index: 10000;
   top: 50%;
   display: flex;
   align-items: baseline;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+  font-family: 'Onest', sans-serif;
+  font-weight: 900;
   font-size: clamp(3rem, 8vw, 6rem);
   letter-spacing: -0.04em;
   line-height: 1;
   transform: translateY(-50%);
   pointer-events: none;
-  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.intro-companions.show-initial {
+  opacity: 1;
 }
 .intro-dash {
   color: rgba(0,0,0,0.15);
@@ -551,10 +582,9 @@ body {
   transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
   display: inline-block;
 }
-.intro-coding.fade-out {
+.intro-coding.fall-down {
   opacity: 0;
-  filter: blur(16px);
-  transform: translateY(-40px) scale(0.8);
+  transform: translateY(100vh);
 }
 .intro-dash.fade-out {
   opacity: 0;
@@ -578,69 +608,39 @@ body {
 .hero-top.show, .blob.show { opacity: 1; }
 .blob.show.blob-1 { opacity: 0.35; }
 .blob.show.blob-2 { opacity: 0.35; }
-.blob.show.blob-3 { opacity: 0.35; }
 
 .hero-giant {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(5rem, 15vw, 12rem);
-  font-weight: 700;
+  font-size: clamp(8rem, 25vw, 20rem);
+  font-weight: 900;
   letter-spacing: -0.04em;
-  line-height: 0.9;
-  margin-bottom: 8px;
+  line-height: 0.85;
+  margin-bottom: 16px;
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: heroGlow 4s ease-in-out infinite alternate;
 }
 
-@keyframes heroGlow {
-  0% { filter: brightness(1); }
-  100% { filter: brightness(1.08); }
-}
-
-.hero-sub-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  letter-spacing: -0.02em;
+h1.hero-h1 {
+  font-family: 'Onest', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   margin-bottom: 24px;
+  color: var(--text-primary);
 }
 
-.hero-sub-title span {
-  opacity: 0.45;
-  font-weight: 400;
-}
-
-.hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
-
-/* H1 styled as subtitle size */
-h1.hero-subtitle {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 400;
-}
-
-.hero-tags {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 40px;
-}
-
-.hero-buttons {
+.hero-pills {
   display: flex;
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: 12px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.hero-meta {
-  font-size: 13px;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
+.hero-cta-wrap {
+  margin-top: 8px;
 }
 
 /* Blobs */
@@ -665,19 +665,10 @@ h1.hero-subtitle {
 .blob-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, #E87B35 0%, transparent 70%);
+  background: radial-gradient(circle, #D4722A 0%, transparent 70%);
   top: 30%;
   right: -5%;
   animation: blobFloat2 15s ease-in-out infinite alternate;
-}
-
-.blob-3 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, #8B5CF6 0%, transparent 70%);
-  bottom: 5%;
-  left: 20%;
-  animation: blobFloat3 10s ease-in-out infinite alternate;
 }
 
 @keyframes blobFloat1 {
@@ -690,12 +681,28 @@ h1.hero-subtitle {
   100% { transform: translate(-50px, 50px) scale(1.1); }
 }
 
-@keyframes blobFloat3 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(40px, -60px) scale(1.2); }
+/* ============== FOR WHO ============== */
+.who-section {
+  position: relative;
+  overflow: hidden;
+}
+.who-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(232,200,64,0.15) 0%, rgba(212,114,42,0.08) 40%, transparent 70%);
+  animation: whoGlowPulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes whoGlowPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
 }
 
-/* ============== FOR WHO ============== */
 .who-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -721,7 +728,6 @@ h1.hero-subtitle {
 }
 
 .who-card-num {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
@@ -730,7 +736,6 @@ h1.hero-subtitle {
 }
 
 .who-card-title {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 8px;
@@ -742,61 +747,102 @@ h1.hero-subtitle {
   font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.55;
+  font-weight: 400;
 }
 
-/* ============== RESULTS ============== */
-.results-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 48px;
+/* ============== RESULTS (PATH) ============== */
+.results-section {
+  position: relative;
+  overflow: hidden;
 }
 
-@media (max-width: 700px) {
-  .results-grid {
-    grid-template-columns: 1fr;
+.path-container {
+  position: relative;
+  max-width: 800px;
+  margin: 60px auto 0;
+  padding: 0 20px;
+}
+
+.path-line-wrap {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.path-line-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.path-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.path-item.path-left {
+  justify-content: flex-start;
+  padding-right: 50%;
+}
+
+.path-item.path-right {
+  justify-content: flex-end;
+  padding-left: 50%;
+}
+
+@media (max-width: 600px) {
+  .path-item.path-left,
+  .path-item.path-right {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: flex-start;
   }
 }
 
-.result-card {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  padding: 28px;
-}
-
-.result-num {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 28px;
-  font-weight: 700;
+.path-num {
+  font-size: 48px;
+  font-weight: 900;
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   flex-shrink: 0;
   line-height: 1;
-  min-width: 38px;
+  min-width: 60px;
+  text-shadow: none;
+  filter: drop-shadow(0 0 30px rgba(232, 200, 64, 0.5));
 }
 
-.result-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 16px;
+.path-content {
+  flex: 1;
+}
+
+.path-title {
+  font-size: 17px;
   font-weight: 600;
-  margin-bottom: 4px;
   letter-spacing: -0.01em;
-}
-
-.result-desc {
-  font-size: 14px;
-  color: var(--text-secondary);
+  line-height: 1.45;
+  color: var(--text-primary);
 }
 
 .results-closing {
   margin-top: 48px;
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
   color: var(--text-secondary);
   max-width: 680px;
   line-height: 1.7;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
 }
 
 /* ============== CASES ============== */
@@ -825,7 +871,6 @@ h1.hero-subtitle {
 }
 
 .case-label {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -843,7 +888,6 @@ h1.hero-subtitle {
 }
 
 .case-title {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
@@ -852,6 +896,7 @@ h1.hero-subtitle {
 
 .case-desc {
   font-size: 14px;
+  font-weight: 400;
   color: var(--text-secondary);
   margin-bottom: 16px;
   line-height: 1.55;
@@ -871,7 +916,24 @@ h1.hero-subtitle {
   text-align: center;
 }
 
-/* ============== PROGRAM ============== */
+/* ============== PROGRAM (DARK) ============== */
+.program-section {
+  background: #1A1A1A;
+  color: #fff;
+}
+
+.program-section .section-label {
+  color: rgba(232, 200, 64, 0.8);
+}
+
+.program-section .section-title {
+  color: #fff;
+}
+
+.program-section .section-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .program-list {
   margin-top: 48px;
   display: flex;
@@ -883,6 +945,20 @@ h1.hero-subtitle {
   cursor: pointer;
   padding: 24px 28px;
   user-select: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.program-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.program-item.open {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(232, 200, 64, 0.3);
+  box-shadow: 0 0 30px rgba(232, 200, 64, 0.05);
 }
 
 .program-item-header {
@@ -901,10 +977,9 @@ h1.hero-subtitle {
 }
 
 .program-num {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: rgba(0,0,0,0.15);
+  color: rgba(255, 255, 255, 0.2);
   min-width: 36px;
   transition: color 0.3s ease;
   line-height: 1.2;
@@ -915,23 +990,24 @@ h1.hero-subtitle {
 }
 
 .program-title {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.35;
+  color: #fff;
 }
 
 .program-subtitle {
   font-size: 14px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.4);
   margin-top: 4px;
   line-height: 1.4;
+  font-weight: 400;
 }
 
 .program-arrow {
   font-size: 20px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.4);
   transition: transform 0.3s ease;
   flex-shrink: 0;
   margin-top: 4px;
@@ -969,8 +1045,9 @@ h1.hero-subtitle {
   align-items: flex-start;
   gap: 12px;
   font-size: 14px;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.7);
   line-height: 1.5;
+  font-weight: 400;
 }
 
 .program-body-inner ul li::before {
@@ -983,13 +1060,21 @@ h1.hero-subtitle {
   margin-top: 7px;
 }
 
-.program-item.open {
-  background: rgba(232,200,64,0.06);
-}
-
 .program-btn {
   margin-top: 48px;
   text-align: center;
+}
+
+.program-btn .glass-pill {
+  padding: 16px 36px;
+  font-size: 15px;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+}
+.program-btn .glass-pill:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 /* ============== AUTHOR ============== */
@@ -1009,14 +1094,12 @@ h1.hero-subtitle {
   align-items: center;
   justify-content: center;
   margin: 0 auto 24px;
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 28px;
   font-weight: 700;
   color: #fff;
 }
 
 .author-name {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 12px;
@@ -1028,6 +1111,7 @@ h1.hero-subtitle {
   color: var(--text-secondary);
   margin-bottom: 32px;
   line-height: 1.6;
+  font-weight: 400;
 }
 
 .author-stats {
@@ -1040,14 +1124,15 @@ h1.hero-subtitle {
 .author-stat {
   font-size: 14px;
   color: var(--text-secondary);
+  font-weight: 400;
 }
 
 .author-stat strong {
   display: block;
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 18px;
   color: var(--text-primary);
   margin-bottom: 4px;
+  font-weight: 700;
 }
 
 /* ============== PRICING ============== */
@@ -1076,7 +1161,7 @@ h1.hero-subtitle {
 
 .pricing-card.recommended {
   border: 2px solid transparent;
-  background-image: linear-gradient(var(--glass-bg), var(--glass-bg)), var(--gradient);
+  background-image: linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12)), var(--gradient);
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
@@ -1098,7 +1183,6 @@ h1.hero-subtitle {
 }
 
 .pricing-name {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 8px;
@@ -1106,7 +1190,6 @@ h1.hero-subtitle {
 }
 
 .pricing-price {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 36px;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -1127,6 +1210,7 @@ h1.hero-subtitle {
 
 .pricing-features li {
   font-size: 14px;
+  font-weight: 400;
   color: var(--text-secondary);
   padding: 8px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
@@ -1156,6 +1240,116 @@ h1.hero-subtitle {
 }
 
 /* ============== COMMUNITY ============== */
+.community-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Constellation / network visualization */
+.constellation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.constellation-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gradient);
+  opacity: 0.2;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+
+.constellation-orb:nth-child(1) {
+  width: 12px; height: 12px;
+  top: 15%; left: 10%;
+  animation-delay: 0s;
+  animation-duration: 7s;
+}
+.constellation-orb:nth-child(2) {
+  width: 20px; height: 20px;
+  top: 25%; right: 15%;
+  animation-delay: 1s;
+  animation-duration: 9s;
+  opacity: 0.3;
+}
+.constellation-orb:nth-child(3) {
+  width: 8px; height: 8px;
+  top: 60%; left: 20%;
+  animation-delay: 2s;
+  animation-duration: 6s;
+}
+.constellation-orb:nth-child(4) {
+  width: 16px; height: 16px;
+  top: 45%; right: 25%;
+  animation-delay: 0.5s;
+  animation-duration: 10s;
+  opacity: 0.25;
+}
+.constellation-orb:nth-child(5) {
+  width: 10px; height: 10px;
+  top: 75%; left: 60%;
+  animation-delay: 3s;
+  animation-duration: 8s;
+}
+.constellation-orb:nth-child(6) {
+  width: 14px; height: 14px;
+  top: 30%; left: 45%;
+  animation-delay: 1.5s;
+  animation-duration: 11s;
+  opacity: 0.15;
+}
+.constellation-orb:nth-child(7) {
+  width: 6px; height: 6px;
+  top: 80%; right: 30%;
+  animation-delay: 2.5s;
+  animation-duration: 7.5s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-15px) translateX(10px); }
+  50% { transform: translateY(-5px) translateX(-8px); }
+  75% { transform: translateY(-20px) translateX(5px); }
+}
+
+.constellation-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 200, 64, 0.15), transparent);
+  animation: lineGlow 4s ease-in-out infinite;
+}
+
+.constellation-line:nth-child(8) {
+  top: 20%; left: 12%; width: 200px;
+  transform: rotate(25deg);
+  animation-delay: 0s;
+}
+.constellation-line:nth-child(9) {
+  top: 50%; left: 25%; width: 150px;
+  transform: rotate(-15deg);
+  animation-delay: 1.5s;
+}
+.constellation-line:nth-child(10) {
+  top: 40%; right: 18%; width: 180px;
+  transform: rotate(35deg);
+  animation-delay: 0.8s;
+}
+.constellation-line:nth-child(11) {
+  top: 70%; left: 40%; width: 120px;
+  transform: rotate(-25deg);
+  animation-delay: 2s;
+}
+
+@keyframes lineGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
 .community-items {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1175,25 +1369,47 @@ h1.hero-subtitle {
 }
 
 .community-item-title {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.community-footer {
+.community-callout {
+  margin-top: 32px;
+  text-align: center;
+  padding: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(232, 200, 64, 0.2);
+  background: rgba(232, 200, 64, 0.04);
+}
+
+.community-callout-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.community-callout-desc {
   font-size: 14px;
   color: var(--text-secondary);
-  text-align: center;
+  font-weight: 400;
 }
 
 /* ============== FAQ ============== */
+.faq-section {
+  text-align: center;
+}
+
 .faq-list {
   margin-top: 48px;
   max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
 }
 
 .faq-item {
@@ -1206,18 +1422,17 @@ h1.hero-subtitle {
   padding: 20px 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 16px;
   background: none;
   border: none;
   width: 100%;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
   font-family: inherit;
 }
 
 .faq-question-text {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -1227,7 +1442,7 @@ h1.hero-subtitle {
 .faq-icon {
   font-size: 20px;
   color: var(--text-muted);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease;
   flex-shrink: 0;
   width: 32px;
   height: 32px;
@@ -1240,7 +1455,8 @@ h1.hero-subtitle {
 
 .faq-item.open .faq-icon {
   transform: rotate(45deg);
-  background: rgba(232,200,64,0.2);
+  background: rgba(212, 114, 42, 0.15);
+  color: #D4722A;
 }
 
 .faq-answer {
@@ -1256,8 +1472,10 @@ h1.hero-subtitle {
 .faq-answer-inner {
   padding-bottom: 20px;
   font-size: 14px;
+  font-weight: 400;
   color: var(--text-secondary);
   line-height: 1.65;
+  text-align: center;
 }
 
 /* ============== CONTACT ============== */
@@ -1265,8 +1483,17 @@ h1.hero-subtitle {
   text-align: center;
 }
 
+.contact-section .section-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+}
+
+.contact-section .section-subtitle {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  margin: 0 auto;
+}
+
 .contact-links {
-  margin-top: 32px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   gap: 32px;
@@ -1274,14 +1501,18 @@ h1.hero-subtitle {
 }
 
 .contact-link {
-  font-size: 15px;
+  font-size: 17px;
+  font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.2s;
+  padding: 12px 24px;
+  border-radius: 16px;
 }
 
 .contact-link:hover {
   color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 /* ============== FOOTER ============== */
@@ -1300,7 +1531,6 @@ h1.hero-subtitle {
 }
 
 .footer-logo {
-  font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -1312,6 +1542,7 @@ h1.hero-subtitle {
 
 .footer-desc {
   font-size: 13px;
+  font-weight: 400;
   color: var(--text-muted);
   max-width: 280px;
   line-height: 1.5;
@@ -1331,6 +1562,7 @@ h1.hero-subtitle {
 
 .footer-col a {
   font-size: 13px;
+  font-weight: 400;
   color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.2s;
@@ -1363,6 +1595,15 @@ h1.hero-subtitle {
   position: relative;
   z-index: 1;
 }
+
+/* Bold highlight in orange */
+.highlight-bold {
+  font-weight: 700;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 </style>
 </head>
 <body>
@@ -1375,7 +1616,7 @@ h1.hero-subtitle {
       <li><a href="#program" class="nav-text">Программа</a></li>
       <li><a href="#pricing" class="nav-text">Тарифы</a></li>
       <li><a href="#faq" class="nav-text">FAQ</a></li>
-      <li><a href="#contact" class="btn btn-primary">Записаться</a></li>
+      <li><a href="#contact" class="glass-pill">Записаться</a></li>
     </ul>
     <button class="burger-btn" id="stickyBurger" aria-label="Меню" aria-expanded="false">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1392,10 +1633,10 @@ h1.hero-subtitle {
 </nav>
 
 <!-- ============== HERO ============== -->
-<!-- THE ONE AND ONLY ВАЙБ -->
+<!-- THE ONE AND ONLY VAYB -->
 <div id="theVayb">ВАЙБ</div>
 
-<!-- INTRO: overlay + КОДИНГ companion -->
+<!-- INTRO: overlay + CODING companion -->
 <div class="intro-overlay" id="introOverlay"></div>
 <div class="intro-companions" id="introCompanions">
   <span class="intro-dash" id="introDash" aria-hidden="true">&mdash;</span>
@@ -1405,16 +1646,15 @@ h1.hero-subtitle {
 <section class="hero section" id="hero">
   <div class="blob blob-1" aria-hidden="true"></div>
   <div class="blob blob-2" aria-hidden="true"></div>
-  <div class="blob blob-3" aria-hidden="true"></div>
   <div class="container" style="flex:1;display:flex;flex-direction:column;">
     <header class="hero-top">
       <div class="hero-logo">АГИ</div>
       <nav>
         <ul class="hero-nav">
-          <li><a href="#program" class="nav-text-link">Программа</a></li>
-          <li><a href="#pricing" class="nav-text-link">Тарифы</a></li>
-          <li><a href="#faq" class="nav-text-link">FAQ</a></li>
-          <li><a href="#contact" class="btn btn-primary">Записаться</a></li>
+          <li><a href="#program" class="glass-pill nav-text-link">Программа</a></li>
+          <li><a href="#pricing" class="glass-pill nav-text-link">Тарифы</a></li>
+          <li><a href="#faq" class="glass-pill nav-text-link">FAQ</a></li>
+          <li><a href="#contact" class="glass-pill nav-text-link">Записаться</a></li>
         </ul>
       </nav>
       <button class="hero-burger-btn" id="heroBurger" aria-label="Меню" aria-expanded="false">
@@ -1430,140 +1670,154 @@ h1.hero-subtitle {
       </ul>
     </header>
     <div class="hero-content">
-      <!-- placeholder to reserve space for ВАЙБ -->
-      <div class="hero-giant display-font" id="vaybTarget" style="visibility:hidden" aria-hidden="true">ВАЙБ</div>
-      <h1 class="hero-subtitle hero-fade" style="--d:0s">Научись решать любые задачи с помощью ИИ</h1>
-      <p class="hero-tags hero-fade" style="--d:0.15s">без кода &middot; без опыта &middot; без запары</p>
-      <div class="hero-buttons hero-fade" style="--d:0.3s">
-        <a href="#contact" class="btn btn-primary">Хочу на курс</a>
-        <a href="#program" class="btn btn-secondary">Программа</a>
+      <!-- placeholder to reserve space for VAYB -->
+      <div class="hero-giant" id="vaybTarget" style="visibility:hidden" aria-hidden="true">ВАЙБ</div>
+      <h1 class="hero-h1 hero-fade" style="--d:0s">НАУЧИСЬ РЕШАТЬ ЛЮБЫЕ ЗАДАЧИ С ПОМОЩЬЮ ИИ</h1>
+      <div class="hero-pills hero-fade" style="--d:0.15s">
+        <span class="glass-pill">без кода</span>
+        <span class="glass-pill">без опыта</span>
+        <span class="glass-pill">без запары</span>
       </div>
-      <p class="hero-meta hero-fade" style="--d:0.45s">7 уроков &middot; Закрытое комьюнити &middot; Для любой профессии</p>
+      <div class="hero-cta-wrap hero-fade" style="--d:0.3s">
+        <a href="#contact" class="glass-pill" style="padding:14px 36px;font-size:15px;">Хочу на курс</a>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ============== FOR WHO ============== -->
-<section class="section section-alt" id="for-who">
-  <div class="section-blob" style="width:400px;height:400px;background:radial-gradient(circle,#E8C840,transparent 70%);top:20%;right:-5%;" aria-hidden="true"></div>
+<section class="section section-alt who-section" id="for-who">
+  <div class="who-glow" aria-hidden="true"></div>
   <div class="container">
     <div class="reveal">
-      <p class="section-label">Для кого</p>
-      <h2 class="section-title display-font">Этот курс для тебя, <span class="gradient-text">если...</span></h2>
-      <p class="section-subtitle">Неважно кто ты по профессии. Важно, что ты хочешь <strong>делать больше — быстрее, проще</strong> и своими руками.</p>
+      <p class="section-label" style="font-size:clamp(1rem, 2vw, 1.3rem);letter-spacing:0.08em;">ДЛЯ КОГО</p>
+      <p class="section-subtitle" style="max-width:650px;margin-bottom:20px;">Неважно, кто ты по профессии. Важно, что ты хочешь <span class="highlight-bold">делать больше, быстрее, проще</span> и своими руками.</p>
+      <h2 class="section-title"><span class="gradient-text">Этот курс для тебя, если...</span></h2>
     </div>
     <div class="who-grid">
       <div class="glass-card who-card reveal reveal-delay-1">
         <div class="who-card-num">01</div>
         <div class="who-card-title">У тебя есть идея, но нет технических навыков</div>
-        <div class="who-card-desc">Хочешь сделать сайт, бота, сервис — но не знаешь с чего начать</div>
+        <div class="who-card-desc">Хочешь сделать сайт, бота, сервис — но не знаешь, с чего начать.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-2">
         <div class="who-card-num">02</div>
         <div class="who-card-title">Ты пробовал ChatGPT и разочаровался</div>
-        <div class="who-card-desc">Думал «ну и хайп», получал средние ответы и забил. Сейчас всё по-другому</div>
+        <div class="who-card-desc">Думал «пузырь», получал средние ответы и забил. Сейчас всё по-другому.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-3">
         <div class="who-card-num">03</div>
         <div class="who-card-title">Ты предприниматель или фрилансер</div>
-        <div class="who-card-desc">И хочешь делать за час то, на что раньше уходила неделя и бюджет на подрядчика</div>
+        <div class="who-card-desc">Хочешь делать за час то, на что раньше уходила неделя и бюджет на подрядчика.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-1">
         <div class="who-card-num">04</div>
         <div class="who-card-title">Хочешь проверить бизнес-идею быстро</div>
-        <div class="who-card-desc">Собрать MVP, протестировать гипотезу, запустить лендинг — без команды</div>
+        <div class="who-card-desc">Собрать MVP, протестировать гипотезу, запустить лендинг — без команды.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-2">
         <div class="who-card-num">05</div>
-        <div class="who-card-title">Слышал про AI-агентов, но не понимаешь как начать</div>
-        <div class="who-card-desc">Cursor, Claude Code, Codex — звучит сложно, но на деле проще чем кажется</div>
+        <div class="who-card-title">Слышал про AI-агентов, но не понимаешь, что это и зачем</div>
+        <div class="who-card-desc">Cursor, Claude Code, Codex — звучит сложно, но на деле проще простого.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-3">
         <div class="who-card-num">06</div>
         <div class="who-card-title">Ты дизайнер, маркетолог, менеджер — кто угодно</div>
-        <div class="who-card-desc">И хочешь добавить себе суперсилу, которая кратно ускоряет работу</div>
+        <div class="who-card-desc">И хочешь добавить себе суперсилу, которая кратно ускоряет работу и увеличивает заработок.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== RESULTS ============== -->
-<section class="section" id="results">
-  <div class="section-blob" style="width:350px;height:350px;background:radial-gradient(circle,#8B5CF6,transparent 70%);bottom:10%;left:-5%;" aria-hidden="true"></div>
+<!-- ============== RESULTS (PATH) ============== -->
+<section class="section results-section" id="results">
+  <div class="section-blob" style="width:350px;height:350px;background:radial-gradient(circle,#D4722A,transparent 70%);bottom:10%;left:-5%;" aria-hidden="true"></div>
   <div class="container">
-    <div class="reveal">
+    <div class="reveal" style="text-align:center;">
       <p class="section-label">Результат</p>
-      <h2 class="section-title display-font">После курса <span class="gradient-text">ты сможешь:</span></h2>
+      <h2 class="section-title"><span class="gradient-text">В начале пути</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">После курса ты сможешь:</p>
     </div>
-    <div class="results-grid">
-      <div class="glass-card result-card reveal reveal-delay-1">
-        <div class="result-num">01</div>
-        <div>
-          <div class="result-title">Собрать сайт или лендинг с нуля</div>
-          <div class="result-desc">без дизайнера, без верстальщика, за вечер</div>
+    <div class="path-container">
+      <div class="path-line-wrap" id="pathLineWrap">
+        <svg id="pathSvg" viewBox="0 0 100 1600" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pathGrad" x1="50" y1="0" x2="50" y2="1600" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8C840"/>
+              <stop offset="100%" stop-color="#D4722A"/>
+            </linearGradient>
+          </defs>
+          <path id="snakePath" d="M50,0 C80,100 20,200 50,300 C80,400 20,500 50,600 C80,700 20,800 50,900 C80,1000 20,1100 50,1200 C80,1300 20,1400 50,1500 L50,1600" stroke="url(#pathGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="path-item path-left reveal">
+        <div class="path-num">1</div>
+        <div class="path-content">
+          <div class="path-title">Собрать сайт или сервис с нуля за один вечер.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-2">
-        <div class="result-num">02</div>
-        <div>
-          <div class="result-title">Создать Telegram-бота</div>
-          <div class="result-desc">который делает то, что тебе нужно</div>
+
+      <div class="path-item path-right reveal">
+        <div class="path-num">2</div>
+        <div class="path-content">
+          <div class="path-title">Создать Telegram-бота, который работает за тебя.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-1">
-        <div class="result-num">03</div>
-        <div>
-          <div class="result-title">Запустить проект на сервер</div>
-          <div class="result-desc">чтобы он работал 24/7 и был доступен всем</div>
+
+      <div class="path-item path-left reveal">
+        <div class="path-num">3</div>
+        <div class="path-content">
+          <div class="path-title">Запустить проект в интернет — чтобы он работал 24/7.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-2">
-        <div class="result-num">04</div>
-        <div>
-          <div class="result-title">Проверить любую бизнес-идею</div>
-          <div class="result-desc">собрать MVP за дни, а не месяцы</div>
+
+      <div class="path-item path-right reveal">
+        <div class="path-num">4</div>
+        <div class="path-content">
+          <div class="path-title">Проверить бизнес-идею за дни, а не месяцы.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-1">
-        <div class="result-num">05</div>
-        <div>
-          <div class="result-title">Подключать внешние инструменты к AI</div>
-          <div class="result-desc">базы данных, API, сервисы</div>
+
+      <div class="path-item path-left reveal">
+        <div class="path-num">5</div>
+        <div class="path-content">
+          <div class="path-title">Воссоздать любую идею, где раньше нужна была команда.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-2">
-        <div class="result-num">06</div>
-        <div>
-          <div class="result-title">Думать по-новому</div>
-          <div class="result-desc">ставить задачи AI так, чтобы получать результат с первого раза</div>
+
+      <div class="path-item path-right reveal">
+        <div class="path-num">6</div>
+        <div class="path-content">
+          <div class="path-title">Автоматизировать рутину: отчёты, данные, рассылки.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-1">
-        <div class="result-num">07</div>
-        <div>
-          <div class="result-title">Не попадать в ловушки</div>
-          <div class="result-desc">знать, где AI врёт, где опасно, как проверять результат</div>
+
+      <div class="path-item path-left reveal">
+        <div class="path-num">7</div>
+        <div class="path-content">
+          <div class="path-title">Увеличить свой доход и экспертность с помощью AI.</div>
         </div>
       </div>
-      <div class="glass-card result-card reveal reveal-delay-2">
-        <div class="result-num">08</div>
-        <div>
-          <div class="result-title">Автоматизировать рутину</div>
-          <div class="result-desc">отчёты, обработка данных, парсинг, рассылки</div>
+
+      <div class="path-item path-right reveal">
+        <div class="path-num">8</div>
+        <div class="path-content">
+          <div class="path-title">Думать по-новому и ставить задачи так, чтобы получать результат.</div>
         </div>
       </div>
     </div>
-    <p class="results-closing reveal">И самое главное — ты получишь навык, который будет только дорожать. Потому что так скоро будут работать все.</p>
+    <p class="results-closing reveal">Ты не деградируешь — ты ускоряешься. Освободи время и внимание для того, что действительно важно.</p>
   </div>
 </section>
 
 <!-- ============== CASES ============== -->
 <section class="section section-alt" id="cases">
-  <div class="section-blob" style="width:400px;height:400px;background:radial-gradient(circle,#E87B35,transparent 70%);top:15%;left:-8%;" aria-hidden="true"></div>
+  <div class="section-blob" style="width:400px;height:400px;background:radial-gradient(circle,#D4722A,transparent 70%);top:15%;left:-8%;" aria-hidden="true"></div>
   <div class="container">
     <div class="reveal">
       <p class="section-label">Кейсы</p>
-      <h2 class="section-title display-font">Вот что можно собрать <span class="gradient-text">с помощью AI</span></h2>
+      <h2 class="section-title">Вот что можно собрать <span class="gradient-text">с помощью AI</span></h2>
       <p class="section-subtitle"><strong>Обычные люди</strong>, без опыта в программировании.</p>
     </div>
     <div class="cases-grid">
@@ -1573,7 +1827,7 @@ h1.hero-subtitle {
           <span class="case-time">2 часа</span>
         </div>
         <div class="case-title">Лендинг для мероприятия</div>
-        <div class="case-desc">Полностью адаптивный сайт с формой регистрации, анимациями и подключением к базе данных</div>
+        <div class="case-desc">Полностью адаптивный сайт с формой регистрации, анимациями и подключением к базе данных.</div>
         <span class="case-tag">Нулевой опыт в вёрстке</span>
       </div>
       <div class="glass-card case-card reveal reveal-delay-2">
@@ -1582,7 +1836,7 @@ h1.hero-subtitle {
           <span class="case-time">3 часа</span>
         </div>
         <div class="case-title">Telegram-бот для бизнеса</div>
-        <div class="case-desc">Бот с обработкой заказов, уведомлениями и интеграцией с Google Sheets</div>
+        <div class="case-desc">Бот с обработкой заказов, уведомлениями и интеграцией с Google Sheets.</div>
         <span class="case-tag">Никогда не писал код</span>
       </div>
       <div class="glass-card case-card reveal reveal-delay-1">
@@ -1591,7 +1845,7 @@ h1.hero-subtitle {
           <span class="case-time">1 вечер</span>
         </div>
         <div class="case-title">Мини-сервис автоматизации</div>
-        <div class="case-desc">Автоматический парсинг конкурентов с отправкой отчётов в Telegram каждый день</div>
+        <div class="case-desc">Автоматический парсинг конкурентов с отправкой отчётов в Telegram каждый день.</div>
         <span class="case-tag">Маркетолог</span>
       </div>
       <div class="glass-card case-card reveal reveal-delay-2">
@@ -1600,7 +1854,7 @@ h1.hero-subtitle {
           <span class="case-time">4 часа</span>
         </div>
         <div class="case-title">Персональный AI-инструмент</div>
-        <div class="case-desc">Внутренний инструмент для генерации ТЗ из голосовых заметок с AI-обработкой</div>
+        <div class="case-desc">Внутренний инструмент для генерации ТЗ из голосовых заметок с AI-обработкой.</div>
         <span class="case-tag">Дизайнер</span>
       </div>
     </div>
@@ -1610,20 +1864,19 @@ h1.hero-subtitle {
   </div>
 </section>
 
-<!-- ============== PROGRAM ============== -->
-<section class="section" id="program">
+<!-- ============== PROGRAM (DARK) ============== -->
+<section class="section program-section" id="program">
   <div class="container">
     <div class="reveal">
-      <p class="section-label">7 уроков</p>
-      <h2 class="section-title display-font">Программа курса</h2>
-      <p class="section-subtitle"><strong>7 уроков</strong> от нуля до своего продукта</p>
+      <p class="section-label">Программа курса</p>
+      <h2 class="section-title">7 уроков от нуля до своего продукта</h2>
     </div>
     <div class="program-list">
 
-      <div class="glass-card program-item reveal reveal-delay-1">
+      <div class="program-item reveal reveal-delay-1">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">01</span>
+            <span class="program-num">1</span>
             <div>
               <div class="program-title">Что произошло с ИИ и почему «вайб» — новая грамотность</div>
               <div class="program-subtitle">Ломаем старую картину мира</div>
@@ -1634,20 +1887,20 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Почему ваш прошлый опыт с AI уже неактуален</li>
-              <li>Что изменилось за последние месяцы и почему это важно</li>
-              <li>Агентные системы — не чат-бот, а цифровой исполнитель</li>
-              <li>Новая грамотность: задача &rarr; контекст &rarr; проверка &rarr; результат</li>
-              <li>Что теперь реально возможно — конкретные примеры</li>
+              <li>Почему ваш прошлый опыт с AI уже неактуален;</li>
+              <li>Что изменилось за последние месяцы и почему это важно;</li>
+              <li>Агентные системы — не чат-бот, а цифровой исполнитель;</li>
+              <li>Новая грамотность: задача &rarr; контекст &rarr; проверка &rarr; результат;</li>
+              <li>Что теперь реально возможно — конкретные примеры.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="glass-card program-item reveal reveal-delay-2">
+      <div class="program-item reveal reveal-delay-2">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">02</span>
+            <span class="program-num">2</span>
             <div>
               <div class="program-title">Интерфейс и навигация — «куда нажимать, чтобы работало»</div>
               <div class="program-subtitle">Перестаём бояться и начинаем делать</div>
@@ -1658,20 +1911,20 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Обзор агентных систем: что выбрать и почему</li>
-              <li>Первые шаги: от установки до первого результата</li>
-              <li>Как переключаться между сценариями</li>
-              <li>Какие инструменты реально нужны, а какие — шум</li>
-              <li>Практика: делаем первую задачу вместе</li>
+              <li>Обзор агентных систем: что выбрать и почему;</li>
+              <li>Первые шаги: от установки до первого результата;</li>
+              <li>Как переключаться между сценариями;</li>
+              <li>Какие инструменты реально нужны, а какие — шум;</li>
+              <li>Практика: делаем первую задачу вместе.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="glass-card program-item reveal reveal-delay-3">
+      <div class="program-item reveal reveal-delay-3">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">03</span>
+            <span class="program-num">3</span>
             <div>
               <div class="program-title">База для нетехнаря: домены, серверы, запуски</div>
               <div class="program-subtitle">Снимаем блок «это не для меня»</div>
@@ -1682,20 +1935,20 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Что такое домен, хостинг, сервер — на пальцах</li>
-              <li>Как купить, арендовать, настроить — или попросить AI</li>
-              <li>Что значит «задеплоить» и почему это не страшно</li>
-              <li>Даёшь агенту доступ — он разворачивает всё сам</li>
-              <li>Практика: запускаем что-то реальное в интернет</li>
+              <li>Что такое домен, хостинг, сервер — на пальцах;</li>
+              <li>Как купить, арендовать, настроить — или попросить AI;</li>
+              <li>Что значит «задеплоить» и почему это не страшно;</li>
+              <li>Даёшь агенту доступ — он разворачивает всё сам;</li>
+              <li>Практика: запускаем что-то реальное в интернет.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="glass-card program-item reveal reveal-delay-1">
+      <div class="program-item reveal reveal-delay-1">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">04</span>
+            <span class="program-num">4</span>
             <div>
               <div class="program-title">Скиллы, MCP, расширения — агент с руками</div>
               <div class="program-subtitle">Из чат-бота в полноценную систему</div>
@@ -1706,20 +1959,20 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Что такое MCP и зачем он нужен</li>
-              <li>Расширения и внешние подключения</li>
-              <li>Какие сценарии это открывает</li>
-              <li>Когда подключать, а когда не усложнять</li>
-              <li>Практика: подключаем и видим разницу</li>
+              <li>Что такое MCP и зачем он нужен;</li>
+              <li>Расширения и внешние подключения;</li>
+              <li>Какие сценарии это открывает;</li>
+              <li>Когда подключать, а когда не усложнять;</li>
+              <li>Практика: подключаем и видим разницу.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="glass-card program-item reveal reveal-delay-2">
+      <div class="program-item reveal reveal-delay-2">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">05</span>
+            <span class="program-num">5</span>
             <div>
               <div class="program-title">Лайв: собираем продукт с нуля</div>
               <div class="program-subtitle">Настоящая сборка в реальном времени</div>
@@ -1730,20 +1983,20 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Голосование: вы выбираете что собираем</li>
-              <li>С нуля до работающего продукта за одну сессию</li>
-              <li>Ошибки, тупики, правки — всё как в жизни</li>
-              <li>Где AI справляется сам, а где нужна ваша голова</li>
-              <li>Результат: работающий продукт, который можно потрогать</li>
+              <li>Голосование: вы выбираете, что собираем;</li>
+              <li>С нуля до работающего продукта за одну сессию;</li>
+              <li>Ошибки, тупики, правки — всё как в жизни;</li>
+              <li>Где AI справляется сам, а где нужна ваша голова;</li>
+              <li>Результат: работающий продукт, который можно потрогать.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="glass-card program-item reveal reveal-delay-3">
+      <div class="program-item reveal reveal-delay-3">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">06</span>
+            <span class="program-num">6</span>
             <div>
               <div class="program-title">Применение, ограничения, безопасность</div>
               <div class="program-subtitle">Зрелая позиция: мощь + ответственность</div>
@@ -1754,20 +2007,20 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Какие задачи AI решает идеально, а какие — нет</li>
-              <li>Где агент врёт, ломает и фантазирует</li>
-              <li>Как не слить ключи, деньги и данные</li>
-              <li>Как проверять результат перед запуском</li>
-              <li>Чек-лист безопасности для каждого проекта</li>
+              <li>Какие задачи AI решает идеально, а какие — нет;</li>
+              <li>Где агент врёт, ломает и фантазирует;</li>
+              <li>Как не слить ключи, деньги и данные;</li>
+              <li>Как проверять результат перед запуском;</li>
+              <li>Чек-лист безопасности для каждого проекта.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="glass-card program-item reveal reveal-delay-1">
+      <div class="program-item reveal reveal-delay-1">
         <div class="program-item-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleProgram(this.parentNode)">
           <div class="program-item-left">
-            <span class="program-num">07</span>
+            <span class="program-num">7</span>
             <div>
               <div class="program-title">Демо-день и выпускной</div>
               <div class="program-subtitle">Показываем результаты, планируем дальше</div>
@@ -1778,11 +2031,11 @@ h1.hero-subtitle {
         <div class="program-body">
           <div class="program-body-inner">
             <ul>
-              <li>Участники показывают свои проекты</li>
-              <li>Разбор: что получилось, где сложности</li>
-              <li>Финальные рекомендации и вектор развития</li>
-              <li>Доступ в закрытое комьюнити</li>
-              <li>Следующий шаг: что делать после курса</li>
+              <li>Участники показывают свои проекты;</li>
+              <li>Разбор: что получилось, где сложности;</li>
+              <li>Финальные рекомендации и вектор развития;</li>
+              <li>Доступ в закрытое комьюнити;</li>
+              <li>Следующий шаг: что делать после курса.</li>
             </ul>
           </div>
         </div>
@@ -1790,7 +2043,7 @@ h1.hero-subtitle {
 
     </div>
     <div class="program-btn reveal">
-      <a href="#contact" class="btn btn-primary">Записаться на курс</a>
+      <a href="#contact" class="glass-pill">Записаться на курс</a>
     </div>
   </div>
 </section>
@@ -1798,9 +2051,12 @@ h1.hero-subtitle {
 <!-- ============== AUTHOR ============== -->
 <section class="section" id="author">
   <div class="container">
+    <div class="reveal">
+      <p class="section-label" style="text-align:center;">Эксперт курса</p>
+    </div>
     <div class="glass-card author-card reveal">
       <div class="author-avatar" aria-hidden="true">E</div>
-      <div class="author-name display-font">Егор</div>
+      <div class="author-name">Егор</div>
       <div class="author-desc">Разработчик и предприниматель. Каждый день строю продукты с помощью AI-агентов — и учу других делать то же самое.</div>
       <div class="author-stats">
         <div class="author-stat">
@@ -1826,54 +2082,68 @@ h1.hero-subtitle {
   <div class="container">
     <div class="reveal">
       <p class="section-label">Тарифы</p>
-      <h2 class="section-title display-font">Выбери <span class="gradient-text">свой формат</span></h2>
-      <p class="section-subtitle">От самостоятельного до персонального</p>
+      <h2 class="section-title">Выбери <span class="gradient-text">свой формат</span></h2>
+      <p class="section-subtitle">От самостоятельного до персонального.</p>
     </div>
     <div class="pricing-grid">
       <div class="glass-card pricing-card reveal reveal-delay-1">
-        <div class="pricing-name display-font">Базовый</div>
+        <div class="pricing-name">Базовый</div>
         <div class="pricing-price">4 990 <span>&#8381;</span></div>
         <ul class="pricing-features">
-          <li>Доступ ко всем 7 урокам</li>
-          <li>Записи уроков навсегда</li>
-          <li>Доступ в закрытый чат</li>
+          <li>Доступ ко всем 7 урокам.</li>
+          <li>Записи уроков навсегда.</li>
+          <li>Доступ в закрытый чат.</li>
         </ul>
         <a href="#contact" class="btn btn-secondary">Записаться</a>
       </div>
       <div class="glass-card pricing-card recommended reveal reveal-delay-2">
         <span class="pricing-badge">Рекомендуем</span>
-        <div class="pricing-name display-font">С поддержкой</div>
+        <div class="pricing-name">С поддержкой</div>
         <div class="pricing-price">9 990 <span>&#8381;</span></div>
         <ul class="pricing-features">
-          <li>Всё из «Базового»</li>
-          <li>Обратная связь по проектам</li>
-          <li>Доп. материалы и шаблоны</li>
-          <li>Приоритетные ответы</li>
+          <li>Всё из «Базового».</li>
+          <li>Обратная связь по проектам.</li>
+          <li>Доп. материалы и шаблоны.</li>
+          <li>Приоритетные ответы.</li>
         </ul>
         <a href="#contact" class="btn btn-accent">Записаться</a>
       </div>
       <div class="glass-card pricing-card reveal reveal-delay-3">
-        <div class="pricing-name display-font">Персональный</div>
+        <div class="pricing-name">Персональный</div>
         <div class="pricing-price">24 990 <span>&#8381;</span></div>
         <ul class="pricing-features">
-          <li>Всё из «С поддержкой»</li>
-          <li>1-на-1 созвон с автором</li>
-          <li>Разбор вашей задачи</li>
-          <li>Помощь с запуском</li>
+          <li>Всё из «С поддержкой».</li>
+          <li>1-на-1 созвон с экспертом.</li>
+          <li>Разбор вашей задачи.</li>
+          <li>Помощь с запуском.</li>
         </ul>
         <a href="#contact" class="btn btn-secondary">Записаться</a>
-        <div class="pricing-limited">Ограниченное количество мест</div>
+        <div class="pricing-limited">Ограниченное количество мест.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============== COMMUNITY ============== -->
-<section class="section" id="community">
+<section class="section community-section" id="community">
+  <div class="constellation" aria-hidden="true">
+    <div class="constellation-orb"></div>
+    <div class="constellation-orb"></div>
+    <div class="constellation-orb"></div>
+    <div class="constellation-orb"></div>
+    <div class="constellation-orb"></div>
+    <div class="constellation-orb"></div>
+    <div class="constellation-orb"></div>
+    <div class="constellation-line"></div>
+    <div class="constellation-line"></div>
+    <div class="constellation-line"></div>
+    <div class="constellation-line"></div>
+  </div>
   <div class="container" style="text-align:center;">
     <div class="reveal">
-      <h2 class="section-title display-font">После курса ты не один</h2>
-      <p class="section-subtitle" style="margin:0 auto;">Все выпускники попадают в закрытую группу</p>
+      <p class="section-label">После курса</p>
+      <h2 class="section-title">После курса ты не один</h2>
+      <p class="section-subtitle" style="margin:0 auto;">Все выпускники попадают в закрытую группу.</p>
     </div>
     <div class="community-items">
       <div class="glass-card community-item reveal reveal-delay-1">
@@ -1889,16 +2159,19 @@ h1.hero-subtitle {
         <div class="community-item-title">Находи людей</div>
       </div>
     </div>
-    <p class="community-footer reveal">Закрытый Telegram-чат. Автор курса регулярно на связи.</p>
+    <div class="glass-card community-callout reveal">
+      <div class="community-callout-title">Закрытый Telegram-чат</div>
+      <div class="community-callout-desc">Эксперт курса регулярно на связи. Обсуждения, разборы, обновления — всё в одном месте.</div>
+    </div>
   </div>
 </section>
 
 <!-- ============== FAQ ============== -->
-<section class="section" id="faq">
+<section class="section faq-section" id="faq">
   <div class="container">
     <div class="reveal">
       <p class="section-label">FAQ</p>
-      <h2 class="section-title display-font">Частые <span class="gradient-text">вопросы</span></h2>
+      <h2 class="section-title">Частые <span class="gradient-text">вопросы</span></h2>
     </div>
     <div class="faq-list">
 
@@ -1914,7 +2187,7 @@ h1.hero-subtitle {
 
       <div class="faq-item reveal reveal-delay-2">
         <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this.parentNode)">
-          <span class="faq-question-text">Я уже пробовал ChatGPT и мне не зашло. Чем это отличается?</span>
+          <span class="faq-question-text">Я уже пробовал ChatGPT, и мне не зашло. Чем это отличается?</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer">
@@ -1928,7 +2201,7 @@ h1.hero-subtitle {
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer">
-          <div class="faq-answer-inner">Компьютер (Mac / Windows / Linux) и подписка на одну из агентных систем. На курсе подскажем какую выбрать и как настроить.</div>
+          <div class="faq-answer-inner">Компьютер (Mac / Windows / Linux) и подписка на одну из агентных систем. На курсе подскажем, какую выбрать и как настроить.</div>
         </div>
       </div>
 
@@ -1958,7 +2231,7 @@ h1.hero-subtitle {
           <span class="faq-icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-answer">
-          <div class="faq-answer-inner">Да, подписка на агентную систему оплачивается отдельно (обычно $20–50/мес). Мы покажем как выбрать оптимальный вариант.</div>
+          <div class="faq-answer-inner">Да, подписка на агентную систему оплачивается отдельно (обычно $20–50/мес). Мы покажем, как выбрать оптимальный вариант.</div>
         </div>
       </div>
 
@@ -1980,8 +2253,8 @@ h1.hero-subtitle {
 <section class="section section-alt contact-section" id="contact">
   <div class="container">
     <div class="reveal">
-      <h2 class="section-title display-font">Остались вопросы?</h2>
-      <p class="section-subtitle" style="margin:0 auto;">Напиши нам — <span class="gradient-text">ответим быстро</span></p>
+      <h2 class="section-title">Остались <span class="gradient-text">вопросы?</span></h2>
+      <p class="section-subtitle">Напиши нам — ответим быстро.</p>
     </div>
     <div class="contact-links reveal reveal-delay-1">
       <a href="https://t.me/agiage" class="contact-link" target="_blank" rel="noopener">Telegram — @agiage</a>
@@ -1996,7 +2269,7 @@ h1.hero-subtitle {
     <div class="footer-inner">
       <div>
         <div class="footer-logo">АГИ</div>
-        <p class="footer-desc">Курс по использованию AI-агентов для решения любых задач</p>
+        <p class="footer-desc">Курс по использованию AI-агентов для решения любых задач.</p>
       </div>
       <div class="footer-links">
         <div class="footer-col">
@@ -2018,7 +2291,6 @@ h1.hero-subtitle {
 
 <script>
 // === INTRO ANIMATION ===
-// #theVayb is ONE element. Starts centered, moves to hero, stays forever.
 (function() {
   var vayb = document.getElementById('theVayb');
   var overlay = document.getElementById('introOverlay');
@@ -2027,50 +2299,54 @@ h1.hero-subtitle {
   var dash = document.getElementById('introDash');
   var target = document.getElementById('vaybTarget');
 
-  // Measure companions width, then offset ВАЙБ left so the whole phrase is centered
-  var compW = companions.getBoundingClientRect().width;
-  vayb.style.transform = 'translate(calc(-50% - ' + (compW / 2) + 'px), -50%)';
-
-  // Reposition companions right after ВАЙБ
-  requestAnimationFrame(function() {
-    var vr = vayb.getBoundingClientRect();
-    companions.style.left = (vr.right + 2) + 'px';
-  });
-
-  // Phase 0 (800ms): Nav/top bar appears early
+  // Phase 0 (300ms): Show VAYB-CODING centered
   setTimeout(function() {
-    document.querySelector('.hero-top').classList.add('show');
-  }, 800);
+    vayb.classList.add('show-initial');
+    companions.classList.add('show-initial');
 
-  // Phase 1 (1.5s): "—КОДИНГ" fades out + hero CTA/subtitle/meta appear
+    // Measure companions width and offset VAYB left so phrase is centered
+    requestAnimationFrame(function() {
+      var compW = companions.getBoundingClientRect().width;
+      vayb.style.transform = 'translate(calc(-50% - ' + (compW / 2) + 'px), -50%)';
+
+      requestAnimationFrame(function() {
+        var vr = vayb.getBoundingClientRect();
+        companions.style.left = (vr.right + 2) + 'px';
+      });
+    });
+  }, 300);
+
+  // Phase 1 (1500ms): CODING falls DOWN
   setTimeout(function() {
-    coding.classList.add('fade-out');
+    coding.classList.add('fall-down');
     dash.classList.add('fade-out');
-
-    // Show blobs and hero fade elements early (CTA, subtitle, meta)
-    document.querySelectorAll('.blob').forEach(function(b) { b.classList.add('show'); });
-    document.querySelectorAll('.hero-fade').forEach(function(el) { el.classList.add('show'); });
   }, 1500);
 
-  // Phase 3 (2.8s): ВАЙБ → gradient + move to hero target
+  // Phase 2 (2500ms): VAYB gets gradient, grows huge, moves to hero position
   setTimeout(function() {
     var tr = target.getBoundingClientRect();
-    var scale = tr.width / vayb.getBoundingClientRect().width;
+    var currentSize = vayb.getBoundingClientRect().width;
+    var scale = tr.width / currentSize;
 
     vayb.classList.add('gradient');
+    vayb.classList.add('glow');
     vayb.style.top = (tr.top + tr.height / 2) + 'px';
     vayb.style.left = (tr.left + tr.width / 2) + 'px';
     vayb.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
-  }, 2800);
+  }, 2500);
 
-  // Phase 4 (4.2s): Overlay fades, companions removed
+  // Phase 3 (3500ms): Overlay fades, nav/blobs/hero content appear
   setTimeout(function() {
     overlay.classList.add('done');
     companions.style.transition = 'opacity 0.5s';
     companions.style.opacity = '0';
-  }, 4200);
 
-  // Phase 5 (5.2s): Land ВАЙБ into hero DOM (fixed → absolute)
+    document.querySelector('.hero-top').classList.add('show');
+    document.querySelectorAll('.blob').forEach(function(b) { b.classList.add('show'); });
+    document.querySelectorAll('.hero-fade').forEach(function(el) { el.classList.add('show'); });
+  }, 3500);
+
+  // Phase 4 (4500ms): Land VAYB into hero DOM (fixed -> absolute), start float
   setTimeout(function() {
     var tr = target.getBoundingClientRect();
     var heroEl = document.getElementById('hero');
@@ -2086,7 +2362,14 @@ h1.hero-subtitle {
     heroEl.appendChild(vayb);
     overlay.remove();
     companions.remove();
-  }, 5200);
+
+    // Start float animation after a brief pause
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        vayb.classList.add('float-anim');
+      });
+    });
+  }, 4500);
 })();
 
 // Sticky nav
@@ -2121,17 +2404,45 @@ document.querySelectorAll('.reveal').forEach(function(el) {
   revealObserver.observe(el);
 });
 
+// === PATH LINE ANIMATION (scroll-based stroke-dashoffset) ===
+(function() {
+  var path = document.getElementById('snakePath');
+  if (!path) return;
+  var pathLength = path.getTotalLength();
+  path.style.strokeDasharray = pathLength;
+  path.style.strokeDashoffset = pathLength;
+
+  function updatePath() {
+    var container = document.getElementById('pathLineWrap');
+    if (!container) return;
+    var rect = container.getBoundingClientRect();
+    var windowH = window.innerHeight;
+    var scrollProgress = 0;
+
+    if (rect.top < windowH && rect.bottom > 0) {
+      var visibleTop = Math.max(0, windowH - rect.top);
+      var totalVisible = windowH + rect.height;
+      scrollProgress = Math.min(1, visibleTop / totalVisible);
+    } else if (rect.bottom <= 0) {
+      scrollProgress = 1;
+    }
+
+    path.style.strokeDashoffset = pathLength * (1 - scrollProgress * 1.5);
+  }
+
+  window.addEventListener('scroll', updatePath, { passive: true });
+  updatePath();
+})();
+
 // FAQ accordion
 function toggleFaq(item) {
   var wasOpen = item.classList.contains('open');
   var btn = item.querySelector('.faq-question');
-  // Close all
   document.querySelectorAll('.faq-item.open').forEach(function(el) {
     el.classList.remove('open');
     var b = el.querySelector('.faq-question');
     if (b) b.setAttribute('aria-expanded', 'false');
   });
-  // Open clicked if it wasn't open
   if (!wasOpen) {
     item.classList.add('open');
     if (btn) btn.setAttribute('aria-expanded', 'true');
@@ -2174,7 +2485,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
       var y = targetEl.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
-    // Close mobile menus on nav click
     closeMobileMenus();
   });
 });
@@ -2195,7 +2505,6 @@ function closeMobileMenus() {
 stickyBurger.addEventListener('click', function() {
   var isOpen = stickyMobileMenu.classList.toggle('open');
   stickyBurger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  // Close other menu
   heroMobileMenu.classList.remove('open');
   heroBurger.setAttribute('aria-expanded', 'false');
 });
@@ -2203,7 +2512,6 @@ stickyBurger.addEventListener('click', function() {
 heroBurger.addEventListener('click', function() {
   var isOpen = heroMobileMenu.classList.toggle('open');
   heroBurger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  // Close other menu
   stickyMobileMenu.classList.remove('open');
   stickyBurger.setAttribute('aria-expanded', 'false');
 });
