@@ -650,8 +650,8 @@ body {
   transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .hero-top.show, .blob.show { opacity: 1; }
-.blob.show.blob-1 { opacity: 0.35; }
-.blob.show.blob-2 { opacity: 0.35; }
+.blob.show.blob-1 { opacity: 0.5; }
+.blob.show.blob-2 { opacity: 0.45; }
 
 .hero-giant {
   font-size: clamp(8rem, 25vw, 20rem);
@@ -775,6 +775,25 @@ h1.hero-h1 {
 .who-card {
   position: relative;
   padding: 28px;
+}
+
+.who-card-wide {
+  grid-column: 1 / -1;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .who-card-wide {
+    max-width: none;
+  }
+}
+
+.who-card-icon {
+  font-size: 32px;
+  margin-bottom: 14px;
+  line-height: 1;
 }
 
 .who-card-num {
@@ -915,6 +934,12 @@ h1.hero-h1 {
 
 .case-card {
   padding: 32px;
+}
+
+.case-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  line-height: 1;
 }
 
 .case-top {
@@ -1491,6 +1516,12 @@ h1.hero-h1 {
   padding: 28px 20px;
 }
 
+.community-item-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
 .community-item-title {
   font-size: 16px;
   font-weight: 600;
@@ -1880,37 +1911,37 @@ h1.hero-h1 {
     </div>
     <div class="who-grid">
       <div class="glass-card who-card reveal reveal-delay-1">
-        <div class="who-card-num">1</div>
+        <div class="who-card-icon">💡</div>
         <div class="who-card-title">У тебя есть идея, но нет технических навыков</div>
         <div class="who-card-desc">Хочешь сделать сайт, бота, сервис — но не знаешь, с чего начать.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-2">
-        <div class="who-card-num">2</div>
+        <div class="who-card-icon">🤔</div>
         <div class="who-card-title">Ты пробовал ChatGPT и разочаровался</div>
         <div class="who-card-desc">Думал «пузырь», получал средние ответы и забил. Сейчас всё по-другому.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-3">
-        <div class="who-card-num">3</div>
+        <div class="who-card-icon">🚀</div>
         <div class="who-card-title">Ты предприниматель или фрилансер</div>
         <div class="who-card-desc">Хочешь делать за час то, на что раньше уходила неделя и бюджет на подрядчика.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-1">
-        <div class="who-card-num">4</div>
+        <div class="who-card-icon">⚡</div>
         <div class="who-card-title">Хочешь проверить бизнес-идею быстро</div>
         <div class="who-card-desc">Собрать MVP, протестировать гипотезу, запустить лендинг — без команды.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-2">
-        <div class="who-card-num">5</div>
+        <div class="who-card-icon">🤖</div>
         <div class="who-card-title">Слышал про AI-агентов, но не понимаешь, что это и зачем</div>
         <div class="who-card-desc">Cursor, Claude Code, Codex — звучит сложно, но на деле проще простого.</div>
       </div>
       <div class="glass-card who-card reveal reveal-delay-3">
-        <div class="who-card-num">6</div>
+        <div class="who-card-icon">🎯</div>
         <div class="who-card-title">Ты дизайнер, маркетолог, менеджер — кто угодно</div>
         <div class="who-card-desc">И хочешь добавить себе суперсилу, которая кратно ускоряет работу и увеличивает заработок.</div>
       </div>
-      <div class="glass-card who-card reveal reveal-delay-1">
-        <div class="who-card-num">7</div>
+      <div class="glass-card who-card who-card-wide reveal reveal-delay-1">
+        <div class="who-card-icon">🌍</div>
         <div class="who-card-title">Ты просто любопытный человек</div>
         <div class="who-card-desc">Который чувствует, что мир меняется, и хочет быть в первых рядах, а не догонять.</div>
       </div>
@@ -1946,56 +1977,56 @@ h1.hero-h1 {
       <div class="path-item path-left reveal">
         <div class="path-num">1</div>
         <div class="path-content">
-          <div class="path-title">Собрать сайт или сервис с нуля за один вечер.</div>
+          <div class="path-title">🔧 Собрать сайт или сервис с нуля за один вечер.</div>
         </div>
       </div>
 
       <div class="path-item path-right reveal">
         <div class="path-num">2</div>
         <div class="path-content">
-          <div class="path-title">Создать Telegram-бота, который работает за тебя.</div>
+          <div class="path-title">🤖 Создать Telegram-бота, который работает за тебя.</div>
         </div>
       </div>
 
       <div class="path-item path-left reveal">
         <div class="path-num">3</div>
         <div class="path-content">
-          <div class="path-title">Запустить проект в интернет — чтобы он работал 24/7.</div>
+          <div class="path-title">🚀 Запустить проект в интернет — чтобы он работал 24/7.</div>
         </div>
       </div>
 
       <div class="path-item path-right reveal">
         <div class="path-num">4</div>
         <div class="path-content">
-          <div class="path-title">Проверить бизнес-идею за дни, а не месяцы.</div>
+          <div class="path-title">💡 Проверить бизнес-идею за дни, а не месяцы.</div>
         </div>
       </div>
 
       <div class="path-item path-left reveal">
         <div class="path-num">5</div>
         <div class="path-content">
-          <div class="path-title">Воссоздать любую идею, где раньше нужна была команда.</div>
+          <div class="path-title">🔗 Воссоздать любую идею, где раньше нужна была команда.</div>
         </div>
       </div>
 
       <div class="path-item path-right reveal">
         <div class="path-num">6</div>
         <div class="path-content">
-          <div class="path-title">Автоматизировать рутину: отчёты, данные, рассылки.</div>
+          <div class="path-title">📱 Автоматизировать рутину: отчёты, данные, рассылки.</div>
         </div>
       </div>
 
       <div class="path-item path-left reveal">
         <div class="path-num">7</div>
         <div class="path-content">
-          <div class="path-title">Увеличить свой доход и экспертность с помощью AI.</div>
+          <div class="path-title">💰 Увеличить свой доход и экспертность с помощью AI.</div>
         </div>
       </div>
 
       <div class="path-item path-right reveal">
         <div class="path-num">8</div>
         <div class="path-content">
-          <div class="path-title">Думать по-новому и ставить задачи так, чтобы получать результат.</div>
+          <div class="path-title">🧠 Думать по-новому и ставить задачи так, чтобы получать результат.</div>
         </div>
       </div>
     </div>
@@ -2003,8 +2034,11 @@ h1.hero-h1 {
   </div>
 </section>
 
+<!-- Transition -->
+<div style="height:60px;background:linear-gradient(to bottom, var(--bg-main), var(--bg-alt));" aria-hidden="true"></div>
+
 <!-- ============== CASES ============== -->
-<section class="section section-alt" id="cases">
+<section class="section section-alt" id="cases" style="padding-top:40px;">
   <div class="section-blob" style="width:400px;height:400px;background:radial-gradient(circle,#D4722A,transparent 70%);top:15%;left:-8%;" aria-hidden="true"></div>
   <div class="container">
     <div class="reveal">
@@ -2018,6 +2052,7 @@ h1.hero-h1 {
           <span class="case-label">Кейс 1</span>
           <span class="case-time">2 часа</span>
         </div>
+        <div class="case-icon">🌐</div>
         <div class="case-title">Лендинг для мероприятия</div>
         <div class="case-desc">Полностью адаптивный сайт с формой регистрации, анимациями и подключением к базе данных.</div>
         <span class="case-tag">Нулевой опыт в вёрстке</span>
@@ -2027,6 +2062,7 @@ h1.hero-h1 {
           <span class="case-label">Кейс 2</span>
           <span class="case-time">3 часа</span>
         </div>
+        <div class="case-icon">🤖</div>
         <div class="case-title">Telegram-бот для бизнеса</div>
         <div class="case-desc">Бот с обработкой заказов, уведомлениями и интеграцией с Google Sheets.</div>
         <span class="case-tag">Никогда не писал код</span>
@@ -2036,6 +2072,7 @@ h1.hero-h1 {
           <span class="case-label">Кейс 3</span>
           <span class="case-time">1 вечер</span>
         </div>
+        <div class="case-icon">⚙️</div>
         <div class="case-title">Мини-сервис автоматизации</div>
         <div class="case-desc">Автоматический парсинг конкурентов с отправкой отчётов в Telegram каждый день.</div>
         <span class="case-tag">Маркетолог</span>
@@ -2045,6 +2082,7 @@ h1.hero-h1 {
           <span class="case-label">Кейс 4</span>
           <span class="case-time">4 часа</span>
         </div>
+        <div class="case-icon">🧠</div>
         <div class="case-title">Персональный AI-инструмент</div>
         <div class="case-desc">Внутренний инструмент для генерации ТЗ из голосовых заметок с AI-обработкой.</div>
         <span class="case-tag">Дизайнер</span>
@@ -2241,14 +2279,17 @@ h1.hero-h1 {
   </div>
 </section>
 
+<!-- Transition -->
+<div style="height:60px;background:linear-gradient(to bottom, #1A1A1A, var(--bg-main));" aria-hidden="true"></div>
+
 <!-- ============== AUTHOR ============== -->
-<section class="section" id="author" style="background:var(--bg-main);">
+<section class="section" id="author" style="background:var(--bg-main);padding-top:40px;">
   <div class="container">
     <div class="reveal">
       <p class="section-label" style="text-align:center;">Эксперт курса</p>
     </div>
     <div class="glass-card author-card reveal">
-      <img src="https://274418.selcdn.ru/cv08300-33250f0d-0664-43fc-9dbf-9d89738d114e/uploads/211216/7500e602-2cef-4ee3-b009-391df48e75b5.jpg" alt="Егор Борисенко" class="author-photo">
+      <img src="author.jpg" alt="Егор Борисенко" class="author-photo">
       <div class="author-name">Егор Борисенко</div>
       <div class="author-desc">Эксперт по GenAI в НМ-Тех. Консультант, спикер, разработчик. Провёл 40+ обучающих мероприятий, обучил 300+ специалистов. Создатель курсов «ИИ для юристов» и «AI-креаторы». Лауреат премии «Цифровизация во благо» 2025. Каждый день строю продукты с помощью AI-агентов — и учу других делать то же самое.</div>
       <div class="author-stats">
@@ -2269,8 +2310,11 @@ h1.hero-h1 {
   </div>
 </section>
 
+<!-- Transition -->
+<div style="height:60px;background:linear-gradient(to bottom, var(--bg-main), var(--bg-alt));" aria-hidden="true"></div>
+
 <!-- ============== PRICING ============== -->
-<section class="section section-alt" id="pricing">
+<section class="section section-alt" id="pricing" style="padding-top:40px;">
   <div class="section-blob" style="width:450px;height:450px;background:radial-gradient(circle,#E8C840,transparent 70%);bottom:10%;right:-10%;" aria-hidden="true"></div>
   <div class="container">
     <div class="reveal">
@@ -2346,15 +2390,19 @@ h1.hero-h1 {
     </div>
     <div class="community-items">
       <div class="glass-card community-item reveal reveal-delay-1">
+        <div class="community-item-icon">🛠</div>
         <div class="community-item-title">Делись проектами</div>
       </div>
       <div class="glass-card community-item reveal reveal-delay-2">
+        <div class="community-item-icon">💬</div>
         <div class="community-item-title">Задавай вопросы</div>
       </div>
       <div class="glass-card community-item reveal reveal-delay-3">
+        <div class="community-item-icon">📡</div>
         <div class="community-item-title">Будь в курсе</div>
       </div>
       <div class="glass-card community-item reveal reveal-delay-4">
+        <div class="community-item-icon">🤝</div>
         <div class="community-item-title">Находи людей</div>
       </div>
     </div>
