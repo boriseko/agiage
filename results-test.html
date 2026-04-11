@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --gradient: linear-gradient(135deg, #E8C840, #D4722A);
+  --text-primary: #1A1A1A;
+  --text-secondary: #5A5A52;
+  --text-muted: #6E6E64;
+  --gold: #C9A030;
+}
+body { font-family:'Onest',sans-serif; color:var(--text-primary); background:#fff; }
+.gradient-text { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.container { max-width:1100px; margin:0 auto; padding:0 24px; }
+.variant { padding:80px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+.variant-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--gold); margin-bottom:12px; }
+.variant-title { font-size:32px; font-weight:700; letter-spacing:-0.03em; margin-bottom:8px; }
+.variant-sub { font-size:15px; color:var(--text-secondary); margin-bottom:48px; }
+
+/* === A: Before/After === */
+.ba-grid { display:flex; flex-direction:column; gap:0; }
+.ba-row {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:24px;
+  align-items:center;
+  padding:20px 0;
+  border-bottom:1px solid rgba(0,0,0,0.04);
+}
+.ba-before {
+  text-align:right;
+  font-size:17px;
+  font-weight:500;
+  color:var(--text-muted);
+  text-decoration:line-through;
+  text-decoration-color:rgba(212,114,42,0.3);
+}
+.ba-arrow {
+  font-size:20px;
+  color:var(--gold);
+  font-weight:300;
+}
+.ba-after {
+  font-size:17px;
+  font-weight:600;
+  color:var(--text-primary);
+}
+
+/* === B: Bento Grid === */
+.bento { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.bento-card {
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:16px;
+  padding:28px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+}
+.bento-card.big { grid-column:span 2; grid-row:span 2; padding:40px; display:flex; flex-direction:column; justify-content:center; }
+.bento-card .num { font-size:32px; font-weight:900; margin-bottom:8px; }
+.bento-card.big .num { font-size:56px; margin-bottom:12px; }
+.bento-card .text { font-size:15px; font-weight:500; color:var(--text-primary); line-height:1.45; }
+.bento-card.big .text { font-size:20px; font-weight:600; }
+.bento-card .sub { font-size:13px; color:var(--text-secondary); margin-top:4px; }
+
+/* === C: Big Numbers === */
+.nums { display:grid; grid-template-columns:repeat(2,1fr); gap:32px 48px; }
+.num-item { display:flex; align-items:baseline; gap:16px; }
+.num-big { font-size:clamp(3rem,6vw,4.5rem); font-weight:900; line-height:1; min-width:140px; text-align:right; }
+.num-label { font-size:17px; font-weight:500; color:var(--text-secondary); line-height:1.4; }
+.num-label strong { color:var(--text-primary); font-weight:600; }
+
+/* === D: Checklist === */
+.checklist { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:0; }
+.check-item {
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:18px 0;
+  border-bottom:1px solid rgba(0,0,0,0.04);
+}
+.check-box {
+  width:28px; height:28px;
+  border-radius:8px;
+  border:2px solid rgba(0,0,0,0.12);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+  transition:all 0.3s ease;
+}
+.check-item.checked .check-box {
+  background:var(--gradient);
+  border-color:transparent;
+}
+.check-item.checked .check-box::after {
+  content:'✓';
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+}
+.check-text {
+  font-size:17px;
+  font-weight:500;
+  color:var(--text-primary);
+  transition:opacity 0.3s ease;
+}
+.check-item.checked .check-text {
+  opacity:0.6;
+}
+</style>
+</head>
+<body>
+
+<!-- VARIANT A -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ А — До / После</p>
+    <div class="variant-title">После курса ты <span class="gradient-text">сможешь</span></div>
+    <p class="variant-sub">Конкретные результаты, а не абстрактные обещания.</p>
+    <div class="ba-grid">
+      <div class="ba-row">
+        <div class="ba-before">3 месяца ожидания + 500К</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-after">Рабочий сайт за один вечер</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-before">Искать разработчика, ставить ТЗ</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-after">Telegram-бот за 4 часа, своими руками</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-before">Не понимать что такое «сервер»</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-after">Свой проект на своём домене, работает 24/7</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-before">Полгода на проверку гипотезы</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-after">MVP за 2 дня вместо 2 месяцев</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-before">Ручная рутина каждый день</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-after">Автоматизация без единой строчки кода</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-before">«AI — это не для меня»</div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-after">Новый источник дохода на AI-навыках</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANT B -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ Б — Бенто-сетка</p>
+    <div class="variant-title">После курса ты <span class="gradient-text">сможешь</span></div>
+    <p class="variant-sub">Конкретные результаты, а не абстрактные обещания.</p>
+    <div class="bento">
+      <div class="bento-card big">
+        <div class="num gradient-text">1 вечер</div>
+        <div class="text">Собрать полноценный сайт — с формой, адаптивом, на своём домене</div>
+      </div>
+      <div class="bento-card">
+        <div class="num gradient-text">4 ч</div>
+        <div class="text">Telegram-бот для бизнеса</div>
+        <div class="sub">Заказы, уведомления, отчёты</div>
+      </div>
+      <div class="bento-card">
+        <div class="num gradient-text">2 дня</div>
+        <div class="text">MVP стартапа</div>
+        <div class="sub">Вместо 2 месяцев и 500К</div>
+      </div>
+      <div class="bento-card">
+        <div class="num gradient-text">24/7</div>
+        <div class="text">Проект на своём сервере</div>
+        <div class="sub">Свой домен, полный контроль</div>
+      </div>
+      <div class="bento-card">
+        <div class="num gradient-text">0 строк</div>
+        <div class="text">Автоматизация без кода</div>
+        <div class="sub">Парсинг, отчёты, рассылки</div>
+      </div>
+      <div class="bento-card">
+        <div class="num gradient-text">∞</div>
+        <div class="text">Новый источник дохода</div>
+        <div class="sub">Фриланс, продукты, услуги</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANT C -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ В — Крупные цифры</p>
+    <div class="variant-title">После курса ты <span class="gradient-text">сможешь</span></div>
+    <p class="variant-sub">Конкретные результаты, а не абстрактные обещания.</p>
+    <div class="nums">
+      <div class="num-item">
+        <div class="num-big gradient-text">1 вечер</div>
+        <div class="num-label"><strong>рабочий сайт</strong><br>с формой, адаптивом и на своём домене</div>
+      </div>
+      <div class="num-item">
+        <div class="num-big gradient-text">4 часа</div>
+        <div class="num-label"><strong>Telegram-бот</strong><br>заказы, уведомления, отчёты — автоматом</div>
+      </div>
+      <div class="num-item">
+        <div class="num-big gradient-text">2 дня</div>
+        <div class="num-label"><strong>MVP стартапа</strong><br>вместо 2 месяцев и 500К на разработку</div>
+      </div>
+      <div class="num-item">
+        <div class="num-big gradient-text">0 строк</div>
+        <div class="num-label"><strong>кода</strong><br>парсинг, отчёты, рассылки — без программиста</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANT D -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ Г — Чеклист</p>
+    <div class="variant-title">После курса ты <span class="gradient-text">сможешь</span></div>
+    <p class="variant-sub">Конкретные результаты, а не абстрактные обещания.</p>
+    <div class="checklist">
+      <div class="check-item checked">
+        <div class="check-box"></div>
+        <div class="check-text">Собрать полноценный сайт за один вечер</div>
+      </div>
+      <div class="check-item checked">
+        <div class="check-box"></div>
+        <div class="check-text">Запустить Telegram-бота для бизнеса за 4 часа</div>
+      </div>
+      <div class="check-item checked">
+        <div class="check-box"></div>
+        <div class="check-text">Задеплоить проект на сервер — свой домен, 24/7</div>
+      </div>
+      <div class="check-item checked">
+        <div class="check-box"></div>
+        <div class="check-text">Проверить бизнес-идею за 2 дня вместо 2 месяцев</div>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-text">Автоматизировать рутину без единой строчки кода</div>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-text">Открыть новый источник дохода на AI-навыках</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

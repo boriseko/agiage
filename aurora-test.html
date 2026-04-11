@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Test — AGI Age</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-main:#FAFAF7;--text-primary:#1A1A1A;--text-secondary:#5A5A52;--text-muted:#6E6E64;--gradient:linear-gradient(135deg,#E8C840,#D4722A)}
+body{font-family:'Onest',sans-serif;background:var(--bg-main);color:var(--text-primary);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+.hero{min-height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden;background:var(--bg-main)}
+#bgCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+
+.grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0.025;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:256px}
+.vignette-bottom{position:absolute;bottom:0;left:0;right:0;height:200px;z-index:3;pointer-events:none;background:linear-gradient(to top,var(--bg-main),transparent)}
+
+.intro-overlay{position:fixed;inset:0;background:var(--bg-main);z-index:9998;transition:opacity .8s ease}.intro-overlay.done{opacity:0;pointer-events:none}
+.intro-text{position:fixed;z-index:10000;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;align-items:baseline;font-family:'Onest',sans-serif;font-weight:900;font-size:clamp(3rem,8vw,6rem);letter-spacing:-0.04em;line-height:.9;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .4s ease}.intro-text.visible{opacity:1}
+.intro-dash{color:rgba(0,0,0,.12);font-weight:400;margin:0 .08em;transition:opacity .8s cubic-bezier(.23,1,.32,1),filter .8s cubic-bezier(.23,1,.32,1)}.intro-dash.fade{opacity:0;filter:blur(8px)}
+.intro-coding{color:var(--text-secondary);display:inline-block;transition:opacity 1s cubic-bezier(.23,1,.32,1),transform 1s cubic-bezier(.23,1,.32,1)}.intro-coding.fall{opacity:0;transform:translateY(100vh)}
+.intro-skip{position:fixed;z-index:10001;bottom:40px;left:50%;transform:translateX(-50%);font-family:'Onest',sans-serif;font-size:14px;font-weight:500;color:var(--text-muted);background:none;border:none;cursor:pointer;opacity:0;transition:opacity .3s ease;letter-spacing:.05em}.intro-skip.visible{opacity:1}
+
+.hero-content{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px 24px 80px;position:relative;z-index:10;max-width:1200px;margin:0 auto;width:100%}
+
+.hero-vayb{
+  font-size:clamp(7rem,22vw,18rem);font-weight:900;letter-spacing:-0.04em;line-height:0.85;margin-bottom:24px;
+  background:linear-gradient(180deg,#E8C840 0%,#D4722A 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(180,100,20,.4)) drop-shadow(0 4px 0 rgba(160,80,15,.3)) drop-shadow(0 6px 0 rgba(140,65,10,.2)) drop-shadow(0 8px 0 rgba(120,50,5,.1)) drop-shadow(0 16px 40px rgba(212,114,42,.25)) drop-shadow(0 30px 80px rgba(232,200,64,.15));
+  animation:vaybFloat 6s ease-in-out infinite;
+}
+@keyframes vaybFloat{0%,100%{transform:perspective(800px) rotateX(2deg) rotate(-.5deg)}50%{transform:perspective(800px) rotateX(-1deg) rotate(.5deg) translateY(-6px)}}
+
+.hero-fade{opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.23,1,.32,1) var(--d,0s),transform .5s cubic-bezier(.23,1,.32,1) var(--d,0s)}.hero-fade.show{opacity:1;transform:translateY(0)}
+.hero-top-bar{padding:28px 24px;text-align:center;position:relative;z-index:10;opacity:0;transition:opacity .6s ease}.hero-top-bar.show{opacity:1}
+h1.hero-h1{font-size:clamp(1rem,2.5vw,1.4rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+.hero-subtitle{font-size:clamp(.92rem,1.7vw,1.05rem);color:var(--text-secondary);max-width:520px;line-height:1.65;font-weight:400;margin-bottom:28px}
+.hero-pills{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;justify-content:center}
+.glass-pill{background:rgba(255,255,255,.55);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.75);border-radius:50px;padding:10px 24px;font-size:14px;font-weight:600;color:var(--text-primary);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.btn-accent{display:inline-flex;align-items:center;justify-content:center;padding:16px 40px;border-radius:60px;font-family:'Onest',sans-serif;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;background:linear-gradient(135deg,#E8C840,#D4722A);color:#fff;transition:transform .2s ease,box-shadow .2s ease;box-shadow:0 4px 20px rgba(212,114,42,.2)}.btn-accent:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,114,42,.35)}
+.hero-meta{font-size:13px;color:var(--text-muted);font-weight:500;margin-top:16px}
+.next-section{padding:120px 24px;max-width:800px;margin:0 auto;text-align:center;background:var(--bg-main)}
+</style>
+</head>
+<body>
+<div class="intro-overlay" id="introOverlay"></div>
+<button class="intro-skip" id="introSkip">Пропустить</button>
+<div class="intro-text" id="introText"><span>ВАЙБ</span><span class="intro-dash" id="introDash">&mdash;</span><span class="intro-coding" id="introCoding">КОДИНГ</span></div>
+
+<section class="hero" id="hero">
+  <canvas id="bgCanvas"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette-bottom" aria-hidden="true"></div>
+  <div class="hero-top-bar" id="heroTopBar"><div style="font-size:18px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--text-primary);opacity:.5">АГИ</div></div>
+  <div class="hero-content">
+    <div class="hero-vayb hero-fade" style="--d:0s">ВАЙБ</div>
+    <h1 class="hero-h1 hero-fade" style="--d:.08s">НАУЧИСЬ РЕШАТЬ ЛЮБЫЕ ЗАДАЧИ С ПОМОЩЬЮ ИИ</h1>
+    <p class="hero-subtitle hero-fade" style="--d:.15s">Один инструмент вместо десятков нейросетей. Собирай сайты, ботов, автоматизации — даже если ты не программист.</p>
+    <div class="hero-pills hero-fade" style="--d:.25s"><span class="glass-pill">без кода</span><span class="glass-pill">без опыта</span><span class="glass-pill">без запары</span></div>
+    <div class="hero-fade" style="--d:.35s"><a href="#" class="btn-accent">Хочу на курс</a></div>
+    <div class="hero-meta hero-fade" style="--d:.45s">7 уроков · Старт скоро</div>
+  </div>
+</section>
+<div class="next-section"><h2 style="font-size:2rem;font-weight:700">Следующая секция</h2></div>
+
+<script>
+// ============================================
+//  Mesh gradient — large visible color zones
+//  that slowly drift + cursor shifts them
+// ============================================
+(function(){
+  var canvas=document.getElementById('bgCanvas');
+  var gl=canvas.getContext('webgl2',{alpha:false,antialias:false});
+  if(!gl){canvas.style.display='none';return}
+
+  var VS='#version 300 es\nin vec2 p;out vec2 uv;void main(){uv=p*.5+.5;gl_Position=vec4(p,0,1);}';
+
+  var FS=`#version 300 es
+precision highp float;
+in vec2 uv;
+out vec4 O;
+uniform float t;
+uniform vec2 res;
+uniform vec2 mouse;
+uniform float mouseIn;
+
+void main(){
+  vec2 st=uv;
+  float aspect=res.x/res.y;
+
+  // 5 zones — warm + cool for contrast
+  // Wide orbits, clearly different colors
+
+  vec2 m=mouse;
+  vec2 A=vec2(aspect,1.);
+
+  // Zone positions — slow, wide orbits
+  vec2 z1=vec2(.12+.25*sin(t*.07),       .18+.22*cos(t*.09));       // gold — top-left
+  vec2 z2=vec2(.88+.20*cos(t*.055+2.),   .22+.25*sin(t*.075+1.));  // rose — top-right
+  vec2 z3=vec2(.50+.28*sin(t*.045+4.),   .82+.18*cos(t*.065+2.));  // teal — bottom-center
+  vec2 z4=vec2(.78+.22*sin(t*.04+1.5),   .60+.20*cos(t*.085+3.));  // orange — right
+  vec2 z5=vec2(.25+.20*cos(t*.06+3.),    .55+.22*sin(t*.05+1.));   // sky — left-center
+
+  // Cursor gently pushes nearest zones
+  float mPush=mouseIn*.10;
+  z1+=normalize(z1-m+.001)*mPush*exp(-2.*length((z1-m)*A));
+  z2+=normalize(z2-m+.001)*mPush*exp(-2.*length((z2-m)*A));
+  z3+=normalize(z3-m+.001)*mPush*exp(-2.*length((z3-m)*A));
+  z4+=normalize(z4-m+.001)*mPush*exp(-2.*length((z4-m)*A));
+  z5+=normalize(z5-m+.001)*mPush*exp(-2.*length((z5-m)*A));
+
+  // Distances
+  float d1=length((st-z1)*A);
+  float d2=length((st-z2)*A);
+  float d3=length((st-z3)*A);
+  float d4=length((st-z4)*A);
+  float d5=length((st-z5)*A);
+
+  // Wide gaussians
+  float b1=exp(-1.8*d1*d1);
+  float b2=exp(-2.2*d2*d2);
+  float b3=exp(-2.0*d3*d3);
+  float b4=exp(-2.5*d4*d4);
+  float b5=exp(-2.0*d5*d5);
+
+  // Color palette — warm base + cool accents
+  vec3 gold   =vec3(.910,.780,.220);  // #E8C738 — saturated gold
+  vec3 rose   =vec3(.920,.640,.620);  // soft blush rose
+  vec3 teal   =vec3(.520,.780,.720);  // muted sage-teal
+  vec3 orange =vec3(.870,.500,.180);  // warm orange
+  vec3 sky    =vec3(.620,.760,.880);  // soft sky blue
+  vec3 bg     =vec3(.992,.990,.982);
+
+  // Layer on white — visible, rich
+  vec3 col=bg;
+  col=mix(col, gold,   b1*.70);
+  col=mix(col, rose,   b2*.55);
+  col=mix(col, teal,   b3*.50);
+  col=mix(col, orange, b4*.60);
+  col=mix(col, sky,    b5*.45);
+
+  // --- Cursor: warm glow ---
+  float dm=length((st-m)*A);
+  float glow=exp(-4.*dm*dm)*mouseIn;
+  col=mix(col, vec3(.950,.850,.500), glow*.40);
+
+  O=vec4(col,1.);
+}`;
+
+  function compile(type,src){
+    var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  var prog=gl.createProgram();
+  gl.attachShader(prog,compile(gl.VERTEX_SHADER,VS));
+  gl.attachShader(prog,compile(gl.FRAGMENT_SHADER,FS));
+  gl.linkProgram(prog);gl.useProgram(prog);
+
+  var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var loc=gl.getAttribLocation(prog,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+
+  var uTime=gl.getUniformLocation(prog,'t');
+  var uRes=gl.getUniformLocation(prog,'res');
+  var uMouse=gl.getUniformLocation(prog,'mouse');
+  var uMouseIn=gl.getUniformLocation(prog,'mouseIn');
+
+  var mx=.5,my=.5,tmx=.5,tmy=.5,mA=0,mT=0,rT;
+
+  function resize(){
+    var w=canvas.parentElement.offsetWidth,h=canvas.parentElement.offsetHeight;
+    canvas.width=w*Math.min(devicePixelRatio,1.5);
+    canvas.height=h*Math.min(devicePixelRatio,1.5);
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+  }
+
+  document.getElementById('hero').addEventListener('mousemove',function(e){
+    var r=canvas.getBoundingClientRect();
+    tmx=(e.clientX-r.left)/r.width;
+    tmy=(e.clientY-r.top)/r.height;
+    mT=1;clearTimeout(rT);rT=setTimeout(function(){mT=0},2000);
+  });
+  document.getElementById('hero').addEventListener('mouseleave',function(){mT=0});
+
+  var t0=performance.now();
+  function frame(){
+    mx+=(tmx-mx)*.04;my+=(tmy-my)*.04;mA+=(mT-mA)*.03;
+    gl.uniform1f(uTime,(performance.now()-t0)/1000);
+    gl.uniform2f(uMouse,mx,my);
+    gl.uniform1f(uMouseIn,mA);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    requestAnimationFrame(frame);
+  }
+  resize();window.addEventListener('resize',resize);frame();
+})();
+
+// === INTRO ===
+(function(){
+  var el=document.getElementById('introText'),d=document.getElementById('introDash'),c=document.getElementById('introCoding'),o=document.getElementById('introOverlay'),s=document.getElementById('introSkip'),tb=document.getElementById('heroTopBar'),T=[],done=false;
+  function fin(){if(done)return;done=true;T.forEach(clearTimeout);el.remove();o.classList.add('done');s.remove();tb.classList.add('show');document.querySelectorAll('.hero-fade').forEach(function(e){e.classList.add('show')});setTimeout(function(){if(o.parentNode)o.remove()},800)}
+  T.push(setTimeout(function(){s.classList.add('visible')},800));
+  s.addEventListener('click',fin);
+  T.push(setTimeout(function(){if(!done)el.classList.add('visible')},300));
+  T.push(setTimeout(function(){if(!done){c.classList.add('fall');d.classList.add('fade')}},1400));
+  T.push(setTimeout(function(){if(!done){el.style.transition='opacity .6s ease';el.style.opacity='0';o.classList.add('done');s.remove();tb.classList.add('show');document.querySelectorAll('.hero-fade').forEach(function(e){e.classList.add('show')})}},2400));
+  T.push(setTimeout(function(){if(!done){el.remove();o.remove();done=true}},3400));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<!--
+  fin.ai Hero Background Effect — Reverse-Engineered
+  ==================================================
+  Two-layer effect:
+  1. A looping .webm video of aurora/nebula (used as texture)
+  2. WebGL (OGL) shader that adds:
+     - Mouse-following glow/spotlight with warm color (#ecc6ac)
+     - Film grain overlay
+     - Perlin noise distortion on the spotlight shape
+     - Fade-in intro animation
+     - Dark-blue (#020917) vignette edges via CSS gradients
+
+  The original uses OGL (https://github.com/oframe/ogl) for WebGL.
+  This standalone version uses raw WebGL2 to avoid the dependency.
+
+  Video source: https://fin.ai/img/home/hero_loop_nonoise_1920.webm
+  Poster image: https://fin.ai/img/home/hero-loop-poster.webp
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fin.ai Hero Background Effect</title>
+<style>
+  /* ============================================
+     COLOR PALETTE (from fin.ai CSS variables)
+     ============================================ */
+  :root {
+    --color-dark-blue: #020917;
+    --color-deep-blue: #080f1e;
+    --color-cream: #f4f3ec;
+    --color-off-white: #f6f6f1;
+    --color-bright-blue: #000ce1;
+    --color-white-100: #fff;
+    --color-white-80: #cecfd2;
+    --color-white-60: #9c9fa5;
+    --color-white-50: #84878f;
+    --color-white-20: #393f4b;
+    --color-white-5: #151b29;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--color-dark-blue);
+    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* ============================================
+     HERO SECTION STRUCTURE
+     ============================================ */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* ============================================
+     WEBGL CANVAS CONTAINER (Layer 1 — the effect)
+     ============================================ */
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .hero-background .canvas-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-dark-blue);
+    /* Original uses: lg:animate-[fadeIn_1s_ease-in-out_both] */
+    animation: fadeIn 1s ease-in-out both;
+  }
+
+  .hero-background canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ============================================
+     VIDEO FALLBACK (shown when WebGL unavailable)
+     ============================================ */
+  .hero-background .video-fallback {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ============================================
+     CSS GRADIENT OVERLAYS (vignette edges)
+     These sit ON TOP of the canvas/video to
+     blend the hero into the dark-blue page bg.
+     ============================================ */
+  .hero-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Left edge vignette — 230px gradient from dark-blue to transparent */
+  .hero-overlay .edge-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: 230px;
+    background: linear-gradient(to right, var(--color-dark-blue), transparent);
+  }
+
+  /* Right edge vignette */
+  .hero-overlay .edge-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: 230px;
+    background: linear-gradient(to left, var(--color-dark-blue), transparent);
+  }
+
+  /* Bottom edge vignette — taller, with via stop for stronger blend */
+  .hero-overlay .edge-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 15rem; /* h-60 = 240px */
+    background: linear-gradient(
+      to top,
+      var(--color-dark-blue) 0%,
+      rgba(2, 9, 23, 0.85) 25%,
+      transparent 100%
+    );
+  }
+
+  /* Top edge vignette */
+  .hero-overlay .edge-top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 11.25rem; /* h-45 = 180px */
+    background: linear-gradient(
+      to bottom,
+      var(--color-dark-blue) 0%,
+      rgba(2, 9, 23, 0.6) 25%,
+      transparent 100%
+    );
+  }
+
+  /* ============================================
+     KEYFRAMES
+     ============================================ */
+  @keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* ============================================
+     DEMO CONTENT (just for this demo page)
+     ============================================ */
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .hero-content h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 300;
+    font-size: clamp(2.75rem, 6vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-content h1 span {
+    filter: drop-shadow(0 0 8px #ffffff);
+  }
+
+  .hero-content .subtitle {
+    font-family: monospace;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.094rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  /* Hide side vignettes on mobile */
+  @media (max-width: 1280px) {
+    .hero-overlay .edge-left,
+    .hero-overlay .edge-right {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero-section">
+  <!-- Background layer -->
+  <div class="hero-background">
+    <div class="canvas-container" id="canvas-container">
+      <!-- WebGL canvas gets injected here by JS -->
+      <!-- Video fallback shown if WebGL unavailable -->
+      <video
+        class="video-fallback"
+        id="video-fallback"
+        autoplay loop muted playsinline
+        src="https://fin.ai/img/home/hero_loop_nonoise_1920.webm"
+        poster="https://fin.ai/img/home/hero-loop-poster.webp"
+      ></video>
+    </div>
+  </div>
+
+  <!-- CSS gradient overlays (vignette edges) -->
+  <div class="hero-overlay">
+    <div class="edge-left"></div>
+    <div class="edge-right"></div>
+    <div class="edge-bottom"></div>
+    <div class="edge-top"></div>
+  </div>
+
+  <!-- Demo content -->
+  <div class="hero-content">
+    <h1>The #1 AI Agent for<br><span> all</span> your customer service</h1>
+    <div class="subtitle">
+      <span>#1 in bake-offs</span>
+      <span>#1 in benchmarks</span>
+      <span>#1 for complex queries</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// ============================================================
+//  fin.ai Hero WebGL Background Effect
+//  ============================================================
+//  Architecture:
+//  - Loads a looping .webm video as a texture
+//  - Renders it through a fragment shader that adds:
+//    * Mouse-tracking warm glow (color #ecc6ac)
+//    * Perlin-noise-based distortion on the glow circle
+//    * Film grain effect
+//    * Darkness overlay
+//    * Bottom gradient mask blending to dark-blue (#020917)
+//    * Intro fade animation
+//  - Uses OGL-style WebGL setup (simplified to raw WebGL2)
+// ============================================================
+
+(function () {
+  'use strict';
+
+  // ========== CONFIGURATION (from fin.ai source guiObj) ==========
+  const CONFIG = {
+    uIntensity: 0.2,       // Glow intensity
+    uRadius: 1.0,          // Glow radius
+    color: [0.925, 0.776, 0.675],  // #ecc6ac in RGB [0..1]
+    grainAmount: 0.12,     // Film grain strength
+    grainMultiply: false,   // Multiply grain (false = additive)
+    grainSpeed: 607,       // Grain animation speed
+    grainMvt: true,        // Animated grain
+    darkness: 0.2,         // Overall darkness
+    speed: 1,              // Animation speed multiplier
+  };
+
+  // ========== GLSL SHADERS ==========
+
+  const VERTEX_SHADER = `#version 300 es
+    in vec2 uv;
+    in vec2 position;
+    out vec2 vUv;
+    out vec2 vUvMap;
+
+    uniform vec2 uvRepeat;
+    uniform vec2 uvOffset;
+    uniform float uIntensity;
+    uniform float uIntro;
+
+    void main() {
+      vUv = uv;
+
+      // Scale UVs from center based on intro progress
+      vec2 centeredUv = uv - 0.5;
+      float scale = mix(1.125, 1.0, uIntro);
+      centeredUv *= (1.0 / scale);
+      centeredUv += 0.5;
+
+      // Apply ratio + offset to UVs to crop and center the image
+      vUvMap = centeredUv;
+      vUvMap *= uvRepeat;
+      vUvMap += uvOffset;
+
+      gl_Position = vec4(position, 0, 1);
+    }
+  `;
+
+  const FRAGMENT_SHADER = `#version 300 es
+    precision highp float;
+    out vec4 fragColor;
+
+    uniform float uTime;
+    uniform vec2 uResolution;
+    uniform vec2 uMouse;
+    uniform float uRadius;
+    uniform float uMovement;
+
+    uniform sampler2D tMap;
+    uniform float uIntensity;
+    uniform vec3 uColor;
+
+    uniform float uGrainAmount;
+    uniform float uGrainMul;
+    uniform float uGrainSpeed;
+    uniform float uIntro;
+
+    uniform float uDarkness;
+
+    in vec2 vUv;
+    in vec2 vUvMap;
+
+    // ---- Noise functions (from fin.ai) ----
+    vec2 hash( vec2 p ) {
+      p = vec2( dot(p,vec2(2127.1,81.17)), dot(p,vec2(1269.5,283.37)) );
+      return fract(sin(p)*43758.5453);
+    }
+
+    float noise( in vec2 p ) {
+      vec2 i = floor( p );
+      vec2 f = fract( p );
+      vec2 u = f*f*(3.0-2.0*f);
+      float n = mix(
+        mix( dot( -1.0+2.0*hash( i + vec2(0.0,0.0) ), f - vec2(0.0,0.0) ),
+             dot( -1.0+2.0*hash( i + vec2(1.0,0.0) ), f - vec2(1.0,0.0) ), u.x),
+        mix( dot( -1.0+2.0*hash( i + vec2(0.0,1.0) ), f - vec2(0.0,1.0) ),
+             dot( -1.0+2.0*hash( i + vec2(1.0,1.0) ), f - vec2(1.0,1.0) ), u.x),
+        u.y
+      );
+      return 0.5 + 0.5*n;
+    }
+
+    // ---- Random for grain ----
+    float rand(vec2 co){
+      return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+    }
+
+    // ---- Grain function ----
+    vec3 grain(vec3 fragCol, vec2 uv){
+      vec3 color = fragCol;
+      vec2 noiseCoord = uv + uTime * uGrainSpeed * 0.01;
+      float n = noise(noiseCoord) * 2.0 - 1.0;
+      float diff = (rand(n + uv) - 0.0) * uGrainAmount;
+
+      if (uGrainMul == 1.) {
+        color.r += color.r * diff;
+        color.g += color.g * diff;
+        color.b += color.b * diff;
+      } else {
+        color.r += diff;
+        color.g += diff;
+        color.b += diff;
+      }
+      return color;
+    }
+
+    void main() {
+      float ratio = uResolution.x / uResolution.y;
+      vec2 uv = vUv;
+
+      // Mouse influence — creates the spotlight/glow circle
+      vec2 normUv = uv * 2.0 - 1.0;
+      normUv.x *= ratio;
+      vec2 normMouse = uMouse * 2.0 - 1.0;
+      normMouse.x *= ratio;
+      float circle = distance(normUv, normMouse);
+      circle *= noise(uv);  // add noise distortion to spotlight edge
+      float progress = smoothstep(0., 0.5, circle) + (1. - uMovement);
+
+      // Sample video texture
+      vec3 tex = texture(tMap, vUvMap).rgb;
+
+      // Apply glow
+      progress /= uRadius;
+      float brightness = max(0., (1. - progress));
+      float sides = abs(uv.x * 2. - 1.);
+      brightness *= (uIntensity * 2.1 + sides * 0.2 * smoothstep(0., 0.8, 1. - uv.y));
+
+      float initBright = (tex.r + tex.g + tex.b) / 3.0;
+      brightness = initBright * brightness;
+      tex += brightness * uColor;
+
+      // Grain
+      vec3 g = grain(tex, vUv);
+      tex = g;
+
+      // Darkness
+      tex = mix(tex, vec3(0.), uDarkness);
+
+      // Dark blue background color: #020917
+      vec3 darkBlue = vec3(0.0078, 0.0353, 0.0902);
+
+      // Bottom gradient mask
+      float gradientMask = smoothstep(0.0, 0.04, uv.y);
+      tex = mix(darkBlue, tex, gradientMask);
+
+      // Intro fade from black
+      fragColor = vec4(mix(darkBlue, tex, uIntro), 1.0);
+    }
+  `;
+
+  // ========== WEBGL SETUP ==========
+
+  class HeroEffect {
+    constructor() {
+      this.mouse = { x: 0.5, y: 0.5 };
+      this.mouseTarget = { x: 0.5, y: 0.5 };
+      this.movement = 0;
+      this.uMovement = 2.0;   // starts at 2 (no glow visible), animates to 0
+      this.uIntro = 0;
+      this.isLoaded = false;
+      this.isReady = false;
+      this.time = 0;
+      this.resetTimeout = null;
+      this.program = null;
+      this.gl = null;
+      this.video = null;
+      this.texture = null;
+      this.uniforms = {};
+    }
+
+    async init(container) {
+      this.container = container;
+
+      // Create canvas
+      this.canvas = document.createElement('canvas');
+      this.canvas.style.cssText = 'display:block;width:100%;height:100%;position:absolute;left:0;top:0;';
+      container.appendChild(this.canvas);
+
+      // Init WebGL2
+      this.gl = this.canvas.getContext('webgl2', {
+        alpha: false,
+        antialias: false,
+        premultipliedAlpha: false,
+      });
+
+      if (!this.gl) {
+        console.warn('WebGL2 not available, falling back to video');
+        return;
+      }
+
+      // Hide the video fallback
+      const videoFallback = document.getElementById('video-fallback');
+      if (videoFallback) videoFallback.style.display = 'none';
+
+      const gl = this.gl;
+
+      // Create video element for texture
+      this.video = document.createElement('video');
+      this.video.src = 'https://fin.ai/img/home/hero_loop_nonoise.webm';
+      this.video.crossOrigin = 'anonymous';
+      this.video.autoplay = true;
+      this.video.loop = true;
+      this.video.muted = true;
+      this.video.playsInline = true;
+      this.video.setAttribute('playsinline', 'playsinline');
+
+      try {
+        await this.video.play();
+        await new Promise((resolve) => {
+          if (this.video.readyState >= 2) { resolve(); return; }
+          this.video.addEventListener('loadeddata', resolve, { once: true });
+        });
+      } catch (e) {
+        console.warn('Video autoplay blocked, using fallback');
+        if (videoFallback) videoFallback.style.display = '';
+        return;
+      }
+
+      this.isLoaded = true;
+
+      // Create texture
+      this.texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, this.texture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+      // Compile shaders
+      const vs = this._compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
+      const fs = this._compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
+      this.program = gl.createProgram();
+      gl.attachShader(this.program, vs);
+      gl.attachShader(this.program, fs);
+      gl.linkProgram(this.program);
+
+      if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+        console.error('Program link error:', gl.getProgramInfoLog(this.program));
+        return;
+      }
+
+      gl.useProgram(this.program);
+
+      // Full-screen triangle (covers viewport with single triangle)
+      const positionData = new Float32Array([-1, -1, 3, -1, -1, 3]);
+      const uvData = new Float32Array([0, 0, 2, 0, 0, 2]);
+
+      const vao = gl.createVertexArray();
+      gl.bindVertexArray(vao);
+
+      // Position attribute
+      const posBuf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+      gl.bufferData(gl.ARRAY_BUFFER, positionData, gl.STATIC_DRAW);
+      const posLoc = gl.getAttribLocation(this.program, 'position');
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      // UV attribute
+      const uvBuf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf);
+      gl.bufferData(gl.ARRAY_BUFFER, uvData, gl.STATIC_DRAW);
+      const uvLoc = gl.getAttribLocation(this.program, 'uv');
+      gl.enableVertexAttribArray(uvLoc);
+      gl.vertexAttribPointer(uvLoc, 2, gl.FLOAT, false, 0, 0);
+
+      // Cache uniform locations
+      const uNames = [
+        'uTime', 'uResolution', 'uMouse', 'uRadius', 'uMovement',
+        'tMap', 'uIntensity', 'uColor', 'uGrainAmount', 'uGrainMul',
+        'uGrainSpeed', 'uIntro', 'uDarkness', 'uvRepeat', 'uvOffset'
+      ];
+      for (const name of uNames) {
+        this.uniforms[name] = gl.getUniformLocation(this.program, name);
+      }
+
+      // Set static uniforms
+      gl.uniform1f(this.uniforms.uIntensity, CONFIG.uIntensity);
+      gl.uniform1f(this.uniforms.uRadius, CONFIG.uRadius);
+      gl.uniform3fv(this.uniforms.uColor, CONFIG.color);
+      gl.uniform1f(this.uniforms.uGrainAmount, CONFIG.grainAmount);
+      gl.uniform1f(this.uniforms.uGrainMul, CONFIG.grainMultiply ? 1.0 : 0.0);
+      gl.uniform1f(this.uniforms.uGrainSpeed, CONFIG.grainMvt ? CONFIG.grainSpeed : 0.0);
+      gl.uniform1f(this.uniforms.uDarkness, CONFIG.darkness);
+      gl.uniform1i(this.uniforms.tMap, 0);
+
+      // Resize & compute cover UVs
+      this.resize();
+
+      // Start render loop
+      this._lastTime = performance.now();
+      this._raf = requestAnimationFrame(this._loop.bind(this));
+
+      // Start intro animation
+      this._startIntro();
+
+      // Listen for mouse/touch
+      window.addEventListener('mousemove', this._onPointerMove.bind(this));
+      window.addEventListener('touchmove', this._onPointerMove.bind(this));
+      window.addEventListener('resize', this.resize.bind(this));
+
+      // Click to resume video (browser autoplay policy)
+      document.body.addEventListener('click', () => { this.video.play(); }, { once: false });
+    }
+
+    _compileShader(type, source) {
+      const gl = this.gl;
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+        console.error('Source:', source);
+      }
+      return shader;
+    }
+
+    _getCoverUV() {
+      const canvasW = this.canvas.width;
+      const canvasH = this.canvas.height;
+      const canvasAspect = canvasW / canvasH;
+      const videoAspect = this.video.videoWidth / this.video.videoHeight;
+
+      let repeat, offset;
+      if (canvasAspect / videoAspect > 1) {
+        repeat = [1, videoAspect / canvasAspect];
+      } else {
+        repeat = [canvasAspect / videoAspect, 1];
+      }
+      offset = [(1 - repeat[0]) / 2, (1 - repeat[1]) / 2];
+      return { repeat, offset };
+    }
+
+    resize() {
+      if (!this.gl || !this.container) return;
+      const dpr = Math.min(window.devicePixelRatio, 2);
+      const w = this.container.offsetWidth;
+      const h = this.container.offsetHeight;
+      this.canvas.width = w * dpr;
+      this.canvas.height = h * dpr;
+      this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+
+      if (this.isLoaded && this.video.videoWidth > 0) {
+        const { repeat, offset } = this._getCoverUV();
+        this.gl.useProgram(this.program);
+        this.gl.uniform2fv(this.uniforms.uvRepeat, repeat);
+        this.gl.uniform2fv(this.uniforms.uvOffset, offset);
+        this.gl.uniform2f(this.uniforms.uResolution, this.canvas.width, this.canvas.height);
+      }
+
+      this.containerRect = this.container.getBoundingClientRect();
+      this.containerTopInit = this.containerRect.top + window.scrollY;
+    }
+
+    _startIntro() {
+      // Animate uMovement from current value to 0 over 1s
+      // Animate uIntro from 0 to 1 over 1s
+      this.mouseTarget = { x: 0.5, y: 0.25 };
+      this.uMovement = 1.0;
+      this.uIntro = 1.0;
+      this.isReady = false;
+
+      const startTime = performance.now();
+      const duration = 1000;
+
+      const animateIntro = () => {
+        const elapsed = performance.now() - startTime;
+        const t = Math.min(elapsed / duration, 1);
+
+        // Ease: cubic-bezier(.455, .03, .515, .955) approximation
+        const ease = t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+        this.uMovement = 1.0 - ease;
+
+        if (t < 1) {
+          requestAnimationFrame(animateIntro);
+        } else {
+          this.uMovement = 0;
+          this.isReady = true;
+        }
+      };
+      requestAnimationFrame(animateIntro);
+    }
+
+    _onPointerMove(e) {
+      if (!this.isLoaded || !this.isReady || !this.containerRect) return;
+
+      let clientX, clientY;
+      if (e.touches) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
+      const x = (clientX - this.containerRect.left) / this.containerRect.width;
+      const y = 1 - (clientY + window.scrollY - this.containerTopInit) / this.containerRect.height;
+
+      this.mouseTarget = { x, y };
+
+      // Animate uMovement to 1 (glow active)
+      if (this.movement !== 1) {
+        this.movement = 1;
+        this._animateMovement(1, 1000, 'easeOut');
+      }
+
+      // Reset movement after 300ms of inactivity
+      clearTimeout(this.resetTimeout);
+      this.resetTimeout = setTimeout(() => {
+        this.movement = 0;
+        this._animateMovement(0, 1000, 'easeInOut');
+      }, 300);
+    }
+
+    _animateMovement(target, duration, easing) {
+      const start = this.uMovement;
+      const startTime = performance.now();
+      if (this._movementRaf) cancelAnimationFrame(this._movementRaf);
+
+      const animate = () => {
+        const elapsed = performance.now() - startTime;
+        let t = Math.min(elapsed / duration, 1);
+
+        if (easing === 'easeOut') {
+          t = 1 - Math.pow(1 - t, 3);
+        } else if (easing === 'easeInOut') {
+          t = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        this.uMovement = start + (target - start) * t;
+
+        if (elapsed < duration) {
+          this._movementRaf = requestAnimationFrame(animate);
+        }
+      };
+      this._movementRaf = requestAnimationFrame(animate);
+    }
+
+    _loop(now) {
+      if (!this.isLoaded) {
+        this._raf = requestAnimationFrame(this._loop.bind(this));
+        return;
+      }
+
+      const delta = Math.min(now - this._lastTime, 128); // cap at ~8fps min
+      this._lastTime = now;
+
+      const gl = this.gl;
+      gl.useProgram(this.program);
+
+      // Update time
+      this.time += CONFIG.speed / 100 * delta / 16;
+      gl.uniform1f(this.uniforms.uTime, this.time);
+
+      // Update video texture
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.texture);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, this.video);
+
+      // Lerp mouse position (smoothing factor 0.06)
+      if (this.isReady) {
+        this.mouse.x += (this.mouseTarget.x - this.mouse.x) * 0.06;
+        this.mouse.y += (this.mouseTarget.y - this.mouse.y) * 0.06;
+      }
+
+      // Update dynamic uniforms
+      gl.uniform2f(this.uniforms.uMouse, this.mouse.x, this.mouse.y);
+      gl.uniform1f(this.uniforms.uMovement, this.uMovement);
+      gl.uniform1f(this.uniforms.uIntro, this.uIntro);
+
+      // Draw
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      this._raf = requestAnimationFrame(this._loop.bind(this));
+    }
+  }
+
+  // ========== INITIALIZATION ==========
+  const effect = new HeroEffect();
+  const container = document.getElementById('canvas-container');
+
+  // Check for WebGL2 support (original does this check too)
+  const testCanvas = document.createElement('canvas');
+  const hasWebGL2 = !!testCanvas.getContext('webgl2');
+
+  // Only init on desktop (original checks max-width: 1024px)
+  const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+
+  if (hasWebGL2 && !isMobile) {
+    effect.init(container);
+  } else {
+    // On mobile or without WebGL2, the <video> fallback is already visible
+    console.log('Using video fallback (mobile or no WebGL2)');
+  }
+})();
+</script>
+
+</body>
+</html>

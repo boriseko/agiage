@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGI Age — Hero Intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Sunflower Sunrise palette */
+  --sun-100: #FFFDE7;
+  --sun-200: #FFF9C4;
+  --sun-300: #FFF59D;
+  --sun-400: #FFE082;
+  --sun-500: #FFD54F;
+  --sun-600: #FFC107;
+  --sun-700: #FFB300;
+  --sun-800: #FFA000;
+  --sun-900: #FF8F00;
+  --white: #FFFFFF;
+  --text: #1A1A1A;
+  --text-mid: #6B6B6B;
+  --text-light: #A0A0A0;
+  --text-on-gold: #4A4A4A;
+  --grad-warm: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
+  --grad-hero: linear-gradient(180deg, #FFFDE7 0%, #FFF59D 30%, #FFE082 60%, #FFC107 85%, #FFA000 100%);
+  --grad-radial: radial-gradient(circle at 50% 40%, #FFF59D 0%, #FFE082 35%, #FFC107 65%, #FFA000 100%);
+}
+
+body {
+  font-family: 'Geist', -apple-system, sans-serif;
+  background: var(--white);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* === LAYER 1: ВАЙБ—КОДИНГ (behind) === */
+.intro-layer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  z-index: 1;
+}
+
+.intro-text {
+  display: flex;
+  align-items: baseline;
+  font-family: 'Geist', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 9vw, 7rem);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.intro-text.visible { opacity: 1; }
+
+.intro-vibe {
+  color: var(--text);
+}
+.intro-dash {
+  color: var(--sun-500);
+  font-weight: 400;
+  margin: 0 0.1em;
+  opacity: 0.4;
+}
+.intro-coding {
+  color: var(--text-mid);
+}
+
+/* === LAYER 2: THE PAGE (falls from above) === */
+.hero-page {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  transform: translateY(-105%);
+  will-change: transform;
+
+  /* Hero gradient background */
+  background: var(--grad-hero);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Radial glow overlay */
+.hero-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 35%, rgba(255,255,255,0.5) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Grain texture */
+.hero-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Bottom fade to white */
+.hero-page-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to top, var(--white), transparent);
+  pointer-events: none;
+}
+
+/* Shadow on the bottom edge of falling page */
+.hero-page-shadow {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* === HERO CONTENT (on the falling page) === */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 60px 40px;
+  max-width: 680px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.15s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.15s;
+}
+.hero-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-logo {
+  font-family: 'Geist', sans-serif;
+  font-size: clamp(52px, 12vw, 120px);
+  font-weight: 800;
+  color: var(--text-on-gold);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  margin-bottom: 24px;
+}
+
+.hero-h1 {
+  font-family: 'Geist', sans-serif;
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 700;
+  color: var(--text-on-gold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-size: clamp(14px, 1.8vw, 17px);
+  font-weight: 400;
+  color: var(--text-on-gold);
+  opacity: 0.6;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-meta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-on-gold);
+  opacity: 0.4;
+  letter-spacing: 0.06em;
+  margin-bottom: 32px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 40px;
+  background: var(--grad-warm);
+  color: white;
+  font-family: 'Geist', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 160, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255, 160, 0, 0.35);
+}
+
+/* === REPLAY === */
+.replay-btn {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  font-family: 'Geist', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+.replay-btn:hover {
+  background: rgba(255,255,255,0.95);
+  border-color: rgba(0,0,0,0.14);
+}
+.replay-btn svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+
+<!-- Layer 1: ВАЙБ—КОДИНГ -->
+<div class="intro-layer" id="introLayer">
+  <div class="intro-text" id="introText">
+    <span class="intro-vibe">ВАЙБ</span>
+    <span class="intro-dash">&mdash;</span>
+    <span class="intro-coding">КОДИНГ</span>
+  </div>
+</div>
+
+<!-- Layer 2: Hero page (falls from top) -->
+<div class="hero-page" id="heroPage">
+  <div class="hero-page-shadow" id="heroShadow"></div>
+  <div class="hero-content" id="heroContent">
+    <div class="hero-logo">ВАЙБ</div>
+    <h1 class="hero-h1">Зарабатывай больше с помощью ИИ — на вайбе</h1>
+    <p class="hero-sub">Неважно, чем ты занимаешься — ИИ усилит тебя в разы. Создавай, автоматизируй, запускай новое. Без кода, без опыта — и с кайфом от процесса.</p>
+    <p class="hero-meta">7 уроков · живые эфиры · результат с первого занятия</p>
+    <button class="hero-cta">Хочу на курс</button>
+  </div>
+  <div class="hero-page-fade"></div>
+</div>
+
+<button class="replay-btn" id="replayBtn" onclick="play()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+  Replay
+</button>
+
+<script>
+var introText = document.getElementById('introText');
+var heroPage = document.getElementById('heroPage');
+var heroContent = document.getElementById('heroContent');
+var heroShadow = document.getElementById('heroShadow');
+var raf = null;
+var timers = [];
+
+// Easings
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+function easeOutBounce(t) {
+  if (t < 1/2.75) return 7.5625*t*t;
+  if (t < 2/2.75) return 7.5625*(t-=1.5/2.75)*t+0.75;
+  if (t < 2.5/2.75) return 7.5625*(t-=2.25/2.75)*t+0.9375;
+  return 7.5625*(t-=2.625/2.75)*t+0.984375;
+}
+// Custom: mostly smooth fall with gentle settle at the end
+function easePageDrop(t) {
+  // Accelerate in, then gentle overshoot-settle
+  if (t < 0.65) {
+    // ease-in (accelerating fall)
+    var p = t / 0.65;
+    return p * p * 0.65;
+  } else {
+    // ease-out with tiny bounce
+    var p = (t - 0.65) / 0.35;
+    var base = 0.65 + easeOutCubic(p) * 0.35;
+    // Micro-bounce: overshoot by 1.5% then settle
+    var bounce = Math.sin(p * Math.PI) * 0.015 * (1 - p);
+    return base + bounce;
+  }
+}
+
+function play() {
+  // Cleanup
+  if (raf) cancelAnimationFrame(raf);
+  timers.forEach(clearTimeout);
+  timers = [];
+
+  // Reset
+  introText.classList.remove('visible');
+  heroPage.style.transform = 'translateY(-105%)';
+  heroPage.style.transition = 'none';
+  heroContent.classList.remove('show');
+  heroShadow.style.opacity = '0';
+
+  // Timeline
+  // 0-500ms: fade in ВАЙБ—КОДИНГ
+  // 500-1400ms: hold (user reads)
+  // 1400-2200ms: page drops from top (800ms fall)
+  // 2200ms+: hero content fades in
+
+  var T_SHOW = 200;
+  var T_HOLD = 1400;
+  var T_DROP_START = T_HOLD;
+  var T_DROP_DUR = 850;
+  var T_DROP_END = T_DROP_START + T_DROP_DUR;
+
+  // Show intro text
+  timers.push(setTimeout(function() {
+    introText.classList.add('visible');
+  }, T_SHOW));
+
+  // Page drop animation
+  var startTime = null;
+
+  function tick(now) {
+    if (!startTime) startTime = now;
+    var t = now - startTime;
+
+    if (t < T_DROP_START) {
+      // Waiting
+      raf = requestAnimationFrame(tick);
+      return;
+    }
+
+    var dropProgress = Math.min((t - T_DROP_START) / T_DROP_DUR, 1);
+    var easedProgress = easePageDrop(dropProgress);
+
+    // Page moves from -105% to 0%
+    var y = -105 + 105 * easedProgress;
+    heroPage.style.transform = 'translateY(' + y + '%)';
+
+    // Shadow appears during fall, fades at settle
+    if (dropProgress < 0.7) {
+      heroShadow.style.opacity = Math.min(1, dropProgress * 2);
+    } else {
+      heroShadow.style.opacity = Math.max(0, 1 - (dropProgress - 0.7) / 0.3);
+    }
+
+    if (dropProgress >= 1) {
+      // Page landed — show content
+      heroContent.classList.add('show');
+      return;
+    }
+
+    raf = requestAnimationFrame(tick);
+  }
+
+  raf = requestAnimationFrame(tick);
+}
+
+// Auto-play
+window.addEventListener('load', function() {
+  document.fonts.ready.then(function() {
+    setTimeout(play, 200);
+  });
+});
+</script>
+
+</body>
+</html>

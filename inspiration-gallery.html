@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGI Age — Website Inspiration Gallery</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #f8f8f8;
+    color: #111;
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #555;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 100px;
+    background: white;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: #111;
+    color: white;
+    border-color: #111;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    border-color: #ccc;
+  }
+
+  .card-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 8s ease;
+  }
+
+  .card:hover .card-img-wrap img {
+    transform: translateY(-20%);
+  }
+
+  .card-img-wrap .theme-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+  }
+
+  .theme-light {
+    background: rgba(255,255,255,0.85);
+    color: #333;
+  }
+
+  .theme-dark {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+  }
+
+  .theme-both {
+    background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(0,0,0,0.7));
+    color: #333;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .card-rank {
+    font-size: 13px;
+    font-weight: 800;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  .card-url {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444;
+    margin-bottom: 12px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #f3f3f3;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .tag.highlight {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .tag.effect {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+
+  .tag.edtech {
+    background: #fce4ec;
+    color: #c62828;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 48px 0 24px;
+    padding-top: 24px;
+    border-top: 2px solid #eee;
+  }
+
+  .section-title:first-of-type {
+    border-top: none;
+    margin-top: 0;
+  }
+
+  .fallback-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>AGI Age Inspiration</h1>
+<p class="subtitle">20 лучших сайтов для вдохновения. Кликни на карточку чтобы открыть сайт. Hover = scroll preview.</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#e8f5e9; border:1px solid #2e7d32"></div> Можно стырить</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e3f2fd; border:1px solid #1565c0"></div> Крутой эффект</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fce4ec; border:1px solid #c62828"></div> EdTech</div>
+</div>
+
+<h2 class="section-title">TIER S — Обязательно изучить</h2>
+
+<div class="grid">
+
+  <!-- 1. Stripe -->
+  <a class="card" href="https://stripe.com" target="_blank" data-category="gradient animations light">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://stripe.com" loading="lazy" alt="Stripe"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Stripe</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Stripe</span>
+        <span class="card-rank">#01</span>
+      </div>
+      <div class="card-url">stripe.com</div>
+      <div class="card-desc">Эталон mesh-gradient анимации (синий-фиолетовый-розовый). Идеальный whitespace, sharp типографика. Каждый элемент в движении, но не раздражает.</div>
+      <div class="card-tags">
+        <span class="tag effect">Mesh Gradient</span>
+        <span class="tag effect">Animations</span>
+        <span class="tag highlight">Gradient effect open-source</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 2. Linear -->
+  <a class="card" href="https://linear.app" target="_blank" data-category="glassmorphism animations dark">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://linear.app" loading="lazy" alt="Linear"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Linear</div>'">
+      <span class="theme-badge theme-dark">Dark</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Linear</span>
+        <span class="card-rank">#02</span>
+      </div>
+      <div class="card-url">linear.app</div>
+      <div class="card-desc">Породил целый тренд "linear design". Bold типографика, glassmorphism, shimmer эффекты. Smooth transitions.</div>
+      <div class="card-tags">
+        <span class="tag effect">Glassmorphism</span>
+        <span class="tag effect">Shimmer</span>
+        <span class="tag highlight">Open-source клон!</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 3. Amie -->
+  <a class="card" href="https://www.amie.so" target="_blank" data-category="animations light motion">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://www.amie.so" loading="lazy" alt="Amie"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Amie</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Amie</span>
+        <span class="card-rank">#03</span>
+      </div>
+      <div class="card-url">amie.so</div>
+      <div class="card-desc">Золотой стандарт motion design на светлом фоне. Framer Motion анимации стали референсом для всего design community.</div>
+      <div class="card-tags">
+        <span class="tag effect">Framer Motion</span>
+        <span class="tag effect">Scroll Animations</span>
+        <span class="tag highlight">Туториал воспроизведения</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 4. Vercel -->
+  <a class="card" href="https://vercel.com" target="_blank" data-category="minimal light typography">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://vercel.com" loading="lazy" alt="Vercel"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Vercel</div>'">
+      <span class="theme-badge theme-both">Both</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Vercel</span>
+        <span class="card-rank">#04</span>
+      </div>
+      <div class="card-url">vercel.com</div>
+      <div class="card-desc">Чистый чёрно-белый с стратегическими gradient акцентами. Geist typeface, grid layout, smooth page transitions.</div>
+      <div class="card-tags">
+        <span class="tag effect">Geist Font</span>
+        <span class="tag">Clean Grid</span>
+        <span class="tag highlight">Design Guidelines публичны</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 5. AuthKit -->
+  <a class="card" href="https://www.authkit.com" target="_blank" data-category="light typography clean">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://www.authkit.com" loading="lazy" alt="AuthKit"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>AuthKit</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">AuthKit by WorkOS</span>
+        <span class="card-rank">#05</span>
+      </div>
+      <div class="card-url">authkit.com</div>
+      <div class="card-desc">Crisp белая основа + azure blue + soft purple. Bold sans-serif, illustrative line art, micro-animations. Идеальная светлая тема.</div>
+      <div class="card-tags">
+        <span class="tag effect">Micro-animations</span>
+        <span class="tag">White + Blue</span>
+        <span class="tag">Line Art</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 6. Brilliant -->
+  <a class="card" href="https://brilliant.org" target="_blank" data-category="light edtech gradient animations">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://brilliant.org" loading="lazy" alt="Brilliant"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Brilliant</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Brilliant</span>
+        <span class="card-rank">#06</span>
+      </div>
+      <div class="card-url">brilliant.org</div>
+      <div class="card-desc">Лучший edtech референс! Iridescent градиенты, interactive bouncy кнопки, Rive-powered анимации. Section-by-section gradient shifts.</div>
+      <div class="card-tags">
+        <span class="tag edtech">EdTech</span>
+        <span class="tag effect">Rive Animations</span>
+        <span class="tag effect">Iridescent Gradient</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 7. Design+Code -->
+  <a class="card" href="https://designcode.io" target="_blank" data-category="dark edtech glassmorphism 3d">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://designcode.io" loading="lazy" alt="Design+Code"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Design+Code</div>'">
+      <span class="theme-badge theme-dark">Dark</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Design+Code</span>
+        <span class="card-rank">#07</span>
+      </div>
+      <div class="card-url">designcode.io</div>
+      <div class="card-desc">Прямой курсовой сайт! Glassmorphism 40px blur, 3D perspective transforms на card mockups, wave SVG backgrounds. Premium educational aesthetic.</div>
+      <div class="card-tags">
+        <span class="tag edtech">Курсовой сайт</span>
+        <span class="tag effect">Glassmorphism</span>
+        <span class="tag effect">3D Cards</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<h2 class="section-title">TIER A — Сильные референсы</h2>
+
+<div class="grid">
+
+  <!-- 8. Craft -->
+  <a class="card" href="https://craft.do" target="_blank" data-category="light glassmorphism warm">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://craft.do" loading="lazy" alt="Craft"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Craft</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Craft</span>
+        <span class="card-rank">#08</span>
+      </div>
+      <div class="card-url">craft.do</div>
+      <div class="card-desc">Soft beige фоны, blue градиенты, glass-morphism. Paper textures, cloud illustrations. Notebook-like feel, тёплый и уютный.</div>
+      <div class="card-tags">
+        <span class="tag effect">Glassmorphism</span>
+        <span class="tag">Warm Beige</span>
+        <span class="tag">Textures</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 9. Rise Plasma -->
+  <a class="card" href="https://riseplasma.com" target="_blank" data-category="light glassmorphism 3d">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://riseplasma.com" loading="lazy" alt="Rise Plasma"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Rise Plasma</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Rise Plasma</span>
+        <span class="card-rank">#09</span>
+      </div>
+      <div class="card-url">riseplasma.com</div>
+      <div class="card-desc">Light glassmorphism! Frosted glass, staggered reveals, glass card hover с 3D rotation. Testimonial carousel с progress bars. Gold highlights.</div>
+      <div class="card-tags">
+        <span class="tag effect">Glass on Light</span>
+        <span class="tag effect">3D Hover</span>
+        <span class="tag">Gold Accent</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 10. Superpower -->
+  <a class="card" href="https://superpower.com" target="_blank" data-category="light 3d threejs">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://superpower.com" loading="lazy" alt="Superpower"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Superpower</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Superpower</span>
+        <span class="card-rank">#10</span>
+      </div>
+      <div class="card-url">superpower.com</div>
+      <div class="card-desc">3D hero (Three.js + Blender). "Wormhole" анимация — masterclass. Light theme + Tailwind. Awwwards case study winner.</div>
+      <div class="card-tags">
+        <span class="tag effect">Three.js 3D</span>
+        <span class="tag effect">Immersive Hero</span>
+        <span class="tag">Awwwards</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 11. Framer -->
+  <a class="card" href="https://www.framer.com" target="_blank" data-category="light animations bento">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://www.framer.com" loading="lazy" alt="Framer"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Framer</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Framer</span>
+        <span class="card-rank">#11</span>
+      </div>
+      <div class="card-url">framer.com</div>
+      <div class="card-desc">Scrolling animation, SaaS layout. Clean типографика, smooth section transitions, bento grid feature showcase.</div>
+      <div class="card-tags">
+        <span class="tag effect">Bento Grid</span>
+        <span class="tag effect">Scroll Animation</span>
+        <span class="tag">SaaS Layout</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 12. Notion -->
+  <a class="card" href="https://www.notion.com" target="_blank" data-category="light illustrations warm">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://www.notion.com" loading="lazy" alt="Notion"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Notion</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Notion</span>
+        <span class="card-rank">#12</span>
+      </div>
+      <div class="card-url">notion.com</div>
+      <div class="card-desc">Тёплые пастельные цвета, playful кастомные иллюстрации. Bento grid, color-blocked секции. Friendly и approachable.</div>
+      <div class="card-tags">
+        <span class="tag">Warm Pastels</span>
+        <span class="tag effect">Bento Grid</span>
+        <span class="tag">Illustrations</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 13. Anthropic -->
+  <a class="card" href="https://anthropic.com" target="_blank" data-category="light minimal ai">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://anthropic.com" loading="lazy" alt="Anthropic"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Anthropic</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Anthropic</span>
+        <span class="card-rank">#13</span>
+      </div>
+      <div class="card-url">anthropic.com</div>
+      <div class="card-desc">Чистый, минимальный подход к AI. Простые, эффективные анимации. Идеальный баланс между доступом к инструментам и website experience.</div>
+      <div class="card-tags">
+        <span class="tag edtech">AI Company</span>
+        <span class="tag">Clean Minimal</span>
+        <span class="tag">Simple Animations</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 14. Lovable -->
+  <a class="card" href="https://lovable.dev" target="_blank" data-category="light gradient warm">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://lovable.dev" loading="lazy" alt="Lovable"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Lovable</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Lovable</span>
+        <span class="card-rank">#14</span>
+      </div>
+      <div class="card-url">lovable.dev</div>
+      <div class="card-desc">Warm off-white (#fcfbf8), fluid gradient hero (blue->pink->orange), masonry cards. System-aware light/dark toggle. Content-over-decoration.</div>
+      <div class="card-tags">
+        <span class="tag effect">Fluid Gradient</span>
+        <span class="tag">Warm Off-White</span>
+        <span class="tag">Masonry</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 15. Pitch -->
+  <a class="card" href="https://pitch.com" target="_blank" data-category="light typography cards">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://pitch.com" loading="lazy" alt="Pitch"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Pitch</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Pitch</span>
+        <span class="card-rank">#15</span>
+      </div>
+      <div class="card-url">pitch.com</div>
+      <div class="card-desc">Tagline-driven design. Card galleries с hover states. Animated nav dropdowns с preview images. Layered background objects для depth.</div>
+      <div class="card-tags">
+        <span class="tag effect">Animated Nav</span>
+        <span class="tag">Card Gallery</span>
+        <span class="tag">Depth Layers</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 16. Bohdan -->
+  <a class="card" href="https://bohdan.design" target="_blank" data-category="light interactions animations">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://bohdan.design" loading="lazy" alt="Bohdan"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>bohdan.design</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">bohdan.design</span>
+        <span class="card-rank">#16</span>
+      </div>
+      <div class="card-url">bohdan.design</div>
+      <div class="card-desc">Framer Awards 2025 — Best Interactions. Каждый hover, tap, transition имеет intention. Micro-interactions that make the site feel alive.</div>
+      <div class="card-tags">
+        <span class="tag effect">Micro-interactions</span>
+        <span class="tag">Framer Awards</span>
+        <span class="tag">Intentional Motion</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 17. Raycast -->
+  <a class="card" href="https://raycast.com" target="_blank" data-category="dark gradient typography">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://raycast.com" loading="lazy" alt="Raycast"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Raycast</div>'">
+      <span class="theme-badge theme-dark">Dark</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Raycast</span>
+        <span class="card-rank">#17</span>
+      </div>
+      <div class="card-url">raycast.com</div>
+      <div class="card-desc">Gradient overlays, crisp типографика, minimalist copy. Subtle motion cues. Free Figma file для воспроизведения!</div>
+      <div class="card-tags">
+        <span class="tag effect">Gradient Overlays</span>
+        <span class="tag">Crisp Typography</span>
+        <span class="tag highlight">Free Figma File</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 18. Loom -->
+  <a class="card" href="https://loom.com" target="_blank" data-category="light minimal typography">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://www.loom.com" loading="lazy" alt="Loom"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Loom</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Loom</span>
+        <span class="card-rank">#18</span>
+      </div>
+      <div class="card-url">loom.com</div>
+      <div class="card-desc">Extreme minimalism done right. Clear headlines, generous white space, bold типографика. Animation blends into UX naturally.</div>
+      <div class="card-tags">
+        <span class="tag">Extreme Minimal</span>
+        <span class="tag">Bold Type</span>
+        <span class="tag">Whitespace</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 19. Temper Studio -->
+  <a class="card" href="https://temper.studio" target="_blank" data-category="light minimal ecommerce">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://temper.studio" loading="lazy" alt="Temper Studio"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Temper Studio</div>'">
+      <span class="theme-badge theme-light">Light</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Temper Studio</span>
+        <span class="card-rank">#19</span>
+      </div>
+      <div class="card-url">temper.studio</div>
+      <div class="card-desc">Framer Awards 2025 — Best Visual Design. "Light, calm, and visually effortless." Минималист e-commerce. Simple и elevated одновременно.</div>
+      <div class="card-tags">
+        <span class="tag">Framer Awards</span>
+        <span class="tag">Calm Design</span>
+        <span class="tag">Visual Design</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 20. Panton Vitra -->
+  <a class="card" href="https://panton.vitra.com" target="_blank" data-category="colorful animations scroll">
+    <div class="card-img-wrap">
+      <img src="https://image.thum.io/get/width/800/crop/500/https://panton.vitra.com" loading="lazy" alt="Panton Vitra"
+           onerror="this.parentElement.innerHTML='<div class=fallback-img>Panton Vitra</div>'">
+      <span class="theme-badge theme-light">Colorful</span>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-title">Panton Vitra</span>
+        <span class="card-rank">#20</span>
+      </div>
+      <div class="card-url">panton.vitra.com</div>
+      <div class="card-desc">Framer Awards 2025 — Best Animations. Geometric animations + vibrant colors + fluid motion. Highly engaging scrolling experience.</div>
+      <div class="card-tags">
+        <span class="tag effect">Geometric Animations</span>
+        <span class="tag effect">Fluid Motion</span>
+        <span class="tag">Vibrant Colors</span>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<div style="margin-top:60px; padding:30px; background:white; border-radius:16px; border:1px solid #e5e5e5;">
+  <h3 style="font-size:20px; font-weight:800; margin-bottom:16px;">Open-source ресурсы для воспроизведения</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px;">
+    <a href="https://github.com/frontendfyi/rebuilding-linear.app" target="_blank" style="padding:12px; background:#f8f8f8; border-radius:8px; text-decoration:none; color:#111; font-size:14px;">
+      <strong>Linear Clone</strong> — Next.js + Tailwind + Framer Motion
+    </a>
+    <a href="https://kevinhufnagl.com/how-to-stripe-website-gradient-effect/" target="_blank" style="padding:12px; background:#f8f8f8; border-radius:8px; text-decoration:none; color:#111; font-size:14px;">
+      <strong>Stripe Gradient</strong> — CSS/WebGL mesh gradient tutorial
+    </a>
+    <a href="https://www.frontend.fyi/tutorials/recreating-amie-so-animations-with-framer-motion" target="_blank" style="padding:12px; background:#f8f8f8; border-radius:8px; text-decoration:none; color:#111; font-size:14px;">
+      <strong>Amie.so Animations</strong> — Framer Motion tutorial
+    </a>
+    <a href="https://vercel.com/design/guidelines" target="_blank" style="padding:12px; background:#f8f8f8; border-radius:8px; text-decoration:none; color:#111; font-size:14px;">
+      <strong>Vercel Guidelines</strong> — Design system + Geist font
+    </a>
+  </div>
+</div>
+
+<p style="margin-top:40px; color:#999; font-size:13px; text-align:center;">
+  AGI Age Inspiration Gallery — April 2026. Превью загружаются через image.thum.io
+</p>
+
+</body>
+</html>

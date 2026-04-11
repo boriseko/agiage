@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StringTune Effects — Extracted Reference</title>
+<style>
+/*
+ * =============================================================
+ * STRINGTUNE EFFECTS — COMPLETE EXTRACTED REFERENCE
+ * Source: https://string-tune.fiddle.digital
+ * Library: @fiddle-digital/string-tune v1.1.53
+ * =============================================================
+ */
+
+/* --- GLOBAL SETUP --- */
+:root {
+  --c-white: #fff;
+  --c-white-rgb: 255,255,255;
+  --c-black: #101214;
+  --c-black-rgb: 16,18,20;
+  --c-grey: #a7a7b4;
+  --c-grey-rgb: 167,167,180;
+  --c-grey-dark: #544d56;
+  --c-grey-dark-rgb: 84,77,86;
+  --f-cubic: cubic-bezier(0.19, 1, 0.22, 1);
+  --f-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --g-gap: 1rem;
+  --h5: 1.25rem;
+  --h6: 1rem;
+  --p: 1rem;
+  --m: 0.5rem;
+  --border-radius: 2rem;
+}
+
+@property --progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --progress-slice {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --spotlight-angle {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --spotlight-distance {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--c-black);
+  color: var(--c-white);
+  line-height: 1.5;
+}
+
+
+/* =============================================================
+ * 1. CHAR WAVE REVEAL (.-mo-in-out / .-mo-in)
+ *
+ * How it works:
+ * - Text is split into individual <span class="-s-char"> elements by JS
+ * - Each char gets --char-index (0..N) set as inline style
+ * - Parent gets --char-global-total (total char count)
+ * - --progress-slice (0..1) is driven by scroll position via JS
+ * - Per-char --local-progress offsets the wave using char-index
+ * - --animation-wave is clamped to create reveal/hide plateau
+ * - opacity, blur, scale are all derived from --animation-wave
+ * ============================================================= */
+
+/* Base: any splitted text */
+.-splitted {
+  display: flex;
+  flex-wrap: wrap;
+}
+.-splitted .-s-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.3em;
+  will-change: contents;
+}
+.-splitted .-s-char,
+.-splitted .-s-word {
+  display: inline-flex;
+  will-change: contents;
+}
+/* Chars inside words need no gap */
+.-splitted .-s-word .-s-char {
+  margin: 0;
+}
+/* Center alignment variant */
+.-splitted.-tac,
+.-splitted.-tac .-s-char,
+.-splitted.-tac .-s-line,
+.-splitted.-tac .-s-word {
+  justify-content: center;
+}
+
+/* WAVE IN + OUT (appears then disappears as scroll continues) */
+.-mo-in-out {
+  --char-total-global: var(--char-total);
+}
+.-mo-in-out .-s-char {
+  --show-plato: 3;
+  --hide-plato: 3;
+  /*
+   * FORMULA BREAKDOWN:
+   * base = --progress-slice (0..1, from scroll)
+   * char_offset = (--char-index / (--char-global-total * 3)) * 0.5
+   * --local-progress = (base - char_offset) / 0.5
+   *   → each char starts its animation slightly later (staggered wave)
+   *   → dividing by 0.5 stretches progress to use the full range
+   *
+   * --animation-wave = min(local * show_plato, (1 - local) * hide_plato)
+   *   → first half ramps UP (multiplied by 3 for steeper rise)
+   *   → second half ramps DOWN from 1 (multiplied by 3 for steeper fall)
+   *   → the min() creates a tent/triangle shape per character
+   */
+  --local-progress: (var(--progress-slice) - (var(--char-index) / (var(--char-global-total) * 3)) * 0.5) / 0.5;
+  --animation-wave: min(
+    var(--local-progress) * var(--show-plato),
+    (1 - var(--local-progress)) * var(--hide-plato)
+  );
+  content: normal;
+  display: inline-flex;
+  /* Blur: 0 when wave=1, up to 0.15em when wave=0 (max 0.5em) */
+  filter: blur(clamp(0px, (1 - var(--animation-wave)) * .15em, .5em));
+  /* Opacity: directly from wave, clamped 0..1 */
+  opacity: clamp(0, var(--animation-wave), 1);
+  overflow: visible;
+  /* Scale: 2 when wave=0, shrinks to 1 when wave=1 */
+  scale: calc(2 - clamp(0, var(--animation-wave) / 1, 1));
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+/* WAVE IN ONLY (appears and stays) */
+.-mo-in {
+  --char-total-global: var(--char-total);
+}
+.-mo-in .-s-char {
+  --show-plato: 3;
+  /* Same formula but wave only goes UP, capped at 1 */
+  --local-progress: (var(--progress-slice) - (var(--char-index) / (var(--char-total-global) * 3)) * 0.5) / 0.5;
+  --animation-wave: min(var(--local-progress) * var(--show-plato), 1);
+  content: normal;
+  display: inline-flex;
+  filter: blur(clamp(0px, (1 - var(--animation-wave)) * .15em, .15em));
+  opacity: clamp(0, var(--animation-wave), 1);
+  overflow: visible;
+  scale: calc(2 - clamp(0, var(--animation-wave) / 1, 1));
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+
+/* =============================================================
+ * 2. LINE-WORD REVEAL (.-a-split)
+ *
+ * How it works:
+ * - Text is split into .-s-line > .-s-word spans by JS
+ * - Each line gets --line-index as inline style
+ * - Lines start translated 100% down, words 150% down
+ * - contain:paint on line clips the word during translate
+ * - When .-inview class is added (by IntersectionObserver),
+ *   lines and words transition to translate(0)
+ * - Stagger: each line delayed by --line-index * 0.0375s
+ * ============================================================= */
+
+.-a-split .-s-line {
+  contain: paint;             /* clips the word during slide-up */
+  margin: -.1em 0;            /* compensate padding */
+  padding: .1em 0;
+  transform: translateZ(0);   /* GPU layer */
+  transition: translate .9s var(--f-cubic);
+  translate: 0 100%;          /* hidden state: shifted down by full line height */
+}
+
+.-a-split .-s-line .-s-word {
+  transform: translateZ(0);
+  translate: 0 150%;          /* word shifts extra for overlap effect */
+}
+
+/* VISIBLE STATE (triggered by adding .-inview class) */
+.-a-split.-inview .-s-line {
+  transition-delay: calc(var(--line-index) * .0375s);  /* stagger per line */
+  translate: 0 0;             /* slide to final position */
+}
+
+.-a-split.-inview .-s-line .-s-word {
+  transition: translate .9s var(--f-cubic);
+  translate: 0 0;
+}
+
+
+/* =============================================================
+ * 3. SEQUENTIAL TEXT REPLACE (progress-part + mo-in-out)
+ *
+ * HTML structure (from the actual page):
+ *
+ *   <section string="progress" string-id="transition"
+ *            string-enter-vp="bottom" string-exit-vp="bottom"
+ *            string-offset-top="50%" string-offset-bottom="-10%">
+ *
+ *     <!-- Full-section progress tracker (invisible) -->
+ *     <span string="progress" string-id="progressTransit"
+ *           string-enter-vp="top"
+ *           style="position:absolute;left:0;top:0;height:100%;width:100%">
+ *     </span>
+ *
+ *     <!-- Each phrase gets a sub-range of the section's progress -->
+ *     <span class="-mo-in-out"
+ *           string="split|progress-part"
+ *           string-split="word|char"
+ *           string-part-of="transition[0.05-0.65]">
+ *       Concentrate
+ *     </span>
+ *     <span class="-mo-in-out"
+ *           string="split|progress-part"
+ *           string-split="word|char"
+ *           string-part-of="transition[0.35-0.95]">
+ *       Keep Scrolling
+ *     </span>
+ *     <span class="-mo-in-out"
+ *           string="split|progress-part"
+ *           string-split="word|char"
+ *           string-part-of="transition[0.65-1.15]">
+ *       The Spirit Awakened
+ *     </span>
+ *   </section>
+ *
+ * PARSING: "transition[0.05-0.65]" is parsed by:
+ *   function ei(str) {
+ *     let match = str.match(/([^[]+)\[([\d.]+)-([\d.]+)\]/);
+ *     return match ? { id: match[1], start: parseFloat(match[2]), end: parseFloat(match[3]) } : null;
+ *   }
+ *
+ * REMAPPING: Section progress (0..1) is mapped to sub-range:
+ *   function ii(progress, rangeStart, rangeEnd, outMin, outMax) {
+ *     return outMin + (outMax - outMin) * (progress - rangeStart) / (rangeEnd - rangeStart);
+ *   }
+ *   // Then clamped: Math.max(0, Math.min(1, result))
+ *   // And set: element.style.setProperty('--progress-slice', clamped)
+ *
+ * So "transition[0.05-0.65]" means:
+ *   - When section progress = 0.05, this element's --progress-slice = 0
+ *   - When section progress = 0.65, this element's --progress-slice = 1
+ *   - Overlapping ranges (0.05-0.65, 0.35-0.95, 0.65-1.15) create
+ *     the sequential reveal/hide cycle
+ *
+ * CSS is identical to .-mo-in-out above — only --progress-slice differs.
+ * ============================================================= */
+
+
+/* =============================================================
+ * 4. SCROLL PROGRESS TRACKING
+ *
+ * StringTune's scroll progress pipeline:
+ *
+ * A. POSITION CALCULATION (I.calculatePositions):
+ *    For each tracked element, computes start and end scroll
+ *    positions based on enter-el, enter-vp, exit-el, exit-vp,
+ *    offset-top, offset-bottom.
+ *
+ *    Default settings:
+ *      enter-el: "top"      (element's top edge)
+ *      enter-vp: "bottom"   (viewport's bottom edge)
+ *      exit-el:  "bottom"   (element's bottom edge)
+ *      exit-vp:  "top"      (viewport's top edge)
+ *
+ *    The position calculation (simplified from actual code):
+ *
+ *      // Where element enters viewport
+ *      if (enter-el == "top" && enter-vp == "bottom")
+ *        startPos = elementTop - viewportHeight - offsetBottom;
+ *      // Where element exits viewport
+ *      if (exit-el == "bottom" && exit-vp == "top")
+ *        endPos = elementTop + elementHeight + offsetTop;
+ *
+ *      differencePosition = endPos - startPos;
+ *      startPosition = startPos - scrollTopPosition;
+ *
+ * B. RAW PROGRESS (At.computeRawProgress):
+ *      progress = (currentScroll - startPosition) / differencePosition
+ *      // Clamped to 0..1 with epsilon threshold (1e-4)
+ *
+ * C. EASING (optional):
+ *      If an easing function is specified, it transforms the
+ *      raw progress before applying.
+ *
+ * D. CSS OUTPUT:
+ *      Sets --progress on the element via inline style.
+ *      For progress-part children, also sets --progress-slice.
+ *
+ * E. BATCHED UPDATES (for performance):
+ *      Uses Float64Array buffers for batch computation:
+ *      computeRawProgressBatch(scrollPos, starts[], diffs[], out[], count)
+ *
+ * ============================================================= */
+
+
+/* =============================================================
+ * 5. SPOTLIGHT BUTTON GLARE
+ *
+ * Three layers:
+ *   .button           — the button itself
+ *   .button::after    — border gradient (uses --spotlight-angle)
+ *   .button .glare    — frosted glass overlay (backdrop-filter)
+ *   .glare::before    — cursor-following light orb (uses --x, --y)
+ * ============================================================= */
+
+/* --- BUTTON BASE --- */
+.button {
+  --border-radius: 2rem;
+  align-items: center;
+  border-radius: var(--border-radius);
+  box-shadow: 0 .8rem .8rem rgba(var(--c-grey-dark-rgb), .05);
+  display: inline-flex;
+  justify-content: center;
+  min-height: calc(var(--h6) + var(--g-gap));
+  padding: calc(var(--g-gap)/2) calc(var(--g-gap)*2);
+  position: relative;
+  /* Desktop enhancement */
+  min-height: auto;
+  padding: calc(var(--g-gap)/2) calc(var(--h6));
+  scale: 1 1;
+  transform: scale(1);
+  transition: scale .45s var(--f-bounce),
+              transform .3s var(--f-bounce),
+              opacity .3s var(--f-cubic);
+  will-change: auto;
+}
+
+/* --- BORDER GRADIENT (::after) --- */
+/*
+ * The border is a gradient that rotates based on cursor angle.
+ * --spotlight-angle: degrees from cursor to element center
+ * --spotlight-distance: pixel distance from cursor to element center
+ *
+ * The gradient opacity fades as cursor moves away:
+ *   calc(.5 - var(--spotlight-distance) / 4000)
+ *   → At distance 0: opacity 0.5
+ *   → At distance 2000: opacity 0
+ *
+ * Uses mask trick for border-only gradient:
+ *   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+ *   mask-composite: exclude;
+ *   padding: 1px;  ← this becomes the border width
+ */
+.button::after {
+  /* Mobile fallback: static diagonal gradient */
+  background-image: linear-gradient(
+    -45deg,
+    rgba(var(--c-white-rgb), .5) 0,
+    rgba(var(--c-white-rgb), 0) 40%,
+    rgba(var(--c-white-rgb), 0) 60%,
+    rgba(var(--c-white-rgb), .5) 100%
+  );
+  box-sizing: border-box;
+  content: "";
+  display: block;
+  mask: linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+  /* Shared positioning with .glare */
+  border-radius: var(--border-radius);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateZ(0);
+  width: 100%;
+  will-change: auto;
+}
+
+/* Desktop: spotlight-driven gradient rotation */
+@media (min-width: 1024px) {
+  .button::after {
+    background-image: linear-gradient(
+      calc(1deg * var(--spotlight-angle)),
+      rgba(var(--c-white-rgb), calc(.5 - var(--spotlight-distance) / 4000)) 0,
+      rgba(var(--c-white-rgb), 0) 40%,
+      rgba(var(--c-white-rgb), 0) 60%,
+      rgba(var(--c-white-rgb), calc(.5 - var(--spotlight-distance) / 4000)) 100%
+    );
+  }
+  /* Stronger variant for light backgrounds */
+  .-light .button::after {
+    background-image: linear-gradient(
+      calc(1deg * var(--spotlight-angle)),
+      rgba(var(--c-white-rgb), calc(.75 - var(--spotlight-distance) / 4000)) 0,
+      rgba(var(--c-white-rgb), .2) 40%,
+      rgba(var(--c-white-rgb), .2) 60%,
+      rgba(var(--c-white-rgb), calc(.75 - var(--spotlight-distance) / 4000)) 100%
+    );
+  }
+  /* Subtle variant for minimal buttons */
+  .button.-min::after {
+    background-image: linear-gradient(
+      calc(1deg * var(--spotlight-angle)),
+      rgba(var(--c-white-rgb), calc(.2 - var(--spotlight-distance) / 4000)) 0,
+      rgba(var(--c-white-rgb), 0) 40%,
+      rgba(var(--c-white-rgb), 0) 60%,
+      rgba(var(--c-white-rgb), calc(.2 - var(--spotlight-distance) / 4000)) 100%
+    );
+  }
+}
+
+/* --- GLARE OVERLAY --- */
+.button .glare {
+  align-items: center;
+  backdrop-filter: blur(.4rem) saturate(120%);
+  -webkit-backdrop-filter: blur(.4rem) saturate(120%);
+  background-color: #a7a7b415;
+  box-shadow: inset 0 0 .4rem .2rem rgba(var(--c-black-rgb), .1);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  contain: paint;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  transform: translateZ(0);
+  transition: background-color .6s var(--f-cubic),
+              box-shadow 1.8s var(--f-cubic),
+              scale .45s var(--f-bounce),
+              transform .3s var(--f-bounce),
+              backdrop-filter .6s var(--f-cubic);
+  will-change: auto;
+}
+
+/* --- GLARE LIGHT ORB (::before) --- */
+/*
+ * --x and --y come from the cursor module (range: -1 to 1, center = 0)
+ * The orb image follows the cursor within the button bounds.
+ */
+.button .glare::before {
+  aspect-ratio: 1/1;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: block;
+  min-height: 100%;
+  opacity: 0;
+  transform: translate3d(calc(100% * var(--x)), calc(100% * var(--y)), 0);
+  width: max(100%, 100vh);
+}
+
+/* --- BUTTON TEXT --- */
+.button span:not(.glare) {
+  color: var(--c-grey);
+  margin-right: auto;
+  pointer-events: none;
+  position: relative;
+  white-space: nowrap;
+}
+
+/* --- HOVER STATES --- */
+/*
+ * --skX, --skY are derived from cursor position (--x, --y)
+ * within the button's Vue component, providing a skew effect.
+ * On hover, the button/glare scale changes based on cursor offset.
+ */
+.button:not(.-disabled):hover .glare,
+.button:not(.-disabled):hover::after {
+  scale: 1 calc(1 + var(--skY) / 1.5);
+  transform: scaleX(calc(1 + var(--skX) / 1.5));
+  transition: background-color .6s var(--f-cubic),
+              box-shadow 1.8s var(--f-cubic),
+              scale .3s var(--f-bounce),
+              transform .45s var(--f-bounce),
+              backdrop-filter .6s var(--f-cubic);
+}
+
+.button:not(.-disabled):hover .glare::before {
+  animation: opacityGlare 1.5s var(--f-cubic) forwards;
+}
+
+/* --- ACTIVE (PRESS) STATE --- */
+.button:not(.-disabled):active {
+  scale: 1 calc(1 + var(--skY) / 2);
+  transform: scaleX(calc(1 + var(--skX) / 2));
+  transition: scale 0s, transform 0s, opacity 0s;
+}
+.button:not(.-disabled):active .glare {
+  background-color: #a7a7b425;
+  transition: background-color 0s, box-shadow 0s, scale 0s, transform 0s, backdrop-filter 0s;
+}
+.button:not(.-disabled):active .glare::before {
+  animation: none;
+  opacity: .6;
+}
+
+@keyframes opacityGlare {
+  0% { opacity: .6; }
+  to { opacity: .1; }
+}
+
+
+/* =============================================================
+ * DEMO STYLES
+ * ============================================================= */
+.demo-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+.demo-section h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--c-grey);
+  margin-bottom: 2rem;
+}
+.spacer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-grey-dark);
+  font-size: 1.5rem;
+}
+.wave-text {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+.split-reveal-text {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  max-width: 600px;
+  text-align: center;
+}
+.sequential-section {
+  min-height: 300vh;
+  position: relative;
+}
+.sequential-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sequential-text {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+}
+.sequential-text .phrase {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+.button-demo {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* === PIXEL POSITION DIVIDERS === */
+.px-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 24px;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(var(--c-grey-rgb), 0.4);
+  user-select: none;
+}
+.px-divider::before,
+.px-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--c-grey-rgb), 0.15), transparent);
+}
+</style>
+</head>
+<body>
+
+<div class="spacer">Scroll down to see effects</div>
+
+<!-- ============================================================= -->
+<!-- DEMO 1: Char Wave Reveal -->
+<!-- ============================================================= -->
+<div class="demo-section" id="wave-section">
+  <h2>1. Char Wave Reveal</h2>
+  <div class="wave-text -mo-in-out -splitted -tac" id="wave-text">
+    <!-- JS will split this into chars -->
+    The Spirit Awakened
+  </div>
+</div>
+
+<div class="px-divider" data-px></div>
+
+<!-- ============================================================= -->
+<!-- DEMO 2: Line-Word Reveal -->
+<!-- ============================================================= -->
+<div class="demo-section" id="split-section">
+  <h2>2. Line-Word Reveal</h2>
+  <div class="split-reveal-text -a-split" id="split-text">
+    StringTune is a cutting-edge JavaScript library designed to deliver
+    high-performance, modular web effects.
+  </div>
+</div>
+
+<div class="spacer">Keep scrolling...</div>
+
+<!-- ============================================================= -->
+<!-- DEMO 3: Sequential Text Replace -->
+<!-- ============================================================= -->
+<div class="sequential-section" id="sequential-section">
+  <div class="sequential-sticky">
+    <div>
+      <h2 style="text-align:center">3. Sequential Text Replace</h2>
+      <div class="sequential-text" id="sequential-text">
+        <!-- Three phrases with overlapping progress ranges -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="spacer">Keep scrolling...</div>
+
+<!-- ============================================================= -->
+<!-- DEMO 5: Spotlight Button Glare -->
+<!-- ============================================================= -->
+<div class="demo-section" id="button-section">
+  <h2>5. Spotlight Button</h2>
+  <div class="button-demo">
+    <div class="button" id="btn1" string="spotlight|cursor">
+      <span class="glare"></span>
+      <span>Get Started</span>
+    </div>
+    <div class="button" id="btn2" string="spotlight|cursor">
+      <span class="glare"></span>
+      <span>Learn More</span>
+    </div>
+  </div>
+</div>
+
+<div class="px-divider" data-px></div>
+<div class="spacer">End of demo</div>
+
+
+<script>
+/**
+ * =============================================================
+ * STRINGTUNE EFFECTS — COMPLETE STANDALONE IMPLEMENTATION
+ *
+ * This reproduces the exact behavior of the StringTune library
+ * for the 5 requested effects, extracted from the minified source.
+ * =============================================================
+ */
+
+// ---------------------------------------------------------------
+// UTILITY: Lerp and Easing
+// ---------------------------------------------------------------
+function lerp(from, to, progress) {
+  return (to - from) * progress;
+}
+function clamp(val, min, max) {
+  return Math.max(min, Math.min(max, val));
+}
+
+// ---------------------------------------------------------------
+// 1. TEXT SPLITTING (creates -s-line, -s-word, -s-char spans)
+//
+// From StringTune's split module. The library tokenizes text,
+// measures line breaks, then rebuilds the DOM with spans.
+// This simplified version handles the essential structure.
+// ---------------------------------------------------------------
+function splitText(element, mode = 'word|char') {
+  const text = element.textContent.trim();
+  const modes = mode.split('|');
+  const doLines = modes.includes('line') || modes.includes('charLine') || modes.includes('wordLine');
+  const doWords = modes.includes('word') || modes.includes('charWord') || modes.includes('wordLine');
+  const doChars = modes.includes('char') || modes.includes('charLine') || modes.includes('charWord');
+
+  // Split into words
+  const words = text.split(/\s+/);
+  let globalCharIndex = 0;
+  const globalCharTotal = text.replace(/\s/g, '').length;
+
+  // For line detection: render words to measure line breaks
+  const fragment = document.createDocumentFragment();
+  const tempWords = [];
+
+  // First pass: create word spans to measure positions
+  const measureContainer = element.cloneNode(false);
+  measureContainer.style.cssText = element.style.cssText;
+  measureContainer.style.visibility = 'hidden';
+  measureContainer.style.position = 'absolute';
+  measureContainer.style.width = element.offsetWidth + 'px';
+  document.body.appendChild(measureContainer);
+
+  words.forEach((word, wi) => {
+    const span = document.createElement('span');
+    span.style.display = 'inline';
+    span.textContent = word + (wi < words.length - 1 ? ' ' : '');
+    measureContainer.appendChild(span);
+    tempWords.push({ word, element: span });
+  });
+
+  // Detect line breaks
+  let lines = [[]];
+  let lastTop = null;
+  tempWords.forEach(tw => {
+    const rect = tw.element.getBoundingClientRect();
+    if (lastTop !== null && Math.abs(rect.top - lastTop) > 2) {
+      lines.push([]);
+    }
+    lines[lines.length - 1].push(tw.word);
+    lastTop = rect.top;
+  });
+  document.body.removeChild(measureContainer);
+
+  // Second pass: build the actual DOM
+  element.innerHTML = '';
+  element.setAttribute('aria-label', text);
+  let wordIndexGlobal = 0;
+
+  lines.forEach((lineWords, lineIndex) => {
+    const lineSpan = document.createElement('span');
+    lineSpan.setAttribute('aria-hidden', 'true');
+    lineSpan.classList.add('-s-line');
+    lineSpan.style.setProperty('--line-index', String(lineIndex));
+    lineSpan.style.setProperty('--word-total', String(lineWords.length));
+
+    lineWords.forEach((word, wordIndex) => {
+      const wordSpan = document.createElement('span');
+      wordSpan.setAttribute('aria-hidden', 'true');
+      wordSpan.classList.add('-s-word');
+      wordSpan.style.setProperty('--word-index', String(wordIndexGlobal));
+      wordSpan.style.setProperty('--char-total', String(word.length));
+      wordSpan.setAttribute('data-split-content', word);
+
+      if (doChars) {
+        // Split word into characters
+        Array.from(word).forEach((char) => {
+          const charSpan = document.createElement('span');
+          charSpan.setAttribute('aria-hidden', 'true');
+          charSpan.classList.add('-s-char');
+          charSpan.textContent = char;
+          charSpan.setAttribute('data-split-content', char);
+          charSpan.style.setProperty('--char-index', String(globalCharIndex));
+          globalCharIndex++;
+          wordSpan.appendChild(charSpan);
+        });
+      } else {
+        wordSpan.textContent = word;
+      }
+
+      lineSpan.appendChild(wordSpan);
+      wordIndexGlobal++;
+
+      // Add space between words (not after last)
+      if (wordIndex < lineWords.length - 1) {
+        wordSpan.appendChild(document.createTextNode(' '));
+      }
+    });
+
+    // Add line break between lines (not after last)
+    if (lineIndex < lines.length - 1) {
+      lineSpan.appendChild(document.createElement('br'));
+    }
+
+    element.appendChild(lineSpan);
+  });
+
+  // Set global totals on the element
+  element.style.setProperty('--char-global-total', String(globalCharTotal));
+  element.style.setProperty('--word-global-total', String(wordIndexGlobal));
+  element.style.setProperty('--line-global-total', String(lines.length));
+  // Also set --char-total at element level (used by .-mo-in-out)
+  element.style.setProperty('--char-total', String(globalCharTotal));
+
+  element.classList.add('-splitted');
+}
+
+
+// ---------------------------------------------------------------
+// 4. SCROLL PROGRESS TRACKING
+//
+// Extracted from StringTune's Progress module (class Ie).
+// Tracks each section's scroll position and maps to 0..1 progress.
+//
+// Core formula (At.computeRawProgress):
+//   progress = (currentScroll - startPosition) / differencePosition
+//   clamped to [0, 1]
+//
+// Position calculation (I.calculatePositions):
+//   With default enter-el="top", enter-vp="bottom", exit-el="bottom", exit-vp="top":
+//     startPosition = elementTop - viewportHeight
+//     endPosition   = elementTop + elementHeight
+//     differencePosition = endPosition - startPosition
+// ---------------------------------------------------------------
+
+class ScrollProgressTracker {
+  constructor() {
+    this.tracked = []; // { element, config, startPos, diffPos, progress }
+    this.partOfListeners = []; // { element, parentId, rangeStart, rangeEnd }
+    this.onScrollBound = this.onScroll.bind(this);
+    this.onResizeBound = this.onResize.bind(this);
+    window.addEventListener('scroll', this.onScrollBound, { passive: true });
+    window.addEventListener('resize', this.onResizeBound, { passive: true });
+  }
+
+  /**
+   * Track an element's scroll progress.
+   * @param {HTMLElement} element
+   * @param {Object} config - { id, enterEl, enterVp, exitEl, exitVp, offsetTop, offsetBottom, key, easing }
+   */
+  track(element, config = {}) {
+    const entry = {
+      element,
+      config: {
+        id: config.id || null,
+        enterEl: config.enterEl || 'top',
+        enterVp: config.enterVp || 'bottom',
+        exitEl: config.exitEl || 'bottom',
+        exitVp: config.exitVp || 'top',
+        offsetTop: config.offsetTop || 0,
+        offsetBottom: config.offsetBottom || 0,
+        key: config.key || '--progress',
+        easing: config.easing || null,
+      },
+      startPos: 0,
+      diffPos: 0,
+      progress: 0,
+      progressRaw: 0,
+      callbacks: [],
+    };
+    this.tracked.push(entry);
+    this.calculatePositions(entry);
+    this.updateProgress(entry);
+    return entry;
+  }
+
+  /**
+   * Register a progress-part element.
+   * Listens to a parent tracker's progress and maps to sub-range.
+   *
+   * @param {HTMLElement} element
+   * @param {string} partOf - e.g. "transition[0.05-0.65]"
+   */
+  trackPart(element, partOf) {
+    // Parse: "id[start-end]"
+    const match = partOf.match(/([^[]+)\[([\d.]+)-([\d.]+)\]/);
+    if (!match) return null;
+
+    const id = match[1];
+    const rangeStart = parseFloat(match[2]);
+    const rangeEnd = parseFloat(match[3]);
+
+    const entry = { element, parentId: id, rangeStart, rangeEnd };
+    this.partOfListeners.push(entry);
+    return entry;
+  }
+
+  /**
+   * Calculate enter/exit scroll positions.
+   * Extracted from StringTune I.calculatePositions.
+   */
+  calculatePositions(entry) {
+    const { element, config } = entry;
+    const rect = element.getBoundingClientRect();
+    const scrollTop = window.scrollY;
+    const vpHeight = window.innerHeight;
+
+    const elTop = rect.top + scrollTop;
+    const elHeight = rect.height;
+
+    let startPos = 0;
+    let endPos = 0;
+
+    // Start position (when element enters viewport)
+    const { enterEl, enterVp, exitEl, exitVp, offsetBottom, offsetTop } = config;
+
+    if (enterEl === 'top' && enterVp === 'bottom') {
+      startPos = elTop - vpHeight - offsetBottom;
+    } else if (enterEl === 'top' && enterVp === 'top') {
+      startPos = elTop - offsetBottom;
+    } else if (enterEl === 'bottom' && enterVp === 'bottom') {
+      startPos = elTop + elHeight - vpHeight - offsetBottom;
+    } else if (enterEl === 'bottom' && enterVp === 'top') {
+      startPos = elTop + elHeight - offsetBottom;
+    }
+
+    // End position (when element exits viewport)
+    if (exitEl === 'bottom' && exitVp === 'top') {
+      endPos = elTop + elHeight + offsetTop;
+    } else if (exitEl === 'top' && exitVp === 'top') {
+      endPos = elTop + offsetTop;
+    } else if (exitEl === 'top' && exitVp === 'bottom') {
+      endPos = elTop - vpHeight + offsetTop;
+    } else if (exitEl === 'bottom' && exitVp === 'bottom') {
+      endPos = elTop + elHeight - vpHeight + offsetTop;
+    }
+
+    entry.startPos = startPos;
+    entry.diffPos = endPos - startPos;
+  }
+
+  /**
+   * Core progress formula from At.computeRawProgress:
+   *   progress = (currentScroll - startPosition) / differencePosition
+   */
+  updateProgress(entry) {
+    const scrollY = window.scrollY;
+    if (entry.diffPos === 0) {
+      entry.progressRaw = 0;
+    } else {
+      let raw = (scrollY - entry.startPos) / entry.diffPos;
+      // Epsilon threshold from StringTune
+      if (raw <= 0) raw = 0;
+      else if (raw >= 1) raw = 1;
+      else {
+        const eps = 1e-4;
+        if (raw > 1 - eps) raw = 1;
+        else if (raw < eps) raw = 0;
+      }
+      entry.progressRaw = raw;
+    }
+
+    // Apply easing if provided
+    const easing = entry.config.easing;
+    entry.progress = typeof easing === 'function' ? easing(entry.progressRaw) : entry.progressRaw;
+
+    // Write CSS variable
+    const key = entry.config.key;
+    entry.element.style.setProperty(key, entry.progress.toFixed(6));
+
+    // Emit to progress-part listeners
+    if (entry.config.id) {
+      this.partOfListeners.forEach(listener => {
+        if (listener.parentId === entry.config.id) {
+          // Map parent progress to sub-range
+          // From StringTune: ii(progress, start, end, 0, 1)
+          //   = 0 + (1 - 0) * (progress - start) / (end - start)
+          const mapped = (entry.progress - listener.rangeStart) / (listener.rangeEnd - listener.rangeStart);
+          const clamped = Math.max(0, Math.min(1, mapped));
+          listener.element.style.setProperty('--progress-slice', clamped.toFixed(6));
+        }
+      });
+    }
+
+    // Call registered callbacks
+    entry.callbacks.forEach(cb => cb(entry.progress));
+  }
+
+  onScroll() {
+    this.tracked.forEach(entry => this.updateProgress(entry));
+  }
+
+  onResize() {
+    this.tracked.forEach(entry => {
+      this.calculatePositions(entry);
+      this.updateProgress(entry);
+    });
+  }
+
+  destroy() {
+    window.removeEventListener('scroll', this.onScrollBound);
+    window.removeEventListener('resize', this.onResizeBound);
+  }
+}
+
+
+// ---------------------------------------------------------------
+// INVIEW OBSERVER
+//
+// From StringTune's object model. Each tracked element
+// gets .-inview class when it enters the viewport.
+// The show/hide methods in the source:
+//   show() { this.htmlElement.classList.add("-inview"); }
+//   hide() { if (repeat) this.htmlElement.classList.remove("-inview"); }
+// ---------------------------------------------------------------
+
+class InviewObserver {
+  constructor(options = {}) {
+    this.elements = [];
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('-inview');
+        } else if (options.repeat) {
+          entry.target.classList.remove('-inview');
+        }
+      });
+    }, {
+      threshold: options.threshold || 0.1,
+      rootMargin: options.rootMargin || '0px',
+    });
+  }
+
+  observe(element) {
+    this.elements.push(element);
+    this.observer.observe(element);
+  }
+
+  destroy() {
+    this.observer.disconnect();
+  }
+}
+
+
+// ---------------------------------------------------------------
+// 5. SPOTLIGHT MODULE
+//
+// Extracted from StringTune's di (Spotlight) class.
+// Computes angle and distance from cursor to element center,
+// then writes --spotlight-angle and --spotlight-distance as CSS vars.
+//
+// Core math (Pe.computeStep):
+//   dx = cursorX - elementCenterX
+//   dy = cursorY - elementCenterY
+//   targetAngle = Math.atan2(dy, dx)
+//   targetDist = Math.sqrt(dx*dx + dy*dy) [or Math.min(dist, distMax)]
+//
+//   // Lerped smoothing:
+//   angle += (shortestAnglePath(angle, targetAngle) - angle) * lerp
+//   dist  += (targetDist - dist) * lerp
+//
+//   // Convert to CSS degrees (rotated -90 for gradient alignment):
+//   cssDeg = angle * (180/PI) - 90
+//   cssDist = dist (rounded to 1 decimal)
+//
+// Cursor module writes --x, --y (normalized -1..1) per element.
+// calculateOffset("center", pixelPos, dimension):
+//   return (pixelPos - dimension/2) / (dimension/2)
+// ---------------------------------------------------------------
+
+class SpotlightTracker {
+  constructor() {
+    this.elements = [];
+    this.cursorX = 0;
+    this.cursorY = 0;
+    this.rafId = null;
+    this.onMouseMoveBound = this.onMouseMove.bind(this);
+    this.updateBound = this.update.bind(this);
+    document.addEventListener('mousemove', this.onMouseMoveBound, { passive: true });
+    this.startLoop();
+  }
+
+  /**
+   * Track an element for spotlight + cursor effects.
+   * @param {HTMLElement} element
+   * @param {Object} config
+   */
+  track(element, config = {}) {
+    const entry = {
+      element,
+      lerp: config.lerp || 0.15,
+      deadzone: config.deadzone || 4,
+      distMax: config.distMax || 0,
+      angleThreshold: config.angleThreshold || 0.2,
+      distanceThreshold: config.distanceThreshold || 0.5,
+      // Spotlight state (from WeakMap ke() in source)
+      angle: 0,
+      dist: 0,
+      tAngle: 0,
+      tDist: 0,
+      prevDeg: NaN,
+      prevDist: NaN,
+      // Cursor state
+      mouseX: 0,
+      mouseY: 0,
+      mousePixelX: 0,
+      mousePixelY: 0,
+      isMouseOver: false,
+    };
+    this.elements.push(entry);
+    return entry;
+  }
+
+  onMouseMove(e) {
+    this.cursorX = e.clientX;
+    this.cursorY = e.clientY;
+  }
+
+  startLoop() {
+    const loop = () => {
+      this.update();
+      this.rafId = requestAnimationFrame(loop);
+    };
+    this.rafId = requestAnimationFrame(loop);
+  }
+
+  /**
+   * Update all tracked elements.
+   * Combines cursor module + spotlight module logic.
+   */
+  update() {
+    for (const entry of this.elements) {
+      const el = entry.element;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+
+      // --- CURSOR MODULE ---
+      // Check if cursor is over element
+      const isOver = (
+        this.cursorX >= rect.left &&
+        this.cursorX <= rect.right &&
+        this.cursorY >= rect.top &&
+        this.cursorY <= rect.bottom
+      );
+
+      let normalizedX, normalizedY;
+      const lerpFactor = entry.lerp;
+
+      if (isOver) {
+        // Pixel position relative to element
+        const px = this.cursorX - rect.left;
+        const py = this.cursorY - rect.top;
+
+        // Lerp pixel position
+        entry.mousePixelX += (px - entry.mousePixelX) * lerpFactor;
+        entry.mousePixelY += (py - entry.mousePixelY) * lerpFactor;
+
+        // Normalize to -1..1 (calculateOffset with "center" alignment)
+        // (pixelPos - dimension/2) / (dimension/2)
+        normalizedX = (entry.mousePixelX - rect.width / 2) / (rect.width / 2);
+        normalizedY = (entry.mousePixelY - rect.height / 2) / (rect.height / 2);
+        entry.isMouseOver = true;
+      } else {
+        // Lerp back to center
+        entry.mousePixelX += (rect.width / 2 - entry.mousePixelX) * lerpFactor;
+        entry.mousePixelY += (rect.height / 2 - entry.mousePixelY) * lerpFactor;
+        normalizedX = (entry.mousePixelX - rect.width / 2) / (rect.width / 2);
+        normalizedY = (entry.mousePixelY - rect.height / 2) / (rect.height / 2);
+        if (Math.abs(normalizedX) < 0.001 && Math.abs(normalizedY) < 0.001) {
+          normalizedX = 0;
+          normalizedY = 0;
+        }
+        entry.isMouseOver = false;
+      }
+
+      // Write --x, --y to element
+      el.style.setProperty('--x', normalizedX.toFixed(4));
+      el.style.setProperty('--y', normalizedY.toFixed(4));
+
+      // --- SPOTLIGHT MODULE ---
+      // Pe.computeStep extracted from the minified source:
+      const dx = this.cursorX - cx;
+      const dy = this.cursorY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      // Target angle (only update if beyond deadzone)
+      let targetAngle = entry.tAngle;
+      if (dist > entry.deadzone) {
+        targetAngle = Math.atan2(dy, dx);
+      }
+
+      // Target distance (optionally capped)
+      const targetDist = entry.distMax > 0 ? Math.min(dist, entry.distMax) : dist;
+
+      // Lerp angle with shortest-path wrapping
+      // From Ee() in source: wrap angle difference to [-PI, PI]
+      const TAU = Math.PI * 2;
+      let angleDiff = (targetAngle - entry.angle) % TAU;
+      if (angleDiff > Math.PI) angleDiff -= TAU;
+      if (angleDiff < -Math.PI) angleDiff += TAU;
+      const lerpedAngle = entry.angle + angleDiff * clamp(lerpFactor, 0, 1);
+
+      // Lerp distance
+      const lerpedDist = entry.dist + (targetDist - entry.dist) * clamp(lerpFactor, 0, 1);
+
+      // Convert to CSS degrees (rotated -90 for gradient alignment)
+      const degRaw = lerpedAngle * (180 / Math.PI) - 90;
+      const cssDeg = Math.round(degRaw * 10) / 10;
+      const cssDist = Math.round(lerpedDist * 10) / 10;
+
+      // Threshold check (only update CSS if changed enough)
+      const angleChanged = Number.isNaN(entry.prevDeg) || Math.abs(cssDeg - entry.prevDeg) > entry.angleThreshold;
+      const distChanged = Number.isNaN(entry.prevDist) || Math.abs(lerpedDist - entry.prevDist) > entry.distanceThreshold;
+
+      // Store state
+      entry.angle = lerpedAngle;
+      entry.dist = lerpedDist;
+      entry.tAngle = targetAngle;
+      entry.tDist = targetDist;
+
+      if (angleChanged || distChanged) {
+        // Write --spotlight-angle and --spotlight-distance
+        el.style.setProperty('--spotlight-angle', cssDeg);
+        el.style.setProperty('--spotlight-distance', cssDist);
+        entry.prevDeg = degRaw;
+        entry.prevDist = lerpedDist;
+      }
+
+      // Also compute --skX, --skY for button hover deformation
+      // These are derived from the normalized cursor position
+      // skX/skY represent how far off-center the cursor is
+      el.style.setProperty('--skX', (normalizedX * 0.05).toFixed(4));
+      el.style.setProperty('--skY', (normalizedY * 0.05).toFixed(4));
+    }
+  }
+
+  destroy() {
+    cancelAnimationFrame(this.rafId);
+    document.removeEventListener('mousemove', this.onMouseMoveBound);
+  }
+}
+
+
+// ---------------------------------------------------------------
+// INITIALIZATION
+// ---------------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollTracker = new ScrollProgressTracker();
+  const inviewObserver = new InviewObserver({ threshold: 0.1 });
+  const spotlightTracker = new SpotlightTracker();
+
+  // --- DEMO 1: Char Wave Reveal ---
+  const waveEl = document.getElementById('wave-text');
+  const waveSection = document.getElementById('wave-section');
+  splitText(waveEl, 'word|char');
+  // Track the section for scroll progress
+  const waveEntry = scrollTracker.track(waveSection, {
+    id: 'wave',
+    key: '--progress',
+    enterVp: 'bottom',
+    exitVp: 'top',
+  });
+  // Wire progress directly to --progress-slice on the text
+  waveEntry.callbacks.push((progress) => {
+    waveEl.style.setProperty('--progress-slice', progress.toFixed(6));
+  });
+
+  // --- DEMO 2: Line-Word Reveal ---
+  const splitEl = document.getElementById('split-text');
+  splitText(splitEl, 'wordLine');
+  inviewObserver.observe(splitEl);
+
+  // --- DEMO 3: Sequential Text Replace ---
+  const seqSection = document.getElementById('sequential-section');
+  const seqTextContainer = document.getElementById('sequential-text');
+  const phrases = [
+    { text: 'Concentrate', rangeStart: 0.05, rangeEnd: 0.65 },
+    { text: 'Keep Scrolling', rangeStart: 0.35, rangeEnd: 0.95 },
+    { text: 'The Spirit Awakened', rangeStart: 0.65, rangeEnd: 1.15 },
+  ];
+
+  // Track the section
+  scrollTracker.track(seqSection, {
+    id: 'sequential',
+    key: '--progress',
+    enterVp: 'bottom',
+    exitVp: 'bottom',
+    offsetTop: window.innerHeight * 0.5,
+    offsetBottom: -window.innerHeight * 0.1,
+  });
+
+  // Create phrase elements
+  phrases.forEach((p, i) => {
+    const span = document.createElement('span');
+    span.className = 'phrase -mo-in-out -splitted -tac';
+    span.textContent = p.text;
+    span.style.setProperty('--progress-slice', '0');
+    seqTextContainer.appendChild(span);
+
+    // Split into chars
+    splitText(span, 'word|char');
+
+    // Register as progress-part
+    scrollTracker.trackPart(span, `sequential[${p.rangeStart}-${p.rangeEnd}]`);
+  });
+
+  // --- DEMO 5: Spotlight Buttons ---
+  document.querySelectorAll('.button').forEach(btn => {
+    spotlightTracker.track(btn, { lerp: 0.15 });
+  });
+
+  // --- PIXEL DIVIDERS ---
+  function updatePxDividers() {
+    document.querySelectorAll('[data-px]').forEach(el => {
+      const top = Math.round(el.getBoundingClientRect().top + window.scrollY);
+      el.textContent = '\u2190 TOP: ' + top + ' PX \u2192';
+    });
+  }
+  updatePxDividers();
+  window.addEventListener('resize', updatePxDividers);
+  setTimeout(updatePxDividers, 500);
+
+  // --- Recalculate on resize ---
+  window.addEventListener('resize', () => {
+    // Re-split texts if needed (line breaks may change)
+  });
+});
+</script>
+
+</body>
+</html>

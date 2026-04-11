@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGI Age — Вайб</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'Geist',-apple-system,sans-serif;background:#fff;color:#1A1A1A;overflow-x:hidden}
+
+/* ============================================================
+   INTRO — white screen, ВАЙБ—КОДИНГ
+   ============================================================ */
+.intro-layer {
+  position:fixed;inset:0;z-index:10000;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;
+}
+.intro-text {
+  display:flex;align-items:baseline;
+  font-weight:800;font-size:clamp(3rem,9vw,7rem);
+  letter-spacing:-0.04em;line-height:0.9;white-space:nowrap;
+  opacity:0;transition:opacity 0.5s ease;
+}
+.intro-text.visible{opacity:1}
+.intro-vibe{color:#1A1A1A}
+.intro-dash{color:#FFD54F;font-weight:400;margin:0 0.12em;opacity:0.5}
+.intro-coding{color:#6B6B6B}
+
+/* ============================================================
+   HERO PAGE — drops from top, has gradient bg
+   ============================================================ */
+.hero-page {
+  position:fixed;inset:0;z-index:9999;
+  transform:translateY(-105%);
+  will-change:transform;
+  overflow-x:hidden;overflow-y:auto;
+  /* Sunrise gradient — exactly like brandbook */
+  background:linear-gradient(135deg, #FFF59D 0%, #FFD54F 35%, #FFA000 100%);
+  background-attachment:fixed;
+}
+
+/* Gradient blobs on top */
+.gradient-blobs {
+  position:fixed;inset:0;
+  filter:blur(60px);
+  opacity:0.6;
+  z-index:0;
+}
+.g-blob {
+  position:absolute;border-radius:50%;
+  width:80%;height:80%;
+  top:10%;left:10%;
+  mix-blend-mode:soft-light;
+}
+.g-blob-1 {
+  background:radial-gradient(circle, rgba(255,249,196,0.8) 0%, transparent 60%);
+  animation:b1 12s ease-in-out infinite;
+}
+.g-blob-2 {
+  background:radial-gradient(circle, rgba(255,179,0,0.5) 0%, transparent 60%);
+  animation:b2 10s ease-in-out infinite;
+}
+.g-blob-3 {
+  background:radial-gradient(circle, rgba(255,143,0,0.4) 0%, transparent 60%);
+  animation:b3 14s ease-in-out infinite;
+}
+
+@keyframes b1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5%,-8%) scale(1.15)}}
+@keyframes b2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8%,5%) scale(1.1)}}
+@keyframes b3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6%,6%) scale(0.9)}}
+
+/* Radial glow */
+.hero-page::before {
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 35%, rgba(255,255,255,0.4) 0%, transparent 70%);
+  pointer-events:none;z-index:1;
+}
+/* Grain */
+.hero-page::after {
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;opacity:0.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Shadow under falling page */
+.hero-page-shadow {
+  position:absolute;bottom:-30px;left:0;right:0;height:30px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.06),transparent);
+  pointer-events:none;opacity:0;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.hero-nav {
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 40px;opacity:0;
+}
+.hero-logo {
+  font-size:16px;font-weight:800;letter-spacing:0.2em;
+  text-transform:uppercase;color:#fff;opacity:0.9;
+}
+.hero-nav-links{display:flex;gap:8px;list-style:none}
+.hero-nav-links a {
+  font-size:14px;font-weight:500;color:#fff;
+  opacity:0.7;text-decoration:none;padding:8px 16px;border-radius:40px;
+  transition:opacity 0.2s,background 0.2s;
+}
+.hero-nav-links a:hover{opacity:1;background:rgba(255,255,255,0.2)}
+
+/* ============================================================
+   HERO CONTENT — Section 1 (ВАЙБ) — identical to section 2
+   ============================================================ */
+.hero-content {
+  position:relative;height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;z-index:10;padding:0 24px;
+  visibility:hidden;
+}
+.hero-content.show{visibility:visible}
+
+.hero-title {
+  font-size:clamp(80px, 20vw, 220px);
+  font-weight:900;
+  letter-spacing:-0.05em;
+  line-height:0.85;
+  margin-bottom:24px;
+  color:#fff;
+  text-shadow:0 2px 40px rgba(255,160,0,0.15);
+}
+.title-char {
+  display:inline-block;
+  will-change:transform,opacity;
+}
+
+.hero-subtitle { margin-bottom:24px; max-width:560px; }
+.subtitle-line {
+  font-size:clamp(17px, 2.2vw, 22px);
+  font-weight:500;
+  color:#fff;
+  text-shadow:0 1px 8px rgba(0,0,0,0.06);
+  line-height:1.6;
+}
+
+.hero-meta {
+  font-size:14px;font-weight:500;
+  color:#fff;opacity:0.65;
+  letter-spacing:0.04em;margin-bottom:28px;
+}
+
+.hero-cta {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:16px 36px;border-radius:40px;
+  background:rgba(255,255,255,0.25);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.4);
+  color:#fff;font-family:'Geist',sans-serif;font-size:16px;font-weight:600;
+  text-decoration:none;cursor:pointer;
+  box-shadow:0 2px 16px rgba(0,0,0,0.06);
+  transition:background 0.3s,transform 0.3s,box-shadow 0.3s;
+}
+.hero-cta:hover{background:rgba(255,255,255,0.4);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.1)}
+
+/* ============================================================
+   SECTION 2 — БУДУЩЕЕ (scrolls into view)
+   ============================================================ */
+.scroll-section {
+  position:relative;height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;z-index:10;padding:0 24px;
+}
+
+.section-title-big {
+  font-size:clamp(80px, 20vw, 220px);
+  font-weight:900;letter-spacing:-0.05em;
+  line-height:0.85;margin-bottom:24px;
+  color:#fff;
+  text-shadow:0 2px 40px rgba(255,160,0,0.15);
+}
+.section-sub-big {
+  font-size:clamp(17px,2.2vw,22px);
+  font-weight:500;color:#fff;
+  max-width:520px;margin:0 auto;line-height:1.6;
+  text-align:center;
+  text-shadow:0 1px 8px rgba(0,0,0,0.06);
+}
+
+/* ============================================================
+   SCROLL INDICATOR
+   ============================================================ */
+.scroll-indicator {
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:20;display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;
+}
+.scroll-text{font-size:10px;font-weight:600;letter-spacing:0.2em;color:#fff;opacity:0.7}
+.scroll-line{width:1px;height:32px;background:#fff;opacity:0.4;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.2;transform:scaleY(0.6)}50%{opacity:0.6;transform:scaleY(1)}}
+</style>
+</head>
+<body>
+
+<!-- ===== INTRO: ВАЙБ—КОДИНГ on white ===== -->
+<div class="intro-layer" id="introLayer">
+  <div class="intro-text" id="introText">
+    <span class="intro-vibe" id="introVibe">ВАЙБ</span>
+    <span class="intro-dash" id="introDash">&mdash;</span>
+    <span class="intro-coding" id="introCoding">КОДИНГ</span>
+  </div>
+</div>
+
+<!-- ===== HERO PAGE (drops from top) ===== -->
+<div class="hero-page" id="heroPage">
+  <div class="hero-page-shadow" id="heroShadow"></div>
+  <div class="gradient-blobs" aria-hidden="true">
+    <div class="g-blob g-blob-1"></div>
+    <div class="g-blob g-blob-2"></div>
+    <div class="g-blob g-blob-3"></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="hero-nav" id="heroNav">
+    <div class="hero-logo">AGI AGE</div>
+    <ul class="hero-nav-links">
+      <li><a href="#program">Программа</a></li>
+      <li><a href="#pricing">Тарифы</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Записаться</a></li>
+    </ul>
+  </nav>
+
+  <!-- Section 1: ВАЙБ -->
+  <div class="hero-content" id="heroContent">
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <div class="hero-subtitle">
+      <p class="subtitle-line">Зарабатывай больше с помощью ИИ —</p>
+      <p class="subtitle-line">на вайбе</p>
+    </div>
+    <p class="hero-meta">7 уроков · живые эфиры · результат с первого занятия</p>
+    <a href="#pricing" class="hero-cta">Хочу на курс</a>
+  </div>
+
+  <!-- no spacer needed, hero-content is 100vh -->
+
+  <!-- Section 2: БУДУЩЕЕ -->
+  <div class="scroll-section" id="section2">
+    <div>
+      <div class="section-title-big">БУДУЩЕЕ</div>
+      <div class="section-sub-big">Один навык меняет всё. Создавай, автоматизируй, запускай — без кода и без опыта.</div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator (in section 1 area) -->
+  <div class="scroll-indicator" id="scrollIndicator">
+    <span class="scroll-text">SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ============================================================
+// 1. INTRO → KICK → PAGE DROP → REVEAL
+// ============================================================
+(function() {
+  var introLayer = document.getElementById('introLayer');
+  var introText = document.getElementById('introText');
+  var introVibe = document.getElementById('introVibe');
+  var introDash = document.getElementById('introDash');
+  var introCoding = document.getElementById('introCoding');
+  var heroPage = document.getElementById('heroPage');
+  var heroShadow = document.getElementById('heroShadow');
+  var heroContent = document.getElementById('heroContent');
+  var heroNav = document.getElementById('heroNav');
+  var scrollInd = document.getElementById('scrollIndicator');
+  var heroTitle = document.getElementById('heroTitle');
+
+  // Build ВАЙБ chars
+  'ВАЙБ'.split('').forEach(function(ch) {
+    var s = document.createElement('span');
+    s.className = 'title-char';
+    s.textContent = ch;
+    heroTitle.appendChild(s);
+  });
+
+  function easeOutCubic(t){return 1-Math.pow(1-t,3)}
+  function easeOutQuint(t){return 1-Math.pow(1-t,5)}
+  function easePageDrop(t) {
+    if(t<0.6){var p=t/0.6;return p*p*0.6}
+    var p=(t-0.6)/0.4;var base=0.6+easeOutCubic(p)*0.4;
+    return base+Math.sin(p*Math.PI)*0.012*(1-p);
+  }
+
+  var done = false, raf = null;
+
+  function revealHero() {
+    // Make hero-page a normal scrollable div
+    heroPage.style.position = 'relative';
+    heroPage.style.transform = 'none';
+    introLayer.style.display = 'none';
+
+    // Show content
+    heroContent.classList.add('show');
+
+    var tl = gsap.timeline({ delay: 0.1 });
+
+    tl.from(heroNav, { y:-30, opacity:0, duration:0.8, ease:'power3.out' });
+
+    tl.from(heroTitle.querySelectorAll('.title-char'), {
+      y:180, opacity:0, duration:1.5, stagger:0.07, ease:'power4.out'
+    }, '-=0.3');
+
+    tl.from('.hero-content .subtitle-line', {
+      y:40, opacity:0, duration:0.9, stagger:0.15, ease:'power3.out'
+    }, '-=0.8');
+
+    tl.from('.hero-meta', {y:20,opacity:0,duration:0.6,ease:'power2.out'}, '-=0.5');
+    tl.from('.hero-cta', {y:20,opacity:0,duration:0.6,ease:'power2.out'}, '-=0.3');
+    tl.to(scrollInd, {opacity:1,duration:0.6,ease:'power2.out'}, '-=0.2');
+  }
+
+  function finish() {
+    if(done) return;
+    done = true;
+    if(raf) cancelAnimationFrame(raf);
+    revealHero();
+  }
+
+  // === TIMELINE ===
+  var T_SHOW=200, T_WINDUP=1100, T_HIT=1250, T_HIT_END=1370, T_FLY_END=1850;
+  var T_DROP_START=1950, T_DROP_DUR=850;
+  var startTime=null;
+
+  function tick(now) {
+    if(done) return;
+    if(!startTime) startTime=now;
+    var t=now-startTime;
+
+    // Fade in intro text
+    if(t>T_SHOW && t<T_SHOW+400) introText.style.opacity=easeOutCubic((t-T_SHOW)/400);
+    else if(t>=T_SHOW+400) introText.style.opacity='1';
+
+    // ВАЙБ windup
+    if(t>=T_WINDUP && t<T_HIT) {
+      var p=easeOutCubic((t-T_WINDUP)/(T_HIT-T_WINDUP));
+      introVibe.style.transform='translateX('+(-20*p)+'px) scale('+(1-0.02*p)+')';
+    }
+    // ВАЙБ hit
+    else if(t>=T_HIT && t<T_HIT_END) {
+      var p=easeOutQuint((t-T_HIT)/(T_HIT_END-T_HIT));
+      introVibe.style.transform='translateX('+(-20+32*p)+'px) scale('+(0.98+0.08*p)+')';
+    }
+
+    // DASH + КОДИНГ fly away
+    if(t>=T_HIT && t<T_FLY_END) {
+      var p=easeOutCubic((t-T_HIT)/(T_FLY_END-T_HIT));
+      introDash.style.transform='translateX('+(p*innerWidth*0.4)+'px) rotate('+(p*25)+'deg)';
+      introDash.style.opacity=Math.max(0,1-p*2.5);
+      introCoding.style.transform='translate('+(p*innerWidth*0.9)+'px,'+(-40*Math.sin(p*Math.PI))+'px) rotate('+(p*12)+'deg)';
+      introCoding.style.opacity=Math.max(0,1-p*1.4);
+    }
+
+    // PAGE DROP — sunrise page falls from top
+    if(t>=T_DROP_START && t<T_DROP_START+T_DROP_DUR) {
+      var dp=(t-T_DROP_START)/T_DROP_DUR;
+      var ep=easePageDrop(dp);
+      heroPage.style.transform='translateY('+(-105+105*ep)+'%)';
+      // Shadow
+      heroShadow.style.opacity = dp<0.7 ? Math.min(1,dp*2) : Math.max(0,1-(dp-0.7)/0.3);
+    }
+
+    // Page landed
+    if(t>=T_DROP_START+T_DROP_DUR) {
+      heroPage.style.transform='translateY(0)';
+      introLayer.style.display='none';
+      done=true;
+      revealHero();
+      return;
+    }
+
+    raf=requestAnimationFrame(tick);
+  }
+
+  document.fonts.ready.then(function(){raf=requestAnimationFrame(tick)});
+  introLayer.addEventListener('click', finish);
+})();
+
+// ============================================================
+// 2. SECTION 2 — scroll reveal
+// ============================================================
+gsap.from('#section2 .section-title-big',{
+  scrollTrigger:{trigger:'#section2',start:'top 80%',end:'top 40%',scrub:1},
+  y:80,opacity:0
+});
+gsap.from('#section2 .section-sub-big',{
+  scrollTrigger:{trigger:'#section2',start:'top 70%',end:'top 35%',scrub:1},
+  y:50,opacity:0
+});
+
+ScrollTrigger.create({
+  start:100,
+  onEnter:function(){gsap.to('#scrollIndicator',{opacity:0,duration:0.3})},
+  onLeaveBack:function(){gsap.to('#scrollIndicator',{opacity:1,duration:0.3})}
+});
+</script>
+
+</body>
+</html>

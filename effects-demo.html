@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effects Demo — AGI Age</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg-main:#FAFAF7;--bg-alt:#F0ECE4;--text-primary:#1A1A1A;--text-secondary:#5A5A52;--text-muted:#6E6E64;--gold:#C9A030;--gradient:linear-gradient(135deg,#E8C840,#D4722A)}
+body{font-family:'Onest',sans-serif;background:var(--bg-main);color:var(--text-primary);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+/* === SCROLL PROGRESS BAR === */
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:10000;pointer-events:none;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#E8C840,#D4722A)}
+
+/* === SECTION LAYOUT === */
+.demo-section{padding:120px 24px;max-width:900px;margin:0 auto}
+.demo-section h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:12px;letter-spacing:-0.03em}
+.demo-section .label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold);margin-bottom:16px}
+.demo-section p{color:var(--text-secondary);max-width:600px;margin-bottom:32px}
+.demo-section--dark{background:#1A1A1A;color:#fff;max-width:none;padding-left:0;padding-right:0}
+.demo-section--dark .inner{max-width:900px;margin:0 auto;padding:0 24px}
+.demo-section--dark .label{color:rgba(232,200,64,0.8)}
+.demo-section--dark p{color:rgba(255,255,255,0.6)}
+.demo-section--alt{background:var(--bg-alt)}
+
+/* === PIXEL DIVIDERS === */
+.section-divider{display:flex;align-items:center;justify-content:center;gap:16px;padding:32px 24px;font-family:'Onest',monospace;font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);opacity:0.35;user-select:none}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,0.08),transparent)}
+.section-divider--dark{color:rgba(255,255,255,0.3)}
+.section-divider--dark::before,.section-divider--dark::after{background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)}
+
+/* === 1. LINE-WORD REVEAL === */
+.text-reveal{overflow:hidden}
+.text-reveal .line{display:block;overflow:hidden}
+.text-reveal .line .word-wrap{display:inline-block;overflow:hidden}
+.text-reveal .line .word{display:inline-block;transform:translateY(110%);transition:transform 0.9s cubic-bezier(0.23,1,0.32,1)}
+.text-reveal .line:nth-child(2) .word{transition-delay:0.06s}
+.text-reveal .line:nth-child(3) .word{transition-delay:0.12s}
+.text-reveal.visible .line .word{transform:translateY(0)}
+
+/* === 2. CHAR WAVE === */
+.char-wave .char{display:inline-block;opacity:0;filter:blur(4px);transform:scale(1.4) translateY(10px);transition:opacity 0.4s ease,filter 0.4s ease,transform 0.4s ease;transition-delay:calc(var(--i) * 0.05s)}
+.char-wave.visible .char{opacity:1;filter:blur(0);transform:scale(1) translateY(0)}
+
+/* === 3. SEQUENTIAL TEXT REPLACE === */
+.text-cycle{position:relative;height:2em;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.text-cycle .phrase{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(30px);transition:opacity 0.6s cubic-bezier(0.23,1,0.32,1),transform 0.6s cubic-bezier(0.23,1,0.32,1);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:600;letter-spacing:-0.02em}
+.text-cycle .phrase.active{opacity:1;transform:translateY(0)}
+.text-cycle .phrase.exit{opacity:0;transform:translateY(-30px)}
+
+/* === 6. SPOTLIGHT BUTTON === */
+.btn-demo{display:inline-flex;align-items:center;justify-content:center;padding:16px 40px;border-radius:60px;font-family:'Onest',sans-serif;font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;border:none;background:linear-gradient(135deg,#E8C840,#D4722A);color:#fff;transition:transform 0.2s ease,box-shadow 0.2s ease;box-shadow:0 4px 20px rgba(212,114,42,0.2);position:relative;overflow:hidden}
+.btn-demo:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,114,42,0.35)}
+.btn-demo .glare{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 0.3s ease;background:radial-gradient(circle 80px at var(--x,50%) var(--y,50%),rgba(255,255,255,0.4),transparent);border-radius:inherit}
+.btn-demo:hover .glare{opacity:1}
+.btn-demo::after{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:2px;background:linear-gradient(calc(1deg * var(--angle,90)),rgba(255,255,255,0.7),transparent 40%,transparent 60%,rgba(255,255,255,0.3));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity 0.3s ease;pointer-events:none}
+.btn-demo:hover::after{opacity:1}
+
+.btn-demo-secondary{background:rgba(26,26,26,0.06);color:var(--text-primary);border:1.5px solid rgba(26,26,26,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.btn-demo-secondary:hover{box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.btn-demo-secondary .glare{background:radial-gradient(circle 80px at var(--x,50%) var(--y,50%),rgba(232,200,64,0.15),transparent)}
+.btn-demo-secondary::after{background:linear-gradient(calc(1deg * var(--angle,90)),rgba(232,200,64,0.5),transparent 40%,transparent 60%,rgba(212,114,42,0.3))}
+
+/* === 5. BG COLOR TRANSITION (demo zone) === */
+.bg-transition-zone{min-height:300px;display:flex;align-items:center;justify-content:center;transition:none;padding:60px 24px}
+.bg-transition-zone .inner{max-width:900px;text-align:center}
+
+/* === REVEAL (upgraded) === */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s cubic-bezier(0.23,1,0.32,1),transform 0.8s cubic-bezier(0.23,1,0.32,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.08s}.reveal-d2{transition-delay:0.16s}.reveal-d3{transition-delay:0.24s}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- INTRO -->
+<div class="demo-section" style="text-align:center;padding-top:200px;padding-bottom:80px;">
+  <p class="label">Effects Library Demo</p>
+  <h1 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-0.04em;">AGI Age — Все эффекты</h1>
+  <p style="margin:16px auto 0;">Скролль вниз чтобы увидеть каждый эффект в действии.</p>
+</div>
+
+<div class="section-divider" data-pixel-pos>← TOP: 0 PX →</div>
+
+<!-- 1. LINE-WORD REVEAL -->
+<div class="demo-section">
+  <p class="label">Эффект 1</p>
+  <h2 class="text-reveal" id="demo-lwr">
+    <span class="line"><span class="word-wrap"><span class="word">После курса ты</span></span></span>
+    <span class="line"><span class="word-wrap"><span class="word" style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">сможешь</span></span></span>
+  </h2>
+  <p>Line-Word Reveal — строки выезжают снизу, слова стаггерятся. Для заголовков секций.</p>
+</div>
+
+<div class="section-divider" data-pixel-pos>← TOP: 0 PX →</div>
+
+<!-- 2. CHAR WAVE -->
+<div class="demo-section demo-section--alt">
+  <p class="label">Эффект 2</p>
+  <h2 class="char-wave" id="demo-cw" style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900;letter-spacing:-0.04em;"></h2>
+  <p style="margin-top:24px;">Char Wave — буквы появляются волной с blur и scale. Для одного ключевого заголовка.</p>
+</div>
+
+<div class="section-divider" data-pixel-pos>← TOP: 0 PX →</div>
+
+<!-- 3. SEQUENTIAL TEXT REPLACE -->
+<div class="demo-section" style="text-align:center;">
+  <p class="label">Эффект 3</p>
+  <div class="text-cycle" id="demo-cycle">
+    <div class="phrase" data-start="0" data-end="0.33">Собирай сайты за вечер</div>
+    <div class="phrase" data-start="0.33" data-end="0.66" style="color:#D4722A;">Запускай ботов без кода</div>
+    <div class="phrase" data-start="0.66" data-end="1.0" style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Автоматизируй всё что можно</div>
+  </div>
+  <p style="margin-top:24px;">Sequential Text Replace — фразы сменяют друг друга при скролле. Скролль медленно!</p>
+</div>
+
+<div class="section-divider" data-pixel-pos>← TOP: 0 PX →</div>
+
+<!-- 6. SPOTLIGHT BUTTONS -->
+<div class="demo-section" style="text-align:center;">
+  <p class="label">Эффект 6</p>
+  <h2>Spotlight Button Glare</h2>
+  <p>Наведи курсор на кнопки — свечение следует за мышкой.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
+    <button class="btn-demo btn-spotlight">Хочу на курс</button>
+    <button class="btn-demo btn-demo-secondary btn-spotlight">Подробнее</button>
+  </div>
+</div>
+
+<div class="section-divider" data-pixel-pos>← TOP: 0 PX →</div>
+
+<!-- 5. BG COLOR TRANSITION -->
+<div class="bg-transition-zone" id="bgTransZone" style="background:var(--bg-alt);">
+  <div class="inner">
+    <p class="label" style="color:var(--gold);">Эффект 5</p>
+    <h2 id="bgTransTitle" style="transition:color 0.3s;">BG Color Transition</h2>
+    <p id="bgTransDesc" style="transition:color 0.3s;">Фон этой зоны плавно переходит от светлого к тёмному при скролле. Как переход в секцию Программа.</p>
+  </div>
+</div>
+
+<div class="section-divider section-divider--dark" data-pixel-pos style="background:#1A1A1A;">← TOP: 0 PX →</div>
+
+<!-- DARK SECTION (like Программа) -->
+<div class="demo-section demo-section--dark">
+  <div class="inner">
+    <p class="label">Эффект 8</p>
+    <h2 style="color:#fff;">Тёмная секция</h2>
+    <p>Здесь будет Stripe-style mesh gradient на тёмном фоне. Пока статичный #1A1A1A.</p>
+  </div>
+</div>
+
+<div class="section-divider" data-pixel-pos>← TOP: 0 PX →</div>
+
+<!-- ANOTHER LINE-WORD REVEAL -->
+<div class="demo-section" style="text-align:center;padding-bottom:200px;">
+  <p class="label">Конец демо</p>
+  <h2 class="text-reveal" id="demo-lwr2">
+    <span class="line"><span class="word-wrap"><span class="word">Все эффекты готовы</span></span></span>
+    <span class="line"><span class="word-wrap"><span class="word" style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">к внедрению</span></span></span>
+  </h2>
+</div>
+
+<script>
+// === SCROLL PROGRESS BAR ===
+(function(){
+  var bar=document.getElementById('scrollProgress');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.transform='scaleX('+(h>0?window.scrollY/h:0)+')';
+  },{passive:true});
+})();
+
+// === PIXEL DIVIDERS ===
+(function(){
+  function update(){
+    document.querySelectorAll('[data-pixel-pos]').forEach(function(el){
+      el.textContent='\u2190 TOP: '+Math.round(el.getBoundingClientRect().top+window.scrollY)+' PX \u2192';
+    });
+  }
+  update();
+  window.addEventListener('resize',update);
+  setTimeout(update,500);
+})();
+
+// === INTERSECTION OBSERVER (for reveals, text-reveal, char-wave) ===
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+    });
+  },{threshold:0.2,rootMargin:'0px 0px -60px 0px'});
+
+  document.querySelectorAll('.text-reveal, .char-wave, .reveal').forEach(function(el){obs.observe(el)});
+})();
+
+// === CHAR WAVE SETUP ===
+(function(){
+  var el=document.getElementById('demo-cw');
+  var text='НОВАЯ ГРАМОТНОСТЬ';
+  el.innerHTML=text.split('').map(function(ch,i){
+    if(ch===' ')return ' ';
+    return '<span class="char" style="--i:'+i+'">'+ch+'</span>';
+  }).join('');
+})();
+
+// === SEQUENTIAL TEXT REPLACE ===
+(function(){
+  var container=document.getElementById('demo-cycle');
+  if(!container)return;
+  var phrases=Array.from(container.querySelectorAll('.phrase'));
+  var section=container.closest('.demo-section');
+
+  window.addEventListener('scroll',function(){
+    var rect=section.getBoundingClientRect();
+    var progress=Math.max(0,Math.min(1,(window.innerHeight-rect.top)/(window.innerHeight+rect.height)));
+    phrases.forEach(function(p){
+      var s=parseFloat(p.dataset.start);
+      var e=parseFloat(p.dataset.end);
+      var active=progress>=s&&progress<e;
+      var past=progress>=e;
+      p.classList.toggle('active',active);
+      p.classList.toggle('exit',past);
+    });
+  },{passive:true});
+})();
+
+// === SPOTLIGHT BUTTONS ===
+(function(){
+  document.querySelectorAll('.btn-spotlight').forEach(function(btn){
+    if(!btn.querySelector('.glare')){var g=document.createElement('span');g.className='glare';btn.appendChild(g)}
+    btn.addEventListener('mousemove',function(e){
+      var r=btn.getBoundingClientRect();
+      var x=e.clientX-r.left,y=e.clientY-r.top;
+      btn.style.setProperty('--x',(x/r.width*100)+'%');
+      btn.style.setProperty('--y',(y/r.height*100)+'%');
+      btn.style.setProperty('--angle',Math.atan2(y-r.height/2,x-r.width/2)*180/Math.PI);
+    });
+  });
+})();
+
+// === BG COLOR TRANSITION ===
+(function(){
+  var zone=document.getElementById('bgTransZone');
+  var title=document.getElementById('bgTransTitle');
+  var desc=document.getElementById('bgTransDesc');
+  if(!zone)return;
+  var from=[240,236,228]; // #F0ECE4
+  var to=[26,26,26];      // #1A1A1A
+  function lerp(a,b,t){return Math.round(a+(b-a)*t)}
+
+  window.addEventListener('scroll',function(){
+    var rect=zone.getBoundingClientRect();
+    var p=Math.max(0,Math.min(1,1-(rect.bottom/(window.innerHeight+rect.height))));
+    var r=lerp(from[0],to[0],p),g=lerp(from[1],to[1],p),b=lerp(from[2],to[2],p);
+    zone.style.backgroundColor='rgb('+r+','+g+','+b+')';
+    // Text color transition
+    var textP=Math.max(0,Math.min(1,(p-0.3)/0.4));
+    title.style.color=textP>0.5?'#fff':'var(--text-primary)';
+    desc.style.color=textP>0.5?'rgba(255,255,255,0.6)':'var(--text-secondary)';
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

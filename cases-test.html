@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --gradient: linear-gradient(135deg, #E8C840, #D4722A);
+  --text-primary: #1A1A1A;
+  --text-secondary: #5A5A52;
+  --text-muted: #6E6E64;
+  --gold: #C9A030;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+body { font-family:'Onest',sans-serif; color:var(--text-primary); background:#fff; }
+.gradient-text { background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.container { max-width:1100px; margin:0 auto; padding:0 24px; }
+.variant { padding:80px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+.variant-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--gold); margin-bottom:12px; }
+.variant-title { font-size:32px; font-weight:700; letter-spacing:-0.03em; margin-bottom:8px; }
+.variant-sub { font-size:15px; color:var(--text-secondary); margin-bottom:48px; }
+
+/* === A: Горизонтальная лента === */
+.carousel-wrap {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin: 0 -24px;
+  padding: 0 24px 20px;
+}
+.carousel-wrap::-webkit-scrollbar { display:none; }
+.carousel {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+}
+.carousel-card {
+  width: 340px;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  position: relative;
+}
+.carousel-time {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(201,160,48,0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.carousel-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.carousel-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.carousel-tag {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.03);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* === Б: Переключатель === */
+.switcher { max-width:700px; margin:0 auto; text-align:center; }
+.switcher-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 20px;
+  padding: 48px 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.switcher-time {
+  font-size: 48px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+.switcher-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.switcher-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 480px;
+}
+.switcher-tag {
+  font-size: 13px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.03);
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-top: 16px;
+}
+.switcher-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+.switcher-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.switcher-dot.active {
+  background: var(--gradient);
+  transform: scale(1.2);
+}
+.switcher-nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+.switcher-nav button {
+  background: none;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: border-color 0.2s, color 0.2s;
+}
+.switcher-nav button:hover {
+  border-color: var(--gold);
+  color: var(--text-primary);
+}
+
+/* === В: Аккордеон-строки === */
+.case-rows { max-width:800px; margin:0 auto; }
+.case-row {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  user-select: none;
+}
+.case-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  gap: 16px;
+}
+.case-row-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.case-row-time {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(201,160,48,0.08);
+  padding: 4px 14px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.case-row-arrow {
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.case-row.open .case-row-arrow {
+  transform: rotate(180deg);
+}
+.case-row-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.case-row.open .case-row-body {
+  max-height: 120px;
+}
+.case-row-body-inner {
+  padding: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.case-row-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.case-row-tag {
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.03);
+  padding: 4px 12px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- VARIANT A: Carousel -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ А — ГОРИЗОНТАЛЬНАЯ ЛЕНТА</p>
+    <div class="variant-title">Реальные проекты, <span class="gradient-text">собранные с AI</span></div>
+    <p class="variant-sub">Не учебные задания — настоящие продукты, которые работают.</p>
+  </div>
+  <div class="container">
+    <div class="carousel-wrap">
+      <div class="carousel">
+        <div class="carousel-card">
+          <div class="carousel-time">1 день</div>
+          <div class="carousel-title">Сервис анонимизации данных</div>
+          <div class="carousel-desc">Сервис обработки персональных данных для крупной юридической компании. REST API, шифрование, логирование.</div>
+          <div class="carousel-tag">Без опыта в backend</div>
+        </div>
+        <div class="carousel-card">
+          <div class="carousel-time">4 часа</div>
+          <div class="carousel-title">Чат-бот для Instagram и Telegram</div>
+          <div class="carousel-desc">Бот с обработкой запросов клиентов, автоответами и интеграцией с CRM.</div>
+          <div class="carousel-tag">Менеджер</div>
+        </div>
+        <div class="carousel-card">
+          <div class="carousel-time">2 дня</div>
+          <div class="carousel-title">Сервис обработки претензий</div>
+          <div class="carousel-desc">Система автоматического написания претензий для логистической компании.</div>
+          <div class="carousel-tag">Нулевой опыт</div>
+        </div>
+        <div class="carousel-card">
+          <div class="carousel-time">3 часа</div>
+          <div class="carousel-title">Сайт для девелопера</div>
+          <div class="carousel-desc">Корпоративный сайт с анимациями, адаптивом, галереей проектов.</div>
+          <div class="carousel-tag">Дизайнер</div>
+        </div>
+        <div class="carousel-card">
+          <div class="carousel-time">1 вечер</div>
+          <div class="carousel-title">Автоматизации для бизнеса</div>
+          <div class="carousel-desc">Генерация отчётов, обработка данных, интеграция с внутренними системами.</div>
+          <div class="carousel-tag">Продакт-менеджер</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANT Б: Switcher -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ Б — ПЕРЕКЛЮЧАТЕЛЬ</p>
+    <div class="variant-title">Реальные проекты, <span class="gradient-text">собранные с AI</span></div>
+    <p class="variant-sub">Не учебные задания — настоящие продукты, которые работают.</p>
+    <div class="switcher">
+      <div class="switcher-card" id="switchCard">
+        <div class="switcher-time gradient-text" id="swTime">1 день</div>
+        <div class="switcher-title" id="swTitle">Сервис анонимизации данных</div>
+        <div class="switcher-desc" id="swDesc">Сервис обработки персональных данных для крупной юридической компании. REST API, шифрование, логирование.</div>
+        <div class="switcher-tag" id="swTag">Без опыта в backend</div>
+      </div>
+      <div class="switcher-dots" id="swDots"></div>
+      <div class="switcher-nav">
+        <button onclick="swPrev()">←</button>
+        <button onclick="swNext()">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VARIANT В: Accordion rows -->
+<section class="variant">
+  <div class="container">
+    <p class="variant-label">ВАРИАНТ В — АККОРДЕОН-СТРОКИ</p>
+    <div class="variant-title">Реальные проекты, <span class="gradient-text">собранные с AI</span></div>
+    <p class="variant-sub">Не учебные задания — настоящие продукты, которые работают.</p>
+    <div class="case-rows">
+      <div class="case-row open" onclick="this.classList.toggle('open')">
+        <div class="case-row-header">
+          <div class="case-row-title">Сервис анонимизации данных</div>
+          <div class="case-row-time">1 день</div>
+          <span class="case-row-arrow">⌄</span>
+        </div>
+        <div class="case-row-body">
+          <div class="case-row-body-inner">
+            <div class="case-row-desc">Сервис обработки персональных данных для крупной юридической компании. REST API, шифрование, логирование.</div>
+            <div class="case-row-tag">Без опыта в backend</div>
+          </div>
+        </div>
+      </div>
+      <div class="case-row" onclick="this.classList.toggle('open')">
+        <div class="case-row-header">
+          <div class="case-row-title">Чат-бот для Instagram и Telegram</div>
+          <div class="case-row-time">4 часа</div>
+          <span class="case-row-arrow">⌄</span>
+        </div>
+        <div class="case-row-body">
+          <div class="case-row-body-inner">
+            <div class="case-row-desc">Бот с обработкой запросов клиентов, автоответами и интеграцией с CRM.</div>
+            <div class="case-row-tag">Менеджер</div>
+          </div>
+        </div>
+      </div>
+      <div class="case-row" onclick="this.classList.toggle('open')">
+        <div class="case-row-header">
+          <div class="case-row-title">Сервис обработки претензий</div>
+          <div class="case-row-time">2 дня</div>
+          <span class="case-row-arrow">⌄</span>
+        </div>
+        <div class="case-row-body">
+          <div class="case-row-body-inner">
+            <div class="case-row-desc">Система автоматического написания претензий для логистической компании.</div>
+            <div class="case-row-tag">Нулевой опыт</div>
+          </div>
+        </div>
+      </div>
+      <div class="case-row" onclick="this.classList.toggle('open')">
+        <div class="case-row-header">
+          <div class="case-row-title">Сайт для девелопера</div>
+          <div class="case-row-time">3 часа</div>
+          <span class="case-row-arrow">⌄</span>
+        </div>
+        <div class="case-row-body">
+          <div class="case-row-body-inner">
+            <div class="case-row-desc">Корпоративный сайт с анимациями, адаптивом, галереей проектов.</div>
+            <div class="case-row-tag">Дизайнер</div>
+          </div>
+        </div>
+      </div>
+      <div class="case-row" onclick="this.classList.toggle('open')">
+        <div class="case-row-header">
+          <div class="case-row-title">Автоматизации для бизнеса</div>
+          <div class="case-row-time">1 вечер</div>
+          <span class="case-row-arrow">⌄</span>
+        </div>
+        <div class="case-row-body">
+          <div class="case-row-body-inner">
+            <div class="case-row-desc">Генерация отчётов, обработка данных, интеграция с внутренними системами.</div>
+            <div class="case-row-tag">Продакт-менеджер</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Switcher logic
+var cases = [
+  { time:'1 день', title:'Сервис анонимизации данных', desc:'Сервис обработки персональных данных для крупной юридической компании. REST API, шифрование, логирование.', tag:'Без опыта в backend' },
+  { time:'4 часа', title:'Чат-бот для Instagram и Telegram', desc:'Бот с обработкой запросов клиентов, автоответами и интеграцией с CRM.', tag:'Менеджер' },
+  { time:'2 дня', title:'Сервис обработки претензий', desc:'Система автоматического написания претензий для логистической компании.', tag:'Нулевой опыт' },
+  { time:'3 часа', title:'Сайт для девелопера', desc:'Корпоративный сайт с анимациями, адаптивом, галереей проектов.', tag:'Дизайнер' },
+  { time:'1 вечер', title:'Автоматизации для бизнеса', desc:'Генерация отчётов, обработка данных, интеграция с внутренними системами.', tag:'Продакт-менеджер' },
+];
+var swIdx = 0;
+var dotsEl = document.getElementById('swDots');
+cases.forEach(function(_, i) {
+  var d = document.createElement('button');
+  d.className = 'switcher-dot' + (i === 0 ? ' active' : '');
+  d.onclick = function() { swGo(i); };
+  dotsEl.appendChild(d);
+});
+
+function swGo(i) {
+  swIdx = i;
+  var c = cases[i];
+  document.getElementById('swTime').textContent = c.time;
+  document.getElementById('swTitle').textContent = c.title;
+  document.getElementById('swDesc').textContent = c.desc;
+  document.getElementById('swTag').textContent = c.tag;
+  dotsEl.querySelectorAll('.switcher-dot').forEach(function(d, j) {
+    d.classList.toggle('active', j === i);
+  });
+}
+function swNext() { swGo((swIdx + 1) % cases.length); }
+function swPrev() { swGo((swIdx - 1 + cases.length) % cases.length); }
+</script>
+
+</body>
+</html>
