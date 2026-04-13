@@ -1288,6 +1288,145 @@ body {
   .footer-col:last-child { text-align: left; }
 }
 
+/* ========== MINI-FILM ========== */
+.film {
+  position: relative;
+  background: var(--bg);
+}
+.film-pin {
+  height: 100vh; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .film-pin { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+}
+/* Left: Terminal */
+.film-terminal {
+  background: #1a1a1a; color: #aaa;
+  padding: 2.5rem; display: flex; flex-direction: column;
+  font-family: 'Geist Mono', 'SF Mono', monospace; font-size: 0.85rem;
+  position: relative; overflow: hidden;
+}
+.film-terminal-bar {
+  display: flex; gap: 6px; margin-bottom: 1.5rem;
+}
+.film-terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.film-terminal-dot:nth-child(1) { background: #ff5f57; }
+.film-terminal-dot:nth-child(2) { background: #febc2e; }
+.film-terminal-dot:nth-child(3) { background: #28c840; }
+.film-terminal-lines { flex: 1; overflow: hidden; }
+.film-term-line {
+  opacity: 0; transform: translateY(8px);
+  margin-bottom: 0.4rem; line-height: 1.5;
+  transition: all 0.4s ease;
+}
+.film-term-line.visible { opacity: 1; transform: translateY(0); }
+.film-term-line .cmd { color: #28c840; }
+.film-term-line .accent { color: #FFD54F; }
+.film-term-line .dim { color: #555; }
+.film-progress {
+  height: 4px; background: #333; border-radius: 2px;
+  margin: 0.5rem 0; overflow: hidden;
+}
+.film-progress-bar {
+  height: 100%; width: 0%; border-radius: 2px;
+  background: linear-gradient(90deg, #FFD54F, #DE802E);
+  transition: width 1s ease;
+}
+.film-term-status {
+  margin-top: auto; padding-top: 1rem;
+  border-top: 1px solid #333; color: #555; font-size: 0.8rem;
+}
+.film-term-status .live { color: #28c840; }
+
+/* Right: Life scenes */
+.film-life {
+  background: linear-gradient(135deg, #FFFDE7, #FFF8E1);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.film-scene {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.5s ease;
+  padding: 2rem;
+}
+.film-scene.active { opacity: 1; }
+.film-scene-emoji {
+  font-size: clamp(4rem, 10vw, 7rem);
+  margin-bottom: 1rem;
+  animation: sceneBounce 2s ease-in-out infinite;
+}
+@keyframes sceneBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.film-scene-text {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700; color: var(--text);
+  text-align: center; line-height: 1.4;
+}
+.film-scene-sub {
+  font-size: 1rem; color: var(--text-muted);
+  margin-top: 0.5rem; text-align: center;
+}
+/* Final scene */
+.film-scene-final .film-scene-emoji { animation: none; }
+.film-scene-final .film-money {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #E8C738, #DE802E);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: moneyPop 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes moneyPop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+/* Character */
+.film-char {
+  position: relative; width: 80px; height: 120px; margin-bottom: 1.5rem;
+}
+.film-char-head {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: #FFD54F; margin: 0 auto;
+  position: relative;
+}
+.film-char-head::before, .film-char-head::after {
+  content: ''; position: absolute; top: 14px;
+  width: 5px; height: 5px; border-radius: 50%; background: #1a1a1a;
+}
+.film-char-head::before { left: 10px; }
+.film-char-head::after { right: 10px; }
+.film-char-body {
+  width: 32px; height: 40px; margin: 4px auto 0;
+  background: #fff; border-radius: 8px 8px 4px 4px;
+  border: 2px solid #eee;
+}
+.film-char-legs {
+  display: flex; justify-content: center; gap: 8px; margin-top: 2px;
+}
+.film-char-leg {
+  width: 10px; height: 24px; background: #555; border-radius: 0 0 4px 4px;
+}
+/* Walking animation */
+.film-char.walking .film-char-leg:nth-child(1) { animation: legWalk 0.4s ease-in-out infinite; }
+.film-char.walking .film-char-leg:nth-child(2) { animation: legWalk 0.4s 0.2s ease-in-out infinite; }
+@keyframes legWalk {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(20deg); transform-origin: top; }
+}
+/* Celebrate animation */
+.film-char.celebrate { animation: charJump 0.5s ease infinite; }
+@keyframes charJump {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
 </style>
 </head>
 <body>
@@ -1704,6 +1843,84 @@ body {
         <div class="worth-price-num">$100</div>
         <div class="worth-price-rub">7 700 ₽/мес</div>
         <div class="worth-price-label">Полная мощность</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MINI-FILM ==================== -->
+<section class="film" id="film" style="height:500vh;">
+  <div class="film-pin" id="filmPin">
+    <!-- Terminal side -->
+    <div class="film-terminal">
+      <div class="film-terminal-bar">
+        <div class="film-terminal-dot"></div>
+        <div class="film-terminal-dot"></div>
+        <div class="film-terminal-dot"></div>
+      </div>
+      <div class="film-terminal-lines" id="filmTerminal">
+        <div class="film-term-line" data-step="1"><span class="cmd">$</span> Новая задача получена</div>
+        <div class="film-term-line" data-step="1"><span class="dim">→ Анализирую бриф от заказчика...</span></div>
+        <div class="film-term-line" data-step="2"><span class="accent">⚙</span> Собираю структуру проекта</div>
+        <div class="film-term-line" data-step="2"><span class="dim">→ Создаю файлы, пишу код...</span></div>
+        <div class="film-term-line" data-step="2"><div class="film-progress"><div class="film-progress-bar" id="filmProgress1"></div></div></div>
+        <div class="film-term-line" data-step="3"><span class="accent">⚙</span> Генерирую дизайн и контент</div>
+        <div class="film-term-line" data-step="3"><span class="dim">→ Подключаю API, тестирую...</span></div>
+        <div class="film-term-line" data-step="3"><div class="film-progress"><div class="film-progress-bar" id="filmProgress2"></div></div></div>
+        <div class="film-term-line" data-step="4"><span class="cmd">!</span> Готов к проверке. Жду правки.</div>
+        <div class="film-term-line" data-step="4"><span class="dim">→ Получены правки, вношу...</span></div>
+        <div class="film-term-line" data-step="5"><span class="accent">⚙</span> Финализация...</div>
+        <div class="film-term-line" data-step="5"><div class="film-progress"><div class="film-progress-bar" id="filmProgress3"></div></div></div>
+        <div class="film-term-line" data-step="6"><span class="cmd" style="color:#28c840;">✅ Проект готов. Отправлен заказчику.</span></div>
+      </div>
+      <div class="film-term-status">
+        <span class="live" id="filmStatus">● Агент работает</span>
+      </div>
+    </div>
+
+    <!-- Life side -->
+    <div class="film-life" id="filmLife">
+      <div class="film-scene active" data-step="1">
+        <div class="film-char">
+          <div class="film-char-head"></div>
+          <div class="film-char-body"></div>
+          <div class="film-char-legs"><div class="film-char-leg"></div><div class="film-char-leg"></div></div>
+        </div>
+        <div class="film-scene-text">Проснулся. Скинул задачу.</div>
+        <div class="film-scene-sub">Агент уже работает ☕</div>
+      </div>
+      <div class="film-scene" data-step="2">
+        <div class="film-scene-emoji">🚿</div>
+        <div class="film-scene-text">Душ, завтрак, кофе</div>
+        <div class="film-scene-sub">Агент собирает проект</div>
+      </div>
+      <div class="film-scene" data-step="3">
+        <div class="film-scene-emoji">🏃</div>
+        <div class="film-scene-text">Спорт</div>
+        <div class="film-scene-sub">Агент генерирует дизайн</div>
+      </div>
+      <div class="film-scene" data-step="4">
+        <div class="film-char walking">
+          <div class="film-char-head"></div>
+          <div class="film-char-body"></div>
+          <div class="film-char-legs"><div class="film-char-leg"></div><div class="film-char-leg"></div></div>
+        </div>
+        <div class="film-scene-text">5 минут правок — и дальше</div>
+        <div class="film-scene-sub">Агент доделывает</div>
+      </div>
+      <div class="film-scene" data-step="5">
+        <div class="film-scene-emoji">🍕</div>
+        <div class="film-scene-text">Друзья, прогулка, жизнь</div>
+        <div class="film-scene-sub">Агент финализирует</div>
+      </div>
+      <div class="film-scene film-scene-final" data-step="6">
+        <div class="film-char celebrate">
+          <div class="film-char-head"></div>
+          <div class="film-char-body"></div>
+          <div class="film-char-legs"><div class="film-char-leg"></div><div class="film-char-leg"></div></div>
+        </div>
+        <div class="film-scene-text">Отправил заказчику ✅</div>
+        <div class="film-money">+100 000 ₽</div>
       </div>
     </div>
   </div>
@@ -2341,6 +2558,65 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     if (running) draw();
   });
   obs.observe(container);
+})();
+</script>
+
+<!-- GSAP ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Mini-film scroll animation
+(function() {
+  const film = document.getElementById('film');
+  const pin = document.getElementById('filmPin');
+  if (!film || !pin) return;
+
+  const totalSteps = 6;
+  let currentStep = 0;
+
+  function setStep(step) {
+    if (step === currentStep) return;
+    currentStep = step;
+
+    // Terminal lines
+    document.querySelectorAll('.film-term-line').forEach(el => {
+      const s = parseInt(el.dataset.step);
+      el.classList.toggle('visible', s <= step);
+    });
+
+    // Progress bars
+    const p1 = document.getElementById('filmProgress1');
+    const p2 = document.getElementById('filmProgress2');
+    const p3 = document.getElementById('filmProgress3');
+    if (p1) p1.style.width = step >= 2 ? '100%' : '0%';
+    if (p2) p2.style.width = step >= 3 ? '100%' : '0%';
+    if (p3) p3.style.width = step >= 5 ? '100%' : '0%';
+
+    // Life scenes
+    document.querySelectorAll('.film-scene').forEach(el => {
+      el.classList.toggle('active', parseInt(el.dataset.step) === step);
+    });
+
+    // Status
+    const status = document.getElementById('filmStatus');
+    if (status) {
+      status.textContent = step >= 6 ? '● Готово' : '● Агент работает';
+      status.style.color = step >= 6 ? '#FFD54F' : '#28c840';
+    }
+  }
+
+  ScrollTrigger.create({
+    trigger: film,
+    start: 'top top',
+    end: 'bottom bottom',
+    pin: pin,
+    onUpdate: (self) => {
+      const step = Math.min(totalSteps, Math.max(1, Math.ceil(self.progress * totalSteps)));
+      setStep(step);
+    }
+  });
 })();
 </script>
 
