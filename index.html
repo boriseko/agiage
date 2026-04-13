@@ -890,11 +890,10 @@ body {
 }
 .worth-accent {
   display: inline;
-  font-weight: 800; font-size: 1.3em;
+  font-weight: 800;
   background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 1px 4px rgba(232,199,56,0.25));
 }
 .worth-big-num {
   display: block;
@@ -922,6 +921,38 @@ body {
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* Price cards */
+.worth-price-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+@media (max-width: 500px) { .worth-price-row { grid-template-columns: 1fr; } }
+.worth-price-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  background: rgba(255,255,255,0.7);
+  text-align: center;
+}
+.worth-price-card-main {
+  border-color: rgba(232,199,56,0.4);
+  background: linear-gradient(135deg, rgba(255,253,231,0.8), rgba(255,240,200,0.5));
+  box-shadow: 0 4px 20px rgba(232,199,56,0.1);
+}
+.worth-price-num {
+  font-size: 2.5rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.worth-price-rub {
+  font-size: 0.9rem; color: #999; margin-top: 0.25rem;
+}
+.worth-price-label {
+  font-size: 1rem; font-weight: 600; color: var(--text);
+  margin-top: 0.75rem; line-height: 1.4;
+}
+
 /* Timeline bar decoration */
 .worth-timeline {
   position: absolute; left: calc(50% - 380px - 40px);
@@ -1621,8 +1652,20 @@ body {
 
     <div class="worth-divider"></div>
 
-    <div class="worth-block" id="worthBlock6">
-      <p><span class="worth-accent">$20</span> <span style="color:#999">(1 500 ₽)</span> — вход.<br><span class="worth-accent">$100</span> <span style="color:#999">(7 700 ₽)</span> — рабочий режим, где окупается всё. Не только в деньгах. В проектах, времени, свободе.</p>
+    <div class="worth-block worth-prices" id="worthBlock6">
+      <div class="worth-price-row">
+        <div class="worth-price-card">
+          <div class="worth-price-num">$20</div>
+          <div class="worth-price-rub">1 500 ₽/мес</div>
+          <div class="worth-price-label">Вход</div>
+        </div>
+        <div class="worth-price-card worth-price-card-main">
+          <div class="worth-price-num">$100</div>
+          <div class="worth-price-rub">7 700 ₽/мес</div>
+          <div class="worth-price-label">Рабочий режим, где окупается всё</div>
+        </div>
+      </div>
+      <p style="margin-top:1.25rem;">Не только в деньгах. В проектах, времени, свободе.</p>
     </div>
 
     <div class="worth-block" id="worthBlock7">
