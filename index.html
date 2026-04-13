@@ -742,79 +742,102 @@ body {
   border-color: rgba(255,255,255,0.55);
 }
 
-/* ========== PROGRAM (3D perspective) ========== */
-.program-list { margin-top: 3rem; perspective: 1000px; }
-.program-item {
-  position: relative; border-bottom: 1px solid var(--border);
-  padding: 2rem 0; cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+/* ========== PROGRAM — DARK HERO SECTION ========== */
+.program-section {
+  background: #1A1A1A;
+  color: #fff;
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
 }
-.program-item:first-child { border-top: 1px solid var(--border); }
-.program-item::before {
+.program-section::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,213,79,0.06) 0%, rgba(255,160,0,0.03) 100%);
-  border-radius: 16px;
-  opacity: 0; transition: opacity 0.5s ease;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(232,199,56,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(222,128,46,0.06) 0%, transparent 50%);
   pointer-events: none;
 }
-.program-item.open::before { opacity: 1; }
+.program-section .s-label { color: rgba(255,255,255,0.4); }
+.program-section .s-title {
+  color: #fff;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  background: linear-gradient(135deg, #fff 0%, #FFD54F 50%, #DE802E 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 20px rgba(232,199,56,0.2));
+}
+.program-list { margin-top: 3rem; }
+.program-item {
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 1.75rem 1.5rem; cursor: pointer;
+  border-radius: 16px; margin-bottom: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.program-item:first-child { border-top: none; }
+.program-item:hover {
+  background: rgba(255,255,255,0.03);
+}
+.program-item.open {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(232,199,56,0.2);
+  box-shadow: 0 0 40px rgba(232,199,56,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+}
 .program-item-head {
   display: flex; align-items: flex-start; gap: 1.5rem;
 }
-/* Gradient numbers */
+/* Big gradient numbers */
 .program-num {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-  font-weight: 800; flex-shrink: 0; min-width: 2.5rem;
-  background: linear-gradient(180deg, #ddd, #ccc);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 900; flex-shrink: 0; min-width: 2.5rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.08));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .program-item.open .program-num,
 .program-item:hover .program-num {
-  background: linear-gradient(180deg, var(--gold, #E8C738), var(--orange, #DE802E));
+  background: linear-gradient(180deg, #FFD54F, #DE802E);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(232,199,56,0.3));
+  filter: drop-shadow(0 0 16px rgba(232,199,56,0.4));
 }
 .program-title {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 700; color: var(--text);
-  line-height: 1.3; flex: 1;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  font-weight: 600; color: rgba(255,255,255,0.85);
+  line-height: 1.35; flex: 1;
   transition: color 0.3s ease;
 }
-/* Morph arrow: + → × with color */
+.program-item.open .program-title,
+.program-item:hover .program-title { color: #fff; }
+/* Morph arrow */
 .program-arrow {
   width: 28px; height: 28px; flex-shrink: 0;
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), color 0.3s ease;
-  color: #ccc;
-  margin-top: 2px;
+  color: rgba(255,255,255,0.2);
+  margin-top: 4px;
 }
 .program-item.open .program-arrow {
   transform: rotate(135deg);
-  color: var(--orange, #DE802E);
-  filter: drop-shadow(0 0 6px rgba(222,128,46,0.4));
+  color: #FFD54F;
+  filter: drop-shadow(0 0 8px rgba(255,213,79,0.5));
 }
-.program-item:hover .program-arrow { color: #999; }
-/* Glow border on open */
-.program-item.open {
-  border-color: rgba(232,199,56,0.3);
-}
-/* Body animation — slide up + fade */
+.program-item:hover .program-arrow { color: rgba(255,255,255,0.4); }
+/* Body */
 .program-body {
   max-height: 0; overflow: hidden;
   transition: max-height 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
   opacity: 0;
 }
 .program-body-inner {
-  padding: 1.25rem 0 0.75rem 4rem;
-  font-size: 0.95rem; color: var(--text-muted); line-height: 1.7;
+  padding: 1.25rem 0 0.5rem 4rem;
+  font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.75;
   transform: translateY(10px);
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .program-item.open .program-body { max-height: 500px; opacity: 1; }
 .program-item.open .program-body-inner { transform: translateY(0); }
-/* Bullet list styling */
+/* Bullet list */
 .program-points {
   list-style: none; padding: 0; margin: 0 0 1rem 0;
 }
@@ -833,19 +856,20 @@ body {
 .program-points li::before {
   content: ''; position: absolute; left: 0; top: 0.55em;
   width: 6px; height: 6px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
+  background: linear-gradient(135deg, #FFD54F, #DE802E);
+  box-shadow: 0 0 6px rgba(255,213,79,0.4);
 }
 /* Result badge */
 .program-result {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, rgba(232,199,56,0.12), rgba(222,128,46,0.08));
-  border-radius: 8px; border: 1px solid rgba(232,199,56,0.2);
-  font-size: 0.95rem; font-weight: 400; color: var(--text-muted);
+  background: rgba(255,213,79,0.08);
+  border-radius: 8px; border: 1px solid rgba(255,213,79,0.15);
+  font-size: 0.95rem; font-weight: 400; color: rgba(255,255,255,0.5);
   opacity: 0; transform: translateY(8px);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0.25s;
 }
-.program-result::before { content: '✦'; color: var(--orange, #DE802E); }
+.program-result::before { content: '✦'; color: #FFD54F; }
 .program-item.open .program-result {
   opacity: 1; transform: translateY(0);
 }
@@ -1528,11 +1552,11 @@ body {
 </div>
 
 <!-- ==================== PROGRAM ==================== -->
-<section class="section-white" id="program">
+<section class="program-section" id="program">
   <div class="s-container">
     <div class="reveal">
       <div class="s-label">Программа</div>
-      <h2 class="s-title">7 уроков —<br>и ты умеешь то, что не умеет 99%</h2>
+      <h2 class="s-title">7 уроков —<br>и ты умеешь то,<br>что не умеет 99%</h2>
     </div>
     <div class="program-list">
       <div class="program-item reveal">
