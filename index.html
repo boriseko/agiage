@@ -978,63 +978,78 @@ body {
 }
 
 
-/* ========== AGENTS SWARM (scroll-driven) ========== */
+/* ========== AGENTS SWARM ========== */
 .swarm-outer { position: relative; background: var(--bg); }
 .swarm-pin {
-  height: 100vh; width: 100%;
+  height: 100vh; width: 100%; position: relative;
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden; position: relative;
+  overflow: hidden;
 }
-.swarm-text {
+.swarm-text-layer {
   position: absolute; inset: 0; z-index: 10;
   display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: 2rem; pointer-events: none;
+  text-align: center; pointer-events: none;
 }
-.swarm-text span {
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900; letter-spacing: -0.03em; line-height: 1.3;
-  color: var(--text); opacity: 0; transition: opacity 0.6s;
+.swarm-text-layer span {
+  font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 1.2;
+  color: var(--text); opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.23,1,0.32,1);
 }
-.swarm-text span.vis { opacity: 1; }
-.swarm-text .sw-gold {
-  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
+.swarm-text-layer span.vis { opacity: 1; }
+.swarm-text-layer .sw-gold {
+  background: linear-gradient(135deg, #E8C738, #DE802E);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 20px rgba(232,199,56,0.3));
 }
-.swarm-text .sw-dim {
-  color: var(--text-light); font-weight: 400;
-  font-size: clamp(1.2rem, 3vw, 2rem);
+.swarm-text-layer .sw-sub {
+  display: block; font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 400; color: var(--text-muted); margin-top: 0.5rem;
+  -webkit-text-fill-color: var(--text-muted);
+  filter: none;
 }
-.swarm-grid {
+/* Agent terminals — absolutely positioned chaos */
+.swarm-canvas {
   position: absolute; inset: 0; z-index: 1;
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 8px; padding: 8px; opacity: 0; transition: opacity 0.8s;
 }
-@media (min-width: 768px) { .swarm-grid { grid-template-columns: repeat(5, 1fr); } }
-.swarm-grid.vis { opacity: 1; }
-.swarm-agent {
-  background: #1e1e1e; border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px; padding: 0.5rem 0.65rem;
-  font-family: "Geist Mono", "SF Mono", monospace;
-  font-size: 0.6rem; color: rgba(255,255,255,0.3);
-  line-height: 1.5; overflow: hidden; position: relative;
-  opacity: 0; transform: scale(0.85);
-  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+.sw-term {
+  position: absolute;
+  background: #1a1a1a; border-radius: 10px;
+  padding: 0; overflow: hidden;
+  font-family: "Geist Mono","SF Mono",monospace;
+  font-size: 0.65rem; color: rgba(255,255,255,0.35);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  opacity: 0; transform: scale(0.3);
+  transition: opacity 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.6s cubic-bezier(0.23,1,0.32,1);
 }
-.swarm-agent.vis { opacity: 1; transform: scale(1); }
-.swarm-agent::after {
-  content: ""; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 20px; background: linear-gradient(transparent, #1e1e1e);
+.sw-term.vis { opacity: 1; transform: scale(1); }
+.sw-term-bar {
+  display: flex; gap: 4px; padding: 6px 8px;
+  background: #2a2a2a; align-items: center;
 }
-.swarm-agent .sa-s { color: #28c840; }
-.swarm-agent .sa-t { color: rgba(255,255,255,0.5); font-weight: 600; }
-.swarm-agent .sa-a { color: #FFD54F; }
-.sa-cursor {
+.sw-term-bar i { width: 7px; height: 7px; border-radius: 50%; }
+.sw-term-bar i:nth-child(1){background:#ff5f57;} .sw-term-bar i:nth-child(2){background:#febc2e;} .sw-term-bar i:nth-child(3){background:#28c840;}
+.sw-term-bar span { margin-left: auto; font-size: 0.55rem; color: #666; }
+.sw-term-body {
+  padding: 6px 8px; line-height: 1.6; min-height: 60px;
+  position: relative;
+}
+.sw-term-body::after {
+  content:""; position: absolute; bottom:0; left:0; right:0;
+  height: 15px; background: linear-gradient(transparent,#1a1a1a);
+}
+.sw-s { color: #28c840; }
+.sw-a { color: #FFD54F; }
+.sw-t { color: rgba(255,255,255,0.55); }
+.sw-cur {
   display: inline-block; width: 5px; height: 10px;
-  background: #FFD54F; margin-left: 2px; vertical-align: middle;
-  animation: curBlink 0.8s step-end infinite;
+  background: #FFD54F; vertical-align: middle;
+  animation: swCur 0.7s step-end infinite;
 }
-@keyframes curBlink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+@keyframes swCur { 50%{opacity:0;} }
+/* Pulse glow on random terminals */
+.sw-term.glow { box-shadow: 0 0 30px rgba(232,199,56,0.15), 0 4px 20px rgba(0,0,0,0.15); }
 
 /* ========== FORMAT STEPS ========== */
 .format-steps {
@@ -2094,32 +2109,13 @@ body {
 </section>
 
 <!-- ==================== AGENTS SWARM ==================== -->
-<section class="swarm-outer" id="swarm" style="height:400vh;">
+<section class="swarm-outer" id="swarm" style="height:500vh;">
   <div class="swarm-pin" id="swarmPin">
-    <!-- Text overlays -->
-    <div class="swarm-text" id="swarmText1"><span>И это был лишь <span class="sw-gold">один</span> агент.</span></div>
-    <div class="swarm-text" id="swarmText2"><span class="sw-dim">Но их может быть больше.</span></div>
-    <div class="swarm-text" id="swarmText3"><span class="sw-gold">Намного больше.</span></div>
-    <div class="swarm-text" id="swarmText4"><span>И все они работают на тебя.<br><span class="sw-dim">В рамках одной подписки.</span></span></div>
-
-    <!-- Agent terminals -->
-    <div class="swarm-grid" id="swarmGrid">
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Лендинг</span><br><span class="sa-line">Hero-секция...</span><br><span class="sa-line">Вёрстка...</span><br><span class="sa-line">Формы...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Анализ данных</span><br><span class="sa-line">12K строк...</span><br><span class="sa-line">Группировка...</span><br><span class="sa-line">Таблица...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Чат-бот</span><br><span class="sa-line">База знаний...</span><br><span class="sa-line">Telegram API...</span><br><span class="sa-line">Тесты...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Презентация</span><br><span class="sa-line">Слайд 12/24...</span><br><span class="sa-line">Графики...</span><br><span class="sa-line">PPTX...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Email</span><br><span class="sa-line">Сегментация...</span><br><span class="sa-line">Шаблон B...</span><br><span class="sa-line">Отправка...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">SEO-аудит</span><br><span class="sa-line">180/340 стр...</span><br><span class="sa-line">Мета-теги...</span><br><span class="sa-line">Отчёт...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">CRM</span><br><span class="sa-line">Webhook...</span><br><span class="sa-line">Маппинг...</span><br><span class="sa-line">450 контактов...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Видеомонтаж</span><br><span class="sa-line">Нарезка...</span><br><span class="sa-line">Субтитры...</span><br><span class="sa-line">Рендер...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Юрид. анализ</span><br><span class="sa-line">Пункт 4.2...</span><br><span class="sa-line">Сравнение...</span><br><span class="sa-line">Риски...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Автоотчёты</span><br><span class="sa-line">API 1/3...</span><br><span class="sa-line">Формат...</span><br><span class="sa-line">Slack...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Логотип</span><br><span class="sa-line">Вариант 5/8...</span><br><span class="sa-line">Мокапы...</span><br><span class="sa-line">SVG...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Парсинг</span><br><span class="sa-line">Сайт 8/15...</span><br><span class="sa-line">Цены...</span><br><span class="sa-line">Таблица...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Приложение</span><br><span class="sa-line">Экран 3/7...</span><br><span class="sa-line">Навигация...</span><br><span class="sa-line">Firebase...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Контент-план</span><br><span class="sa-line">Тема 14/30...</span><br><span class="sa-line">Хэштеги...</span><br><span class="sa-line">График...</span><br><span class="sa-cursor"></span></div>
-    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Бухгалтерия</span><br><span class="sa-line">Чек #47...</span><br><span class="sa-line">Расходы...</span><br><span class="sa-line">Отчёт Q1...</span><br><span class="sa-cursor"></span></div>
-  </div>
+    <div class="swarm-text-layer" id="swT1"><span>И это был лишь <span class="sw-gold">один</span> агент.</span></div>
+    <div class="swarm-text-layer" id="swT2"><span>Но их может быть больше.</span></div>
+    <div class="swarm-text-layer" id="swT3"><span class="sw-gold">Намного больше.</span></div>
+    <div class="swarm-text-layer" id="swT4"><span>И все они работают на тебя.<span class="sw-sub">В рамках одной подписки.</span></span></div>
+    <div class="swarm-canvas" id="swarmCanvas"></div>
   </div>
 </section>
 
@@ -2797,59 +2793,124 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 })();
 </script>
 
-<!-- GSAP for Swarm -->
+<!-- GSAP + Swarm -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
-(function() {
+(function(){
   const outer = document.getElementById('swarm');
   const pin = document.getElementById('swarmPin');
-  if (!outer || !pin) return;
+  const canvas = document.getElementById('swarmCanvas');
+  if(!outer||!pin||!canvas) return;
 
   const texts = [
-    document.querySelector('#swarmText1 span'),
-    document.querySelector('#swarmText2 span'),
-    document.querySelector('#swarmText3 span'),
-    document.querySelector('#swarmText4 span'),
+    document.querySelector('#swT1 span'),
+    document.querySelector('#swT2 span'),
+    document.querySelector('#swT3 span'),
+    document.querySelector('#swT4 span'),
   ];
-  const grid = document.getElementById('swarmGrid');
-  const agents = grid ? Array.from(grid.querySelectorAll('.swarm-agent')) : [];
+
+  // Agent data
+  const agentDefs = [
+    {name:'Лендинг',lines:['$ Получил задачу','→ Собираю hero...','→ Адаптивная вёрстка...','→ Формы подключены','→ Тестирую...','✅ Готово']},
+    {name:'Анализ данных',lines:['$ Загрузка CSV...','→ 12 400 строк','→ Группировка...','→ Pivot table...','→ Экспорт Excel']},
+    {name:'Чат-бот',lines:['$ Инициализация...','→ База знаний: 240 док','→ Telegram API...','→ Сценарий #3...','→ Тест: OK']},
+    {name:'Презентация',lines:['$ Создаю слайды...','→ Слайд 8/24...','→ Генерирую графики','→ Анимации...','→ Export PPTX']},
+    {name:'Email-рассылка',lines:['$ Сегментация базы','→ 2 400 контактов','→ Шаблон B...','→ Персонализация','→ Отправка...']},
+    {name:'SEO-аудит',lines:['$ Сканирую сайт...','→ Страница 180/340','→ Мета-теги: 12 ошибок','→ Alt-тексты...','→ Отчёт готов']},
+    {name:'CRM',lines:['$ Webhook настроен','→ Маппинг полей...','→ Синхронизация...','→ 450 контактов','✅ Интеграция OK']},
+    {name:'Видеомонтаж',lines:['$ Импорт 40 мин','→ Нарезка по таймкодам','→ Субтитры RU','→ Цветокоррекция','→ Рендер 1080p...']},
+    {name:'Юрид. анализ',lines:['$ Загрузка договора','→ Пункт 4.2: риск','→ Сравниваю с шаблоном','→ 3 замечания','→ Отчёт сформирован']},
+    {name:'Автоотчёты',lines:['$ API 1/3 подключен','→ Форматирую данные','→ Графики построены','→ Отправляю в Slack','✅ Доставлено']},
+    {name:'Логотип',lines:['$ Генерирую варианты','→ Вариант 5/8','→ Мокап на футболке','→ SVG + PNG export','→ Готово']},
+    {name:'Парсинг',lines:['$ Сайт 8/15','→ Цены собраны','→ Ассортимент: 1240','→ Сравнительная табл.','→ CSV export']},
+    {name:'Мобильное прил.',lines:['$ React Native init','→ Экран 3/7...','→ Навигация готова','→ Firebase auth','→ Билд APK...']},
+    {name:'Контент-план',lines:['$ Анализ ниши','→ Тема 14/30','→ Хэштеги подобраны','→ Расписание: 3 пост/нед','→ Готово']},
+    {name:'Бухгалтерия',lines:['$ Импорт выписки','→ Чек #47: офис','→ Категоризация...','→ Итого Q1: 840K','→ Отчёт готов']},
+    {name:'Перевод',lines:['$ Документ: 12 стр','→ EN → RU','→ Терминология...','→ Вычитка...','→ Экспорт DOCX']},
+    {name:'Мониторинг',lines:['$ Подключаю метрики','→ CPU: 23%','→ Аптайм: 99.7%','→ Алерт настроен','→ Dashboard OK']},
+    {name:'Фото-обработка',lines:['$ Пакет: 120 фото','→ Ретушь #34...','→ Цветокоррекция','→ Ресайз для web','→ Экспорт ZIP']},
+    {name:'Скрипт продаж',lines:['$ Анализ ЦА','→ Возражение #3','→ Структура диалога','→ 5 вариантов','→ Готово']},
+    {name:'Тех. документация',lines:['$ Сканирую код','→ 34 эндпоинта','→ Swagger генерация','→ Примеры запросов','→ README готов']},
+  ];
+
+  // Create terminal DOM elements
+  const terminals = [];
+  const positions = [];
+  
+  function randBetween(a,b){ return a + Math.random()*(b-a); }
+
+  for(let i=0; i<20; i++){
+    const d = agentDefs[i];
+    const el = document.createElement('div');
+    el.className = 'sw-term';
+    const w = Math.round(randBetween(180, 260));
+    const h = Math.round(randBetween(100, 160));
+    // Random position avoiding dead center (text area)
+    let x, y;
+    do {
+      x = randBetween(2, 90);
+      y = randBetween(2, 85);
+    } while (x > 25 && x < 75 && y > 30 && y < 70); // avoid center
+    
+    el.style.cssText = `width:${w}px; left:${x}%; top:${y}%; z-index:${Math.round(randBetween(1,5))};`;
+    el.innerHTML = '<div class="sw-term-bar"><i></i><i></i><i></i><span>'+d.name+'</span></div><div class="sw-term-body" id="swB'+i+'"><span class="sw-s">● </span><span class="sw-t">'+d.name+'</span><br></div>';
+    canvas.appendChild(el);
+    terminals.push({el, def: d, lineIdx: 0, charIdx: 0, bodyEl: null});
+  }
+
+  // Cache body elements
+  terminals.forEach((t,i) => { t.bodyEl = document.getElementById('swB'+i); });
+
+  // Typing simulation
+  let typingActive = false;
+  function typeStep(){
+    if(!typingActive) return;
+    terminals.forEach(t => {
+      if(!t.el.classList.contains('vis')) return;
+      // Add new line periodically
+      if(Math.random() < 0.3) {
+        const line = t.def.lines[t.lineIdx % t.def.lines.length];
+        t.lineIdx++;
+        const color = line.startsWith('✅') ? 'sw-s' : (line.startsWith('→') ? '' : 'sw-a');
+        t.bodyEl.innerHTML += '<br><span class="'+color+'">'+line+'</span>';
+        // Keep only last 6 lines
+        const brs = t.bodyEl.querySelectorAll('br');
+        if(brs.length > 6) { 
+          brs[0].nextElementSibling?.remove(); 
+          brs[0].remove(); 
+        }
+      }
+      // Random glow
+      t.el.classList.toggle('glow', Math.random() < 0.15);
+    });
+    setTimeout(typeStep, 400 + Math.random()*400);
+  }
 
   let phase = -1;
-
   function setPhase(p) {
-    if (p === phase) return;
+    if(p === phase) return;
     phase = p;
+    texts.forEach(t => t && t.classList.remove('vis'));
 
-    // Hide all texts
-    texts.forEach(t => { if(t) t.classList.remove('vis'); });
-
-    if (p === 0) {
-      // "И это был лишь один агент"
-      texts[0].classList.add('vis');
-      grid.classList.remove('vis');
-      agents.forEach(a => a.classList.remove('vis'));
-    } else if (p === 1) {
-      // "Но их может быть больше"
-      texts[1].classList.add('vis');
-      grid.classList.remove('vis');
-    } else if (p === 2) {
-      // Terminals appear + "Намного больше"
-      texts[2].classList.add('vis');
-      grid.classList.add('vis');
-      agents.forEach((a, i) => {
-        setTimeout(() => a.classList.add('vis'), i * 60);
-      });
-    } else if (p === 3) {
-      // More agents visible, text changes
-      grid.classList.add('vis');
-      agents.forEach(a => a.classList.add('vis'));
-    } else if (p >= 4) {
-      // Final text
-      texts[3].classList.add('vis');
-      grid.classList.add('vis');
-      agents.forEach(a => a.classList.add('vis'));
+    if(p === 0) {
+      texts[0]?.classList.add('vis');
+    } else if(p === 1) {
+      texts[1]?.classList.add('vis');
+      // Show first 3 agents small
+      terminals.slice(0,3).forEach((t,i) => setTimeout(()=>t.el.classList.add('vis'), i*200));
+    } else if(p === 2) {
+      texts[2]?.classList.add('vis');
+      // Show 10 agents
+      terminals.slice(0,10).forEach((t,i) => setTimeout(()=>t.el.classList.add('vis'), i*80));
+      if(!typingActive){ typingActive=true; typeStep(); }
+    } else if(p === 3) {
+      // ALL agents, no text — just chaos
+      terminals.forEach((t,i) => setTimeout(()=>t.el.classList.add('vis'), i*50));
+    } else if(p >= 4) {
+      texts[3]?.classList.add('vis');
+      terminals.forEach(t => t.el.classList.add('vis'));
     }
   }
 
@@ -2859,42 +2920,9 @@ gsap.registerPlugin(ScrollTrigger);
     end: 'bottom bottom',
     pin: pin,
     onUpdate: (self) => {
-      const p = Math.floor(self.progress * 5);
-      setPhase(Math.min(p, 4));
+      setPhase(Math.min(4, Math.floor(self.progress * 5)));
     }
   });
-
-  // Typing effect — randomly update agent content
-  const tasks = [
-    ['Лендинг','Собираю компоненты...','Адаптивная вёрстка...','Подключаю формы...','Тестирую...','Деплою...'],
-    ['Анализ данных','Читаю CSV...','12 400 строк...','Группировка...','Pivot table...','Экспорт...'],
-    ['Чат-бот','Обучаю модель...','Telegram API...','Сценарий #3...','Тестирую ответы...'],
-    ['Презентация','Слайд 12/24...','Генерирую графики...','Анимации...','Экспорт PPTX...'],
-    ['Email','Сегментация...','Шаблон B...','Персонализация...','Отправка 2400...'],
-    ['SEO-аудит','Страница 180/340...','Мета-теги...','Alt-тексты...','Отчёт...'],
-    ['CRM','Webhook настроен...','Синхронизация...','450 контактов...','Готово...'],
-    ['Видео','Нарезка...','Субтитры RU...','Цветокоррекция...','Рендер...'],
-    ['Юрид.','Пункт 4.2...','Сравниваю...','Риск: средний...','Отчёт...'],
-    ['Автоотчёты','API 1/3...','Форматирую...','Графики...','Slack...'],
-    ['Логотип','Вариант 5/8...','Мокап на футболке...','SVG export...'],
-    ['Парсинг','Сайт 8/15...','Цены собраны...','Таблица...'],
-    ['Приложение','Экран 3/7...','Навигация...','Firebase auth...'],
-    ['Контент','Тема 14/30...','Хэштеги...','Расписание...'],
-    ['Бухгалтерия','Чек #47...','Категория: офис...','Итого Q1...'],
-  ];
-
-  let typingInterval = setInterval(() => {
-    agents.forEach((agent, i) => {
-      if (!agent.classList.contains('vis')) return;
-      const t = tasks[i % tasks.length];
-      const line = t[Math.floor(Math.random() * t.length)];
-      const spans = agent.querySelectorAll('.sa-line');
-      if (spans.length > 0) {
-        const target = spans[Math.floor(Math.random() * spans.length)];
-        target.textContent = line;
-      }
-    });
-  }, 800);
 })();
 </script>
 
