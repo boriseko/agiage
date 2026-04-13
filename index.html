@@ -890,10 +890,11 @@ body {
 }
 .worth-accent {
   display: inline;
-  font-weight: 800;
+  font-weight: 800; font-size: 1.3em;
   background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 4px rgba(232,199,56,0.25));
 }
 .worth-big-num {
   display: block;
@@ -955,7 +956,7 @@ body {
 
 /* Timeline bar decoration */
 .worth-timeline {
-  position: absolute; left: calc(50% - 380px - 40px);
+  position: absolute; left: calc(50% - 540px);
   top: 12rem; bottom: 6rem; width: 3px;
   background: linear-gradient(180deg, rgba(232,199,56,0.3) 0%, rgba(222,128,46,0.1) 100%);
   border-radius: 2px;
@@ -971,7 +972,7 @@ body {
   0%, 100% { box-shadow: 0 0 12px rgba(232,199,56,0.3); transform: scale(1); }
   50% { box-shadow: 0 0 24px rgba(232,199,56,0.6); transform: scale(1.3); }
 }
-@media (max-width: 900px) { .worth-timeline { display: none; } }
+@media (max-width: 1200px) { .worth-timeline { display: none; } }
 
 /* ========== FORMAT STEPS ========== */
 .format-steps {
@@ -1632,22 +1633,22 @@ body {
     </div>
 
     <div class="worth-block" id="worthBlock2">
-      <p>Что если за эти деньги ты запускаешь продукт, на который раньше нанимал подрядчика за <span class="worth-accent">50 тысяч</span>? Берёшь заказы, от которых отказывался? Автоматизируешь рутину, которая съедала часы каждую неделю?</p>
+      <p>Что если за эти деньги ты запускаешь продукт, на который раньше нанимал подрядчика за <span class="worth-accent">50 тысяч</span>?<br>Берёшь заказы, от которых отказывался?<br>Автоматизируешь рутину, которая съедала часы каждую неделю?</p>
     </div>
 
     <div class="worth-block" id="worthBlock3">
-      <p>Люди приходят за ускорением — а открывают целые направления, о которых не думали. Платят за одно — получают <span class="worth-accent">пять</span>.</p>
+      <p>Люди приходят за ускорением —<br>а открывают целые направления, о которых не думали.<br>Платят за одно — получают <span class="worth-accent">пять</span>.</p>
     </div>
 
     <div class="worth-divider"></div>
 
     <div class="worth-block" id="worthBlock4">
-      <p>Но вот что выносит мозг. За те же <span class="worth-accent">$20</span> каждый месяц ты получаешь больше. Модели обновляются, возможности растут.</p>
+      <p>Но вот что выносит мозг.<br>За те же <span class="worth-accent">$20</span> каждый месяц ты получаешь больше.<br>Модели обновляются, возможности растут.</p>
     </div>
 
     <div class="worth-block" id="worthBlock5">
       <span class="worth-big-num">×5 → ×20</span>
-      <p>В январе — одно. В апреле — впятеро. В июле — в двадцать раз. Цена та же. Назови хоть один продукт, который так работает.</p>
+      <p>В январе — одно. В апреле — впятеро. В июле — в двадцать раз.<br>Цена та же. Назови хоть один продукт, который так работает.</p>
     </div>
 
     <div class="worth-divider"></div>
