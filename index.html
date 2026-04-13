@@ -1415,6 +1415,53 @@ body {
 }
 .cin-top-btn:hover { color: var(--text); transform: translateY(-2px); }
 
+/* Legal links row */
+.cin-legal {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem;
+  margin-top: 1.25rem;
+}
+.cin-legal a {
+  font-size: 0.65rem; font-weight: 500; color: var(--text-light);
+  text-decoration: none; transition: color 0.2s;
+}
+.cin-legal a:hover { color: var(--text); }
+.cin-requisites {
+  font-size: 0.55rem; color: var(--text-light); text-align: center;
+  margin-top: 0.5rem; letter-spacing: 0.03em;
+}
+
+/* Cookie banner */
+.cookie-banner {
+  position: fixed; bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 9990;
+  max-width: 480px; width: calc(100% - 2rem);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
+  opacity: 0; transform: translateX(-50%) translateY(20px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.cookie-banner.visible {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+.cookie-banner.hidden { display: none; }
+.cookie-text { flex: 1; }
+.cookie-text a { color: var(--text); text-decoration: underline; }
+.cookie-btn {
+  flex-shrink: 0; padding: 0.5rem 1.25rem;
+  border-radius: 9999px; border: none;
+  background: var(--black); color: var(--white);
+  font-size: 0.75rem; font-weight: 700; cursor: pointer;
+  transition: background 0.2s;
+}
+.cookie-btn:hover { background: #000; }
+
 /* ========== SCROLL REVEAL ========== */
 .reveal {
   opacity: 0; transform: translateY(40px);
@@ -2370,6 +2417,12 @@ body {
       <a href="#faq" class="cin-pill cin-pill-sm">FAQ</a>
       <a href="mailto:hello@agiage.ru" class="cin-pill cin-pill-sm">hello@agiage.ru</a>
     </div>
+    <div class="cin-legal reveal">
+      <a href="offer.html" target="_blank">Оферта</a>
+      <a href="privacy.html" target="_blank">Политика конфиденциальности</a>
+      <a href="consent.html" target="_blank">Обработка ПД</a>
+    </div>
+    <div class="cin-requisites reveal">ИП Борисенко Е.Т. &middot; ИНН 123456789</div>
   </div>
 
   <div class="cin-bottom">
@@ -2385,7 +2438,25 @@ body {
   </div>
 </section>
 
+<!-- Cookie banner -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">Мы используем cookie для улучшения работы сайта. Подробнее — <a href="privacy.html" target="_blank">политика конфиденциальности</a></div>
+  <button class="cookie-btn" id="cookieAccept">Принять</button>
+</div>
+
 <script>
+// === Cookie banner ===
+(function() {
+  if (localStorage.getItem('cookieOk')) return;
+  const banner = document.getElementById('cookieBanner');
+  setTimeout(() => banner.classList.add('visible'), 2000);
+  document.getElementById('cookieAccept').addEventListener('click', () => {
+    localStorage.setItem('cookieOk', '1');
+    banner.classList.remove('visible');
+    setTimeout(() => banner.classList.add('hidden'), 500);
+  });
+})();
+
 // === Force scroll to top on load ===
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
