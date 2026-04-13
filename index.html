@@ -881,49 +881,8 @@ body {
   font-weight: 900; line-height: 1.1; letter-spacing: -0.03em;
   margin-bottom: 3rem;
 }
-.worth-block {
-  margin-bottom: 2.5rem;
-  opacity: 0; transform: translateY(20px);
-  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.worth-block.revealed {
-  opacity: 1; transform: translateY(0);
-}
-.worth-block p {
-  font-size: 1.15rem; line-height: 1.75; color: #444;
-}
-@media (min-width: 768px) {
-  .worth-block p { font-size: 1.25rem; }
-}
-@media (min-width: 1280px) {
-  .worth-block p { font-size: 1.35rem; line-height: 1.8; }
-}
-.worth-accent {
-  display: inline;
-  font-weight: 800; font-size: 1.3em;
-  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 1px 4px rgba(232,199,56,0.25));
-}
-.worth-big-num {
-  display: block;
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 900; line-height: 1;
-  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(232,199,56,0.3));
-  margin-bottom: 0.75rem;
-}
-.worth-divider {
-  width: 60px; height: 3px;
-  background: linear-gradient(90deg, var(--gold, #E8C738), var(--orange, #DE802E));
-  border-radius: 2px;
-  margin: 2.5rem 0;
-}
 .worth-closing {
-  font-size: clamp(1.3rem, 2.5vw, 1.6rem); font-weight: 700; line-height: 1.5;
+  font-size: clamp(1.15rem, 2vw, 1.35rem); font-weight: 600; line-height: 1.6;
   color: var(--text);
 }
 .worth-closing em {
@@ -964,25 +923,40 @@ body {
   margin-top: 0.75rem; line-height: 1.4;
 }
 
-/* Timeline bar decoration */
-.worth-timeline {
-  position: absolute; left: calc(50% - 540px);
-  top: 12rem; bottom: 6rem; width: 3px;
-  background: linear-gradient(180deg, rgba(232,199,56,0.3) 0%, rgba(222,128,46,0.1) 100%);
-  border-radius: 2px;
+/* Worth cards grid */
+.worth-grid {
+  display: grid; grid-template-columns: 1fr; gap: 1rem;
+  margin-bottom: 2.5rem;
 }
-.worth-timeline::after {
-  content: ''; position: absolute; top: 0; left: -3px;
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--gold, #E8C738);
-  box-shadow: 0 0 12px rgba(232,199,56,0.5);
-  animation: pulseGold 3s ease-in-out infinite;
+@media (min-width: 768px) {
+  .worth-grid { grid-template-columns: 1fr 1fr; }
+  .worth-card-big { grid-column: span 2; }
 }
-@keyframes pulseGold {
-  0%, 100% { box-shadow: 0 0 12px rgba(232,199,56,0.3); transform: scale(1); }
-  50% { box-shadow: 0 0 24px rgba(232,199,56,0.6); transform: scale(1.3); }
+.worth-card {
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(232,199,56,0.15);
+  transition: all 0.3s ease;
 }
-@media (max-width: 1200px) { .worth-timeline { display: none; } }
+.worth-card:hover {
+  border-color: rgba(232,199,56,0.35);
+  box-shadow: 0 8px 30px rgba(232,199,56,0.08);
+}
+.worth-card-num {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900; line-height: 1;
+  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(232,199,56,0.25));
+  margin-bottom: 1rem;
+}
+.worth-card-text {
+  font-size: 1.05rem; line-height: 1.7; color: #555;
+}
+
 
 /* ========== FORMAT STEPS ========== */
 .format-steps {
@@ -1674,55 +1648,43 @@ body {
 
 <!-- ==================== WORTH ==================== -->
 <section class="worth" id="worth">
-  <div class="worth-timeline"></div>
   <div class="worth-inner">
     <div class="worth-label reveal">Про инструмент</div>
     <h2 class="worth-title reveal">Почему это стоит<br>каждого рубля</h2>
 
-    <div class="worth-block" id="worthBlock1">
-      <span class="worth-big-num">7 700 ₽</span>
-      <p>в месяц — это дорого. Пока не посчитаешь, что получаешь взамен.</p>
-    </div>
-
-    <div class="worth-block" id="worthBlock2">
-      <p>Что если за эти деньги ты запускаешь продукт, на который раньше нанимал подрядчика за <span class="worth-accent">50 тысяч</span>?<br>Берёшь заказы, от которых отказывался?<br>Автоматизируешь рутину, которая съедала часы каждую неделю?</p>
-    </div>
-
-    <div class="worth-block" id="worthBlock3">
-      <p>Люди приходят за ускорением —<br>а открывают целые направления, о которых не думали.<br>Платят за одно — получают <span class="worth-accent">пять</span>.</p>
-    </div>
-
-    <div class="worth-divider"></div>
-
-    <div class="worth-block" id="worthBlock4">
-      <p>Но вот что выносит мозг.<br>За те же <span class="worth-accent">$20</span> каждый месяц ты получаешь больше.<br>Модели обновляются, возможности растут.</p>
-    </div>
-
-    <div class="worth-block" id="worthBlock5">
-      <span class="worth-big-num">×5 → ×20</span>
-      <p>В январе — одно. В апреле — впятеро. В июле — в двадцать раз.<br>Цена та же. Назови хоть один продукт, который так работает.</p>
-    </div>
-
-    <div class="worth-divider"></div>
-
-    <div class="worth-block worth-prices" id="worthBlock6">
-      <div class="worth-price-row">
-        <div class="worth-price-card">
-          <div class="worth-price-num">$20</div>
-          <div class="worth-price-rub">1 500 ₽/мес</div>
-          <div class="worth-price-label">Вход</div>
-        </div>
-        <div class="worth-price-card worth-price-card-main">
-          <div class="worth-price-num">$100</div>
-          <div class="worth-price-rub">7 700 ₽/мес</div>
-          <div class="worth-price-label">Рабочий режим, где окупается всё</div>
-        </div>
+    <!-- Cards grid -->
+    <div class="worth-grid">
+      <div class="worth-card worth-card-big reveal">
+        <div class="worth-card-num">50 ₽/день</div>
+        <div class="worth-card-text">Пока одни тратят часы на рутину — другие за эти деньги запускают проекты, берут новых клиентов и строят то, что раньше стоило сотни тысяч.</div>
       </div>
-      <p style="margin-top:1.25rem;">Не только в деньгах. В проектах, времени, свободе.</p>
+      <div class="worth-card reveal">
+        <div class="worth-card-num">×20</div>
+        <div class="worth-card-text">За те же деньги каждый месяц ты получаешь больше. Модели умнеют — цена та же.</div>
+      </div>
+      <div class="worth-card reveal">
+        <div class="worth-card-num">∞</div>
+        <div class="worth-card-text">Приходят за ускорением — открывают новые направления, доходы и проекты.</div>
+      </div>
     </div>
 
-    <div class="worth-block" id="worthBlock7">
-      <p class="worth-closing">Это не подписка. Это инвестиция, которая дорожает сама — а ты платишь столько же.<br><br>Вопрос не «дорого ли». Вопрос — <em>сколько ты теряешь каждый месяц без этого</em>.</p>
+    <!-- Price cards -->
+    <div class="worth-price-row reveal">
+      <div class="worth-price-card">
+        <div class="worth-price-num">$20</div>
+        <div class="worth-price-rub">1 500 ₽/мес</div>
+        <div class="worth-price-label">Вход</div>
+      </div>
+      <div class="worth-price-card worth-price-card-main">
+        <div class="worth-price-num">$100</div>
+        <div class="worth-price-rub">7 700 ₽/мес</div>
+        <div class="worth-price-label">Полная мощность</div>
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="worth-block reveal" style="text-align:center; margin-top:3rem;">
+      <p class="worth-closing">Это не подписка. Это инвестиция в время, деньги и свободу.<br>Вопрос не «дорого ли» — а <em>сколько ты теряешь без этого</em>.</p>
     </div>
   </div>
 </section>
