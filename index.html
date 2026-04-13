@@ -978,100 +978,63 @@ body {
 }
 
 
-/* ========== AGENTS SWARM ========== */
-.swarm {
-  padding: clamp(80px, 10vw, 140px) 0;
-  background: #1a1a1a; color: #fff;
+/* ========== AGENTS SWARM (scroll-driven) ========== */
+.swarm-outer { position: relative; background: var(--bg); }
+.swarm-pin {
+  height: 100vh; width: 100%;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden; position: relative;
 }
-.swarm-intro {
-  text-align: center; position: relative; z-index: 2;
-  max-width: 700px; margin: 0 auto; padding: 0 2rem;
+.swarm-text {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 2rem; pointer-events: none;
 }
-.swarm-line1 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 300; color: rgba(255,255,255,0.5);
-  margin-bottom: 1rem;
-  opacity: 0; transform: translateY(20px);
-  transition: all 0.8s cubic-bezier(0.23,1,0.32,1);
+.swarm-text span {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 1.3;
+  color: var(--text); opacity: 0; transition: opacity 0.6s;
 }
-.swarm-line2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900; letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #FFD54F, #DE802E);
+.swarm-text span.vis { opacity: 1; }
+.swarm-text .sw-gold {
+  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 3rem;
-  opacity: 0; transform: translateY(20px);
-  transition: all 0.8s 0.2s cubic-bezier(0.23,1,0.32,1);
 }
-.swarm.visible .swarm-line1,
-.swarm.visible .swarm-line2 {
-  opacity: 1; transform: translateY(0);
+.swarm-text .sw-dim {
+  color: var(--text-light); font-weight: 400;
+  font-size: clamp(1.2rem, 3vw, 2rem);
 }
-/* Agent cards grid */
 .swarm-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px; padding: 0 1rem;
-  max-width: 1200px; margin: 0 auto;
-  position: relative; z-index: 2;
+  position: absolute; inset: 0; z-index: 1;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; padding: 8px; opacity: 0; transition: opacity 0.8s;
 }
-@media (min-width: 768px) {
-  .swarm-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 2rem; }
-}
-@media (min-width: 1100px) {
-  .swarm-grid { grid-template-columns: repeat(5, 1fr); }
-}
+@media (min-width: 768px) { .swarm-grid { grid-template-columns: repeat(5, 1fr); } }
+.swarm-grid.vis { opacity: 1; }
 .swarm-agent {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 1rem;
-  font-family: 'Geist Mono', 'SF Mono', monospace;
-  font-size: 0.7rem; color: rgba(255,255,255,0.4);
-  line-height: 1.5; overflow: hidden;
-  max-height: 120px; position: relative;
-  opacity: 0; transform: scale(0.8) translateY(20px);
-  transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
+  background: #1e1e1e; border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px; padding: 0.5rem 0.65rem;
+  font-family: "Geist Mono", "SF Mono", monospace;
+  font-size: 0.6rem; color: rgba(255,255,255,0.3);
+  line-height: 1.5; overflow: hidden; position: relative;
+  opacity: 0; transform: scale(0.85);
+  transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
 }
+.swarm-agent.vis { opacity: 1; transform: scale(1); }
 .swarm-agent::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 30px; background: linear-gradient(transparent, #1a1a1a);
+  content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 20px; background: linear-gradient(transparent, #1e1e1e);
 }
-.swarm-agent.visible {
-  opacity: 1; transform: scale(1) translateY(0);
+.swarm-agent .sa-s { color: #28c840; }
+.swarm-agent .sa-t { color: rgba(255,255,255,0.5); font-weight: 600; }
+.swarm-agent .sa-a { color: #FFD54F; }
+.sa-cursor {
+  display: inline-block; width: 5px; height: 10px;
+  background: #FFD54F; margin-left: 2px; vertical-align: middle;
+  animation: curBlink 0.8s step-end infinite;
 }
-.swarm-agent .sa-status {
-  color: #28c840; font-weight: 600;
-}
-.swarm-agent .sa-task {
-  color: rgba(255,255,255,0.6);
-}
-.swarm-agent .sa-accent {
-  color: #FFD54F;
-}
-/* Closing text */
-.swarm-closing {
-  text-align: center; margin-top: 3rem;
-  position: relative; z-index: 2;
-  padding: 0 2rem;
-}
-.swarm-closing p {
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  color: rgba(255,255,255,0.5);
-  max-width: 600px; margin: 0 auto; line-height: 1.6;
-}
-.swarm-closing strong {
-  color: #fff; font-weight: 700;
-}
-/* Glow bg */
-.swarm::before {
-  content: ''; position: absolute;
-  top: 50%; left: 50%; width: 600px; height: 600px;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(232,199,56,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
+@keyframes curBlink { 0%,100%{opacity:1;} 50%{opacity:0;} }
 
 /* ========== FORMAT STEPS ========== */
 .format-steps {
@@ -2131,32 +2094,32 @@ body {
 </section>
 
 <!-- ==================== AGENTS SWARM ==================== -->
-<section class="swarm" id="swarm">
-  <div class="swarm-intro">
-    <div class="swarm-line1">Это был один агент.</div>
-    <div class="swarm-line2">А теперь представь, что их десятки.</div>
-  </div>
+<section class="swarm-outer" id="swarm" style="height:400vh;">
+  <div class="swarm-pin" id="swarmPin">
+    <!-- Text overlays -->
+    <div class="swarm-text" id="swarmText1"><span>И это был лишь <span class="sw-gold">один</span> агент.</span></div>
+    <div class="swarm-text" id="swarmText2"><span class="sw-dim">Но их может быть больше.</span></div>
+    <div class="swarm-text" id="swarmText3"><span class="sw-gold">Намного больше.</span></div>
+    <div class="swarm-text" id="swarmText4"><span>И все они работают на тебя.<br><span class="sw-dim">В рамках одной подписки.</span></span></div>
 
-  <div class="swarm-grid" id="swarmGrid">
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Пишу лендинг</span><br><span class="sa-accent">→</span> Hero-секция...<br>Адаптивная вёрстка...<br>Подключаю формы...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Анализ данных</span><br><span class="sa-accent">→</span> Парсинг 12 000 строк...<br>Группировка...<br>Сводная таблица...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Чат-бот</span><br><span class="sa-accent">→</span> Обучаю на базе знаний...<br>Telegram API...<br>Тестирую сценарии...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Презентация</span><br><span class="sa-accent">→</span> 24 слайда...<br>Генерирую графики...<br>Экспорт PPTX...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Email-рассылка</span><br><span class="sa-accent">→</span> Сегментация базы...<br>Персонализация...<br>A/B тест темы...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">SEO-аудит</span><br><span class="sa-accent">→</span> 340 страниц...<br>Мета-теги...<br>Отчёт по ошибкам...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">CRM-интеграция</span><br><span class="sa-accent">→</span> Webhook...<br>Маппинг полей...<br>Синхронизация...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Видеомонтаж</span><br><span class="sa-accent">→</span> Нарезка 40 мин...<br>Субтитры...<br>Цветокоррекция...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Юрид. анализ</span><br><span class="sa-accent">→</span> Проверяю договор...<br>Сравниваю с шаблоном...<br>Список рисков...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Автоотчёты</span><br><span class="sa-accent">→</span> Данные из 3 API...<br>Форматирую...<br>Отправляю в Slack...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Дизайн логотипа</span><br><span class="sa-accent">→</span> 8 вариантов...<br>Мокапы...<br>SVG + PNG...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Парсинг конкурентов</span><br><span class="sa-accent">→</span> 15 сайтов...<br>Цены, ассортимент...<br>Сравнительная таблица...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Моб. приложение</span><br><span class="sa-accent">→</span> React Native...<br>Навигация, экраны...<br>Firebase...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Контент-план</span><br><span class="sa-accent">→</span> 30 тем на месяц...<br>Ключевые слова...<br>Расписание...</div>
-    <div class="swarm-agent"><span class="sa-status">● </span><span class="sa-task">Бухгалтерия</span><br><span class="sa-accent">→</span> Сортировка чеков...<br>Расходы...<br>Квартальный отчёт...</div>
+    <!-- Agent terminals -->
+    <div class="swarm-grid" id="swarmGrid">
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Лендинг</span><br><span class="sa-line">Hero-секция...</span><br><span class="sa-line">Вёрстка...</span><br><span class="sa-line">Формы...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Анализ данных</span><br><span class="sa-line">12K строк...</span><br><span class="sa-line">Группировка...</span><br><span class="sa-line">Таблица...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Чат-бот</span><br><span class="sa-line">База знаний...</span><br><span class="sa-line">Telegram API...</span><br><span class="sa-line">Тесты...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Презентация</span><br><span class="sa-line">Слайд 12/24...</span><br><span class="sa-line">Графики...</span><br><span class="sa-line">PPTX...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Email</span><br><span class="sa-line">Сегментация...</span><br><span class="sa-line">Шаблон B...</span><br><span class="sa-line">Отправка...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">SEO-аудит</span><br><span class="sa-line">180/340 стр...</span><br><span class="sa-line">Мета-теги...</span><br><span class="sa-line">Отчёт...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">CRM</span><br><span class="sa-line">Webhook...</span><br><span class="sa-line">Маппинг...</span><br><span class="sa-line">450 контактов...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Видеомонтаж</span><br><span class="sa-line">Нарезка...</span><br><span class="sa-line">Субтитры...</span><br><span class="sa-line">Рендер...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Юрид. анализ</span><br><span class="sa-line">Пункт 4.2...</span><br><span class="sa-line">Сравнение...</span><br><span class="sa-line">Риски...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Автоотчёты</span><br><span class="sa-line">API 1/3...</span><br><span class="sa-line">Формат...</span><br><span class="sa-line">Slack...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Логотип</span><br><span class="sa-line">Вариант 5/8...</span><br><span class="sa-line">Мокапы...</span><br><span class="sa-line">SVG...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Парсинг</span><br><span class="sa-line">Сайт 8/15...</span><br><span class="sa-line">Цены...</span><br><span class="sa-line">Таблица...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Приложение</span><br><span class="sa-line">Экран 3/7...</span><br><span class="sa-line">Навигация...</span><br><span class="sa-line">Firebase...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Контент-план</span><br><span class="sa-line">Тема 14/30...</span><br><span class="sa-line">Хэштеги...</span><br><span class="sa-line">График...</span><br><span class="sa-cursor"></span></div>
+    <div class="swarm-agent"><span class="sa-s">● </span><span class="sa-t">Бухгалтерия</span><br><span class="sa-line">Чек #47...</span><br><span class="sa-line">Расходы...</span><br><span class="sa-line">Отчёт Q1...</span><br><span class="sa-cursor"></span></div>
   </div>
-
-  <div class="swarm-closing">
-    <p>И все работают <strong>одновременно</strong>. Каждый день. Без выходных.<br>За ту же подписку.</p>
   </div>
 </section>
 
@@ -2553,22 +2516,7 @@ const worthObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
 worthBlocks.forEach(el => worthObserver.observe(el));
 
-// === Swarm stagger reveal ===
-const swarmSection = document.getElementById('swarm');
-if (swarmSection) {
-  const swarmObs = new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) {
-      swarmSection.classList.add('visible');
-      // Stagger agent cards
-      const agents = swarmSection.querySelectorAll('.swarm-agent');
-      agents.forEach((el, i) => {
-        setTimeout(() => el.classList.add('visible'), 400 + i * 100);
-      });
-      swarmObs.disconnect();
-    }
-  }, { threshold: 0.15 });
-  swarmObs.observe(swarmSection);
-}
+// === Swarm scroll-driven ===
 
 // === Glowing Effect on cards ===
 const glowCards = document.querySelectorAll('.glow-card');
@@ -2846,6 +2794,107 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     if (running) draw();
   });
   obs.observe(container);
+})();
+</script>
+
+<!-- GSAP for Swarm -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+(function() {
+  const outer = document.getElementById('swarm');
+  const pin = document.getElementById('swarmPin');
+  if (!outer || !pin) return;
+
+  const texts = [
+    document.querySelector('#swarmText1 span'),
+    document.querySelector('#swarmText2 span'),
+    document.querySelector('#swarmText3 span'),
+    document.querySelector('#swarmText4 span'),
+  ];
+  const grid = document.getElementById('swarmGrid');
+  const agents = grid ? Array.from(grid.querySelectorAll('.swarm-agent')) : [];
+
+  let phase = -1;
+
+  function setPhase(p) {
+    if (p === phase) return;
+    phase = p;
+
+    // Hide all texts
+    texts.forEach(t => { if(t) t.classList.remove('vis'); });
+
+    if (p === 0) {
+      // "И это был лишь один агент"
+      texts[0].classList.add('vis');
+      grid.classList.remove('vis');
+      agents.forEach(a => a.classList.remove('vis'));
+    } else if (p === 1) {
+      // "Но их может быть больше"
+      texts[1].classList.add('vis');
+      grid.classList.remove('vis');
+    } else if (p === 2) {
+      // Terminals appear + "Намного больше"
+      texts[2].classList.add('vis');
+      grid.classList.add('vis');
+      agents.forEach((a, i) => {
+        setTimeout(() => a.classList.add('vis'), i * 60);
+      });
+    } else if (p === 3) {
+      // More agents visible, text changes
+      grid.classList.add('vis');
+      agents.forEach(a => a.classList.add('vis'));
+    } else if (p >= 4) {
+      // Final text
+      texts[3].classList.add('vis');
+      grid.classList.add('vis');
+      agents.forEach(a => a.classList.add('vis'));
+    }
+  }
+
+  ScrollTrigger.create({
+    trigger: outer,
+    start: 'top top',
+    end: 'bottom bottom',
+    pin: pin,
+    onUpdate: (self) => {
+      const p = Math.floor(self.progress * 5);
+      setPhase(Math.min(p, 4));
+    }
+  });
+
+  // Typing effect — randomly update agent content
+  const tasks = [
+    ['Лендинг','Собираю компоненты...','Адаптивная вёрстка...','Подключаю формы...','Тестирую...','Деплою...'],
+    ['Анализ данных','Читаю CSV...','12 400 строк...','Группировка...','Pivot table...','Экспорт...'],
+    ['Чат-бот','Обучаю модель...','Telegram API...','Сценарий #3...','Тестирую ответы...'],
+    ['Презентация','Слайд 12/24...','Генерирую графики...','Анимации...','Экспорт PPTX...'],
+    ['Email','Сегментация...','Шаблон B...','Персонализация...','Отправка 2400...'],
+    ['SEO-аудит','Страница 180/340...','Мета-теги...','Alt-тексты...','Отчёт...'],
+    ['CRM','Webhook настроен...','Синхронизация...','450 контактов...','Готово...'],
+    ['Видео','Нарезка...','Субтитры RU...','Цветокоррекция...','Рендер...'],
+    ['Юрид.','Пункт 4.2...','Сравниваю...','Риск: средний...','Отчёт...'],
+    ['Автоотчёты','API 1/3...','Форматирую...','Графики...','Slack...'],
+    ['Логотип','Вариант 5/8...','Мокап на футболке...','SVG export...'],
+    ['Парсинг','Сайт 8/15...','Цены собраны...','Таблица...'],
+    ['Приложение','Экран 3/7...','Навигация...','Firebase auth...'],
+    ['Контент','Тема 14/30...','Хэштеги...','Расписание...'],
+    ['Бухгалтерия','Чек #47...','Категория: офис...','Итого Q1...'],
+  ];
+
+  let typingInterval = setInterval(() => {
+    agents.forEach((agent, i) => {
+      if (!agent.classList.contains('vis')) return;
+      const t = tasks[i % tasks.length];
+      const line = t[Math.floor(Math.random() * t.length)];
+      const spans = agent.querySelectorAll('.sa-line');
+      if (spans.length > 0) {
+        const target = spans[Math.floor(Math.random() * spans.length)];
+        target.textContent = line;
+      }
+    });
+  }, 800);
 })();
 </script>
 
