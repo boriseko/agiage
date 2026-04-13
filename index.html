@@ -670,7 +670,7 @@ body {
 
 /* ========== CASES (Horizontal scroll) ========== */
 .cases-scroll {
-  --cases-pad: max(2rem, calc((100vw - 1200px) / 2 + 2rem));
+  --cases-pad: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
   display: flex; gap: 1.25rem; overflow-x: auto;
   padding: 2.5rem var(--cases-pad) 2rem;
   scroll-snap-type: x proximity;
@@ -681,10 +681,10 @@ body {
 }
 .cases-scroll::-webkit-scrollbar { display: none; }
 @media (min-width: 768px) {
-  .cases-scroll { --cases-pad: max(3rem, calc((100vw - 1200px) / 2 + 3rem)); }
+  .cases-scroll { --cases-pad: max(2rem, calc((100vw - 1200px) / 2 + 2rem)); }
 }
 @media (min-width: 1280px) {
-  .cases-scroll { --cases-pad: max(5rem, calc((100vw - 1200px) / 2 + 5rem)); }
+  .cases-scroll { --cases-pad: max(2.5rem, calc((100vw - 1200px) / 2 + 2.5rem)); }
 }
 
 .case-card {
