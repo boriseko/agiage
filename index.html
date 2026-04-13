@@ -743,123 +743,120 @@ body {
   border-color: rgba(255,255,255,0.55);
 }
 
-/* ========== PROGRAM ========== */
+/* ========== PROGRAM TIMELINE ========== */
 .program-section {
   padding: clamp(60px, 8vw, 120px) 0;
   position: relative; overflow: hidden;
-  background: var(--bg);
+  background: var(--white);
 }
-.program-section .s-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.program-section .s-container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
 @media (min-width: 768px) { .program-section .s-container { padding: 0 3rem; } }
-@media (min-width: 1280px) { .program-section .s-container { padding: 0 5rem; } }
 .program-section .s-title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  background: linear-gradient(135deg, var(--text) 0%, #DE802E 70%, #E8C738 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 800; letter-spacing: -0.04em;
+  color: var(--black); line-height: 1;
 }
-.program-list { margin-top: 3rem; }
-.program-item {
-  position: relative;
-  border-bottom: 1px solid var(--border);
-  padding: 2rem 0; cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+.timeline { position: relative; margin-top: 3rem; padding-left: 2.5rem; }
+@media (min-width: 768px) { .timeline { padding-left: 3.5rem; } }
+.timeline::before {
+  content: ""; position: absolute;
+  left: 1rem; top: 0; bottom: 0; width: 2px;
+  background: var(--border);
 }
-.program-item:first-child { border-top: 1px solid var(--border); }
-.program-item:hover {
-  background: rgba(232,199,56,0.04);
+@media (min-width: 768px) { .timeline::before { left: 1.5rem; } }
+
+.timeline-progress {
+  position: absolute; left: 1rem; top: 0; width: 2px;
+  background: linear-gradient(180deg, #FFD54F, #FFA000);
+  transform-origin: top; transform: scaleY(0);
+  transition: transform 0.3s ease-out; z-index: 1;
 }
-.program-item.open {
-  background: rgba(232,199,56,0.06);
-  border-color: rgba(232,199,56,0.3);
+@media (min-width: 768px) { .timeline-progress { left: 1.5rem; } }
+
+.timeline-item { position: relative; padding-bottom: 2.5rem; }
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-marker {
+  position: absolute; left: -2.5rem; top: 0;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--white); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 800; color: var(--text-light);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 2;
 }
-.program-item-head {
-  display: flex; align-items: flex-start; gap: 1.5rem;
+@media (min-width: 768px) {
+  .timeline-marker { left: -3.5rem; width: 50px; height: 50px; font-size: 0.95rem; }
 }
-/* Big gradient numbers */
-.program-num {
-  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  font-weight: 900; flex-shrink: 0; min-width: 2.5rem;
-  background: linear-gradient(180deg, #ddd, #ccc);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+.timeline-item.revealed .timeline-marker {
+  background: linear-gradient(135deg, #FFD54F, #FFA000);
+  border-color: transparent; color: var(--white);
+  box-shadow: 0 4px 16px rgba(255,160,0,0.3);
+  animation: markerPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.program-item.open .program-num,
-.program-item:hover .program-num {
-  background: linear-gradient(180deg, var(--gold, #E8C738), var(--orange, #DE802E));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 12px rgba(232,199,56,0.35));
+@keyframes markerPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
 }
-.program-title {
-  font-size: clamp(1.1rem, 2vw, 1.45rem);
-  font-weight: 600; color: var(--text);
-  line-height: 1.35; flex: 1;
-  transition: color 0.3s ease;
+
+.timeline-card {
+  border-radius: 16px; padding: 1.5rem 1.75rem;
+  border: 1px solid var(--border); background: var(--white);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0; transform: translateX(-20px) translateY(15px);
 }
-/* Morph arrow */
-.program-arrow {
-  width: 28px; height: 28px; flex-shrink: 0;
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), color 0.3s ease;
-  color: #ccc;
-  margin-top: 4px;
+.timeline-item.revealed .timeline-card {
+  opacity: 1; transform: translateX(0) translateY(0);
 }
-.program-item.open .program-arrow {
-  transform: rotate(135deg);
-  color: var(--orange, #DE802E);
-  filter: drop-shadow(0 0 6px rgba(222,128,46,0.4));
+.timeline-card:hover {
+  border-color: rgba(255,160,0,0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04); transform: translateY(-2px);
 }
-.program-item:hover .program-arrow { color: #999; }
-/* Body */
-.program-body {
-  max-height: 0; overflow: hidden;
-  transition: max-height 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
-  opacity: 0;
-}
-.program-body-inner {
-  padding: 1.25rem 0 0.5rem 4rem;
-  font-size: 0.95rem; color: var(--text-muted); line-height: 1.75;
-  transform: translateY(10px);
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.program-item.open .program-body { max-height: 500px; opacity: 1; }
-.program-item.open .program-body-inner { transform: translateY(0); }
-/* Bullet list */
-.program-points {
-  list-style: none; padding: 0; margin: 0 0 1rem 0;
-}
-.program-points li {
-  position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem;
+.timeline-card h3 {
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  font-weight: 700; color: var(--black);
+  margin-bottom: 0.75rem; line-height: 1.35;
   opacity: 0; transform: translateY(8px);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.05s;
 }
-.program-item.open .program-points li {
-  opacity: 1; transform: translateY(0);
+.timeline-item.revealed .timeline-card h3 { opacity: 1; transform: translateY(0); }
+.timeline-card ul {
+  list-style: none; padding: 0; margin: 0 0 0.75rem;
 }
-.program-item.open .program-points li:nth-child(1) { transition-delay: 0.05s; }
-.program-item.open .program-points li:nth-child(2) { transition-delay: 0.1s; }
-.program-item.open .program-points li:nth-child(3) { transition-delay: 0.15s; }
-.program-item.open .program-points li:nth-child(4) { transition-delay: 0.2s; }
-.program-points li::before {
-  content: ''; position: absolute; left: 0; top: 0.55em;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
+.timeline-card li {
+  position: relative; padding-left: 1.25rem;
+  font-size: 0.9rem; color: var(--text-muted);
+  line-height: 1.65; margin-bottom: 0.35rem;
+  opacity: 0; transform: translateX(-10px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
-/* Result badge */
-.program-result {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, rgba(232,199,56,0.1), rgba(222,128,46,0.06));
-  border-radius: 8px; border: 1px solid rgba(232,199,56,0.2);
-  font-size: 0.95rem; font-weight: 400; color: var(--text-muted);
-  opacity: 0; transform: translateY(8px);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0.25s;
+.timeline-item.revealed .timeline-card li { opacity: 1; transform: translateX(0); }
+.timeline-item.revealed .timeline-card li:nth-child(1) { transition-delay: 0.15s; }
+.timeline-item.revealed .timeline-card li:nth-child(2) { transition-delay: 0.25s; }
+.timeline-item.revealed .timeline-card li:nth-child(3) { transition-delay: 0.35s; }
+.timeline-item.revealed .timeline-card li:nth-child(4) { transition-delay: 0.45s; }
+.timeline-card li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #FFA000;
 }
-.program-result::before { content: '✦'; color: var(--orange, #DE802E); }
-.program-item.open .program-result {
-  opacity: 1; transform: translateY(0);
+.timeline-result {
+  display: inline-block;
+  font-size: 0.85rem; font-weight: 600; color: #FFA000;
+  opacity: 0; transform: translateY(10px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.5s;
 }
+.timeline-item.revealed .timeline-result { opacity: 1; transform: translateY(0); }
+
+.timeline-end {
+  position: absolute; bottom: -12px;
+  left: 1rem; width: 12px; height: 12px;
+  margin-left: -5px; border-radius: 50%;
+  background: linear-gradient(135deg, #FFD54F, #FFA000);
+  z-index: 2;
+}
+@media (min-width: 768px) { .timeline-end { left: 1.5rem; } }
 
 /* ========== WORTH SECTION ========== */
 .worth {
@@ -1289,44 +1286,47 @@ body {
   .footer-col:last-child { text-align: left; }
 }
 
-/* ========== MINI-FILM ========== */
+/* ========== MINI-FILM (Autoplay) ========== */
 .film {
-  position: relative;
-  background: #f0f0f0;
+  padding: clamp(60px, 8vw, 100px) 0;
+  background: var(--bg);
 }
-.film-pin {
-  height: 100vh; width: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 1rem;
+.film-header {
+  text-align: center; margin-bottom: 2.5rem;
 }
-.film-time {
-  font-size: 1.1rem; font-weight: 700; color: var(--text);
-  background: rgba(255,255,255,0.9); border-radius: 12px;
-  padding: 0.5rem 1.5rem; margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  text-align: center; letter-spacing: 0.05em;
+.film-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900; letter-spacing: -0.03em;
 }
-.film-screens {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1.5rem; width: 100%; max-width: 900px;
-  height: min(75vh, 600px);
+.film-header p {
+  color: var(--text-muted); margin-top: 0.5rem; font-size: 1.05rem;
+}
+.film-devices {
+  display: grid; grid-template-columns: 1.4fr 0.6fr;
+  gap: 2rem; max-width: 960px; margin: 0 auto;
+  padding: 0 2rem; align-items: start;
 }
 @media (max-width: 768px) {
-  .film-screens { grid-template-columns: 1fr; max-width: 400px; height: auto; }
-  .film-terminal { display: none; }
+  .film-devices { grid-template-columns: 1fr; max-width: 400px; }
 }
-/* Left: Terminal */
+/* Left: MacBook-style terminal */
+.film-macbook {
+  background: #2d2d2d; border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05);
+  overflow: hidden;
+}
 .film-terminal {
-  background: #1a1a1a; color: #aaa;
-  padding: 2.5rem; display: flex; flex-direction: column;
-  font-family: 'Geist Mono', 'SF Mono', monospace; font-size: 0.85rem;
-  position: relative; overflow: hidden;
+  background: #1e1e1e; color: #ccc;
+  padding: 1rem 1.25rem; display: flex; flex-direction: column;
+  font-family: 'Geist Mono', 'SF Mono', 'Menlo', monospace; font-size: 0.8rem;
+  min-height: 380px;
 }
 .film-terminal-bar {
-  display: flex; gap: 6px; margin-bottom: 1.5rem;
+  display: flex; gap: 6px; align-items: center;
+  padding: 0.75rem 0.25rem; margin-bottom: 0.75rem;
+  border-bottom: 1px solid #333;
 }
-.film-terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+.film-terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
 .film-terminal-dot:nth-child(1) { background: #ff5f57; }
 .film-terminal-dot:nth-child(2) { background: #febc2e; }
 .film-terminal-dot:nth-child(3) { background: #28c840; }
@@ -1355,21 +1355,31 @@ body {
 }
 .film-term-status .live { color: #28c840; }
 
-/* Right: Phone with chats */
-.film-phone {
-  background: #fff; border-radius: 32px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+/* Right: iPhone-style phone */
+.film-iphone {
+  background: #1a1a1a; border-radius: 40px;
+  padding: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.08);
+}
+.film-phone-inner {
+  background: #fff; border-radius: 34px;
   display: flex; flex-direction: column;
   overflow: hidden; position: relative;
+  min-height: 500px;
 }
-.film-phone-notch {
-  width: 120px; height: 28px; background: #1a1a1a;
-  border-radius: 0 0 16px 16px; margin: 0 auto;
-  position: relative; z-index: 2;
+.film-phone-status {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.6rem 1.5rem 0.3rem;
+  font-size: 0.75rem; font-weight: 600; color: #1a1a1a;
 }
+.film-phone-status::after { content: '🔋'; font-size: 0.7rem; }
 .film-phone-screen {
-  flex: 1; overflow: hidden; padding: 1rem 1rem;
+  flex: 1; overflow: hidden; padding: 0 0.75rem 0.75rem;
   display: flex; flex-direction: column; position: relative;
+}
+.film-phone-home {
+  width: 100px; height: 4px; background: #1a1a1a;
+  border-radius: 2px; margin: 0.5rem auto;
 }
 /* Chat bubbles */
 .film-chat {
@@ -1401,8 +1411,8 @@ body {
   border-bottom-left-radius: 4px;
 }
 .film-msg-out {
-  background: linear-gradient(135deg, #E8C738, #DE802E);
-  color: #fff; align-self: flex-end;
+  background: #E8C738; color: #1a1a1a;
+  align-self: flex-end; font-weight: 500;
   border-bottom-right-radius: 4px;
 }
 /* Bank notification */
@@ -1423,6 +1433,38 @@ body {
   background: linear-gradient(135deg, #28c840, #20a835);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+/* Timeline / progress */
+.film-timeline {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0;
+  max-width: 960px; margin: 2rem auto 0; padding: 0 2rem;
+}
+.film-step {
+  flex: 1; text-align: center; position: relative; cursor: pointer;
+}
+.film-step-time {
+  font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
+  transition: color 0.3s;
+}
+.film-step.active .film-step-time { color: var(--text); }
+.film-step-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #ddd; margin: 0.5rem auto;
+  transition: all 0.3s;
+}
+.film-step.active .film-step-dot {
+  background: var(--gold, #E8C738);
+  box-shadow: 0 0 10px rgba(232,199,56,0.5);
+  transform: scale(1.3);
+}
+.film-step-label {
+  font-size: 0.7rem; color: var(--text-light);
+}
+.film-step-line {
+  flex: 0 0 auto; width: 40px; height: 2px;
+  background: #ddd; margin: 0 -4px;
+  margin-top: 0.5rem; align-self: center;
 }
 
 </style>
@@ -1670,137 +1712,112 @@ body {
   </div>
 </div>
 
-<!-- ==================== PROGRAM ==================== -->
+<!-- ==================== PROGRAM (Timeline) ==================== -->
 <section class="program-section" id="program">
   <div class="s-container">
-    <div class="reveal" style="text-align:center;">
+    <div class="reveal">
       <div class="s-label">Программа</div>
       <h2 class="s-title">7 уроков — и ты умеешь то,<br>что не умеет 99%</h2>
     </div>
-    <div class="program-list">
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">01</div>
-          <div class="program-title">Что вообще произошло с ИИ — и почему сейчас всё по-другому</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Почему то, что ты знал про ИИ, — уже неактуально?</li>
-              <li>Чем «вайб» отличается от обычного чата с нейросетью?</li>
-              <li>Что реально можно делать прямо сейчас — конкретные примеры из разных сфер.</li>
-              <li>Как правильно ставить задачу ИИ, чтобы получать то, что нужно.</li>
-            </ul>
-            <div class="program-result">Понимаешь, что возможно — и хочешь попробовать.</div>
-          </div>
+    <div class="timeline" id="timeline">
+      <div class="timeline-progress" id="timelineProgress"></div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">01</div>
+        <div class="timeline-card">
+          <h3>Что вообще произошло с ИИ — и почему сейчас всё по-другому</h3>
+          <ul>
+            <li>Почему то, что ты знал про ИИ, — уже неактуально?</li>
+            <li>Чем «вайб» отличается от обычного чата с нейросетью?</li>
+            <li>Что реально можно делать прямо сейчас — примеры из разных сфер</li>
+            <li>Как правильно ставить задачу ИИ, чтобы получать то, что нужно</li>
+          </ul>
+          <div class="timeline-result">Понимаешь, что возможно — и хочешь попробовать</div>
         </div>
       </div>
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">02</div>
-          <div class="program-title">Куда нажимать, чтобы работало</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Какие инструменты существуют и что выбрать?</li>
-              <li>Первые шаги: от установки до первого результата.</li>
-              <li>Что реально нужно, а что — лишний шум?</li>
-              <li>Практика: делаем первую задачу вместе.</li>
-            </ul>
-            <div class="program-result">Всё настроено, первый результат в руках.</div>
-          </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">02</div>
+        <div class="timeline-card">
+          <h3>Куда нажимать, чтобы работало</h3>
+          <ul>
+            <li>Какие инструменты существуют и что выбрать?</li>
+            <li>Первые шаги: от установки до первого результата</li>
+            <li>Что реально нужно, а что — лишний шум?</li>
+            <li>Практика: делаем первую задачу вместе</li>
+          </ul>
+          <div class="timeline-result">Всё настроено, первый результат в руках</div>
         </div>
       </div>
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">03</div>
-          <div class="program-title">Домены, серверы, запуск — без паники</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Что такое домен, хостинг, сервер — простыми словами.</li>
-              <li>Как всё это купить и настроить (или попросить ИИ).</li>
-              <li>Как запустить свой проект в интернет — чтобы он работал 24/7.</li>
-            </ul>
-            <div class="program-result">Твой проект в интернете, работает, доступен всем.</div>
-          </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">03</div>
+        <div class="timeline-card">
+          <h3>Домены, серверы, запуск — без паники</h3>
+          <ul>
+            <li>Что такое домен, хостинг, сервер — простыми словами</li>
+            <li>Как всё это купить и настроить (или попросить ИИ)</li>
+            <li>Как запустить свой проект в интернет — чтобы он работал 24/7</li>
+          </ul>
+          <div class="timeline-result">Твой проект в интернете, работает, доступен всем</div>
         </div>
       </div>
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">04</div>
-          <div class="program-title">Подключаем ИИ к внешним сервисам</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Как ИИ может работать с другими программами и данными?</li>
-              <li>Какие возможности это открывает?</li>
-              <li>Когда подключать, а когда — не усложнять?</li>
-              <li>Практика: подключаем и видим разницу.</li>
-            </ul>
-            <div class="program-result">ИИ работает не сам по себе, а вместе с твоими инструментами.</div>
-          </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">04</div>
+        <div class="timeline-card">
+          <h3>Подключаем ИИ к внешним сервисам</h3>
+          <ul>
+            <li>Как ИИ может работать с другими программами и данными?</li>
+            <li>Какие возможности это открывает?</li>
+            <li>Когда подключать, а когда — не усложнять?</li>
+            <li>Практика: подключаем и видим разницу</li>
+          </ul>
+          <div class="timeline-result">ИИ работает вместе с твоими инструментами</div>
         </div>
       </div>
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">05</div>
-          <div class="program-title">Собираем продукт с нуля — в прямом эфире</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Голосование: вы выбираете, что собираем.</li>
-              <li>С нуля до работающей штуки за одну сессию.</li>
-              <li>Ошибки, тупики, правки — всё как в жизни.</li>
-            </ul>
-            <div class="program-result">Видишь своими глазами, как из идеи рождается готовый продукт.</div>
-          </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">05</div>
+        <div class="timeline-card">
+          <h3>Собираем продукт с нуля — в прямом эфире</h3>
+          <ul>
+            <li>Голосование: вы выбираете, что собираем</li>
+            <li>С нуля до работающей штуки за одну сессию</li>
+            <li>Ошибки, тупики, правки — всё как в жизни</li>
+          </ul>
+          <div class="timeline-result">Видишь, как из идеи рождается готовый продукт</div>
         </div>
       </div>
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">06</div>
-          <div class="program-title">Ограничения и здравый смысл</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Что ИИ делает отлично, а что — нет?</li>
-              <li>Где может ошибиться и как это проверять?</li>
-              <li>Как не слить деньги и данные.</li>
-              <li>Чек-лист безопасности для любого проекта.</li>
-            </ul>
-            <div class="program-result">Понимаешь границы ИИ и работаешь с ним уверенно.</div>
-          </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">06</div>
+        <div class="timeline-card">
+          <h3>Ограничения и здравый смысл</h3>
+          <ul>
+            <li>Что ИИ делает отлично, а что — нет?</li>
+            <li>Где может ошибиться и как это проверять?</li>
+            <li>Как не слить деньги и данные</li>
+            <li>Чек-лист безопасности для любого проекта</li>
+          </ul>
+          <div class="timeline-result">Понимаешь границы ИИ и работаешь уверенно</div>
         </div>
       </div>
-      <div class="program-item reveal">
-        <div class="program-item-head" onclick="toggleProgram(this.parentElement)">
-          <div class="program-num">07</div>
-          <div class="program-title">Демо-день</div>
-          <svg class="program-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="program-body">
-          <div class="program-body-inner">
-            <ul class="program-points">
-              <li>Участники показывают свои проекты.</li>
-              <li>Разбор: что получилось, что хочется сделать дальше?</li>
-              <li>Доступ в закрытое комьюнити.</li>
-            </ul>
-            <div class="program-result">Готовый проект + окружение людей, которые делают то же самое.</div>
-          </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">07</div>
+        <div class="timeline-card">
+          <h3>Демо-день</h3>
+          <ul>
+            <li>Участники показывают свои проекты</li>
+            <li>Разбор: что получилось, что хочется сделать дальше?</li>
+            <li>Доступ в закрытое комьюнити</li>
+          </ul>
+          <div class="timeline-result">Готовый проект + окружение единомышленников</div>
         </div>
       </div>
+
+      <div class="timeline-end"></div>
     </div>
   </div>
 </section>
@@ -1846,77 +1863,74 @@ body {
   </div>
 </section>
 
-<!-- ==================== MINI-FILM (Day Story) ==================== -->
-<section class="film" id="film" style="height:400vh;">
-  <div class="film-pin" id="filmPin">
-    <div class="film-time" id="filmTime">09:00</div>
-    <div class="film-screens">
-      <!-- Left: Agent terminal -->
+<!-- ==================== MINI-FILM ==================== -->
+<section class="film" id="film">
+  <div class="s-container">
+    <div class="film-header reveal">
+      <div class="s-label">Как это выглядит</div>
+      <h2>Один день с AI-агентом</h2>
+      <p>Агент работает — ты живёшь</p>
+    </div>
+  </div>
+
+  <div class="film-devices" id="filmDevices">
+    <div class="film-macbook reveal">
       <div class="film-terminal">
         <div class="film-terminal-bar">
-          <div class="film-terminal-dot"></div>
-          <div class="film-terminal-dot"></div>
-          <div class="film-terminal-dot"></div>
-          <span style="margin-left:auto;color:#555;font-size:0.75rem;">AI Агент</span>
+          <div class="film-terminal-dot"></div><div class="film-terminal-dot"></div><div class="film-terminal-dot"></div>
+          <span style="margin-left:auto;color:#666;font-size:0.75rem;">AI Агент — проект для заказчика</span>
         </div>
         <div class="film-terminal-lines" id="filmTerminal">
           <div class="film-term-line" data-step="1"><span class="cmd">$</span> Новая задача получена</div>
-          <div class="film-term-line" data-step="1"><span class="dim">→ Анализирую бриф...</span></div>
-          <div class="film-term-line" data-step="2"><span class="accent">⚙</span> Собираю структуру</div>
-          <div class="film-term-line" data-step="2"><span class="dim">→ Создаю файлы, пишу код...</span></div>
+          <div class="film-term-line" data-step="1"><span class="dim">→ Анализирую бриф от заказчика...</span></div>
+          <div class="film-term-line" data-step="2"><span class="accent">⚙</span> Собираю структуру проекта</div>
+          <div class="film-term-line" data-step="2"><span class="dim">→ Создаю файлы, компоненты, стили...</span></div>
           <div class="film-term-line" data-step="2"><div class="film-progress"><div class="film-progress-bar" id="filmProgress1"></div></div></div>
-          <div class="film-term-line" data-step="3"><span class="accent">⚙</span> Дизайн + контент</div>
+          <div class="film-term-line" data-step="3"><span class="accent">⚙</span> Генерирую дизайн и контент</div>
+          <div class="film-term-line" data-step="3"><span class="dim">→ Адаптивная вёрстка, API...</span></div>
           <div class="film-term-line" data-step="3"><div class="film-progress"><div class="film-progress-bar" id="filmProgress2"></div></div></div>
-          <div class="film-term-line" data-step="4"><span class="cmd">!</span> Жду правки...</div>
-          <div class="film-term-line" data-step="4"><span class="dim">→ Правки получены, вношу</span></div>
-          <div class="film-term-line" data-step="5"><span class="accent">⚙</span> Финализирую...</div>
+          <div class="film-term-line" data-step="4"><span class="cmd">!</span> Готов к проверке. Жду правки.</div>
+          <div class="film-term-line" data-step="4"><span class="dim">→ Правки получены, вношу...</span></div>
+          <div class="film-term-line" data-step="5"><span class="accent">⚙</span> Финализация и тесты...</div>
           <div class="film-term-line" data-step="5"><div class="film-progress"><div class="film-progress-bar" id="filmProgress3"></div></div></div>
-          <div class="film-term-line" data-step="6"><span style="color:#28c840;">✅ Готово. Отправлено.</span></div>
+          <div class="film-term-line" data-step="6"><span style="color:#28c840;">✅ Проект готов. Деплой выполнен.</span></div>
         </div>
-        <div class="film-term-status">
-          <span class="live" id="filmStatus">● Работает</span>
-        </div>
+        <div class="film-term-status"><span class="live" id="filmStatus">● Агент работает</span></div>
       </div>
+    </div>
 
-      <!-- Right: Phone with chats -->
-      <div class="film-phone">
-        <div class="film-phone-notch"></div>
+    <div class="film-iphone reveal reveal-delay-2">
+      <div class="film-phone-inner">
+        <div class="film-phone-status" id="filmPhoneTime">09:00</div>
         <div class="film-phone-screen" id="filmChats">
-          <!-- Step 1: Chat with client -->
-          <div class="film-chat" data-step="1">
+          <div class="film-chat active" data-step="1">
             <div class="film-chat-header">💼 Заказчик</div>
-            <div class="film-msg film-msg-in">Привет! Нужен лендинг для нового продукта. Бриф в файле. Когда сможешь?</div>
-            <div class="film-msg film-msg-out">Принял! К вечеру будет готово 👌</div>
+            <div class="film-msg film-msg-in">Привет! Нужен лендинг для нового продукта. Когда сможешь?</div>
+            <div class="film-msg film-msg-out">Принял! К вечеру готово 👌</div>
           </div>
-          <!-- Step 2: Chat with GF -->
           <div class="film-chat" data-step="2">
             <div class="film-chat-header">❤️ Любимая</div>
-            <div class="film-msg film-msg-out">Доброе утро ☀️ Пошёл завтракать и на спорт. Хорошего дня!</div>
+            <div class="film-msg film-msg-out">Доброе утро ☀️ Пошёл на спорт</div>
             <div class="film-msg film-msg-in">Хорошего дня! 💛</div>
           </div>
-          <!-- Step 3: Nothing — person is at sport, agent works -->
           <div class="film-chat" data-step="3">
-            <div class="film-chat-header" style="text-align:center;color:#999;">🏃 На пробежке...</div>
+            <div class="film-chat-header" style="text-align:center;color:#aaa;padding:3rem 0;font-size:2rem;">🏃<br><span style="font-size:0.85rem;">На пробежке</span></div>
           </div>
-          <!-- Step 4: Quick check agent, give edit -->
           <div class="film-chat" data-step="4">
             <div class="film-chat-header">🤖 AI Агент</div>
-            <div class="film-msg film-msg-in">Проект собран. Проверь макет.</div>
-            <div class="film-msg film-msg-out">Поменяй hero-секцию, добавь анимацию</div>
-            <div class="film-msg film-msg-in">Принял, вношу правки ⚙️</div>
+            <div class="film-msg film-msg-in">Проект собран. Проверь.</div>
+            <div class="film-msg film-msg-out">Поменяй hero, добавь анимацию</div>
+            <div class="film-msg film-msg-in">Принял ⚙️</div>
           </div>
-          <!-- Step 5: Chat with friends -->
           <div class="film-chat" data-step="5">
             <div class="film-chat-header">🍕 Друзья</div>
-            <div class="film-msg film-msg-out">Ребят, давайте вечером встретимся?</div>
-            <div class="film-msg film-msg-in">Давайте! Го в 19:00</div>
-            <div class="film-msg film-msg-in">Я тоже в деле 🙌</div>
+            <div class="film-msg film-msg-out">Го вечером встретимся?</div>
+            <div class="film-msg film-msg-in">Давайте! В 19:00 🙌</div>
           </div>
-          <!-- Step 6: Result — client pays -->
           <div class="film-chat" data-step="6">
             <div class="film-chat-header">💼 Заказчик</div>
             <div class="film-msg film-msg-out">Готово! Вот ссылка 🔗</div>
-            <div class="film-msg film-msg-in">Ого, круто! Всё супер, оплачиваю 🔥</div>
+            <div class="film-msg film-msg-in">Круто! Оплачиваю 🔥</div>
             <div class="film-notification">
               <div class="film-notif-icon">🏦</div>
               <div class="film-notif-text">
@@ -1926,8 +1940,23 @@ body {
             </div>
           </div>
         </div>
+        <div class="film-phone-home"></div>
       </div>
     </div>
+  </div>
+
+  <div class="film-timeline" id="filmTimeline">
+    <div class="film-step active" data-step="1" onclick="filmGoTo(1)"><div class="film-step-time">09:00</div><div class="film-step-dot"></div><div class="film-step-label">Задача</div></div>
+    <div class="film-step-line"></div>
+    <div class="film-step" data-step="2" onclick="filmGoTo(2)"><div class="film-step-time">09:30</div><div class="film-step-dot"></div><div class="film-step-label">Утро</div></div>
+    <div class="film-step-line"></div>
+    <div class="film-step" data-step="3" onclick="filmGoTo(3)"><div class="film-step-time">12:00</div><div class="film-step-dot"></div><div class="film-step-label">Спорт</div></div>
+    <div class="film-step-line"></div>
+    <div class="film-step" data-step="4" onclick="filmGoTo(4)"><div class="film-step-time">14:00</div><div class="film-step-dot"></div><div class="film-step-label">Правки</div></div>
+    <div class="film-step-line"></div>
+    <div class="film-step" data-step="5" onclick="filmGoTo(5)"><div class="film-step-time">17:00</div><div class="film-step-dot"></div><div class="film-step-label">Друзья</div></div>
+    <div class="film-step-line"></div>
+    <div class="film-step" data-step="6" onclick="filmGoTo(6)"><div class="film-step-time">19:30</div><div class="film-step-dot"></div><div class="film-step-label">Оплата</div></div>
   </div>
 </section>
 
@@ -2412,12 +2441,44 @@ function toggleFaq(item) {
   if (!isOpen) item.classList.add('open');
 }
 
-// === Program accordion ===
-function toggleProgram(item) {
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.program-item.open').forEach(el => el.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
+// === Timeline scroll animation ===
+(function() {
+  const items = document.querySelectorAll('.timeline-item');
+  const progress = document.getElementById('timelineProgress');
+  const timeline = document.getElementById('timeline');
+  if (!items.length || !progress || !timeline) return;
+
+  let revealedCount = 0;
+
+  const itemObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.classList.contains('revealed')) {
+        // Stagger: each item gets extra delay based on order
+        const delay = revealedCount * 150;
+        revealedCount++;
+
+        setTimeout(() => {
+          e.target.classList.add('revealed');
+
+          // Update progress line
+          const last = [...items].filter(i => i.classList.contains('revealed')).pop();
+          if (last) {
+            const tRect = timeline.getBoundingClientRect();
+            const mRect = last.querySelector('.timeline-marker').getBoundingClientRect();
+            const h = mRect.top + mRect.height / 2 - tRect.top;
+            progress.style.height = h + 'px';
+            progress.style.transform = 'scaleY(1)';
+            progress.style.transition = 'height 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
+          }
+        }, delay);
+
+        itemObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+  items.forEach(i => itemObs.observe(i));
+})();
 
 // === Hero rotating phrases ===
 (function() {
@@ -2566,20 +2627,13 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 })();
 </script>
 
-<!-- GSAP ScrollTrigger -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<!-- Mini-film autoplay -->
 <script>
-gsap.registerPlugin(ScrollTrigger);
-
-// Mini-film scroll animation
 (function() {
-  const film = document.getElementById('film');
-  const pin = document.getElementById('filmPin');
-  if (!film || !pin) return;
-
   const totalSteps = 6;
   let currentStep = 0;
+  let autoplayTimer = null;
+  const times = { 1: '09:00', 2: '09:30', 3: '12:00', 4: '14:00', 5: '17:00', 6: '19:30' };
 
   function setStep(step) {
     if (step === currentStep) return;
@@ -2587,8 +2641,7 @@ gsap.registerPlugin(ScrollTrigger);
 
     // Terminal lines
     document.querySelectorAll('.film-term-line').forEach(el => {
-      const s = parseInt(el.dataset.step);
-      el.classList.toggle('visible', s <= step);
+      el.classList.toggle('visible', parseInt(el.dataset.step) <= step);
     });
 
     // Progress bars
@@ -2604,28 +2657,48 @@ gsap.registerPlugin(ScrollTrigger);
       el.classList.toggle('active', parseInt(el.dataset.step) === step);
     });
 
-    // Status
+    // Phone time
+    const phoneTime = document.getElementById('filmPhoneTime');
+    if (phoneTime && times[step]) phoneTime.textContent = times[step];
+
+    // Terminal status
     const status = document.getElementById('filmStatus');
     if (status) {
       status.textContent = step >= 6 ? '● Готово' : '● Агент работает';
       status.style.color = step >= 6 ? '#FFD54F' : '#28c840';
     }
+
+    // Timeline dots
+    document.querySelectorAll('.film-step').forEach(el => {
+      el.classList.toggle('active', parseInt(el.dataset.step) <= step);
+    });
   }
 
-  const times = { 1: '09:00', 2: '09:30', 3: '12:00', 4: '14:00', 5: '17:00', 6: '19:30' };
-  const timeEl = document.getElementById('filmTime');
+  function startAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(() => {
+      const next = currentStep >= totalSteps ? 1 : currentStep + 1;
+      setStep(next);
+    }, 3000);
+  }
 
-  ScrollTrigger.create({
-    trigger: film,
-    start: 'top top',
-    end: 'bottom bottom',
-    pin: pin,
-    onUpdate: (self) => {
-      const step = Math.min(totalSteps, Math.max(1, Math.ceil(self.progress * totalSteps)));
-      setStep(step);
-      if (timeEl && times[step]) timeEl.textContent = times[step];
-    }
-  });
+  window.filmGoTo = function(step) {
+    setStep(step);
+    startAutoplay(); // restart timer on click
+  };
+
+  // Start when visible
+  const filmEl = document.getElementById('film');
+  if (filmEl) {
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setStep(1);
+        startAutoplay();
+        obs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    obs.observe(filmEl);
+  }
 })();
 </script>
 
