@@ -881,6 +881,28 @@ body {
   font-weight: 900; line-height: 1.1; letter-spacing: -0.03em;
   margin-bottom: 3rem;
 }
+/* Worth lines */
+.worth-lines {
+  display: flex; flex-direction: column; gap: 0;
+  max-width: 700px; margin: 0 auto;
+}
+.worth-line {
+  display: flex; align-items: center; gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 600; color: var(--text);
+}
+.worth-line:first-child { border-top: 1px solid rgba(0,0,0,0.06); }
+.worth-line-icon {
+  font-size: 1.5rem; flex-shrink: 0;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, rgba(232,199,56,0.15), rgba(222,128,46,0.08));
+  border-radius: 12px;
+}
+.worth-line-text { flex: 1; }
+
 .worth-closing {
   font-size: clamp(1.15rem, 2vw, 1.35rem); font-weight: 600; line-height: 1.6;
   color: var(--text);
@@ -1649,42 +1671,40 @@ body {
 <!-- ==================== WORTH ==================== -->
 <section class="worth" id="worth">
   <div class="worth-inner">
-    <div class="worth-label reveal">Про инструмент</div>
-    <h2 class="worth-title reveal">Почему это стоит<br>каждого рубля</h2>
+    <div class="worth-label reveal" style="text-align:center;">Про инструмент</div>
+    <h2 class="worth-title reveal" style="text-align:center;">Что на самом деле покупают<br>за $100 в месяц</h2>
 
-    <!-- Cards grid -->
-    <div class="worth-grid">
-      <div class="worth-card worth-card-big reveal">
-        <div class="worth-card-num">50 ₽/день</div>
-        <div class="worth-card-text">Пока одни тратят часы на рутину — другие за эти деньги запускают проекты, берут новых клиентов и строят то, что раньше стоило сотни тысяч.</div>
+    <div class="worth-lines">
+      <div class="worth-line reveal">
+        <span class="worth-line-icon">🕐</span>
+        <span class="worth-line-text">Вечера без переработок</span>
       </div>
-      <div class="worth-card reveal">
-        <div class="worth-card-num">×20</div>
-        <div class="worth-card-text">За те же деньги каждый месяц ты получаешь больше. Модели умнеют — цена та же.</div>
+      <div class="worth-line reveal">
+        <span class="worth-line-icon">🚀</span>
+        <span class="worth-line-text">Проекты вместо «когда-нибудь потом»</span>
       </div>
-      <div class="worth-card reveal">
-        <div class="worth-card-num">∞</div>
-        <div class="worth-card-text">Приходят за ускорением — открывают новые направления, доходы и проекты.</div>
+      <div class="worth-line reveal">
+        <span class="worth-line-icon">🔓</span>
+        <span class="worth-line-text">Независимость от подрядчиков и чужих сроков</span>
+      </div>
+      <div class="worth-line reveal">
+        <span class="worth-line-icon">📈</span>
+        <span class="worth-line-text">Навык, который дорожает каждый месяц — вместе с инструментом</span>
       </div>
     </div>
 
     <!-- Price cards -->
-    <div class="worth-price-row reveal">
+    <div class="worth-price-row reveal" style="margin-top:3rem;">
       <div class="worth-price-card">
         <div class="worth-price-num">$20</div>
         <div class="worth-price-rub">1 500 ₽/мес</div>
-        <div class="worth-price-label">Вход</div>
+        <div class="worth-price-label">Старт</div>
       </div>
       <div class="worth-price-card worth-price-card-main">
         <div class="worth-price-num">$100</div>
         <div class="worth-price-rub">7 700 ₽/мес</div>
         <div class="worth-price-label">Полная мощность</div>
       </div>
-    </div>
-
-    <!-- Closing -->
-    <div class="worth-block reveal" style="text-align:center; margin-top:3rem;">
-      <p class="worth-closing">Это не подписка. Это инвестиция в время, деньги и свободу.<br>Вопрос не «дорого ли» — а <em>сколько ты теряешь без этого</em>.</p>
     </div>
   </div>
 </section>
