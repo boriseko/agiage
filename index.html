@@ -1016,7 +1016,7 @@ body {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
   margin-top: 3rem;
 }
-@media (min-width: 768px) { .expert-layout { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) { .expert-layout { grid-template-columns: 1fr 1fr; gap: 4rem; } }
 .expert-info { display: flex; flex-direction: column; justify-content: center; }
 .expert-name {
   font-size: clamp(2rem, 4vw, 3.5rem);
@@ -1024,9 +1024,43 @@ body {
   color: var(--text); margin-bottom: 1.5rem;
 }
 .expert-bio {
-  font-size: 1rem; color: var(--text-muted); line-height: 1.8;
+  font-size: 1.05rem; color: #555; line-height: 1.8;
   margin-bottom: 2rem;
 }
+.expert-bio strong {
+  color: var(--text); font-weight: 700;
+}
+/* Photo */
+.expert-photo-wrap {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.expert-photo {
+  width: 100%; max-width: 420px; aspect-ratio: 1/1; object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+}
+.expert-photo-glow {
+  position: absolute; inset: -20px; border-radius: 40px;
+  background: radial-gradient(circle at 50% 50%, rgba(232,199,56,0.15) 0%, transparent 70%);
+  pointer-events: none; z-index: -1;
+}
+/* Badges */
+.expert-badges {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.expert-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+  background: linear-gradient(135deg, rgba(232,199,56,0.12), rgba(222,128,46,0.08));
+  border: 1px solid rgba(232,199,56,0.2);
+  color: var(--text);
+}
+.expert-badge::before {
+  content: '✦'; color: var(--orange, #DE802E); font-size: 0.7rem;
+}
+/* Stats */
 .expert-stats { display: flex; flex-wrap: wrap; gap: 2rem; }
 .expert-stat-num {
   font-size: 1.75rem; font-weight: 800; color: var(--text);
@@ -1034,6 +1068,14 @@ body {
 }
 .expert-stat-label {
   font-size: 0.8rem; color: var(--text-light); margin-top: 0.25rem;
+}
+/* Quote */
+.expert-quote {
+  margin-top: 2rem; padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, rgba(255,253,231,0.6), rgba(255,240,200,0.3));
+  border-left: 3px solid var(--gold, #E8C738);
+  border-radius: 0 12px 12px 0;
+  font-size: 1.05rem; font-style: italic; color: #555; line-height: 1.7;
 }
 
 /* ========== PRICING ========== */
@@ -1722,10 +1764,33 @@ body {
   <div class="s-container">
     <div class="expert-layout">
       <div class="expert-info reveal">
-        <div class="s-label">Автор курса</div>
+        <div class="s-label">Эксперт курса</div>
         <div class="expert-name">Егор<br>Борисенко</div>
-        <div class="expert-bio">В AI с ChatGPT 3.5. За плечами — десятки реальных проектов: от чат-ботов и автоматизаций до полноценных сервисов. В 2026 появилась принципиально новая возможность — создавать всё что угодно с помощью AI-агентов. Этот курс — про неё.</div>
-        <div class="expert-stats">
+
+        <div class="expert-badges">
+          <span class="expert-badge">Спикер ЕАПК</span>
+          <span class="expert-badge">Спикер ПравоТех</span>
+          <span class="expert-badge">Лауреат «Цифровизация во благо»</span>
+          <span class="expert-badge">Лауреат «AI Guru»</span>
+        </div>
+
+        <div class="expert-bio">
+          В обучении и консалтинге — <strong>четвёртый год</strong>. Работал с госвузами, консалтинговыми фирмами, телеком-компаниями, промышленными предприятиями, юридическими фирмами, логистическими компаниями, девелоперами.
+        </div>
+
+        <div class="expert-bio">
+          Прошёл глобальный грейд вместе с развитием ИИ: от «рассказать и показать, как работать» и построения культуры использования — до <strong>замены целых отделов</strong>, экономии тысяч часов, создания продуктов, которые откладывались из-за дороговизны разработки. Сейчас создаю для клиентов всё, что они попросят.
+        </div>
+
+        <div class="expert-bio">
+          Сфера обучения может показаться про знания. <strong>Но это не так.</strong> Самое главное, что я хочу передать — это мышление. Навык + мышление, которое не цепляется за старое, а открывает новые горизонты, проекты и деньги. Это то, за чем стоит идти.
+        </div>
+
+        <div class="expert-quote">
+          «И что самое важное — я не умираю на работе. Я делаю это на вайбе, с отлично построенным ворк-лайф балансом. И хочу научить этому вас.»
+        </div>
+
+        <div class="expert-stats" style="margin-top:2rem;">
           <div>
             <div class="expert-stat-num">40+</div>
             <div class="expert-stat-label">мероприятий</div>
@@ -1735,19 +1800,15 @@ body {
             <div class="expert-stat-label">людей обучил</div>
           </div>
           <div>
-            <div class="expert-stat-num">3+</div>
+            <div class="expert-stat-num">4</div>
             <div class="expert-stat-label">года в AI</div>
-          </div>
-          <div>
-            <div class="expert-stat-num">2025</div>
-            <div class="expert-stat-label">лауреат года</div>
           </div>
         </div>
       </div>
-      <div class="reveal reveal-delay-2" style="display:flex;align-items:center;justify-content:center;">
-        <div style="width:100%;aspect-ratio:3/4;background:var(--card-bg);border-radius:20px;display:flex;align-items:center;justify-content:center;">
-          <span style="font-size:6rem;opacity:0.15;">E</span>
-        </div>
+
+      <div class="expert-photo-wrap reveal reveal-delay-2">
+        <div class="expert-photo-glow"></div>
+        <img src="egor-speaker.jpg" alt="Егор Борисенко — эксперт курса AGI Age" class="expert-photo" loading="lazy">
       </div>
     </div>
   </div>
