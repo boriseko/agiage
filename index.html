@@ -237,7 +237,8 @@ body {
 }
 .marquee-white .marquee-item { color: var(--text-light); }
 .marquee-grad .marquee-item { color: rgba(255,255,255,0.6); }
-.marquee-dot { opacity: 0.3; }
+.marquee-item { display: inline-flex; align-items: center; }
+.marquee-dot { opacity: 0.3; font-size: 0.4em; margin-left: 0.8em; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ========== WHITE SECTIONS ========== */
@@ -670,21 +671,20 @@ body {
 
 /* ========== CASES (Horizontal scroll) ========== */
 .cases-scroll {
-  --cases-pad: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
   display: flex; gap: 1.25rem; overflow-x: auto;
-  padding: 2.5rem var(--cases-pad) 2rem;
+  padding: 2.5rem 1.5rem 2rem;
   scroll-snap-type: x proximity;
-  scroll-padding-left: var(--cases-pad);
+  scroll-padding-left: 1.5rem;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 .cases-scroll::-webkit-scrollbar { display: none; }
 @media (min-width: 768px) {
-  .cases-scroll { --cases-pad: max(2rem, calc((100vw - 1200px) / 2 + 2rem)); }
+  .cases-scroll { padding: 2.5rem 2.5rem 2rem; scroll-padding-left: 2.5rem; }
 }
 @media (min-width: 1280px) {
-  .cases-scroll { --cases-pad: max(2.5rem, calc((100vw - 1200px) / 2 + 2.5rem)); }
+  .cases-scroll { padding: 2.5rem 3rem 2rem; scroll-padding-left: 3rem; }
 }
 
 .case-card {
