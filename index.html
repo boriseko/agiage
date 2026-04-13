@@ -1023,7 +1023,8 @@ body {
   opacity: 0; transform: scale(0.1) rotate(-5deg);
   transition: opacity 0.4s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
-.sw-term.vis { opacity: 1; transform: scale(1) rotate(0deg); }
+.sw-term.vis { opacity: 1; transform: scale(1) rotate(0deg); cursor: grab; }
+.sw-term.dragging { cursor: grabbing; z-index: 100 !important; box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
 .sw-term-bar {
   display: flex; gap: 4px; padding: 6px 8px;
   background: #2a2a2a; align-items: center;
@@ -2937,11 +2938,12 @@ gsap.registerPlugin(ScrollTrigger);
     const w = Math.round(randBetween(140, 300));
     
     // Random position avoiding dead center (text area)
-    let x, y;
-    do {
-      x = randBetween(2, 90);
-      y = randBetween(2, 85);
-    } while (x > 25 && x < 75 && y > 30 && y < 70); // avoid center
+    // Grid-based with jitter for even spread
+    const cols = 6, rows = 7;
+    const col = i % cols, row = Math.floor(i / cols);
+    const cellW = 92 / cols, cellH = 88 / rows;
+    const x = 3 + col * cellW + randBetween(0, cellW * 0.3);
+    const y = 2 + row * cellH + randBetween(0, cellH * 0.3);
     
     el.style.cssText = `width:${w}px; left:${x}%; top:${y}%; z-index:${Math.round(randBetween(1,5))};`;
     el.innerHTML = '<div class="sw-term-bar"><i></i><i></i><i></i><span>'+d.name+'</span></div><div class="sw-term-body" id="swB'+i+'"><span class="sw-s">● </span><span class="sw-t">'+d.name+'</span><br></div>';
@@ -3010,6 +3012,33 @@ gsap.registerPlugin(ScrollTrigger);
     pin: pin,
     onUpdate: (self) => {
       setPhase(Math.min(4, Math.floor(self.progress * 5)));
+    }
+  });
+
+  // Drag terminals
+  let dragEl = null, dragOffX = 0, dragOffY = 0;
+  canvas.addEventListener('pointerdown', (e) => {
+    const t = e.target.closest('.sw-term');
+    if (!t) return;
+    dragEl = t;
+    dragEl.classList.add('dragging');
+    const r = t.getBoundingClientRect();
+    dragOffX = e.clientX - r.left;
+    dragOffY = e.clientY - r.top;
+    t.style.transition = 'none';
+    t.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!dragEl) return;
+    const cr = canvas.getBoundingClientRect();
+    dragEl.style.left = ((e.clientX - cr.left - dragOffX) / cr.width * 100) + '%';
+    dragEl.style.top = ((e.clientY - cr.top - dragOffY) / cr.height * 100) + '%';
+  });
+  canvas.addEventListener('pointerup', () => {
+    if (dragEl) {
+      dragEl.classList.remove('dragging');
+      dragEl.style.transition = '';
+      dragEl = null;
     }
   });
 })();
