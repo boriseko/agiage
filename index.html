@@ -1176,6 +1176,70 @@ body {
   font-weight: 700; color: var(--text);
 }
 
+/* ========== STICKER WALL (Путь ученика) ========== */
+.stickers-section {
+  padding: clamp(60px, 8vw, 120px) 0;
+  background: var(--white);
+  position: relative; z-index: 2;
+}
+.stickers-section .s-container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+@media (min-width: 768px) { .stickers-section .s-container { padding: 0 3rem; } }
+.stickers-section .s-title {
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  font-weight: 800; letter-spacing: -0.04em;
+  color: var(--black); line-height: 1;
+}
+.sticker-wall {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; margin-top: 3rem;
+}
+@media (min-width: 768px) { .sticker-wall { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
+.sticker {
+  padding: 1.75rem 1.5rem;
+  border-radius: 6px;
+  position: relative;
+  transform: rotate(var(--r, 0deg));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  box-shadow: 2px 3px 12px rgba(0,0,0,0.05);
+  opacity: 0; transform: rotate(var(--r, 0deg)) translateY(20px);
+}
+.sticker.revealed {
+  opacity: 1; transform: rotate(var(--r, 0deg)) translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+}
+.sticker:hover {
+  transform: rotate(0deg) scale(1.04) translateY(-4px);
+  box-shadow: 4px 8px 24px rgba(0,0,0,0.1);
+  z-index: 5;
+}
+.sticker:nth-child(odd) { background: #FFF9C4; }
+.sticker:nth-child(even) { background: #FFE0B2; }
+.sticker:nth-child(1) { --r: -1.5deg; }
+.sticker:nth-child(2) { --r: 1deg; }
+.sticker:nth-child(3) { --r: -0.5deg; }
+.sticker:nth-child(4) { --r: 1.5deg; }
+.sticker:nth-child(5) { --r: -1deg; }
+.sticker:nth-child(6) { --r: 0.5deg; }
+.sticker:nth-child(7) { --r: -0.8deg; grid-column: span 2; }
+@media (max-width: 767px) { .sticker:nth-child(7) { grid-column: span 2; } }
+.sticker-pin {
+  position: absolute; top: -6px; left: 50%;
+  transform: translateX(-50%);
+  width: 12px; height: 12px; border-radius: 50%;
+  background: linear-gradient(135deg, #FFD54F, #FFA000);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.sticker-lesson {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: #FFA000; margin-bottom: 0.5rem;
+}
+.sticker-text {
+  font-size: 1rem; font-weight: 500;
+  color: #555; line-height: 1.6;
+}
+
 /* ========== EXPERT ========== */
 .expert-layout {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
@@ -2262,6 +2326,25 @@ body {
   </div>
 </section>
 
+<!-- ==================== STICKER WALL ==================== -->
+<section class="stickers-section">
+  <div class="s-container">
+    <div class="reveal">
+      <div class="s-label">Путь ученика</div>
+      <h2 class="s-title">Как это выглядит<br>на практике</h2>
+    </div>
+    <div class="sticker-wall" id="stickerWall">
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 1</div><div class="sticker-text">Блин, я не знала что ИИ ТАК умеет. Это вообще не ChatGPT 🤯</div></div>
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 2</div><div class="sticker-text">Сделала лендинг за вечер. САМА. Без единой строчки кода!</div></div>
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 3</div><div class="sticker-text">Мой сайт в интернете! Отправила ссылку маме 😂</div></div>
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 4</div><div class="sticker-text">Бот в Telegram собирает заявки пока я сплю. Это магия 🔮</div></div>
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 5</div><div class="sticker-text">На лайве за ЧАС собрали рабочий сервис. Все в чате в шоке!</div></div>
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 6</div><div class="sticker-text">Теперь знаю где ИИ может ошибиться. Чек-лист безопасности 🔥</div></div>
+      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Итог</div><div class="sticker-text">Сайт + бот + автоматизация. Раньше платила 200К подрядчикам. Теперь делаю всё сама. Бесплатно 💪</div></div>
+    </div>
+  </div>
+</section>
+
 <!-- ==================== EXPERT ==================== -->
 <section class="section-white" id="expert">
   <div class="s-container">
@@ -2812,6 +2895,24 @@ function toggleFaq(item) {
     active = e.isIntersecting;
     if (active && !was) animate();
   }, { threshold: 0.1 }).observe(section);
+})();
+
+// === Sticker wall reveal ===
+(function() {
+  const stickers = document.querySelectorAll('.sticker');
+  if (!stickers.length) return;
+  let count = 0;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.classList.contains('revealed')) {
+        const delay = count * 120;
+        count++;
+        setTimeout(() => e.target.classList.add('revealed'), delay);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  stickers.forEach(s => obs.observe(s));
 })();
 
 // === Smooth scroll for anchor links ===
