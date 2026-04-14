@@ -1194,69 +1194,281 @@ body {
   font-weight: 700; color: var(--text);
 }
 
-/* ========== STICKER WALL (Путь ученика) ========== */
-.stickers-section {
+/* ========== PRACTICE BENTO (Как это выглядит на практике) ========== */
+.practice-section {
   padding: clamp(60px, 8vw, 120px) 0;
   background: var(--white);
   position: relative; z-index: 2;
 }
-.stickers-section .s-container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
-@media (min-width: 768px) { .stickers-section .s-container { padding: 0 3rem; } }
-.stickers-section .s-title {
+.practice-section .s-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+@media (min-width: 768px) { .practice-section .s-container { padding: 0 3rem; } }
+@media (min-width: 1280px) { .practice-section .s-container { padding: 0 5rem; } }
+.practice-section .s-title {
   font-size: clamp(2.5rem, 7vw, 6rem);
   font-weight: 800; letter-spacing: -0.04em;
   color: var(--black); line-height: 1;
 }
-.sticker-wall {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1.5rem; margin-top: 3rem;
+
+/* Practice bento grid */
+.practice-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 0.75rem; margin-top: 3rem;
 }
-@media (min-width: 768px) { .sticker-wall { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
-.sticker {
-  padding: 1.75rem 1.5rem;
-  border-radius: 6px;
-  position: relative;
-  transform: rotate(var(--r, 0deg));
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
-  box-shadow: 2px 3px 12px rgba(0,0,0,0.05);
-  opacity: 0; transform: rotate(var(--r, 0deg)) translateY(20px);
+@media (min-width: 768px) {
+  .practice-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+  }
 }
-.sticker.revealed {
-  opacity: 1; transform: rotate(var(--r, 0deg)) translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+
+/* Practice card — same glass as bento */
+.practice-card {
+  position: relative; overflow: hidden;
+  border-radius: 20px;
+  padding: 0;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #FAFAFA;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
+  transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex; flex-direction: column;
+  opacity: 0; transform: translateY(24px);
 }
-.sticker:hover {
-  transform: rotate(0deg) scale(1.04) translateY(-4px);
-  box-shadow: 4px 8px 24px rgba(0,0,0,0.1);
-  z-index: 5;
+.practice-card.revealed {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.4s ease, box-shadow 0.4s ease;
 }
-.sticker:nth-child(odd) { background: #FFF9C4; }
-.sticker:nth-child(even) { background: #FFE0B2; }
-.sticker:nth-child(1) { --r: -1.5deg; }
-.sticker:nth-child(2) { --r: 1deg; }
-.sticker:nth-child(3) { --r: -0.5deg; }
-.sticker:nth-child(4) { --r: 1.5deg; }
-.sticker:nth-child(5) { --r: -1deg; }
-.sticker:nth-child(6) { --r: 0.5deg; }
-.sticker:nth-child(7) { --r: -0.8deg; grid-column: span 2; }
-@media (max-width: 767px) { .sticker:nth-child(7) { grid-column: span 2; } }
-.sticker-pin {
-  position: absolute; top: -6px; left: 50%;
-  transform: translateX(-50%);
-  width: 12px; height: 12px; border-radius: 50%;
+.practice-card:hover {
+  border-color: rgba(255,160,0,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255,160,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Practice card spans */
+@media (min-width: 768px) {
+  .pc-chat    { grid-column: span 4; grid-row: span 2; }
+  .pc-browser { grid-column: span 2; }
+  .pc-bot     { grid-column: span 2; }
+  .pc-term    { grid-column: span 3; }
+  .pc-check   { grid-column: span 3; }
+}
+
+/* Card header bar */
+.pc-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: rgba(0,0,0,0.02);
+  flex-shrink: 0;
+}
+.pc-dots { display: flex; gap: 5px; }
+.pc-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+}
+.pc-dots span:first-child { background: #FF5F57; }
+.pc-dots span:nth-child(2) { background: #FEBC2E; }
+.pc-dots span:last-child { background: #28C840; }
+.pc-bar-title {
+  font-size: 0.65rem; font-weight: 600; color: var(--text-light);
+  letter-spacing: 0.03em; margin-left: auto;
+}
+.pc-bar-tag {
+  font-size: 0.55rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--orange);
+  background: rgba(255,160,0,0.08); border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+}
+
+/* Card content area */
+.pc-body {
+  flex: 1; padding: 1rem 1.25rem;
+  display: flex; flex-direction: column;
+  overflow: hidden; position: relative;
+}
+
+/* === CHAT MOCK === */
+.mock-chat {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  flex: 1;
+}
+.mock-msg {
+  max-width: 85%; padding: 0.6rem 0.9rem;
+  border-radius: 14px; font-size: 0.8rem; line-height: 1.5;
+  opacity: 0; transform: translateY(10px);
+}
+.mock-msg.revealed {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.mock-msg.user {
+  align-self: flex-end;
+  background: var(--orange); color: white;
+  border-bottom-right-radius: 4px;
+}
+.mock-msg.agent {
+  align-self: flex-start;
+  background: #F0F0F0; color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+.mock-msg .msg-role {
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; opacity: 0.6; margin-bottom: 0.2rem;
+}
+.mock-msg.agent .msg-role { color: var(--orange); opacity: 1; }
+.mock-msg.user .msg-role { color: rgba(255,255,255,0.7); }
+.mock-typing {
+  display: inline-flex; gap: 4px; padding: 0.6rem 0.9rem;
+  align-self: flex-start;
+}
+.mock-typing span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #CCC;
+  animation: typingBounce 1.2s ease-in-out infinite;
+}
+.mock-typing span:nth-child(2) { animation-delay: 0.15s; }
+.mock-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+/* === BROWSER MOCK === */
+.mock-browser { flex: 1; display: flex; flex-direction: column; }
+.mock-url-bar {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.6rem; margin-bottom: 0.75rem;
+  background: white; border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.mock-url-lock { font-size: 0.6rem; opacity: 0.4; }
+.mock-url-text {
+  font-size: 0.65rem; color: var(--text-muted);
+  font-family: monospace;
+}
+.mock-page {
+  flex: 1; border-radius: 8px; overflow: hidden;
+  background: white; border: 1px solid rgba(0,0,0,0.06);
+  padding: 0.75rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.mock-page-hero {
+  height: 28px; border-radius: 6px;
+  background: linear-gradient(135deg, #FFE082 0%, #FFA000 100%);
+}
+.mock-page-line {
+  height: 6px; border-radius: 3px; background: #EEE;
+}
+.mock-page-line:nth-child(2) { width: 80%; }
+.mock-page-line:nth-child(3) { width: 60%; }
+.mock-page-cards {
+  display: flex; gap: 0.3rem; margin-top: 0.3rem;
+}
+.mock-page-card {
+  flex: 1; height: 24px; border-radius: 5px;
+  background: #F5F5F5; border: 1px solid rgba(0,0,0,0.04);
+}
+
+/* === TELEGRAM BOT MOCK === */
+.mock-tg { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+.mock-tg-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.mock-tg-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
   background: linear-gradient(135deg, #FFD54F, #FFA000);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
 }
-.sticker-lesson {
-  font-size: 0.7rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: #FFA000; margin-bottom: 0.5rem;
+.mock-tg-name { font-size: 0.75rem; font-weight: 600; color: var(--text); }
+.mock-tg-status { font-size: 0.6rem; color: #28C840; }
+.mock-tg-msgs { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+.mock-tg-msg {
+  padding: 0.45rem 0.7rem; border-radius: 10px;
+  font-size: 0.7rem; line-height: 1.4; max-width: 88%;
+  opacity: 0; transform: translateY(8px);
 }
-.sticker-text {
-  font-size: 1rem; font-weight: 500;
-  color: #555; line-height: 1.6;
+.mock-tg-msg.revealed {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.23,1,0.32,1);
 }
+.mock-tg-msg.in {
+  align-self: flex-start; background: #F0F0F0; color: var(--text);
+  border-bottom-left-radius: 3px;
+}
+.mock-tg-msg.out {
+  align-self: flex-end; background: #DCF8C6; color: var(--text);
+  border-bottom-right-radius: 3px;
+}
+.mock-tg-msg .tg-time {
+  font-size: 0.5rem; color: var(--text-light);
+  display: block; text-align: right; margin-top: 0.15rem;
+}
+
+/* === TERMINAL MOCK === */
+.mock-term {
+  flex: 1; font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.7rem; line-height: 1.7; color: #CCC;
+  background: #1A1A1A; border-radius: 8px; padding: 1rem;
+  overflow: hidden;
+}
+.mock-term .t-prompt { color: #28C840; }
+.mock-term .t-cmd { color: #FFA000; }
+.mock-term .t-out { color: #888; }
+.mock-term .t-success { color: #28C840; }
+.mock-term .t-cursor {
+  display: inline-block; width: 7px; height: 14px;
+  background: #FFA000; vertical-align: text-bottom;
+  animation: termBlink 1s step-end infinite;
+}
+@keyframes termBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* === CHECKLIST MOCK === */
+.mock-check { flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
+.mock-check-item {
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.5rem 0.7rem; border-radius: 10px;
+  background: white; border: 1px solid rgba(0,0,0,0.06);
+  opacity: 0; transform: translateX(-12px);
+}
+.mock-check-item.revealed {
+  opacity: 1; transform: translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.mock-check-box {
+  width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+  border: 2px solid #DDD; position: relative;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.mock-check-item.checked .mock-check-box {
+  background: #28C840; border-color: #28C840;
+}
+.mock-check-box::after {
+  content: ''; position: absolute;
+  top: 3px; left: 6px; width: 5px; height: 9px;
+  border: solid white; border-width: 0 2px 2px 0;
+  transform: rotate(45deg); opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.mock-check-item.checked .mock-check-box::after { opacity: 1; }
+.mock-check-text {
+  font-size: 0.78rem; color: var(--text); font-weight: 500;
+}
+.mock-check-item.checked .mock-check-text {
+  color: var(--text-light); text-decoration: line-through;
+}
+
+/* Card caption */
+.pc-caption {
+  padding: 0.75rem 1.25rem; border-top: 1px solid rgba(0,0,0,0.05);
+  font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;
+  background: rgba(0,0,0,0.01);
+}
+.pc-caption strong { color: var(--text); font-weight: 700; }
 
 /* ========== EXPERT ========== */
 .expert-layout {
@@ -2188,20 +2400,130 @@ body {
 </section>
 
 <!-- ==================== STICKER WALL ==================== -->
-<section class="stickers-section">
+<section class="practice-section" id="practice">
   <div class="s-container">
     <div class="reveal">
-      <div class="s-label">Путь ученика</div>
+      <div class="s-label">На практике</div>
       <h2 class="s-title">Как это выглядит<br>на практике</h2>
     </div>
-    <div class="sticker-wall" id="stickerWall">
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 1</div><div class="sticker-text">Блин, я не знал что ИИ ТАК умеет. Это вообще не ChatGPT 🤯</div></div>
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 2</div><div class="sticker-text">Первый лендинг за вечер. Без единой строчки кода!</div></div>
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 3</div><div class="sticker-text">Мой сайт в интернете! Скинул ссылку друзьям 😂</div></div>
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 4</div><div class="sticker-text">Бот в Telegram собирает заявки пока я сплю. Это магия 🔮</div></div>
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 5</div><div class="sticker-text">На лайве за ЧАС собрали рабочий сервис. Все в чате в шоке!</div></div>
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Урок 6</div><div class="sticker-text">Теперь знаю где ИИ может ошибиться. Чек-лист безопасности 🔥</div></div>
-      <div class="sticker"><div class="sticker-pin"></div><div class="sticker-lesson">Итог</div><div class="sticker-text">Сайт + бот + автоматизация. Раньше платил 200К подрядчикам. Теперь делаю всё сам. Бесплатно 💪</div></div>
+
+    <div class="practice-grid" id="practiceGrid">
+
+      <!-- 1. CHAT WITH AGENT (big card) -->
+      <div class="practice-card pc-chat">
+        <div class="pc-bar">
+          <div class="pc-dots"><span></span><span></span><span></span></div>
+          <div class="pc-bar-tag">Урок 1-2</div>
+          <div class="pc-bar-title">Claude Code</div>
+        </div>
+        <div class="pc-body">
+          <div class="mock-chat" id="mockChat">
+            <div class="mock-msg user"><div class="msg-role">Вы</div>Сделай мне лендинг для курса по фитнесу. Тёмный, стильный, с формой заявки.</div>
+            <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Создаю структуру проекта... Настраиваю hero-секцию с градиентным фоном, блок преимуществ и форму.</div>
+            <div class="mock-msg user"><div class="msg-role">Вы</div>Добавь секцию с отзывами и анимации при скролле.</div>
+            <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Готово. Добавил карусель отзывов с аватарками и плавные reveal-анимации на каждую секцию. Сайт доступен на localhost:3000</div>
+            <div class="mock-msg user"><div class="msg-role">Вы</div>Идеально. Задеплой на сервер.</div>
+            <div class="mock-typing"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="pc-caption"><strong>Диалог с агентом.</strong> Вы описываете задачу — агент создаёт, правит и запускает.</div>
+      </div>
+
+      <!-- 2. BROWSER MOCKUP -->
+      <div class="practice-card pc-browser">
+        <div class="pc-bar">
+          <div class="pc-dots"><span></span><span></span><span></span></div>
+          <div class="pc-bar-tag">Урок 3</div>
+        </div>
+        <div class="pc-body">
+          <div class="mock-browser">
+            <div class="mock-url-bar">
+              <span class="mock-url-lock">&#128274;</span>
+              <span class="mock-url-text">mysite.ru</span>
+            </div>
+            <div class="mock-page">
+              <div class="mock-page-hero"></div>
+              <div class="mock-page-line"></div>
+              <div class="mock-page-line"></div>
+              <div class="mock-page-line"></div>
+              <div class="mock-page-cards">
+                <div class="mock-page-card"></div>
+                <div class="mock-page-card"></div>
+                <div class="mock-page-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-caption"><strong>Сайт в интернете.</strong> Ваш проект работает 24/7.</div>
+      </div>
+
+      <!-- 3. TELEGRAM BOT -->
+      <div class="practice-card pc-bot">
+        <div class="pc-bar">
+          <div class="pc-dots"><span></span><span></span><span></span></div>
+          <div class="pc-bar-tag">Урок 4</div>
+        </div>
+        <div class="pc-body">
+          <div class="mock-tg">
+            <div class="mock-tg-header">
+              <div class="mock-tg-avatar">&#129302;</div>
+              <div>
+                <div class="mock-tg-name">Бот заявок</div>
+                <div class="mock-tg-status">онлайн</div>
+              </div>
+            </div>
+            <div class="mock-tg-msgs" id="mockTg">
+              <div class="mock-tg-msg in">Привет! Хочу записаться на консультацию.<span class="tg-time">14:02</span></div>
+              <div class="mock-tg-msg out">Отлично! Выберите удобную дату:<br>1. Понедельник 15:00<br>2. Среда 12:00<br>3. Пятница 18:00<span class="tg-time">14:02</span></div>
+              <div class="mock-tg-msg in">Среда подойдёт!<span class="tg-time">14:03</span></div>
+              <div class="mock-tg-msg out">Записал вас на среду 12:00. Отправил подтверждение на почту.<span class="tg-time">14:03</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-caption"><strong>Бот работает за вас.</strong> Собирает заявки пока вы спите.</div>
+      </div>
+
+      <!-- 4. TERMINAL -->
+      <div class="practice-card pc-term">
+        <div class="pc-bar">
+          <div class="pc-dots"><span></span><span></span><span></span></div>
+          <div class="pc-bar-tag">Урок 5</div>
+          <div class="pc-bar-title">Terminal</div>
+        </div>
+        <div class="pc-body" style="padding:0;">
+          <div class="mock-term">
+            <div><span class="t-prompt">$</span> <span class="t-cmd">claude "собери REST API для обработки заявок"</span></div>
+            <div class="t-out">Creating project structure...</div>
+            <div class="t-out">Writing src/index.ts, src/routes.ts, src/db.ts</div>
+            <div class="t-out">Installing dependencies... done</div>
+            <div class="t-out">Running tests... <span class="t-success">4/4 passed</span></div>
+            <div><span class="t-prompt">$</span> <span class="t-cmd">npm start</span></div>
+            <div class="t-success">Server running on port 3000</div>
+            <div><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
+          </div>
+        </div>
+        <div class="pc-caption"><strong>Код пишется сам.</strong> Вы ставите задачу — агент делает.</div>
+      </div>
+
+      <!-- 5. CHECKLIST -->
+      <div class="practice-card pc-check">
+        <div class="pc-bar">
+          <div class="pc-dots"><span></span><span></span><span></span></div>
+          <div class="pc-bar-tag">Урок 6</div>
+          <div class="pc-bar-title">Чек-лист</div>
+        </div>
+        <div class="pc-body">
+          <div class="mock-check" id="mockCheck">
+            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">API-ключи не в коде</div></div>
+            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Данные пользователей зашифрованы</div></div>
+            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Бэкап настроен</div></div>
+            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Проверка перед деплоем</div></div>
+            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Мониторинг ошибок включён</div></div>
+          </div>
+        </div>
+        <div class="pc-caption"><strong>Безопасность.</strong> Знаете, что проверить перед запуском.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2979,22 +3301,56 @@ function toggleFaq(item) {
   }, { threshold: 0.1 }).observe(container);
 })();
 
-// === Sticker wall reveal ===
+// === Practice bento reveal + animations ===
 (function() {
-  const stickers = document.querySelectorAll('.sticker');
-  if (!stickers.length) return;
+  // Reveal cards on scroll
+  const cards = document.querySelectorAll('.practice-card');
+  if (!cards.length) return;
   let count = 0;
-  const obs = new IntersectionObserver((entries) => {
+  const cardObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting && !e.target.classList.contains('revealed')) {
-        const delay = count * 120;
+        const delay = count * 100;
         count++;
-        setTimeout(() => e.target.classList.add('revealed'), delay);
-        obs.unobserve(e.target);
+        setTimeout(() => {
+          e.target.classList.add('revealed');
+          // Trigger inner animations after card reveals
+          if (e.target.classList.contains('pc-chat')) animateChat();
+          if (e.target.classList.contains('pc-bot')) animateTg();
+          if (e.target.classList.contains('pc-check')) animateCheck();
+        }, delay);
+        cardObs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1 });
-  stickers.forEach(s => obs.observe(s));
+  }, { threshold: 0.15 });
+  cards.forEach(c => cardObs.observe(c));
+
+  // Chat messages appear one by one
+  function animateChat() {
+    const msgs = document.querySelectorAll('#mockChat .mock-msg');
+    msgs.forEach((m, i) => {
+      setTimeout(() => m.classList.add('revealed'), i * 400);
+    });
+  }
+
+  // Telegram messages appear one by one
+  function animateTg() {
+    const msgs = document.querySelectorAll('#mockTg .mock-tg-msg');
+    msgs.forEach((m, i) => {
+      setTimeout(() => m.classList.add('revealed'), i * 350);
+    });
+  }
+
+  // Checklist items appear and check themselves
+  function animateCheck() {
+    const items = document.querySelectorAll('#mockCheck .mock-check-item');
+    items.forEach((item, i) => {
+      setTimeout(() => {
+        item.classList.add('revealed');
+        setTimeout(() => item.classList.add('checked'), 400);
+      }, i * 250);
+    });
+  }
 })();
 
 // === Smooth scroll for anchor links ===
