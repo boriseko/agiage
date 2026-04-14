@@ -769,8 +769,7 @@ body {
 .timeline-progress {
   position: absolute; left: 1rem; top: 0; width: 2px;
   background: linear-gradient(180deg, #FFD54F, #FFA000);
-  transform-origin: top; transform: scaleY(0);
-  transition: transform 0.3s ease-out; z-index: 1;
+  height: 0; z-index: 1;
 }
 @media (min-width: 768px) { .timeline-progress { left: 1.5rem; } }
 
@@ -841,6 +840,17 @@ body {
   width: 5px; height: 5px; border-radius: 50%;
   background: #FFA000;
 }
+.timeline-story {
+  font-size: 0.85rem; font-style: italic; color: var(--text-light);
+  line-height: 1.55; margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid rgba(255,160,0,0.25);
+  opacity: 0; transform: translateX(-10px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.4s;
+}
+.timeline-item.revealed .timeline-story { opacity: 1; transform: translateX(0); }
+.timeline-story strong { font-style: normal; color: var(--text-muted); }
+
 .timeline-result {
   display: inline-block;
   font-size: 0.85rem; font-weight: 600; color: #FFA000;
@@ -1998,68 +2008,73 @@ body {
       <div class="timeline-item">
         <div class="timeline-marker">01</div>
         <div class="timeline-card">
-          <h3>Что вообще произошло с ИИ — и почему сейчас всё по-другому</h3>
+          <h3>Что произошло с ИИ и почему сейчас всё по-другому?</h3>
           <ul>
-            <li>Почему то, что ты знал про ИИ, — уже неактуально?</li>
+            <li>Почему то, что ты знал про ИИ, уже неактуально?</li>
             <li>Чем «вайб» отличается от обычного чата с нейросетью?</li>
-            <li>Что реально можно делать прямо сейчас — примеры из разных сфер</li>
-            <li>Как правильно ставить задачу ИИ, чтобы получать то, что нужно</li>
+            <li>Что реально можно делать прямо сейчас. Примеры из разных сфер.</li>
+            <li>Как правильно ставить задачу ИИ, чтобы получать то, что нужно.</li>
           </ul>
-          <div class="timeline-result">Понимаешь, что возможно — и хочешь попробовать</div>
+          <div class="timeline-story"><strong>Маша, маркетолог:</strong> посмотрела эфир, поняла, что ChatGPT — это прошлый век. Загорелась попробовать.</div>
+          <div class="timeline-result">Понимаешь, что возможно, и хочешь попробовать.</div>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-marker">02</div>
         <div class="timeline-card">
-          <h3>Куда нажимать, чтобы работало</h3>
+          <h3>Куда нажимать, чтобы работало?</h3>
           <ul>
             <li>Какие инструменты существуют и что выбрать?</li>
-            <li>Первые шаги: от установки до первого результата</li>
-            <li>Что реально нужно, а что — лишний шум?</li>
-            <li>Практика: делаем первую задачу вместе</li>
+            <li>Первые шаги: от установки до первого результата.</li>
+            <li>Что реально нужно, а что лишний шум?</li>
+            <li>Практика: делаем первую задачу вместе.</li>
           </ul>
-          <div class="timeline-result">Всё настроено, первый результат в руках</div>
+          <div class="timeline-story"><strong>Маша:</strong> установила Cursor, задала первую задачу. Через час — готовый лендинг. «Серьёзно, это я сделала?!»</div>
+          <div class="timeline-result">Всё настроено, первый результат в руках.</div>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-marker">03</div>
         <div class="timeline-card">
-          <h3>Домены, серверы, запуск — без паники</h3>
+          <h3>Как запустить свой проект в интернет?</h3>
           <ul>
-            <li>Что такое домен, хостинг, сервер — простыми словами</li>
-            <li>Как всё это купить и настроить (или попросить ИИ)</li>
-            <li>Как запустить свой проект в интернет — чтобы он работал 24/7</li>
+            <li>Что такое домен, хостинг, сервер простыми словами.</li>
+            <li>Как всё это купить и настроить (или попросить ИИ).</li>
+            <li>Как сделать так, чтобы проект работал 24/7.</li>
           </ul>
-          <div class="timeline-result">Твой проект в интернете, работает, доступен всем</div>
+          <div class="timeline-story"><strong>Маша:</strong> купила домен, попросила ИИ настроить сервер. Через 20 минут сайт в интернете. Отправила ссылку подруге.</div>
+          <div class="timeline-result">Твой проект в интернете, работает, доступен всем.</div>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-marker">04</div>
         <div class="timeline-card">
-          <h3>Подключаем ИИ к внешним сервисам</h3>
+          <h3>Как подключить ИИ к внешним сервисам?</h3>
           <ul>
             <li>Как ИИ может работать с другими программами и данными?</li>
             <li>Какие возможности это открывает?</li>
-            <li>Когда подключать, а когда — не усложнять?</li>
-            <li>Практика: подключаем и видим разницу</li>
+            <li>Когда подключать, а когда не усложнять?</li>
+            <li>Практика: подключаем и видим разницу.</li>
           </ul>
-          <div class="timeline-result">ИИ работает вместе с твоими инструментами</div>
+          <div class="timeline-story"><strong>Маша:</strong> подключила Telegram-бота к сайту. Заявки с лендинга теперь приходят прямо в чат. Автоматически.</div>
+          <div class="timeline-result">ИИ работает вместе с твоими инструментами.</div>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-marker">05</div>
         <div class="timeline-card">
-          <h3>Собираем продукт с нуля — в прямом эфире</h3>
+          <h3>Собираем продукт с нуля в прямом эфире</h3>
           <ul>
-            <li>Голосование: вы выбираете, что собираем</li>
-            <li>С нуля до работающей штуки за одну сессию</li>
-            <li>Ошибки, тупики, правки — всё как в жизни</li>
+            <li>Голосование: вы выбираете, что собираем.</li>
+            <li>С нуля до работающей штуки за одну сессию.</li>
+            <li>Ошибки, тупики, правки. Всё как в жизни.</li>
           </ul>
-          <div class="timeline-result">Видишь, как из идеи рождается готовый продукт</div>
+          <div class="timeline-story"><strong>Маша:</strong> предложила свою идею на лайве. Все проголосовали. За час собрали рабочий сервис для автоматизации рассылки.</div>
+          <div class="timeline-result">Видишь, как из идеи рождается готовый продукт.</div>
         </div>
       </div>
 
@@ -2068,12 +2083,13 @@ body {
         <div class="timeline-card">
           <h3>Ограничения и здравый смысл</h3>
           <ul>
-            <li>Что ИИ делает отлично, а что — нет?</li>
+            <li>Что ИИ делает отлично, а что нет?</li>
             <li>Где может ошибиться и как это проверять?</li>
-            <li>Как не слить деньги и данные</li>
-            <li>Чек-лист безопасности для любого проекта</li>
+            <li>Как не слить деньги и данные.</li>
+            <li>Чек-лист безопасности для любого проекта.</li>
           </ul>
-          <div class="timeline-result">Понимаешь границы ИИ и работаешь уверенно</div>
+          <div class="timeline-story"><strong>Маша:</strong> научилась проверять результат перед запуском. Поняла, где доверять ИИ, а где перепроверять самой.</div>
+          <div class="timeline-result">Понимаешь границы ИИ и работаешь уверенно.</div>
         </div>
       </div>
 
@@ -2082,11 +2098,12 @@ body {
         <div class="timeline-card">
           <h3>Демо-день</h3>
           <ul>
-            <li>Участники показывают свои проекты</li>
+            <li>Участники показывают свои проекты.</li>
             <li>Разбор: что получилось, что хочется сделать дальше?</li>
-            <li>Доступ в закрытое комьюнити</li>
+            <li>Доступ в закрытое комьюнити.</li>
           </ul>
-          <div class="timeline-result">Готовый проект + окружение единомышленников</div>
+          <div class="timeline-story"><strong>Маша:</strong> показала сайт + бота + автоматизацию. За курс сделала то, за что раньше платила 200К. Бесплатно. Сама.</div>
+          <div class="timeline-result">Готовый проект и окружение единомышленников.</div>
         </div>
       </div>
 
@@ -2098,8 +2115,9 @@ body {
 <!-- ==================== WORTH ==================== -->
 <section class="worth" id="worth">
   <div class="worth-inner">
-    <div class="worth-label reveal" style="text-align:center;">Про инструмент</div>
-    <h2 class="worth-title reveal" style="text-align:center;">Что на самом деле покупают<br>за $100 в месяц</h2>
+    <div class="worth-label reveal" style="text-align:center;">Подписка на ИИ-агента</div>
+    <h2 class="worth-title reveal" style="text-align:center;">На курсе мы работаем<br>с платными ИИ-агентами</h2>
+    <p class="reveal" style="text-align:center; color:var(--text-muted); font-size:1.1rem; margin-top:-1.5rem; margin-bottom:2rem;">Это не стоимость курса — это подписка на инструмент, с которым ты будешь работать. Вот что она даёт:</p>
 
     <div class="worth-lines">
       <div class="worth-line reveal">
@@ -2241,110 +2259,6 @@ body {
     <div class="swarm-text-layer" id="swT3"><span class="sw-gold">Намного больше.</span></div>
     <div class="swarm-text-layer" id="swT4"><span class="sw-gold">И все они работают на тебя.<span class="sw-sub">В рамках одной подписки.</span></span></div>
     <div class="swarm-canvas" id="swarmCanvas"></div>
-  </div>
-</section>
-
-<!-- ==================== FORMAT ==================== -->
-<section class="fmt-outer" id="format" style="height:400vh;">
-  <div class="fmt-pin" id="fmtPin">
-    <!-- Left: info -->
-    <div class="fmt-left">
-      <div class="fmt-label">Формат</div>
-      <div class="fmt-title">Как устроен курс</div>
-
-      <div class="fmt-step-info" id="fmtInfo">
-        <div class="fmt-step-content active" data-fmt="1">
-          <div class="fmt-step-num">01</div>
-          <div class="fmt-step-title">Смотришь</div>
-          <div class="fmt-step-desc">Живой эфир с примерами и разбором. Коротко и по делу. Или запись — в удобном темпе.</div>
-        </div>
-        <div class="fmt-step-content" data-fmt="2">
-          <div class="fmt-step-num">02</div>
-          <div class="fmt-step-title">Повторяешь</div>
-          <div class="fmt-step-desc">Делаешь то же самое своими руками. На своём проекте или на примерах из урока.</div>
-        </div>
-        <div class="fmt-step-content" data-fmt="3">
-          <div class="fmt-step-num">03</div>
-          <div class="fmt-step-title">Спрашиваешь</div>
-          <div class="fmt-step-desc">Застрял — пишешь в чат, получаешь ответ лично от эксперта. Без очередей и ботов.</div>
-        </div>
-        <div class="fmt-step-content" data-fmt="4">
-          <div class="fmt-step-num">04</div>
-          <div class="fmt-step-title">Собираешь своё</div>
-          <div class="fmt-step-desc">Применяешь всё к своей задаче или идее. Строишь свой проект от начала до запуска.</div>
-        </div>
-        <div class="fmt-step-content" data-fmt="5">
-          <div class="fmt-step-num">05</div>
-          <div class="fmt-step-title">Показываешь</div>
-          <div class="fmt-step-desc">Демо-день: делишься результатом, получаешь разбор и фидбек от эксперта и группы.</div>
-        </div>
-      </div>
-
-      <div class="fmt-dots" id="fmtDots">
-        <div class="fmt-dot active" onclick="fmtGoTo(1)"></div>
-        <div class="fmt-dot" onclick="fmtGoTo(2)"></div>
-        <div class="fmt-dot" onclick="fmtGoTo(3)"></div>
-        <div class="fmt-dot" onclick="fmtGoTo(4)"></div>
-        <div class="fmt-dot" onclick="fmtGoTo(5)"></div>
-      </div>
-    </div>
-
-    <!-- Right: visual -->
-    <div class="fmt-right">
-      <div class="fmt-visual" style="aspect-ratio:1/1; position:relative;">
-        <div class="fmt-screen active" data-fmt="1">
-          <div class="fmt-mock">
-            <div class="fmt-mock-bar"><i></i><i></i><i></i></div>
-            <div class="fmt-mock-body">
-              <div class="fmt-mock-icon">🎬</div>
-              <div class="fmt-mock-highlight">Живой эфир</div>
-              <div class="fmt-mock-text">Эксперт показывает,<br>ты смотришь и записываешь.</div>
-            </div>
-          </div>
-        </div>
-        <div class="fmt-screen" data-fmt="2">
-          <div class="fmt-mock">
-            <div class="fmt-mock-bar"><i></i><i></i><i></i></div>
-            <div class="fmt-mock-body" style="background:#1e1e1e; color:#ccc; font-family:monospace; align-items:flex-start; text-align:left;">
-              <div style="color:#28c840;">$ Повторяю за экспертом</div>
-              <div style="color:#666;">→ Создаю проект...</div>
-              <div style="color:#666;">→ Первый результат!</div>
-              <div style="color:#FFD54F;">✅ Работает</div>
-            </div>
-          </div>
-        </div>
-        <div class="fmt-screen" data-fmt="3">
-          <div class="fmt-mock" style="max-width:280px;">
-            <div class="fmt-mock-bar"><i></i><i></i><i></i></div>
-            <div class="fmt-mock-body" style="align-items:stretch; gap:0.5rem; padding:1rem;">
-              <div style="background:#f0f0f0; padding:0.5rem 0.8rem; border-radius:12px 12px 12px 4px; font-size:0.8rem; align-self:flex-start;">Не могу подключить API 😩</div>
-              <div style="background:#E8C738; color:#1a1a1a; padding:0.5rem 0.8rem; border-radius:12px 12px 4px 12px; font-size:0.8rem; align-self:flex-end;">Покажи код, разберём вместе 👋</div>
-              <div style="background:#f0f0f0; padding:0.5rem 0.8rem; border-radius:12px 12px 12px 4px; font-size:0.8rem; align-self:flex-start;">Заработало! Спасибо! 🔥</div>
-            </div>
-          </div>
-        </div>
-        <div class="fmt-screen" data-fmt="4">
-          <div class="fmt-mock">
-            <div class="fmt-mock-bar"><i></i><i></i><i></i></div>
-            <div class="fmt-mock-body">
-              <div class="fmt-mock-icon">🚀</div>
-              <div class="fmt-mock-highlight">Твой проект</div>
-              <div class="fmt-mock-text">От идеи до запуска.<br>В интернете. Работает 24/7.</div>
-            </div>
-          </div>
-        </div>
-        <div class="fmt-screen" data-fmt="5">
-          <div class="fmt-mock">
-            <div class="fmt-mock-bar"><i></i><i></i><i></i></div>
-            <div class="fmt-mock-body">
-              <div class="fmt-mock-icon">🎉</div>
-              <div class="fmt-mock-highlight">Демо-день</div>
-              <div class="fmt-mock-text">Показываешь свой проект.<br>Аплодисменты. Сертификат.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -2818,43 +2732,43 @@ function toggleFaq(item) {
   if (!isOpen) item.classList.add('open');
 }
 
-// === Timeline scroll animation ===
+// === Timeline: scroll-based progress line + item reveal ===
 (function() {
   const items = document.querySelectorAll('.timeline-item');
   const progress = document.getElementById('timelineProgress');
   const timeline = document.getElementById('timeline');
   if (!items.length || !progress || !timeline) return;
 
+  // Reveal items on scroll
   let revealedCount = 0;
-
   const itemObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting && !e.target.classList.contains('revealed')) {
-        // Stagger: each item gets extra delay based on order
         const delay = revealedCount * 150;
         revealedCount++;
-
-        setTimeout(() => {
-          e.target.classList.add('revealed');
-
-          // Update progress line
-          const last = [...items].filter(i => i.classList.contains('revealed')).pop();
-          if (last) {
-            const tRect = timeline.getBoundingClientRect();
-            const mRect = last.querySelector('.timeline-marker').getBoundingClientRect();
-            const h = mRect.top + mRect.height / 2 - tRect.top;
-            progress.style.height = h + 'px';
-            progress.style.transform = 'scaleY(1)';
-            progress.style.transition = 'height 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
-          }
-        }, delay);
-
+        setTimeout(() => e.target.classList.add('revealed'), delay);
         itemObs.unobserve(e.target);
       }
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
-
   items.forEach(i => itemObs.observe(i));
+
+  // Continuous scroll-based progress line
+  function updateProgress() {
+    const tRect = timeline.getBoundingClientRect();
+    const viewMid = window.innerHeight * 0.6;
+
+    // How far the scroll midpoint is into the timeline
+    const scrollInto = viewMid - tRect.top;
+    const totalH = tRect.height;
+    const pct = Math.max(0, Math.min(1, scrollInto / totalH));
+
+    progress.style.height = (pct * 100) + '%';
+    progress.style.transform = 'scaleY(1)';
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
 })();
 
 // === Hero rotating phrases ===
