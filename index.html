@@ -872,9 +872,21 @@ body {
 .worth {
   position: relative; overflow: hidden;
   padding: 6rem 0;
-  background: linear-gradient(180deg, #FFFDE7 0%, var(--bg) 100%);
+  background: var(--white);
+}
+.worth-blob {
+  position: absolute;
+  width: 500px; height: 500px;
+  left: 50%; top: 50%;
+  margin-left: -250px; margin-top: -250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,200,0,0.4) 0%, rgba(255,170,0,0.15) 40%, transparent 65%);
+  filter: blur(40px);
+  pointer-events: none;
+  will-change: transform;
 }
 .worth-inner {
+  position: relative; z-index: 1;
   max-width: 900px; margin: 0 auto; padding: 0 2rem;
 }
 @media (min-width: 768px) { .worth-inner { padding: 0 3rem; } }
@@ -2191,6 +2203,7 @@ body {
 
 <!-- ==================== WORTH ==================== -->
 <section class="worth" id="worth">
+  <div class="worth-blob" id="worthBlob"></div>
   <div class="worth-inner">
     <div class="worth-label reveal" style="text-align:center;">Подписка на ИИ-агента</div>
     <h2 class="worth-title reveal" style="text-align:center;">На курсе мы работаем<br>с платными ИИ-агентами</h2>
@@ -2869,6 +2882,33 @@ function toggleFaq(item) {
   const blob = document.getElementById('resultsBlobPointer');
   if (!section || !blob) return;
 
+  let curX = 0, curY = 0, tgX = 0, tgY = 0, active = false;
+
+  section.addEventListener('mousemove', (e) => {
+    const rect = section.getBoundingClientRect();
+    tgX = e.clientX - rect.left - rect.width / 2;
+    tgY = e.clientY - rect.top - rect.height / 2;
+  }, { passive: true });
+
+  function animate() {
+    curX += (tgX - curX) / 15;
+    curY += (tgY - curY) / 15;
+    blob.style.transform = `translate(${curX}px, ${curY}px)`;
+    if (active) requestAnimationFrame(animate);
+  }
+
+  new IntersectionObserver(([e]) => {
+    const was = active;
+    active = e.isIntersecting;
+    if (active && !was) animate();
+  }, { threshold: 0.1 }).observe(section);
+})();
+
+// === Worth blob follows mouse ===
+(function() {
+  const section = document.getElementById('worth');
+  const blob = document.getElementById('worthBlob');
+  if (!section || !blob) return;
   let curX = 0, curY = 0, tgX = 0, tgY = 0, active = false;
 
   section.addEventListener('mousemove', (e) => {
