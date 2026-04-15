@@ -125,12 +125,18 @@ body {
 }
 .header-nav a:hover { opacity: 0.5; }
 .header-cta {
-  display: none; padding: 0.6rem 1.5rem;
-  background: var(--white); color: #666;
-  border-radius: 9999px; font-size: 0.85rem; font-weight: 600;
+  display: none; padding: 0.7rem 1.8rem;
+  background: var(--white); color: var(--text);
+  border-radius: 9999px; font-size: 0.95rem; font-weight: 700;
   text-decoration: none; transition: all var(--transition-fast);
+  border: 2px solid rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
-.header-cta:hover { background: #f5f5f5; transform: translateY(-1px); }
+.header-cta:hover { background: #F5F5F5; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.header.scrolled .header-cta {
+  background: var(--orange); color: var(--white); border-color: var(--orange);
+}
+.header.scrolled .header-cta:hover { background: var(--orange-dark); border-color: var(--orange-dark); }
 
 @media (min-width: 768px) {
   .header { padding: 1.25rem 3rem; }
@@ -1208,18 +1214,19 @@ body {
   font-size: clamp(2.5rem, 7vw, 6rem);
   font-weight: 800; letter-spacing: -0.04em;
   color: var(--white); line-height: 1;
+  text-align: center;
 }
 
 /* Stack wrapper */
 .practice-stack {
   margin-top: 3rem; position: relative;
-  max-width: 680px;
+  max-width: 720px; margin-left: auto; margin-right: auto;
 }
-@media (min-width: 768px) { .practice-stack { max-width: 720px; } }
 
 /* Navigation dots */
 .ps-nav {
   display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+  justify-content: center;
 }
 .ps-dot {
   width: 40px; height: 40px; border-radius: 12px;
@@ -1478,10 +1485,14 @@ body {
 .expert-name {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
-  color: var(--text); margin-bottom: 1.5rem;
+  color: var(--text); margin-bottom: 1rem;
+}
+.expert-role {
+  font-size: 0.95rem; font-weight: 600; color: var(--orange);
+  margin-bottom: 1.5rem; line-height: 1.7;
 }
 .expert-bio {
-  font-size: 1.05rem; color: #555; line-height: 1.8;
+  font-size: 1.15rem; color: #555; line-height: 1.8;
   margin-bottom: 2rem;
 }
 .expert-bio strong {
@@ -1518,7 +1529,7 @@ body {
   content: '✦'; color: var(--orange, #DE802E); font-size: 0.7rem;
 }
 /* Stats */
-.expert-stats { display: flex; flex-wrap: wrap; gap: 2rem; }
+.expert-stats { display: flex; flex-wrap: wrap; gap: 2rem; margin-bottom: 1.5rem; }
 .expert-stat-num {
   font-size: 1.75rem; font-weight: 800; color: var(--text);
   line-height: 1;
@@ -1535,6 +1546,38 @@ body {
   font-size: 1.05rem; font-style: italic; color: #555; line-height: 1.7;
 }
 
+/* Expert gallery slider */
+.expert-gallery {
+  margin-top: 3rem;
+}
+.expert-gallery h3 {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+  margin-bottom: 1.25rem;
+}
+.expert-slider {
+  display: flex; gap: 1rem; overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.75rem;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.expert-slider::-webkit-scrollbar { display: none; }
+.expert-slide {
+  flex: 0 0 280px; height: 200px;
+  border-radius: 16px; overflow: hidden;
+  scroll-snap-align: start;
+  background: #F0F0F0;
+  position: relative;
+}
+.expert-slide img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.expert-slide-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-light); font-size: 0.85rem; font-weight: 500;
+  background: linear-gradient(135deg, #F5F5F5, #EBEBEB);
+}
+
 /* ========== PRICING ========== */
 .pricing-grid {
   display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem;
@@ -1542,59 +1585,53 @@ body {
 @media (min-width: 768px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
 
 .price-card {
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px; padding: 2.5rem;
   transition: transform var(--transition-fast);
 }
 .price-card:hover { transform: translateY(-6px); }
 .price-card--featured {
-  background: var(--white);
-  border: none;
+  border: 2px solid var(--orange);
+  box-shadow: 0 8px 40px rgba(255,160,0,0.18);
 }
-.price-card--featured .price-name,
-.price-card--featured .price-amount,
-.price-card--featured .price-features li { color: var(--text); }
-.price-card--featured .price-label { color: var(--text-muted); }
 .price-card--featured .price-cta {
   background: var(--black); color: var(--white);
 }
 
 .price-label {
   font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.15em; color: rgba(255,255,255,0.6);
+  letter-spacing: 0.15em; color: var(--text-muted);
   margin-bottom: 0.75rem;
 }
 .price-name {
-  font-size: 1.5rem; font-weight: 800; color: var(--white);
+  font-size: 1.5rem; font-weight: 800; color: var(--text);
   margin-bottom: 0.5rem;
 }
 .price-amount {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 900; color: var(--white);
+  font-weight: 900; color: var(--text);
   letter-spacing: -0.03em; margin-bottom: 1.5rem;
 }
 .price-features {
   list-style: none; margin-bottom: 2rem;
 }
 .price-features li {
-  font-size: 0.9rem; color: rgba(255,255,255,0.85);
-  padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem; color: var(--text);
+  padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.06);
   line-height: 1.5;
-}
-.price-card--featured .price-features li {
-  border-bottom-color: var(--border);
 }
 .price-cta {
   display: block; text-align: center;
   padding: 1rem 2rem; border-radius: 9999px;
-  background: var(--white); color: var(--text);
+  background: transparent; color: var(--text);
+  border: 2px solid var(--text);
   font-size: 1rem; font-weight: 700;
   text-decoration: none;
   transition: all var(--transition-fast);
 }
 .price-cta:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.price-card--featured .price-cta:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
 .price-badge {
   display: inline-block; padding: 0.3rem 0.75rem;
   background: var(--orange); color: var(--white);
@@ -1602,7 +1639,6 @@ body {
   text-transform: uppercase; letter-spacing: 0.05em;
   margin-bottom: 1rem;
 }
-.price-card--featured .price-badge { background: var(--orange); color: var(--white); }
 
 /* ========== GUARANTEE ========== */
 .guarantee-box {
@@ -2694,27 +2730,25 @@ body {
 <!-- ==================== EXPERT ==================== -->
 <section class="section-white" id="expert">
   <div class="s-container">
+    <div class="reveal">
+      <div class="s-label">Эксперт курса</div>
+      <h2 class="s-title">Кто ведёт курс</h2>
+    </div>
+
     <div class="expert-layout">
-      <div class="expert-info reveal">
-        <div class="s-label">Эксперт курса</div>
-        <div class="expert-name">Егор<br>Борисенко</div>
+      <div class="expert-info">
+        <div class="expert-name reveal">Егор Борисенко</div>
 
-        <div class="expert-badges">
-          <span class="expert-badge">Спикер ЕАПК</span>
-          <span class="expert-badge">Спикер ПравоТех</span>
-          <span class="expert-badge">Лауреат «Цифровизация во благо»</span>
-          <span class="expert-badge">Лауреат «AI Guru»</span>
+        <div class="expert-role reveal reveal-delay-1">
+          Ведущий специалист по машинному обучению, НМ-Тех<br>
+          Консультант по генеративному ИИ, УрГЮУ
         </div>
 
-        <div class="expert-bio">
-          Четвёртый год обучаю людей и компании работать с ИИ. Госвузы, юрфирмы, девелоперы, телеком. Прошёл путь от обучения промптам до создания продуктов, которые заменяют целые команды.
+        <div class="expert-bio reveal reveal-delay-1">
+          Четвёртый год обучаю людей и компании работать с ИИ. Госвузы, юрфирмы, девелоперы, телеком. Автор курсов «ИИ для юристов» и «AI-креаторы». Прошёл путь от обучения промптам до создания продуктов, которые заменяют целые команды.
         </div>
 
-        <div class="expert-quote">
-          «Я не просто учу инструменту. Я передаю мышление, которое открывает новые проекты и деньги. И делаю это на вайбе.»
-        </div>
-
-        <div class="expert-stats" style="margin-top:2rem;">
+        <div class="expert-stats reveal reveal-delay-2">
           <div>
             <div class="expert-stat-num">40+</div>
             <div class="expert-stat-label">мероприятий</div>
@@ -2728,11 +2762,31 @@ body {
             <div class="expert-stat-label">года в AI</div>
           </div>
         </div>
+
+        <div class="expert-badges reveal reveal-delay-2">
+          <span class="expert-badge">Спикер ЕАПК</span>
+          <span class="expert-badge">Спикер ПравоТех</span>
+          <span class="expert-badge">Лауреат «Цифровизация во благо»</span>
+          <span class="expert-badge">Лауреат «AI Guru»</span>
+        </div>
       </div>
 
       <div class="expert-photo-wrap reveal reveal-delay-2">
         <div class="expert-photo-glow"></div>
         <img src="egor-speaker.jpg" alt="Егор Борисенко — эксперт курса AGI Age" class="expert-photo" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Photo gallery slider -->
+    <div class="expert-gallery reveal reveal-delay-3">
+      <h3>Выступления и мероприятия</h3>
+      <div class="expert-slider" id="expertSlider">
+        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 1</div></div>
+        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 2</div></div>
+        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 3</div></div>
+        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 4</div></div>
+        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 5</div></div>
+        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 6</div></div>
       </div>
     </div>
   </div>
@@ -2742,7 +2796,6 @@ body {
 <section class="section-grad" id="pricing">
   <div class="s-container">
     <div class="reveal">
-      <div class="s-label">Тарифы</div>
       <h2 class="s-title">Выбери свой<br>формат</h2>
     </div>
     <div class="pricing-grid">
