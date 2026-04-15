@@ -879,7 +879,7 @@ body {
 .worth {
   position: relative; overflow: hidden;
   padding: clamp(60px, 8vw, 120px) 0;
-  background: #0A0A0A;
+  background: var(--white);
 }
 .worth-shader { display: none; }
 .worth-blur-top, .worth-blur-bottom { display: none; }
@@ -889,15 +889,16 @@ body {
 }
 @media (min-width: 768px) { .worth-inner { padding: 0 3rem; } }
 @media (min-width: 1280px) { .worth-inner { padding: 0 5rem; } }
-.worth .s-label { color: rgba(255,255,255,0.4); }
-.worth .s-title { color: #FFF; }
-.worth .s-desc { color: rgba(255,255,255,0.5); }
+
+.worth .s-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
 
 /* Bento features — border-separated grid */
 .worth-bento {
   display: grid; grid-template-columns: 1fr;
   margin-top: 3rem;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
   border-radius: 20px;
   overflow: hidden;
 }
@@ -905,12 +906,12 @@ body {
 
 .worth-cell {
   padding: 2rem 2.25rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid var(--border);
   transition: background 0.3s ease;
 }
-.worth-cell:hover { background: rgba(255,255,255,0.03); }
+.worth-cell:hover { background: rgba(255,160,0,0.02); }
 @media (min-width: 768px) {
-  .worth-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
+  .worth-cell:nth-child(odd) { border-right: 1px solid var(--border); }
   .worth-cell:nth-last-child(-n+2) { border-bottom: none; }
 }
 @media (max-width: 767px) {
@@ -918,7 +919,7 @@ body {
 }
 .worth-cell-icon {
   width: 40px; height: 40px; border-radius: 10px;
-  background: rgba(255,160,0,0.12);
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 1rem;
 }
@@ -927,15 +928,15 @@ body {
   stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
 .worth-cell-title {
-  font-size: 1.1rem; font-weight: 700; color: #FFF;
+  font-size: 1.05rem; font-weight: 700; color: var(--text);
   line-height: 1.4; margin-bottom: 0.4rem;
 }
 .worth-cell-desc {
-  font-size: 0.9rem; color: rgba(255,255,255,0.45);
+  font-size: 0.9rem; color: var(--text-muted);
   line-height: 1.6;
 }
 
-/* Glass price cards */
+/* Price cards */
 .worth-price-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
   margin-top: 2.5rem;
@@ -944,45 +945,43 @@ body {
 .worth-price-card {
   padding: 2.5rem 2rem;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  background: var(--white);
   text-align: center;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 .worth-price-card:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(255,160,0,0.25);
   transform: translateY(-3px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 32px rgba(255,160,0,0.06);
 }
 .worth-price-card-main {
-  border-color: rgba(255,160,0,0.35);
-  background: rgba(255,160,0,0.06);
+  border-color: rgba(255,160,0,0.3);
+  background: linear-gradient(135deg, #FFFDE7, #FFF8E1);
   transform: scale(1.03);
-  box-shadow: 0 0 40px rgba(255,160,0,0.08);
+  box-shadow: 0 4px 24px rgba(255,160,0,0.08);
 }
 .worth-price-card-main:hover {
-  border-color: rgba(255,160,0,0.5);
   transform: scale(1.03) translateY(-3px);
-  box-shadow: 0 8px 40px rgba(255,160,0,0.15);
+  box-shadow: 0 8px 32px rgba(255,160,0,0.12);
 }
 .worth-price-badge {
   display: inline-block;
   font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.1em; color: var(--orange);
-  background: rgba(255,160,0,0.12); border-radius: 6px;
+  background: rgba(255,160,0,0.1); border-radius: 6px;
   padding: 0.25rem 0.7rem; margin-bottom: 1rem;
 }
 .worth-price-num {
-  font-size: 3rem; font-weight: 900;
-  color: #FFF; line-height: 1;
+  font-size: clamp(2.5rem, 5vw, 3rem); font-weight: 900;
+  color: var(--text); line-height: 1;
 }
 .worth-price-num span { color: var(--orange); }
 .worth-price-rub {
-  font-size: 0.85rem; color: rgba(255,255,255,0.35); margin-top: 0.4rem;
+  font-size: 0.85rem; color: var(--text-light); margin-top: 0.4rem;
 }
 .worth-price-label {
-  font-size: 1.05rem; font-weight: 600; color: rgba(255,255,255,0.7);
+  font-size: 1.05rem; font-weight: 600; color: var(--text);
   margin-top: 1rem;
 }
 
@@ -1004,6 +1003,12 @@ body {
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.2;
   color: var(--text); opacity: 0;
   transition: opacity 0.8s cubic-bezier(0.23,1,0.32,1);
+  padding: 1.5rem 3rem;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 .swarm-text-layer span.vis { opacity: 1; }
 .swarm-text-layer .sw-gold {
@@ -1078,8 +1083,8 @@ body {
 @media (max-width: 768px) { .fmt-left { padding: 2rem; } }
 
 .fmt-label {
-  font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.12em; color: var(--text-light); margin-bottom: 1rem;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.15em; color: var(--text-light); margin-bottom: 1rem;
 }
 .fmt-title {
   font-size: clamp(2rem, 4vw, 3rem);
@@ -1577,7 +1582,7 @@ body {
   list-style: none; margin-bottom: 2rem;
 }
 .price-features li {
-  font-size: 0.9rem; color: var(--text);
+  font-size: 0.95rem; color: var(--text);
   padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.06);
   line-height: 1.5;
 }
@@ -1644,7 +1649,7 @@ body {
 }
 .faq-answer-inner {
   padding: 0 0 1.5rem;
-  font-size: 0.95rem; color: var(--text-muted); line-height: 1.7;
+  font-size: 1.05rem; color: var(--text-muted); line-height: 1.7;
 }
 .faq-item.open .faq-answer { max-height: 400px; opacity: 1; }
 .faq-item.open .faq-toggle { transform: rotate(45deg); }
@@ -2673,7 +2678,7 @@ body {
         <div class="expert-name reveal">Егор Борисенко</div>
 
         <div class="expert-role reveal reveal-delay-1">
-          Ведущий специалист по машинному обучению, НМ-Тех<br>
+          Ведущий специалист по ИИ, НМ-Тех<br>
           Консультант по генеративному ИИ, УрГЮУ
         </div>
 
