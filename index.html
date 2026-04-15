@@ -1488,7 +1488,7 @@ body {
   color: var(--text); margin-bottom: 1rem;
 }
 .expert-role {
-  font-size: 0.95rem; font-weight: 600; color: var(--orange);
+  font-size: 1.05rem; font-weight: 600; color: var(--orange);
   margin-bottom: 1.5rem; line-height: 1.7;
 }
 .expert-bio {
@@ -1498,19 +1498,36 @@ body {
 .expert-bio strong {
   color: var(--text); font-weight: 700;
 }
-/* Photo */
+/* Photo slider */
 .expert-photo-wrap {
-  position: relative; display: flex; align-items: center; justify-content: center;
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 1rem;
 }
-.expert-photo {
-  width: 100%; max-width: 420px; aspect-ratio: 1/1; object-fit: cover;
-  border-radius: 24px;
+.expert-photo-slider {
+  position: relative; width: 100%; max-width: 420px; aspect-ratio: 1/1;
+  border-radius: 24px; overflow: hidden;
   box-shadow: 0 8px 40px rgba(0,0,0,0.08);
 }
+.expert-photo-slider img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 0.5s ease;
+}
+.expert-photo-slider img.active { opacity: 1; }
 .expert-photo-glow {
   position: absolute; inset: -20px; border-radius: 40px;
   background: radial-gradient(circle at 50% 50%, rgba(232,199,56,0.15) 0%, transparent 70%);
   pointer-events: none; z-index: -1;
+}
+/* Slider dots */
+.expert-photo-dots {
+  display: flex; gap: 0.4rem; justify-content: center;
+}
+.expert-photo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #DDD; border: none; cursor: pointer; padding: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.expert-photo-dot.active {
+  background: var(--orange); transform: scale(1.3);
 }
 /* Badges */
 .expert-badges {
@@ -1546,37 +1563,6 @@ body {
   font-size: 1.05rem; font-style: italic; color: #555; line-height: 1.7;
 }
 
-/* Expert gallery slider */
-.expert-gallery {
-  margin-top: 3rem;
-}
-.expert-gallery h3 {
-  font-size: 1.1rem; font-weight: 700; color: var(--text);
-  margin-bottom: 1.25rem;
-}
-.expert-slider {
-  display: flex; gap: 1rem; overflow-x: auto;
-  scroll-snap-type: x proximity;
-  padding-bottom: 0.75rem;
-  -ms-overflow-style: none; scrollbar-width: none;
-}
-.expert-slider::-webkit-scrollbar { display: none; }
-.expert-slide {
-  flex: 0 0 280px; height: 200px;
-  border-radius: 16px; overflow: hidden;
-  scroll-snap-align: start;
-  background: #F0F0F0;
-  position: relative;
-}
-.expert-slide img {
-  width: 100%; height: 100%; object-fit: cover;
-}
-.expert-slide-placeholder {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-light); font-size: 0.85rem; font-weight: 500;
-  background: linear-gradient(135deg, #F5F5F5, #EBEBEB);
-}
 
 /* ========== PRICING ========== */
 .pricing-grid {
@@ -2773,20 +2759,18 @@ body {
 
       <div class="expert-photo-wrap reveal reveal-delay-2">
         <div class="expert-photo-glow"></div>
-        <img src="egor-speaker.jpg" alt="Егор Борисенко — эксперт курса AGI Age" class="expert-photo" loading="lazy">
-      </div>
-    </div>
-
-    <!-- Photo gallery slider -->
-    <div class="expert-gallery reveal reveal-delay-3">
-      <h3>Выступления и мероприятия</h3>
-      <div class="expert-slider" id="expertSlider">
-        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 1</div></div>
-        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 2</div></div>
-        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 3</div></div>
-        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 4</div></div>
-        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 5</div></div>
-        <div class="expert-slide"><div class="expert-slide-placeholder">Фото 6</div></div>
+        <div class="expert-photo-slider" id="expertPhotoSlider">
+          <img src="egor-speaker.jpg" alt="Егор Борисенко — спикер" class="active" loading="lazy">
+          <img src="egor-photo-2.jpg" alt="Егор Борисенко — выступление" loading="lazy">
+          <img src="egor-photo-3.jpg" alt="Егор Борисенко — мероприятие" loading="lazy">
+          <img src="egor-photo-4.jpg" alt="Егор Борисенко — обучение" loading="lazy">
+        </div>
+        <div class="expert-photo-dots" id="expertPhotoDots">
+          <button class="expert-photo-dot active" data-i="0"></button>
+          <button class="expert-photo-dot" data-i="1"></button>
+          <button class="expert-photo-dot" data-i="2"></button>
+          <button class="expert-photo-dot" data-i="3"></button>
+        </div>
       </div>
     </div>
   </div>
@@ -3412,6 +3396,34 @@ function toggleFaq(item) {
     card.style.transform = '';
     card.style.boxShadow = '';
   });
+})();
+
+// === Expert photo slider ===
+(function() {
+  const slider = document.getElementById('expertPhotoSlider');
+  const dotsWrap = document.getElementById('expertPhotoDots');
+  if (!slider || !dotsWrap) return;
+  const imgs = slider.querySelectorAll('img');
+  const dots = dotsWrap.querySelectorAll('.expert-photo-dot');
+  let current = 0, timer;
+
+  function show(i) {
+    imgs.forEach(img => img.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    imgs[i].classList.add('active');
+    dots[i].classList.add('active');
+    current = i;
+  }
+
+  function next() { show((current + 1) % imgs.length); }
+  function startAuto() { timer = setInterval(next, 4000); }
+  function resetAuto() { clearInterval(timer); startAuto(); }
+
+  dots.forEach(d => {
+    d.addEventListener('click', () => { show(+d.dataset.i); resetAuto(); });
+  });
+
+  startAuto();
 })();
 
 // === Smooth scroll for anchor links ===
