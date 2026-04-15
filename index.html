@@ -1195,10 +1195,10 @@ body {
   font-weight: 700; color: var(--text);
 }
 
-/* ========== PRACTICE BENTO (Как это выглядит на практике) ========== */
+/* ========== PRACTICE STACK (Как это выглядит) ========== */
 .practice-section {
   padding: clamp(60px, 8vw, 120px) 0;
-  background: var(--white);
+  background: var(--grad-page);
   position: relative; z-index: 2;
 }
 .practice-section .s-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
@@ -1207,59 +1207,69 @@ body {
 .practice-section .s-title {
   font-size: clamp(2.5rem, 7vw, 6rem);
   font-weight: 800; letter-spacing: -0.04em;
-  color: var(--black); line-height: 1;
+  color: var(--white); line-height: 1;
 }
 
-/* Practice bento grid */
-.practice-grid {
-  display: grid; grid-template-columns: 1fr;
-  gap: 0.75rem; margin-top: 3rem;
+/* Stack wrapper */
+.practice-stack {
+  margin-top: 3rem; position: relative;
+  max-width: 680px;
 }
-@media (min-width: 768px) {
-  .practice-grid {
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: minmax(180px, auto);
-  }
+@media (min-width: 768px) { .practice-stack { max-width: 720px; } }
+
+/* Navigation dots */
+.ps-nav {
+  display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+}
+.ps-dot {
+  width: 40px; height: 40px; border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.8rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+.ps-dot:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.5);
+}
+.ps-dot.active {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--orange);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
-/* Practice card — same glass as bento */
-.practice-card {
-  position: relative; overflow: hidden;
+/* Cards container */
+.ps-cards {
+  position: relative;
+  perspective: 1200px;
+}
+
+/* Individual card */
+.ps-card {
   border-radius: 20px;
-  padding: 0;
-  border: 1px solid rgba(0,0,0,0.06);
-  background: #FAFAFA;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
-  transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-  display: flex; flex-direction: column;
-  opacity: 0; transform: translateY(24px);
+  background: var(--white);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.04);
+  overflow: hidden;
+  display: none; flex-direction: column;
+  transform-style: preserve-3d;
+  transform: rotateX(0) rotateY(0);
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  will-change: transform;
 }
-.practice-card.revealed {
-  opacity: 1; transform: translateY(0);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-              border-color 0.4s ease, box-shadow 0.4s ease;
-}
-.practice-card:hover {
-  border-color: rgba(255,160,0,0.2);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(255,160,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
-}
-
-/* Practice card spans */
-@media (min-width: 768px) {
-  .pc-chat    { grid-column: span 4; grid-row: span 2; }
-  .pc-browser { grid-column: span 2; }
-  .pc-bot     { grid-column: span 2; }
-  .pc-term    { grid-column: span 3; }
-  .pc-check   { grid-column: span 3; }
+.ps-card.active {
+  display: flex;
 }
 
 /* Card header bar */
 .pc-bar {
   display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.6rem 1rem;
+  padding: 0.65rem 1.25rem;
   border-bottom: 1px solid rgba(0,0,0,0.06);
-  background: rgba(0,0,0,0.02);
+  background: #FAFAFA;
   flex-shrink: 0;
 }
 .pc-dots { display: flex; gap: 5px; }
@@ -1271,36 +1281,31 @@ body {
 .pc-dots span:nth-child(2) { background: #FEBC2E; }
 .pc-dots span:last-child { background: #28C840; }
 .pc-bar-title {
-  font-size: 0.65rem; font-weight: 600; color: var(--text-light);
+  font-size: 0.8rem; font-weight: 600; color: var(--text-light);
   letter-spacing: 0.03em; margin-left: auto;
 }
 .pc-bar-tag {
-  font-size: 0.55rem; font-weight: 700; text-transform: uppercase;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.1em; color: var(--orange);
   background: rgba(255,160,0,0.08); border-radius: 4px;
-  padding: 0.15rem 0.5rem;
+  padding: 0.25rem 0.6rem;
 }
 
 /* Card content area */
 .pc-body {
-  flex: 1; padding: 1rem 1.25rem;
+  flex: 1; padding: 1.5rem 1.75rem;
   display: flex; flex-direction: column;
   overflow: hidden; position: relative;
 }
 
 /* === CHAT MOCK === */
 .mock-chat {
-  display: flex; flex-direction: column; gap: 0.6rem;
+  display: flex; flex-direction: column; gap: 0.75rem;
   flex: 1;
 }
 .mock-msg {
-  max-width: 85%; padding: 0.6rem 0.9rem;
-  border-radius: 14px; font-size: 0.8rem; line-height: 1.5;
-  opacity: 0; transform: translateY(10px);
-}
-.mock-msg.revealed {
-  opacity: 1; transform: translateY(0);
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+  max-width: 85%; padding: 0.75rem 1.1rem;
+  border-radius: 16px; font-size: 1rem; line-height: 1.55;
 }
 .mock-msg.user {
   align-self: flex-end;
@@ -1313,13 +1318,13 @@ body {
   border-bottom-left-radius: 4px;
 }
 .mock-msg .msg-role {
-  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; opacity: 0.6; margin-bottom: 0.2rem;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; opacity: 0.6; margin-bottom: 0.25rem;
 }
 .mock-msg.agent .msg-role { color: var(--orange); opacity: 1; }
 .mock-msg.user .msg-role { color: rgba(255,255,255,0.7); }
 .mock-typing {
-  display: inline-flex; gap: 4px; padding: 0.6rem 0.9rem;
+  display: inline-flex; gap: 4px; padding: 0.65rem 1rem;
   align-self: flex-start;
 }
 .mock-typing span {
@@ -1338,61 +1343,56 @@ body {
 .mock-browser { flex: 1; display: flex; flex-direction: column; }
 .mock-url-bar {
   display: flex; align-items: center; gap: 0.5rem;
-  padding: 0.4rem 0.6rem; margin-bottom: 0.75rem;
-  background: white; border-radius: 8px;
-  border: 1px solid rgba(0,0,0,0.08);
+  padding: 0.45rem 0.7rem; margin-bottom: 0.75rem;
+  background: #F5F5F5; border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
 }
-.mock-url-lock { font-size: 0.6rem; opacity: 0.4; }
+.mock-url-lock { font-size: 0.75rem; opacity: 0.4; }
 .mock-url-text {
-  font-size: 0.65rem; color: var(--text-muted);
+  font-size: 0.85rem; color: var(--text-muted);
   font-family: monospace;
 }
 .mock-page {
-  flex: 1; border-radius: 8px; overflow: hidden;
-  background: white; border: 1px solid rgba(0,0,0,0.06);
-  padding: 0.75rem;
-  display: flex; flex-direction: column; gap: 0.4rem;
+  flex: 1; border-radius: 10px; overflow: hidden;
+  background: #FAFAFA; border: 1px solid rgba(0,0,0,0.06);
+  padding: 1rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
 }
 .mock-page-hero {
-  height: 28px; border-radius: 6px;
+  height: 36px; border-radius: 8px;
   background: linear-gradient(135deg, #FFE082 0%, #FFA000 100%);
 }
 .mock-page-line {
-  height: 6px; border-radius: 3px; background: #EEE;
+  height: 7px; border-radius: 3px; background: #EEE;
 }
 .mock-page-line:nth-child(2) { width: 80%; }
 .mock-page-line:nth-child(3) { width: 60%; }
 .mock-page-cards {
-  display: flex; gap: 0.3rem; margin-top: 0.3rem;
+  display: flex; gap: 0.4rem; margin-top: 0.4rem;
 }
 .mock-page-card {
-  flex: 1; height: 24px; border-radius: 5px;
-  background: #F5F5F5; border: 1px solid rgba(0,0,0,0.04);
+  flex: 1; height: 32px; border-radius: 6px;
+  background: white; border: 1px solid rgba(0,0,0,0.05);
 }
 
 /* === TELEGRAM BOT MOCK === */
 .mock-tg { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
 .mock-tg-header {
-  display: flex; align-items: center; gap: 0.5rem;
-  padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex; align-items: center; gap: 0.6rem;
+  padding-bottom: 0.6rem; border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 .mock-tg-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 50%;
   background: linear-gradient(135deg, #FFD54F, #FFA000);
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
-.mock-tg-name { font-size: 0.75rem; font-weight: 600; color: var(--text); }
-.mock-tg-status { font-size: 0.6rem; color: #28C840; }
-.mock-tg-msgs { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+.mock-tg-name { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+.mock-tg-status { font-size: 0.75rem; color: #28C840; }
+.mock-tg-msgs { display: flex; flex-direction: column; gap: 0.45rem; flex: 1; }
 .mock-tg-msg {
-  padding: 0.45rem 0.7rem; border-radius: 10px;
-  font-size: 0.7rem; line-height: 1.4; max-width: 88%;
-  opacity: 0; transform: translateY(8px);
-}
-.mock-tg-msg.revealed {
-  opacity: 1; transform: translateY(0);
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.23,1,0.32,1);
+  padding: 0.6rem 0.95rem; border-radius: 12px;
+  font-size: 0.95rem; line-height: 1.5; max-width: 88%;
 }
 .mock-tg-msg.in {
   align-self: flex-start; background: #F0F0F0; color: var(--text);
@@ -1403,15 +1403,15 @@ body {
   border-bottom-right-radius: 3px;
 }
 .mock-tg-msg .tg-time {
-  font-size: 0.5rem; color: var(--text-light);
+  font-size: 0.55rem; color: var(--text-light);
   display: block; text-align: right; margin-top: 0.15rem;
 }
 
 /* === TERMINAL MOCK === */
 .mock-term {
   flex: 1; font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.7rem; line-height: 1.7; color: #CCC;
-  background: #1A1A1A; border-radius: 8px; padding: 1rem;
+  font-size: 0.9rem; line-height: 1.9; color: #CCC;
+  background: #1A1A1A; border-radius: 10px; padding: 1.5rem;
   overflow: hidden;
 }
 .mock-term .t-prompt { color: #28C840; }
@@ -1429,19 +1429,14 @@ body {
 }
 
 /* === CHECKLIST MOCK === */
-.mock-check { flex: 1; display: flex; flex-direction: column; gap: 0.6rem; }
+.mock-check { flex: 1; display: flex; flex-direction: column; gap: 0.75rem; }
 .mock-check-item {
-  display: flex; align-items: center; gap: 0.65rem;
-  padding: 0.5rem 0.7rem; border-radius: 10px;
-  background: white; border: 1px solid rgba(0,0,0,0.06);
-  opacity: 0; transform: translateX(-12px);
-}
-.mock-check-item.revealed {
-  opacity: 1; transform: translateX(0);
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.23,1,0.32,1);
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.75rem 1rem; border-radius: 12px;
+  background: #FAFAFA; border: 1px solid rgba(0,0,0,0.06);
 }
 .mock-check-box {
-  width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 7px; flex-shrink: 0;
   border: 2px solid #DDD; position: relative;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
@@ -1450,14 +1445,14 @@ body {
 }
 .mock-check-box::after {
   content: ''; position: absolute;
-  top: 3px; left: 6px; width: 5px; height: 9px;
+  top: 3px; left: 6px; width: 6px; height: 10px;
   border: solid white; border-width: 0 2px 2px 0;
   transform: rotate(45deg); opacity: 0;
   transition: opacity 0.2s ease;
 }
 .mock-check-item.checked .mock-check-box::after { opacity: 1; }
 .mock-check-text {
-  font-size: 0.78rem; color: var(--text); font-weight: 500;
+  font-size: 1rem; color: var(--text); font-weight: 500;
 }
 .mock-check-item.checked .mock-check-text {
   color: var(--text-light); text-decoration: line-through;
@@ -1465,9 +1460,9 @@ body {
 
 /* Card caption */
 .pc-caption {
-  padding: 0.75rem 1.25rem; border-top: 1px solid rgba(0,0,0,0.05);
-  font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;
-  background: rgba(0,0,0,0.01);
+  padding: 1rem 1.75rem; border-top: 1px solid rgba(0,0,0,0.05);
+  font-size: 1rem; color: var(--text-muted); line-height: 1.5;
+  background: #FAFAFA; flex-shrink: 0;
 }
 .pc-caption strong { color: var(--text); font-weight: 700; }
 
@@ -2403,127 +2398,139 @@ body {
 <section class="practice-section" id="practice">
   <div class="s-container">
     <div class="reveal">
-      <div class="s-label">На практике</div>
-      <h2 class="s-title">Как это выглядит<br>на практике</h2>
+      <h2 class="s-title">Как это выглядит</h2>
     </div>
 
-    <div class="practice-grid" id="practiceGrid">
-
-      <!-- 1. CHAT WITH AGENT (big card) -->
-      <div class="practice-card pc-chat">
-        <div class="pc-bar">
-          <div class="pc-dots"><span></span><span></span><span></span></div>
-          <div class="pc-bar-tag">Урок 1-2</div>
-          <div class="pc-bar-title">Claude Code</div>
-        </div>
-        <div class="pc-body">
-          <div class="mock-chat" id="mockChat">
-            <div class="mock-msg user"><div class="msg-role">Вы</div>Сделай мне лендинг для курса по фитнесу. Тёмный, стильный, с формой заявки.</div>
-            <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Создаю структуру проекта... Настраиваю hero-секцию с градиентным фоном, блок преимуществ и форму.</div>
-            <div class="mock-msg user"><div class="msg-role">Вы</div>Добавь секцию с отзывами и анимации при скролле.</div>
-            <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Готово. Добавил карусель отзывов с аватарками и плавные reveal-анимации на каждую секцию. Сайт доступен на localhost:3000</div>
-            <div class="mock-msg user"><div class="msg-role">Вы</div>Идеально. Задеплой на сервер.</div>
-            <div class="mock-typing"><span></span><span></span><span></span></div>
-          </div>
-        </div>
-        <div class="pc-caption"><strong>Диалог с агентом.</strong> Вы описываете задачу — агент создаёт, правит и запускает.</div>
+    <div class="practice-stack">
+      <!-- Navigation dots -->
+      <div class="ps-nav" id="psNav">
+        <button class="ps-dot active" data-i="0">1</button>
+        <button class="ps-dot" data-i="1">2</button>
+        <button class="ps-dot" data-i="2">3</button>
+        <button class="ps-dot" data-i="3">4</button>
+        <button class="ps-dot" data-i="4">5</button>
       </div>
 
-      <!-- 2. BROWSER MOCKUP -->
-      <div class="practice-card pc-browser">
-        <div class="pc-bar">
-          <div class="pc-dots"><span></span><span></span><span></span></div>
-          <div class="pc-bar-tag">Урок 3</div>
-        </div>
-        <div class="pc-body">
-          <div class="mock-browser">
-            <div class="mock-url-bar">
-              <span class="mock-url-lock">&#128274;</span>
-              <span class="mock-url-text">mysite.ru</span>
+      <div class="ps-cards" id="psCards">
+
+        <!-- 1. CHAT WITH AGENT -->
+        <div class="ps-card active">
+          <div class="pc-bar">
+            <div class="pc-dots"><span></span><span></span><span></span></div>
+            <div class="pc-bar-tag">Диалог</div>
+            <div class="pc-bar-title">Claude Code</div>
+          </div>
+          <div class="pc-body">
+            <div class="mock-chat">
+              <div class="mock-msg user"><div class="msg-role">Вы</div>Сделай мне лендинг для курса по фитнесу. Тёмный, стильный, с формой заявки.</div>
+              <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Создаю структуру проекта... Настраиваю hero-секцию с градиентным фоном, блок преимуществ и форму.</div>
+              <div class="mock-msg user"><div class="msg-role">Вы</div>Добавь секцию с отзывами и анимации при скролле.</div>
+              <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Готово. Добавил карусель отзывов и reveal-анимации. Сайт на localhost:3000</div>
+              <div class="mock-msg user"><div class="msg-role">Вы</div>Идеально. Задеплой на сервер.</div>
+              <div class="mock-typing"><span></span><span></span><span></span></div>
             </div>
-            <div class="mock-page">
-              <div class="mock-page-hero"></div>
-              <div class="mock-page-line"></div>
-              <div class="mock-page-line"></div>
-              <div class="mock-page-line"></div>
-              <div class="mock-page-cards">
-                <div class="mock-page-card"></div>
-                <div class="mock-page-card"></div>
-                <div class="mock-page-card"></div>
+          </div>
+          <div class="pc-caption"><strong>Диалог с агентом.</strong> Описываете задачу — агент создаёт, правит и запускает.</div>
+        </div>
+
+        <!-- 2. BROWSER MOCKUP -->
+        <div class="ps-card">
+          <div class="pc-bar">
+            <div class="pc-dots"><span></span><span></span><span></span></div>
+            <div class="pc-bar-tag">Результат</div>
+            <div class="pc-bar-title">Браузер</div>
+          </div>
+          <div class="pc-body">
+            <div class="mock-browser">
+              <div class="mock-url-bar">
+                <span class="mock-url-lock">&#128274;</span>
+                <span class="mock-url-text">mysite.ru</span>
+              </div>
+              <div class="mock-page">
+                <div class="mock-page-hero"></div>
+                <div class="mock-page-line"></div>
+                <div class="mock-page-line"></div>
+                <div class="mock-page-line"></div>
+                <div class="mock-page-cards">
+                  <div class="mock-page-card"></div>
+                  <div class="mock-page-card"></div>
+                  <div class="mock-page-card"></div>
+                </div>
               </div>
             </div>
           </div>
+          <div class="pc-caption"><strong>Сайт в интернете.</strong> Ваш проект работает 24/7.</div>
         </div>
-        <div class="pc-caption"><strong>Сайт в интернете.</strong> Ваш проект работает 24/7.</div>
-      </div>
 
-      <!-- 3. TELEGRAM BOT -->
-      <div class="practice-card pc-bot">
-        <div class="pc-bar">
-          <div class="pc-dots"><span></span><span></span><span></span></div>
-          <div class="pc-bar-tag">Урок 4</div>
-        </div>
-        <div class="pc-body">
-          <div class="mock-tg">
-            <div class="mock-tg-header">
-              <div class="mock-tg-avatar">&#129302;</div>
-              <div>
-                <div class="mock-tg-name">Бот заявок</div>
-                <div class="mock-tg-status">онлайн</div>
+        <!-- 3. TELEGRAM BOT -->
+        <div class="ps-card">
+          <div class="pc-bar">
+            <div class="pc-dots"><span></span><span></span><span></span></div>
+            <div class="pc-bar-tag">Автоматизация</div>
+            <div class="pc-bar-title">Telegram</div>
+          </div>
+          <div class="pc-body">
+            <div class="mock-tg">
+              <div class="mock-tg-header">
+                <div class="mock-tg-avatar">&#129302;</div>
+                <div>
+                  <div class="mock-tg-name">Бот заявок</div>
+                  <div class="mock-tg-status">онлайн</div>
+                </div>
+              </div>
+              <div class="mock-tg-msgs">
+                <div class="mock-tg-msg in">Привет! Хочу записаться на консультацию.<span class="tg-time">14:02</span></div>
+                <div class="mock-tg-msg out">Отлично! Выберите удобную дату:<br>1. Понедельник 15:00<br>2. Среда 12:00<br>3. Пятница 18:00<span class="tg-time">14:02</span></div>
+                <div class="mock-tg-msg in">Среда подойдёт!<span class="tg-time">14:03</span></div>
+                <div class="mock-tg-msg out">Записал вас на среду 12:00. Отправил подтверждение на почту.<span class="tg-time">14:03</span></div>
               </div>
             </div>
-            <div class="mock-tg-msgs" id="mockTg">
-              <div class="mock-tg-msg in">Привет! Хочу записаться на консультацию.<span class="tg-time">14:02</span></div>
-              <div class="mock-tg-msg out">Отлично! Выберите удобную дату:<br>1. Понедельник 15:00<br>2. Среда 12:00<br>3. Пятница 18:00<span class="tg-time">14:02</span></div>
-              <div class="mock-tg-msg in">Среда подойдёт!<span class="tg-time">14:03</span></div>
-              <div class="mock-tg-msg out">Записал вас на среду 12:00. Отправил подтверждение на почту.<span class="tg-time">14:03</span></div>
+          </div>
+          <div class="pc-caption"><strong>Бот работает за вас.</strong> Собирает заявки пока вы спите.</div>
+        </div>
+
+        <!-- 4. TERMINAL -->
+        <div class="ps-card">
+          <div class="pc-bar">
+            <div class="pc-dots"><span></span><span></span><span></span></div>
+            <div class="pc-bar-tag">Код</div>
+            <div class="pc-bar-title">Terminal</div>
+          </div>
+          <div class="pc-body" style="padding:0;">
+            <div class="mock-term">
+              <div><span class="t-prompt">$</span> <span class="t-cmd">claude "собери REST API для обработки заявок"</span></div>
+              <div class="t-out">Creating project structure...</div>
+              <div class="t-out">Writing src/index.ts, src/routes.ts, src/db.ts</div>
+              <div class="t-out">Installing dependencies... done</div>
+              <div class="t-out">Running tests... <span class="t-success">4/4 passed</span></div>
+              <div><span class="t-prompt">$</span> <span class="t-cmd">npm start</span></div>
+              <div class="t-success">Server running on port 3000</div>
+              <div><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
             </div>
           </div>
+          <div class="pc-caption"><strong>Код пишется сам.</strong> Ставите задачу — агент делает.</div>
         </div>
-        <div class="pc-caption"><strong>Бот работает за вас.</strong> Собирает заявки пока вы спите.</div>
-      </div>
 
-      <!-- 4. TERMINAL -->
-      <div class="practice-card pc-term">
-        <div class="pc-bar">
-          <div class="pc-dots"><span></span><span></span><span></span></div>
-          <div class="pc-bar-tag">Урок 5</div>
-          <div class="pc-bar-title">Terminal</div>
-        </div>
-        <div class="pc-body" style="padding:0;">
-          <div class="mock-term">
-            <div><span class="t-prompt">$</span> <span class="t-cmd">claude "собери REST API для обработки заявок"</span></div>
-            <div class="t-out">Creating project structure...</div>
-            <div class="t-out">Writing src/index.ts, src/routes.ts, src/db.ts</div>
-            <div class="t-out">Installing dependencies... done</div>
-            <div class="t-out">Running tests... <span class="t-success">4/4 passed</span></div>
-            <div><span class="t-prompt">$</span> <span class="t-cmd">npm start</span></div>
-            <div class="t-success">Server running on port 3000</div>
-            <div><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
+        <!-- 5. CHECKLIST -->
+        <div class="ps-card">
+          <div class="pc-bar">
+            <div class="pc-dots"><span></span><span></span><span></span></div>
+            <div class="pc-bar-tag">Безопасность</div>
+            <div class="pc-bar-title">Чек-лист</div>
           </div>
-        </div>
-        <div class="pc-caption"><strong>Код пишется сам.</strong> Вы ставите задачу — агент делает.</div>
-      </div>
-
-      <!-- 5. CHECKLIST -->
-      <div class="practice-card pc-check">
-        <div class="pc-bar">
-          <div class="pc-dots"><span></span><span></span><span></span></div>
-          <div class="pc-bar-tag">Урок 6</div>
-          <div class="pc-bar-title">Чек-лист</div>
-        </div>
-        <div class="pc-body">
-          <div class="mock-check" id="mockCheck">
-            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">API-ключи не в коде</div></div>
-            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Данные пользователей зашифрованы</div></div>
-            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Бэкап настроен</div></div>
-            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Проверка перед деплоем</div></div>
-            <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-text">Мониторинг ошибок включён</div></div>
+          <div class="pc-body">
+            <div class="mock-check" id="mockCheck">
+              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">API-ключи не в коде</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Данные пользователей зашифрованы</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Бэкап настроен</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Проверка перед деплоем</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Мониторинг ошибок включён</div></div>
+            </div>
           </div>
+          <div class="pc-caption"><strong>Безопасность.</strong> Знаете, что проверить перед запуском.</div>
         </div>
-        <div class="pc-caption"><strong>Безопасность.</strong> Знаете, что проверить перед запуском.</div>
-      </div>
 
+      </div>
     </div>
   </div>
 </section>
@@ -3301,56 +3308,55 @@ function toggleFaq(item) {
   }, { threshold: 0.1 }).observe(container);
 })();
 
-// === Practice bento reveal + animations ===
+// === Practice stack card switcher ===
 (function() {
-  // Reveal cards on scroll
-  const cards = document.querySelectorAll('.practice-card');
-  if (!cards.length) return;
-  let count = 0;
-  const cardObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting && !e.target.classList.contains('revealed')) {
-        const delay = count * 100;
-        count++;
-        setTimeout(() => {
-          e.target.classList.add('revealed');
-          // Trigger inner animations after card reveals
-          if (e.target.classList.contains('pc-chat')) animateChat();
-          if (e.target.classList.contains('pc-bot')) animateTg();
-          if (e.target.classList.contains('pc-check')) animateCheck();
-        }, delay);
-        cardObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  cards.forEach(c => cardObs.observe(c));
+  const dots = document.querySelectorAll('#psNav .ps-dot');
+  const cards = document.querySelectorAll('#psCards .ps-card');
+  if (!dots.length || !cards.length) return;
 
-  // Chat messages appear one by one
-  function animateChat() {
-    const msgs = document.querySelectorAll('#mockChat .mock-msg');
-    msgs.forEach((m, i) => {
-      setTimeout(() => m.classList.add('revealed'), i * 400);
-    });
+  function showCard(i) {
+    dots.forEach(d => d.classList.remove('active'));
+    cards.forEach(c => c.classList.remove('active'));
+    dots[i].classList.add('active');
+    cards[i].classList.add('active');
   }
 
-  // Telegram messages appear one by one
-  function animateTg() {
-    const msgs = document.querySelectorAll('#mockTg .mock-tg-msg');
-    msgs.forEach((m, i) => {
-      setTimeout(() => m.classList.add('revealed'), i * 350);
-    });
-  }
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => showCard(+dot.dataset.i));
+  });
 
-  // Checklist items appear and check themselves
-  function animateCheck() {
-    const items = document.querySelectorAll('#mockCheck .mock-check-item');
-    items.forEach((item, i) => {
-      setTimeout(() => {
-        item.classList.add('revealed');
-        setTimeout(() => item.classList.add('checked'), 400);
-      }, i * 250);
-    });
-  }
+  // Swipe support on mobile
+  const container = document.getElementById('psCards');
+  let startX = 0, current = 0;
+  container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  container.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      current = [...cards].findIndex(c => c.classList.contains('active'));
+      if (diff > 0 && current < cards.length - 1) showCard(current + 1);
+      if (diff < 0 && current > 0) showCard(current - 1);
+    }
+  }, { passive: true });
+
+  // 3D tilt on mouse move
+  const MAX_TILT = 4; // degrees — subtle
+  container.addEventListener('mousemove', e => {
+    const card = container.querySelector('.ps-card.active');
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `rotateY(${x * MAX_TILT}deg) rotateX(${-y * MAX_TILT}deg)`;
+    // shift shadow opposite to tilt
+    const sx = -x * 12, sy = -y * 12;
+    card.style.boxShadow = `${sx}px ${sy + 8}px 32px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.04)`;
+  });
+  container.addEventListener('mouseleave', () => {
+    const card = container.querySelector('.ps-card.active');
+    if (!card) return;
+    card.style.transform = '';
+    card.style.boxShadow = '';
+  });
 })();
 
 // === Smooth scroll for anchor links ===
