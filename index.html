@@ -878,138 +878,112 @@ body {
 /* ========== WORTH SECTION ========== */
 .worth {
   position: relative; overflow: hidden;
-  padding: 6rem 0;
-  background: var(--white);
+  padding: clamp(60px, 8vw, 120px) 0;
+  background: #0A0A0A;
 }
-.worth-shader {
-  position: absolute; inset: 0; z-index: 0;
-  opacity: 0.35;
-}
-.worth-shader canvas {
-  width: 100%; height: 100%; display: block;
-}
-/* Blur edges top and bottom */
-.worth-blur-top, .worth-blur-bottom {
-  position: absolute; left: 0; right: 0; height: 120px;
-  z-index: 1; pointer-events: none;
-}
-.worth-blur-top {
-  top: 0;
-  background: linear-gradient(to bottom, var(--white), transparent);
-}
-.worth-blur-bottom {
-  bottom: 0;
-  background: linear-gradient(to top, var(--white), transparent);
-}
+.worth-shader { display: none; }
+.worth-blur-top, .worth-blur-bottom { display: none; }
 .worth-inner {
   position: relative; z-index: 2;
-  max-width: 900px; margin: 0 auto; padding: 0 2rem;
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
 }
 @media (min-width: 768px) { .worth-inner { padding: 0 3rem; } }
-@media (min-width: 1280px) { .worth-inner { max-width: 1000px; padding: 0 4rem; } }
-.worth-label {
-  font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.12em; color: var(--text-light);
+@media (min-width: 1280px) { .worth-inner { padding: 0 5rem; } }
+.worth .s-label { color: rgba(255,255,255,0.4); }
+.worth .s-title { color: #FFF; }
+.worth .s-desc { color: rgba(255,255,255,0.5); }
+
+/* Bento features — border-separated grid */
+.worth-bento {
+  display: grid; grid-template-columns: 1fr;
+  margin-top: 3rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .worth-bento { grid-template-columns: 1fr 1fr; } }
+
+.worth-cell {
+  padding: 2rem 2.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.3s ease;
+}
+.worth-cell:hover { background: rgba(255,255,255,0.03); }
+@media (min-width: 768px) {
+  .worth-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
+  .worth-cell:nth-last-child(-n+2) { border-bottom: none; }
+}
+@media (max-width: 767px) {
+  .worth-cell:last-child { border-bottom: none; }
+}
+.worth-cell-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(255,160,0,0.12);
+  display: flex; align-items: center; justify-content: center;
   margin-bottom: 1rem;
 }
-.worth-title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900; line-height: 1.1; letter-spacing: -0.03em;
-  margin-bottom: 3rem; color: var(--black);
+.worth-cell-icon svg {
+  width: 20px; height: 20px; stroke: var(--orange); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
-/* Worth lines */
-.worth-lines {
-  display: flex; flex-direction: column; gap: 0;
-  max-width: 700px; margin: 0 auto;
+.worth-cell-title {
+  font-size: 1.1rem; font-weight: 700; color: #FFF;
+  line-height: 1.4; margin-bottom: 0.4rem;
 }
-.worth-line {
-  display: flex; align-items: center; gap: 1.25rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  font-weight: 600; color: var(--text);
+.worth-cell-desc {
+  font-size: 0.9rem; color: rgba(255,255,255,0.45);
+  line-height: 1.6;
 }
-.worth-line:first-child { border-top: 1px solid rgba(0,0,0,0.06); }
-.worth-line-icon {
-  font-size: 1.5rem; flex-shrink: 0;
-  width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, rgba(232,199,56,0.15), rgba(222,128,46,0.08));
-  border-radius: 12px;
-}
-.worth-line-text { flex: 1; }
 
-.worth-closing {
-  font-size: clamp(1.15rem, 2vw, 1.35rem); font-weight: 600; line-height: 1.6;
-  color: var(--text);
-}
-.worth-closing em {
-  font-style: normal; color: #FFA000; font-weight: 800;
-}
-/* Price cards */
+/* Glass price cards */
 .worth-price-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+  margin-top: 2.5rem;
 }
 @media (max-width: 500px) { .worth-price-row { grid-template-columns: 1fr; } }
 .worth-price-card {
-  padding: 1.5rem;
-  border-radius: 16px;
-  border: 1px solid rgba(0,0,0,0.04);
-  background: rgba(255,255,255,0.75);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   text-align: center;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.worth-price-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 .worth-price-card-main {
-  border-color: rgba(255,160,0,0.2);
-  background: rgba(255,255,255,0.9);
-  box-shadow: 0 4px 20px rgba(255,160,0,0.08);
+  border-color: rgba(255,160,0,0.35);
+  background: rgba(255,160,0,0.06);
+  transform: scale(1.03);
+  box-shadow: 0 0 40px rgba(255,160,0,0.08);
+}
+.worth-price-card-main:hover {
+  border-color: rgba(255,160,0,0.5);
+  transform: scale(1.03) translateY(-3px);
+  box-shadow: 0 8px 40px rgba(255,160,0,0.15);
+}
+.worth-price-badge {
+  display: inline-block;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--orange);
+  background: rgba(255,160,0,0.12); border-radius: 6px;
+  padding: 0.25rem 0.7rem; margin-bottom: 1rem;
 }
 .worth-price-num {
-  font-size: 2.5rem; font-weight: 900;
-  color: #FFA000;
-  line-height: 1;
+  font-size: 3rem; font-weight: 900;
+  color: #FFF; line-height: 1;
 }
+.worth-price-num span { color: var(--orange); }
 .worth-price-rub {
-  font-size: 0.9rem; color: var(--text-light); margin-top: 0.25rem;
+  font-size: 0.85rem; color: rgba(255,255,255,0.35); margin-top: 0.4rem;
 }
 .worth-price-label {
-  font-size: 1rem; font-weight: 600; color: var(--text);
-  margin-top: 0.75rem; line-height: 1.4;
-}
-
-/* Worth cards grid */
-.worth-grid {
-  display: grid; grid-template-columns: 1fr; gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-@media (min-width: 768px) {
-  .worth-grid { grid-template-columns: 1fr 1fr; }
-  .worth-card-big { grid-column: span 2; }
-}
-.worth-card {
-  padding: 2rem;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0,0,0,0.04);
-  border: 1px solid rgba(232,199,56,0.15);
-  transition: all 0.3s ease;
-}
-.worth-card:hover {
-  border-color: rgba(232,199,56,0.35);
-  box-shadow: 0 8px 30px rgba(232,199,56,0.08);
-}
-.worth-card-num {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 900; line-height: 1;
-  background: linear-gradient(135deg, var(--gold, #E8C738), var(--orange, #DE802E));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(232,199,56,0.25));
-  margin-bottom: 1rem;
-}
-.worth-card-text {
-  font-size: 1.05rem; line-height: 1.7; color: #555;
+  font-size: 1.05rem; font-weight: 600; color: rgba(255,255,255,0.7);
+  margin-top: 1rem;
 }
 
 
@@ -1709,35 +1683,6 @@ body {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
   100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
 }
-/* Grid bg */
-.cin-grid {
-  position: absolute; inset: 0; pointer-events: none;
-  background-size: 60px 60px;
-  background-image:
-    linear-gradient(to right, rgba(0,0,0,0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,0.025) 1px, transparent 1px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-}
-/* Diagonal marquee */
-.cin-marquee-wrap {
-  position: absolute; top: 3rem; left: 0; width: 100%;
-  overflow: hidden; padding: 0.75rem 0;
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  background: rgba(255,255,255,0.6); backdrop-filter: blur(12px);
-  transform: rotate(-2deg) scale(1.1);
-  z-index: 5;
-}
-.cin-marquee-track {
-  display: inline-flex;
-  animation: ticker 35s linear infinite;
-}
-.cin-marquee-item {
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--text-light); padding: 0 1.5rem;
-  white-space: nowrap; flex-shrink: 0;
-}
 /* Center content */
 .cin-center {
   position: relative; z-index: 10;
@@ -1746,35 +1691,34 @@ body {
   padding: 8rem 2rem 4rem; text-align: center;
 }
 .cin-heading {
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: clamp(3rem, 10vw, 7rem);
   font-weight: 900; letter-spacing: -0.04em;
   line-height: 1; margin-bottom: 3rem;
-  background: linear-gradient(180deg, var(--black) 0%, rgba(0,0,0,0.35) 100%);
+  background: linear-gradient(180deg, var(--orange) 0%, rgba(255,160,0,0.35) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 20px rgba(0,0,0,0.08));
 }
 /* Glass pills */
 .cin-pill {
   display: inline-flex; align-items: center; gap: 0.6rem;
-  padding: 1rem 2.5rem; border-radius: 9999px;
-  background: linear-gradient(145deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
-  border: 1px solid rgba(0,0,0,0.06);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8);
-  font-size: 1rem; font-weight: 700; color: var(--text);
+  padding: 1.1rem 2.8rem; border-radius: 9999px;
+  background: var(--orange); color: var(--white);
+  border: none;
+  box-shadow: 0 8px 30px rgba(255,160,0,0.25);
+  font-size: 1.1rem; font-weight: 700;
   text-decoration: none;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cin-pill:hover {
-  background: linear-gradient(145deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02));
-  border-color: rgba(0,0,0,0.15);
-  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08), inset 0 1px 1px rgba(255,255,255,0.9);
+  background: var(--orange-dark);
+  box-shadow: 0 12px 40px rgba(255,160,0,0.35);
   transform: translateY(-3px);
 }
 .cin-pill-sm {
-  padding: 0.6rem 1.5rem; font-size: 0.8rem; font-weight: 600;
-  color: var(--text-muted);
+  padding: 0.7rem 1.6rem; font-size: 0.95rem; font-weight: 600;
+  background: linear-gradient(145deg, rgba(0,0,0,0.03), rgba(0,0,0,0.01));
+  border: 1px solid rgba(0,0,0,0.08);
+  color: var(--text);
 }
 .cin-links {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;
@@ -1788,14 +1732,14 @@ body {
 }
 @media (min-width: 768px) { .cin-bottom { padding: 2rem 3rem; } }
 .cin-copy {
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.15em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-light);
 }
 .cin-made {
   display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.6rem; font-weight: 700;
-  letter-spacing: 0.15em; text-transform: uppercase;
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-light);
 }
 .cin-heart {
@@ -1823,13 +1767,13 @@ body {
   margin-top: 1.25rem;
 }
 .cin-legal a {
-  font-size: 0.65rem; font-weight: 500; color: var(--text-light);
+  font-size: 0.85rem; font-weight: 500; color: var(--text-light);
   text-decoration: none; transition: color 0.2s;
 }
 .cin-legal a:hover { color: var(--text); }
 .cin-requisites {
-  font-size: 0.55rem; color: var(--text-light); text-align: center;
-  margin-top: 0.5rem; letter-spacing: 0.03em;
+  font-size: 0.8rem; color: var(--text-muted); text-align: center;
+  margin-top: 0.75rem; letter-spacing: 0.03em;
 }
 
 /* Cookie banner */
@@ -2562,42 +2506,45 @@ body {
 
 <!-- ==================== WORTH ==================== -->
 <section class="worth" id="worth">
-  <div class="worth-shader" id="worthShader"></div>
-  <div class="worth-blur-top"></div>
-  <div class="worth-blur-bottom"></div>
   <div class="worth-inner">
-    <div class="worth-label reveal" style="text-align:center;">Подписка на ИИ-агента</div>
-    <h2 class="worth-title reveal" style="text-align:center;">На курсе мы работаем<br>с платными ИИ-агентами</h2>
-    <p class="reveal" style="text-align:center; color:var(--text-muted); font-size:1.1rem; margin-top:-1.5rem; margin-bottom:2rem;">Это не стоимость курса — это подписка на инструмент, с которым ты будешь работать. Вот что она даёт:</p>
+    <div class="reveal">
+      <div class="s-label">Про инструменты</div>
+      <h2 class="s-title">На курсе мы работаем<br>с платными ИИ-агентами</h2>
+      <p class="s-desc">Это не стоимость курса — это подписка на инструмент, с которым ты будешь работать.</p>
+    </div>
 
-    <div class="worth-lines">
-      <div class="worth-line reveal">
-        <span class="worth-line-icon">🕐</span>
-        <span class="worth-line-text">Вечера без переработок</span>
+    <div class="worth-bento reveal">
+      <div class="worth-cell">
+        <div class="worth-cell-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="worth-cell-title">Вечера без переработок</div>
+        <div class="worth-cell-desc">Агент работает быстрее любого подрядчика. Задачи, на которые уходили дни, закрываются за часы.</div>
       </div>
-      <div class="worth-line reveal">
-        <span class="worth-line-icon">🚀</span>
-        <span class="worth-line-text">Проекты вместо «когда-нибудь потом»</span>
+      <div class="worth-cell">
+        <div class="worth-cell-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="worth-cell-title">Проекты вместо «когда-нибудь потом»</div>
+        <div class="worth-cell-desc">Идея утром — рабочий прототип к вечеру. Больше никаких отложенных планов.</div>
       </div>
-      <div class="worth-line reveal">
-        <span class="worth-line-icon">🔓</span>
-        <span class="worth-line-text">Независимость от подрядчиков и чужих сроков</span>
+      <div class="worth-cell">
+        <div class="worth-cell-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="worth-cell-title">Независимость от подрядчиков</div>
+        <div class="worth-cell-desc">Полный контроль над своими проектами. Ваш код, ваш сервер, ваши сроки.</div>
       </div>
-      <div class="worth-line reveal">
-        <span class="worth-line-icon">📈</span>
-        <span class="worth-line-text">Навык, который дорожает каждый месяц — вместе с инструментом</span>
+      <div class="worth-cell">
+        <div class="worth-cell-icon"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="worth-cell-title">Навык, который дорожает каждый месяц</div>
+        <div class="worth-cell-desc">Вместе с инструментом растёт и ваша ценность на рынке.</div>
       </div>
     </div>
 
-    <!-- Price cards -->
-    <div class="worth-price-row reveal" style="margin-top:3rem;">
+    <div class="worth-price-row reveal">
       <div class="worth-price-card">
-        <div class="worth-price-num">$20</div>
+        <div class="worth-price-num"><span>$</span>20</div>
         <div class="worth-price-rub">1 500 ₽/мес</div>
         <div class="worth-price-label">Старт</div>
       </div>
       <div class="worth-price-card worth-price-card-main">
-        <div class="worth-price-num">$100</div>
+        <div class="worth-price-badge">Рекомендуем</div>
+        <div class="worth-price-num"><span>$</span>100</div>
         <div class="worth-price-rub">7 700 ₽/мес</div>
         <div class="worth-price-label">Полная мощность</div>
       </div>
@@ -2897,23 +2844,7 @@ body {
 <!-- ==================== CINEMATIC FOOTER ==================== -->
 <section class="cin-footer" id="cinFooter">
   <div class="cin-aurora"></div>
-  <div class="cin-grid"></div>
   <div class="cin-giant">ВАЙБ</div>
-
-  <div class="cin-marquee-wrap">
-    <div class="cin-marquee-track">
-      <span class="cin-marquee-item">AI First</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">Без кода</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">7 уроков</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">Живые эфиры</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">Результат</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">AI First</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">Без кода</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">7 уроков</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">Живые эфиры</span><span class="cin-marquee-item">✦</span>
-      <span class="cin-marquee-item">Результат</span><span class="cin-marquee-item">✦</span>
-    </div>
-  </div>
 
   <div class="cin-center">
     <h2 class="cin-heading reveal">Готов начать?</h2>
