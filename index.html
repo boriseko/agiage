@@ -118,7 +118,10 @@ body {
   font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em;
   text-decoration: none; color: #444;
 }
-.header-nav { display: none; gap: 2.5rem; align-items: center; }
+.header-nav {
+  display: none; gap: 2.5rem; align-items: center;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
 .header-nav a {
   text-decoration: none; color: #444; font-size: 0.9rem; font-weight: 500;
   transition: opacity var(--transition-fast);
@@ -2603,7 +2606,7 @@ body {
   <div class="worth-inner">
     <div class="reveal">
       <h2 class="s-title">На курсе мы работаем<br>с платными ИИ-агентами</h2>
-      <p class="s-desc">Это не стоимость курса — это подписка на инструмент, с которым ты будешь работать.</p>
+      <p class="s-desc">Это не стоимость курса — это подписка на инструмент,<br>с которым ты будешь работать.</p>
     </div>
 
     <div class="worth-stack reveal" id="worthStack">
@@ -2637,6 +2640,7 @@ body {
 
     <div class="worth-price-row reveal">
       <div class="worth-price-card">
+        <div class="worth-price-badge" style="visibility:hidden;">.</div>
         <div class="worth-price-num"><span>$</span>20</div>
         <div class="worth-price-rub">1 500 ₽/мес</div>
         <div class="worth-price-label">Старт</div>
