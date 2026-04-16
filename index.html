@@ -1094,13 +1094,12 @@ body {
   background: #1a1a1a; border-radius: 10px;
   padding: 0; overflow: hidden;
   font-family: "Geist Mono","SF Mono",monospace;
-  font-size: 0.7rem; color: rgba(255,255,255,0.55);
+  font-size: 0.78rem; color: rgba(255,255,255,0.7);
   box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-  opacity: 0; transform: scale(0.1) rotate(-5deg);
-  transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1), transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
-  --r: 0deg;
+  opacity: 0; transform: scale(0.1);
+  transition: opacity 0.4s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
-.sw-term.vis { opacity: 1; transform: scale(1) rotate(var(--r)); cursor: grab; }
+.sw-term.vis { opacity: 1; transform: scale(1); cursor: grab; }
 .sw-term.dragging { cursor: grabbing; z-index: 100 !important; box-shadow: 0 14px 44px rgba(0,0,0,0.32); }
 .sw-term-bar {
   display: flex; gap: 4px; padding: 7px 10px;
@@ -1524,16 +1523,17 @@ body {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
 }
 @media (min-width: 768px) { .expert-layout { grid-template-columns: 1fr 1fr; gap: 4rem; } }
-.expert-info { display: flex; flex-direction: column; justify-content: center; }
-.expert-eyebrow {
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--text-light);
-  margin: 0 0 1rem;
-}
-.expert-name {
-  font-size: clamp(2.4rem, 5vw, 4rem);
+.expert-info { display: flex; flex-direction: column; justify-content: flex-start; }
+/* Both title and name live inside the same column — guaranteed on one axis */
+.expert-title {
+  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
   font-weight: 800; line-height: 1.05; letter-spacing: -0.04em;
   color: var(--text); margin: 0 0 1rem;
+}
+.expert-name {
+  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--orange); margin: 0 0 1.25rem;
 }
 .expert-role {
   font-size: 1.05rem; font-weight: 600; color: var(--orange);
@@ -2800,10 +2800,10 @@ body {
 <!-- ==================== AGENTS SWARM ==================== -->
 <section class="swarm-outer" id="swarm" style="height:500vh;">
   <div class="swarm-pin" id="swarmPin">
-    <div class="swarm-text-layer" id="swT1"><span>И это был лишь один агент.</span></div>
-    <div class="swarm-text-layer" id="swT2"><span>Но их может быть больше.</span></div>
-    <div class="swarm-text-layer" id="swT3"><span class="sw-gold">Намного больше.</span></div>
-    <div class="swarm-text-layer" id="swT4"><span class="sw-gold">И все они работают на тебя<span class="sw-sub">В рамках одной подписки.</span></span></div>
+    <div class="swarm-text-layer" id="swT1"><span>И это был лишь один агент</span></div>
+    <div class="swarm-text-layer" id="swT2"><span>Но их может быть больше</span></div>
+    <div class="swarm-text-layer" id="swT3"><span class="sw-gold">Намного больше</span></div>
+    <div class="swarm-text-layer" id="swT4"><span class="sw-gold">И все они работают на тебя<span class="sw-sub">В рамках одной подписки</span></span></div>
     <div class="swarm-canvas" id="swarmCanvas"></div>
   </div>
 </section>
@@ -2813,8 +2813,8 @@ body {
   <div class="s-container">
     <div class="expert-layout">
       <div class="expert-info">
-        <div class="expert-eyebrow reveal">Кто ведёт курс</div>
-        <h2 class="expert-name reveal">Егор Борисенко</h2>
+        <h2 class="expert-title reveal">Кто ведёт курс</h2>
+        <div class="expert-name reveal">Егор Борисенко</div>
 
         <div class="expert-role reveal reveal-delay-1">
           Ведущий специалист по ИИ, НМ-Тех<br>
@@ -3819,9 +3819,7 @@ gsap.registerPlugin(ScrollTrigger);
     const pos = pickPosition(w, placed);
     placed.push({ left: pos.left, top: pos.top, w });
 
-    const rot = (Math.random() * 10 - 5).toFixed(2) + 'deg';
     const z = Math.round(randBetween(1, 5));
-    el.style.setProperty('--r', rot);
     el.style.cssText += `width:${w}px; left:${pos.x}%; top:${pos.y}%; z-index:${z};`;
     el.innerHTML = '<div class="sw-term-bar"><i></i><i></i><i></i><span>'+d.name+'</span></div><div class="sw-term-body" id="swB'+i+'"><span class="sw-s">● </span><span class="sw-t">'+d.name+'</span><br></div>';
     canvas.appendChild(el);
