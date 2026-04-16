@@ -113,7 +113,6 @@ body {
   transition: transform var(--transition), background var(--transition);
 }
 .header.scrolled { background: rgba(255,255,255,0.85); backdrop-filter: blur(20px) saturate(1.4); }
-.header.hide { transform: translateY(-105%); }
 .header-logo {
   font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em;
   text-decoration: none; color: #444;
@@ -1058,9 +1057,10 @@ body {
   overflow: hidden;
 }
 .swarm-text-layer {
-  position: absolute; inset: 0; z-index: 10;
+  position: absolute; inset: 0; z-index: 200;
   display: flex; align-items: center; justify-content: center;
   text-align: center; pointer-events: none;
+  padding: 0 1.5rem;
 }
 .swarm-text-layer span {
   font-size: clamp(2.2rem, 5.5vw, 4.5rem);
@@ -1070,7 +1070,7 @@ body {
   background: linear-gradient(135deg, #E8C738, #DE802E);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 20px rgba(232,199,56,0.3));
+  filter: drop-shadow(0 2px 24px rgba(232,199,56,0.45)) drop-shadow(0 1px 2px rgba(0,0,0,0.2));
 }
 .swarm-text-layer span.vis { opacity: 1; }
 .swarm-text-layer .sw-gold {
@@ -2166,7 +2166,6 @@ body {
   <nav class="header-nav">
     <a href="#program">Программа</a>
     <a href="#pricing">Тарифы</a>
-    <a href="#expert">Автор</a>
     <a href="#faq">FAQ</a>
   </nav>
   <a href="https://t.me/agiage" class="header-cta" target="_blank">Записаться</a>
@@ -2799,7 +2798,7 @@ body {
     <div class="swarm-text-layer" id="swT1"><span>И это был лишь один агент.</span></div>
     <div class="swarm-text-layer" id="swT2"><span>Но их может быть больше.</span></div>
     <div class="swarm-text-layer" id="swT3"><span class="sw-gold">Намного больше.</span></div>
-    <div class="swarm-text-layer" id="swT4"><span class="sw-gold">И все они работают на тебя.<span class="sw-sub">В рамках одной подписки.</span></span></div>
+    <div class="swarm-text-layer" id="swT4"><span class="sw-gold">И все они работают на тебя<span class="sw-sub">В рамках одной подписки.</span></span></div>
     <div class="swarm-canvas" id="swarmCanvas"></div>
   </div>
 </section>
@@ -3142,29 +3141,11 @@ setTimeout(() => {
   });
 }, 2300);
 
-// === Header show/hide on scroll ===
+// === Header background on scroll (always visible) ===
 const header = document.getElementById('header');
-let lastScroll = 0;
-let headerHidden = false;
-
 window.addEventListener('scroll', () => {
-  const currentScroll = window.scrollY;
-
-  if (currentScroll > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-
-  if (currentScroll > lastScroll && currentScroll > 200 && !headerHidden) {
-    header.classList.add('hide');
-    headerHidden = true;
-  } else if (currentScroll < lastScroll && headerHidden) {
-    header.classList.remove('hide');
-    headerHidden = false;
-  }
-
-  lastScroll = currentScroll;
+  if (window.scrollY > 50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
 }, { passive: true });
 
 // === Scroll reveal ===
@@ -3769,30 +3750,75 @@ gsap.registerPlugin(ScrollTrigger);
 
   // Create terminal DOM elements
   const terminals = [];
-  const positions = [];
-  
+
   function randBetween(a,b){ return a + Math.random()*(b-a); }
+
+  // Safe zone — keep centered text crisp and untouched.
+  // Sized to comfortably fit the longest line + sub-line at any breakpoint.
+  function getSafeZone(){
+    const cw = canvas.clientWidth || window.innerWidth;
+    const ch = canvas.clientHeight || window.innerHeight;
+    const safeW = Math.min(cw * 0.78, 980);
+    const safeH = Math.min(ch * 0.5, 420);
+    return {
+      left: (cw - safeW) / 2,
+      right: (cw + safeW) / 2,
+      top:  (ch - safeH) / 2,
+      bottom: (ch + safeH) / 2,
+    };
+  }
+
+  function pickPosition(w){
+    const cw = canvas.clientWidth || window.innerWidth;
+    const ch = canvas.clientHeight || window.innerHeight;
+    const safe = getSafeZone();
+    const hEst = 150; // upper bound for terminal height incl. typed lines
+    const maxX = Math.max(2, ((cw - w - 20) / cw) * 100);
+    const maxY = Math.max(2, ((ch - hEst - 20) / ch) * 100);
+    for (let i = 0; i < 200; i++) {
+      const x = randBetween(2, maxX);
+      const y = randBetween(2, maxY);
+      const left = (x / 100) * cw;
+      const top  = (y / 100) * ch;
+      const noHit =
+        (left + w) <= safe.left ||
+        left      >= safe.right ||
+        (top + hEst) <= safe.top ||
+        top       >= safe.bottom;
+      if (noHit) return { x, y };
+    }
+    // Fallback — drop into top strip if nothing fit
+    return { x: randBetween(2, maxX), y: 2 };
+  }
 
   for(let i=0; i<40; i++){
     const d = agentDefs[i % agentDefs.length];
     const el = document.createElement('div');
     el.className = 'sw-term';
-    const w = Math.round(randBetween(140, 300));
-    
-    // Position terminals avoiding center text zone
-    // Center exclusion: x 25%-75%, y 30%-70%
-    let x, y, attempts = 0;
-    do {
-      x = randBetween(2, 90);
-      y = randBetween(2, 88);
-      attempts++;
-    } while (attempts < 50 && x > 20 && x < 70 && y > 25 && y < 75);
-    
+    // Tighter widths on smaller screens so they always fit outside the safe zone
+    const cw0 = canvas.clientWidth || window.innerWidth;
+    const wMax = cw0 < 900 ? 220 : 300;
+    const w = Math.round(randBetween(140, wMax));
+    const { x, y } = pickPosition(w);
+
     el.style.cssText = `width:${w}px; left:${x}%; top:${y}%; z-index:${Math.round(randBetween(1,5))};`;
     el.innerHTML = '<div class="sw-term-bar"><i></i><i></i><i></i><span>'+d.name+'</span></div><div class="sw-term-body" id="swB'+i+'"><span class="sw-s">● </span><span class="sw-t">'+d.name+'</span><br></div>';
     canvas.appendChild(el);
-    terminals.push({el, def: d, lineIdx: 0, charIdx: 0, bodyEl: null});
+    terminals.push({el, def: d, lineIdx: 0, charIdx: 0, bodyEl: null, w});
   }
+
+  // Reflow on resize so the safe zone stays clean at any viewport
+  let resizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => {
+      terminals.forEach(t => {
+        const { x, y } = pickPosition(t.w);
+        t.el.style.left = x + '%';
+        t.el.style.top  = y + '%';
+      });
+    }, 120);
+  }, { passive: true });
 
   // Cache body elements
   terminals.forEach((t,i) => { t.bodyEl = document.getElementById('swB'+i); });
