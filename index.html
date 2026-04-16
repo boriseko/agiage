@@ -1094,7 +1094,7 @@ body {
   background: #1a1a1a; border-radius: 10px;
   padding: 0; overflow: hidden;
   font-family: "Geist Mono","SF Mono",monospace;
-  font-size: 0.55rem; color: rgba(255,255,255,0.35);
+  font-size: 0.7rem; color: rgba(255,255,255,0.55);
   box-shadow: 0 6px 24px rgba(0,0,0,0.18);
   opacity: 0; transform: scale(0.1) rotate(-5deg);
   transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1), transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
@@ -1103,14 +1103,14 @@ body {
 .sw-term.vis { opacity: 1; transform: scale(1) rotate(var(--r)); cursor: grab; }
 .sw-term.dragging { cursor: grabbing; z-index: 100 !important; box-shadow: 0 14px 44px rgba(0,0,0,0.32); }
 .sw-term-bar {
-  display: flex; gap: 3px; padding: 5px 7px;
+  display: flex; gap: 4px; padding: 7px 10px;
   background: #2a2a2a; align-items: center;
 }
-.sw-term-bar i { width: 6px; height: 6px; border-radius: 50%; }
+.sw-term-bar i { width: 8px; height: 8px; border-radius: 50%; }
 .sw-term-bar i:nth-child(1){background:#ff5f57;} .sw-term-bar i:nth-child(2){background:#febc2e;} .sw-term-bar i:nth-child(3){background:#28c840;}
-.sw-term-bar span { margin-left: auto; font-size: 0.5rem; color: #666; }
+.sw-term-bar span { margin-left: auto; font-size: 0.62rem; color: #888; }
 .sw-term-body {
-  padding: 5px 8px; line-height: 1.55; min-height: 50px;
+  padding: 8px 10px; line-height: 1.6; min-height: 70px;
   position: relative;
 }
 .sw-term-body::after {
@@ -1520,22 +1520,20 @@ body {
 }
 
 /* ========== EXPERT ========== */
-#expert .s-title {
-  /* Optical alignment: shift heavy-bold heading left to visually
-     line up with the smaller name below (same x in CSS, but bigger
-     font has more left side-bearing) */
-  margin-left: -0.02em;
-}
 .expert-layout {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
-  margin-top: 3rem;
 }
 @media (min-width: 768px) { .expert-layout { grid-template-columns: 1fr 1fr; gap: 4rem; } }
 .expert-info { display: flex; flex-direction: column; justify-content: center; }
+.expert-eyebrow {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-light);
+  margin: 0 0 1rem;
+}
 .expert-name {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800; line-height: 1.1; letter-spacing: -0.04em;
-  color: var(--text); margin-bottom: 1rem;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.04em;
+  color: var(--text); margin: 0 0 1rem;
 }
 .expert-role {
   font-size: 1.05rem; font-weight: 600; color: var(--orange);
@@ -2813,13 +2811,10 @@ body {
 <!-- ==================== EXPERT ==================== -->
 <section class="section-white" id="expert">
   <div class="s-container">
-    <div class="reveal">
-      <h2 class="s-title">Кто ведёт курс</h2>
-    </div>
-
     <div class="expert-layout">
       <div class="expert-info">
-        <div class="expert-name reveal">Егор Борисенко</div>
+        <div class="expert-eyebrow reveal">Кто ведёт курс</div>
+        <h2 class="expert-name reveal">Егор Борисенко</h2>
 
         <div class="expert-role reveal reveal-delay-1">
           Ведущий специалист по ИИ, НМ-Тех<br>
@@ -2856,8 +2851,8 @@ body {
       <div class="expert-photo-wrap reveal reveal-delay-2">
         <div class="expert-photo-glow"></div>
         <div class="expert-photo-slider" id="expertPhotoSlider">
-          <img src="egor-photo-1.jpg" alt="Егор Борисенко — номинация ИИ Гуру" class="active" loading="lazy">
-          <img src="egor-photo-5.jpg" alt="Егор Борисенко — обучение" loading="lazy">
+          <img src="egor-speaker.jpg" alt="Егор Борисенко — спикер" class="active" loading="lazy">
+          <img src="egor-photo-4.jpg" alt="Егор Борисенко — лауреат" loading="lazy">
         </div>
         <div class="expert-photo-dots" id="expertPhotoDots">
           <button class="expert-photo-dot active" data-i="0"></button>
@@ -3770,7 +3765,7 @@ gsap.registerPlugin(ScrollTrigger);
     const cw = canvas.clientWidth || window.innerWidth;
     const ch = canvas.clientHeight || window.innerHeight;
     const safe = getSafeZone();
-    const hEst = 110;
+    const hEst = 150;
     const maxX = Math.max(2, ((cw - w - 16) / cw) * 100);
     const maxY = Math.max(2, ((ch - hEst - 16) / ch) * 100);
     let best = null;
@@ -3817,8 +3812,8 @@ gsap.registerPlugin(ScrollTrigger);
     const d = agentDefs[i % agentDefs.length];
     const el = document.createElement('div');
     el.className = 'sw-term';
-    const wMax = cw0 < 900 ? 200 : 260;
-    const w = Math.round(randBetween(150, wMax));
+    const wMax = cw0 < 900 ? 220 : 280;
+    const w = Math.round(randBetween(180, wMax));
     const pos = pickPosition(w, placed);
     placed.push({ left: pos.left, top: pos.top, w });
 
