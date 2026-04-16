@@ -1091,25 +1091,25 @@ body {
 }
 .sw-term {
   position: absolute;
-  background: #1a1a1a; border-radius: 10px;
+  background: #1a1a1a; border-radius: 12px;
   padding: 0; overflow: hidden;
   font-family: "Geist Mono","SF Mono",monospace;
-  font-size: 0.78rem; color: rgba(255,255,255,0.7);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  font-size: 0.92rem; color: rgba(255,255,255,0.78);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
   opacity: 0; transform: scale(0.1);
   transition: opacity 0.4s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
 .sw-term.vis { opacity: 1; transform: scale(1); cursor: grab; }
 .sw-term.dragging { cursor: grabbing; z-index: 100 !important; box-shadow: 0 14px 44px rgba(0,0,0,0.32); }
 .sw-term-bar {
-  display: flex; gap: 4px; padding: 7px 10px;
+  display: flex; gap: 5px; padding: 9px 12px;
   background: #2a2a2a; align-items: center;
 }
-.sw-term-bar i { width: 8px; height: 8px; border-radius: 50%; }
+.sw-term-bar i { width: 10px; height: 10px; border-radius: 50%; }
 .sw-term-bar i:nth-child(1){background:#ff5f57;} .sw-term-bar i:nth-child(2){background:#febc2e;} .sw-term-bar i:nth-child(3){background:#28c840;}
-.sw-term-bar span { margin-left: auto; font-size: 0.62rem; color: #888; }
+.sw-term-bar span { margin-left: auto; font-size: 0.75rem; color: #999; }
 .sw-term-body {
-  padding: 8px 10px; line-height: 1.6; min-height: 70px;
+  padding: 10px 12px; line-height: 1.65; min-height: 90px;
   position: relative;
 }
 .sw-term-body::after {
@@ -1519,21 +1519,17 @@ body {
 }
 
 /* ========== EXPERT ========== */
+#expert .s-title { margin-left: -0.03em; }
 .expert-layout {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
+  margin-top: 3rem;
 }
 @media (min-width: 768px) { .expert-layout { grid-template-columns: 1fr 1fr; gap: 4rem; } }
 .expert-info { display: flex; flex-direction: column; justify-content: flex-start; }
-/* Both title and name live inside the same column — guaranteed on one axis */
-.expert-title {
-  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
-  font-weight: 800; line-height: 1.05; letter-spacing: -0.04em;
-  color: var(--text); margin: 0 0 1rem;
-}
 .expert-name {
-  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
-  font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
-  color: var(--orange); margin: 0 0 1.25rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.04em;
+  color: var(--text); margin-bottom: 1rem;
 }
 .expert-role {
   font-size: 1.05rem; font-weight: 600; color: var(--orange);
@@ -2811,9 +2807,11 @@ body {
 <!-- ==================== EXPERT ==================== -->
 <section class="section-white" id="expert">
   <div class="s-container">
+    <div class="reveal">
+      <h2 class="s-title">Кто ведёт курс</h2>
+    </div>
     <div class="expert-layout">
       <div class="expert-info">
-        <h2 class="expert-title reveal">Кто ведёт курс</h2>
         <div class="expert-name reveal">Егор Борисенко</div>
 
         <div class="expert-role reveal reveal-delay-1">
@@ -3767,7 +3765,7 @@ gsap.registerPlugin(ScrollTrigger);
     const cw = canvas.clientWidth || window.innerWidth;
     const ch = canvas.clientHeight || window.innerHeight;
     const safe = getSafeZone();
-    const hEst = 150;
+    const hEst = 180;
     const maxX = Math.max(2, ((cw - w - 16) / cw) * 100);
     const maxY = Math.max(2, ((ch - hEst - 16) / ch) * 100);
     let best = null;
@@ -3805,17 +3803,17 @@ gsap.registerPlugin(ScrollTrigger);
     return best;
   }
 
-  // ~22 terminals — sparse, scattered, varied, slightly tilted.
+  // More terminals = busier swarm feel.
   const cw0 = canvas.clientWidth || window.innerWidth;
-  const COUNT = cw0 < 700 ? 12 : (cw0 < 1100 ? 18 : 22);
+  const COUNT = cw0 < 700 ? 18 : (cw0 < 1100 ? 26 : 34);
   const placed = [];
 
   for(let i=0; i<COUNT; i++){
     const d = agentDefs[i % agentDefs.length];
     const el = document.createElement('div');
     el.className = 'sw-term';
-    const wMax = cw0 < 900 ? 220 : 280;
-    const w = Math.round(randBetween(180, wMax));
+    const wMax = cw0 < 900 ? 260 : 340;
+    const w = Math.round(randBetween(220, wMax));
     const pos = pickPosition(w, placed);
     placed.push({ left: pos.left, top: pos.top, w });
 
