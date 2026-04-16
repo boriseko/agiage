@@ -1610,87 +1610,129 @@ body {
 /* ========== PRICING ========== */
 .pricing-section {
   position: relative; z-index: 2;
-  padding: clamp(60px, 8vw, 120px) 0;
-  background: linear-gradient(135deg, #FFE082, #FFA000, #FF8F00, #FFD54F, #FFB300, #FF8F00, #FFE082);
-  background-size: 600% 600%;
-  animation: pricingBreath 16s linear infinite;
+  padding: clamp(80px, 10vw, 140px) 0;
+  background: var(--white);
   overflow: hidden;
 }
-@keyframes pricingBreath {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-/* Noise texture overlay */
-.pricing-section::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
+/* Top ambient orange glow (like blue in reference) */
+.pricing-glow {
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 120%; height: 500px;
+  background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(255,160,0,0.25) 0%, rgba(255,180,0,0.1) 40%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
-.pricing-section .s-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+/* Blurred orange ellipses (like border:200px solid #3131f5 blur(92px) in reference) */
+.pricing-glow::before {
+  content: ''; position: absolute;
+  left: 50%; top: -200px; transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  border: 120px solid rgba(255,160,0,0.08);
+  filter: blur(80px);
+}
+.pricing-glow::after {
+  content: ''; position: absolute;
+  left: 50%; top: -100px; transform: translateX(-50%);
+  width: 600px; height: 600px; border-radius: 50%;
+  border: 80px solid rgba(255,140,0,0.06);
+  filter: blur(60px);
+}
+.pricing-section .s-container {
+  max-width: 900px; margin: 0 auto; padding: 0 2rem;
+  position: relative; z-index: 1;
+}
 @media (min-width: 768px) { .pricing-section .s-container { padding: 0 3rem; } }
-@media (min-width: 1280px) { .pricing-section .s-container { padding: 0 5rem; } }
-.pricing-section .s-title { color: var(--white); }
 
 .pricing-grid {
   display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem;
 }
-@media (min-width: 768px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) {
+  .pricing-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: stretch; }
+}
 
+/* Card base */
 .price-card {
   background: var(--white);
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid var(--border);
   border-radius: 20px; padding: 2.5rem;
-  transition: transform var(--transition-fast);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  display: flex; flex-direction: column;
 }
-.price-card:hover { transform: translateY(-6px); }
+.price-card:hover { transform: translateY(-4px); }
+
+/* Featured card — massive orange upward glow */
 .price-card--featured {
-  border: 2px solid var(--orange);
-  box-shadow: 0 8px 40px rgba(255,160,0,0.18);
+  border-color: rgba(255,160,0,0.2);
+  box-shadow: 0px -20px 300px 30px rgba(255,140,0,0.25);
+  z-index: 2;
 }
-.price-card--featured .price-cta {
-  background: var(--black); color: var(--white);
+.price-card--featured:hover {
+  box-shadow: 0px -20px 350px 40px rgba(255,140,0,0.3);
 }
 
-.price-label {
-  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.15em; color: var(--text-muted);
-  margin-bottom: 0.75rem;
-}
 .price-name {
   font-size: 1.5rem; font-weight: 800; color: var(--text);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 .price-amount {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 900; color: var(--text);
-  letter-spacing: -0.03em; margin-bottom: 1.5rem;
+  letter-spacing: -0.03em; margin-bottom: 2rem;
 }
+
+/* Feature list */
 .price-features {
   list-style: none; margin-bottom: 2rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--border);
+  flex: 1;
 }
 .price-features li {
-  font-size: 0.95rem; color: var(--text);
-  padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.06);
-  line-height: 1.5;
+  font-size: 0.95rem; color: var(--text-muted);
+  padding: 0.45rem 0; line-height: 1.5;
+  display: flex; align-items: center; gap: 0.65rem;
 }
+.price-features li::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--border);
+}
+.price-card--featured .price-features li::before {
+  background: var(--orange);
+}
+
+/* CTA buttons */
 .price-cta {
   display: block; text-align: center;
-  padding: 1rem 2rem; border-radius: 9999px;
-  background: transparent; color: var(--text);
-  border: 2px solid var(--text);
-  font-size: 1rem; font-weight: 700;
+  padding: 1rem 2rem; border-radius: 14px;
+  background: var(--white); color: var(--text);
+  border: 2px solid var(--border);
+  font-size: 1.05rem; font-weight: 700;
   text-decoration: none;
   transition: all var(--transition-fast);
 }
-.price-cta:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-.price-card--featured .price-cta:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.price-cta:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-muted);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+/* Featured CTA — orange */
+.price-card--featured .price-cta {
+  background: linear-gradient(145deg, var(--orange), #FF8F00);
+  color: #FFF; border-color: var(--orange);
+  box-shadow: 0 4px 20px rgba(255,140,0,0.2);
+}
+.price-card--featured .price-cta:hover {
+  box-shadow: 0 8px 30px rgba(255,140,0,0.3);
+}
+
+/* Badge */
 .price-badge {
   display: inline-block; padding: 0.3rem 0.75rem;
-  background: var(--orange); color: var(--white);
-  border-radius: 6px; font-size: 0.7rem; font-weight: 700;
+  background: rgba(255,160,0,0.1); color: var(--orange);
+  border: 1px solid rgba(255,160,0,0.2);
+  border-radius: 8px; font-size: 0.7rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.05em;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 /* ========== GUARANTEE ========== */
@@ -2832,15 +2874,15 @@ body {
 
 <!-- ==================== PRICING ==================== -->
 <section class="pricing-section" id="pricing">
+  <div class="pricing-glow"></div>
   <div class="s-container">
     <div class="reveal">
-      <h2 class="s-title">Выбери свой<br>формат</h2>
+      <h2 class="s-title">Выбери свой формат</h2>
     </div>
     <div class="pricing-grid">
       <div class="price-card reveal reveal-delay-1">
-        <div class="price-label">Базовый</div>
         <div class="price-name">Основной</div>
-        <div class="price-amount">30 000 &#8381;</div>
+        <div class="price-amount"><span>30 000</span> &#8381;</div>
         <ul class="price-features">
           <li>7 уроков — эфиры + записи навсегда</li>
           <li>Закрытый чат с поддержкой</li>
@@ -2852,10 +2894,9 @@ body {
         <a href="https://t.me/agiage" class="price-cta" target="_blank">Записаться</a>
       </div>
       <div class="price-card price-card--featured reveal reveal-delay-2">
-        <div class="price-badge">5 мест</div>
-        <div class="price-label">Премиум</div>
+        <div class="price-badge">Осталось 5 мест</div>
         <div class="price-name">Персональный</div>
-        <div class="price-amount">65 000 &#8381;</div>
+        <div class="price-amount"><span>65 000</span> &#8381;</div>
         <ul class="price-features">
           <li>Всё из Основного тарифа</li>
           <li>Личный созвон на старте — цели и план</li>
