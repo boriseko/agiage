@@ -3738,13 +3738,14 @@ gsap.registerPlugin(ScrollTrigger);
     el.className = 'sw-term';
     const w = Math.round(randBetween(140, 300));
     
-    // Random position avoiding dead center (text area)
-    // Grid-based with jitter for even spread
-    const cols = 6, rows = 7;
-    const col = i % cols, row = Math.floor(i / cols);
-    const cellW = 92 / cols, cellH = 88 / rows;
-    const x = 3 + col * cellW + randBetween(0, cellW * 0.3);
-    const y = 2 + row * cellH + randBetween(0, cellH * 0.3);
+    // Position terminals avoiding center text zone
+    // Center exclusion: x 25%-75%, y 30%-70%
+    let x, y, attempts = 0;
+    do {
+      x = randBetween(2, 90);
+      y = randBetween(2, 88);
+      attempts++;
+    } while (attempts < 50 && x > 20 && x < 70 && y > 25 && y < 75);
     
     el.style.cssText = `width:${w}px; left:${x}%; top:${y}%; z-index:${Math.round(randBetween(1,5))};`;
     el.innerHTML = '<div class="sw-term-bar"><i></i><i></i><i></i><span>'+d.name+'</span></div><div class="sw-term-body" id="swB'+i+'"><span class="sw-s">● </span><span class="sw-t">'+d.name+'</span><br></div>';
