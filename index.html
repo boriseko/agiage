@@ -983,6 +983,19 @@ body {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.5s ease;
 }
+/* Stack dots */
+.worth-dots {
+  display: flex; gap: 0.5rem; justify-content: center;
+  margin-top: 1.5rem;
+}
+.worth-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); border: none; padding: 0;
+  cursor: pointer; transition: all 0.3s ease;
+}
+.worth-dot.active {
+  background: var(--orange); transform: scale(1.4);
+}
 
 /* Price cards */
 .worth-price-row {
@@ -2615,6 +2628,12 @@ body {
         <div class="worth-card-desc">Вместе с инструментом растёт и ваша ценность на рынке.</div>
       </div>
     </div>
+    <div class="worth-dots" id="worthDots">
+      <button class="worth-dot active" data-i="0"></button>
+      <button class="worth-dot" data-i="1"></button>
+      <button class="worth-dot" data-i="2"></button>
+      <button class="worth-dot" data-i="3"></button>
+    </div>
 
     <div class="worth-price-row reveal">
       <div class="worth-price-card">
@@ -3474,26 +3493,55 @@ function toggleFaq(item) {
 // === Worth card stack auto-rotate ===
 (function() {
   const stack = document.getElementById('worthStack');
-  if (!stack) return;
+  const dotsWrap = document.getElementById('worthDots');
+  if (!stack || !dotsWrap) return;
   const cards = stack.querySelectorAll('.worth-card');
+  const dots = dotsWrap.querySelectorAll('.worth-dot');
   const n = cards.length;
-  let order = Array.from({length: n}, (_, i) => i); // [0,1,2,3]
+  let order = Array.from({length: n}, (_, i) => i);
+  let timer;
+
+  function updateDots() {
+    dots.forEach(d => d.classList.remove('active'));
+    dots[order[0]].classList.add('active');
+  }
+
+  function setOrder(newOrder) {
+    order = newOrder;
+    order.forEach((cardIdx, pos) => {
+      cards[cardIdx].setAttribute('data-pos', pos);
+    });
+    updateDots();
+  }
 
   function rotate() {
-    // Front card exits
     cards[order[0]].classList.add('exiting');
     setTimeout(() => {
       cards[order[0]].classList.remove('exiting');
-      // Shift order: front goes to back
-      order.push(order.shift());
-      // Update positions
-      order.forEach((cardIdx, pos) => {
-        cards[cardIdx].setAttribute('data-pos', pos);
-      });
+      const shifted = [...order];
+      shifted.push(shifted.shift());
+      setOrder(shifted);
     }, 600);
   }
 
-  setInterval(rotate, 3000);
+  function jumpTo(targetIdx) {
+    if (order[0] === targetIdx) return;
+    // Build new order starting with targetIdx
+    const newOrder = [];
+    for (let i = 0; i < n; i++) newOrder.push((targetIdx + i) % n);
+    cards[order[0]].classList.add('exiting');
+    setTimeout(() => {
+      cards[order[0]].classList.remove('exiting');
+      setOrder(newOrder);
+    }, 600);
+    resetTimer();
+  }
+
+  function resetTimer() { clearInterval(timer); timer = setInterval(rotate, 3000); }
+
+  dots.forEach(d => d.addEventListener('click', () => jumpTo(+d.dataset.i)));
+
+  resetTimer();
 })();
 
 // === ВАЙБ text mouse-tracking gradient ===
