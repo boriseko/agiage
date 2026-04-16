@@ -1063,7 +1063,7 @@ body {
   padding: 0 1.5rem;
 }
 .swarm-text-layer span {
-  font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+  font-size: clamp(1.5rem, 3.6vw, 2.8rem);
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.2;
   opacity: 0;
   transition: opacity 0.8s cubic-bezier(0.23,1,0.32,1);
@@ -1080,7 +1080,7 @@ body {
   filter: drop-shadow(0 2px 20px rgba(232,199,56,0.3));
 }
 .swarm-text-layer .sw-sub {
-  display: block; font-size: clamp(1rem, 2.5vw, 1.6rem);
+  display: block; font-size: clamp(0.85rem, 1.6vw, 1.1rem);
   font-weight: 400; color: var(--text-muted); margin-top: 0.5rem;
   -webkit-text-fill-color: var(--text-muted);
   filter: none;
@@ -1094,22 +1094,23 @@ body {
   background: #1a1a1a; border-radius: 10px;
   padding: 0; overflow: hidden;
   font-family: "Geist Mono","SF Mono",monospace;
-  font-size: 0.65rem; color: rgba(255,255,255,0.35);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  font-size: 0.55rem; color: rgba(255,255,255,0.35);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
   opacity: 0; transform: scale(0.1) rotate(-5deg);
-  transition: opacity 0.4s cubic-bezier(0.34,1.56,0.64,1), transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1), transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
+  --r: 0deg;
 }
-.sw-term.vis { opacity: 1; transform: scale(1) rotate(0deg); cursor: grab; }
-.sw-term.dragging { cursor: grabbing; z-index: 100 !important; box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.sw-term.vis { opacity: 1; transform: scale(1) rotate(var(--r)); cursor: grab; }
+.sw-term.dragging { cursor: grabbing; z-index: 100 !important; box-shadow: 0 14px 44px rgba(0,0,0,0.32); }
 .sw-term-bar {
-  display: flex; gap: 4px; padding: 6px 8px;
+  display: flex; gap: 3px; padding: 5px 7px;
   background: #2a2a2a; align-items: center;
 }
-.sw-term-bar i { width: 7px; height: 7px; border-radius: 50%; }
+.sw-term-bar i { width: 6px; height: 6px; border-radius: 50%; }
 .sw-term-bar i:nth-child(1){background:#ff5f57;} .sw-term-bar i:nth-child(2){background:#febc2e;} .sw-term-bar i:nth-child(3){background:#28c840;}
-.sw-term-bar span { margin-left: auto; font-size: 0.55rem; color: #666; }
+.sw-term-bar span { margin-left: auto; font-size: 0.5rem; color: #666; }
 .sw-term-body {
-  padding: 6px 8px; line-height: 1.6; min-height: 60px;
+  padding: 5px 8px; line-height: 1.55; min-height: 50px;
   position: relative;
 }
 .sw-term-body::after {
@@ -1519,6 +1520,12 @@ body {
 }
 
 /* ========== EXPERT ========== */
+#expert .s-title {
+  /* Optical alignment: shift heavy-bold heading left to visually
+     line up with the smaller name below (same x in CSS, but bigger
+     font has more left side-bearing) */
+  margin-left: -0.02em;
+}
 .expert-layout {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
   margin-top: 3rem;
@@ -1527,7 +1534,7 @@ body {
 .expert-info { display: flex; flex-direction: column; justify-content: center; }
 .expert-name {
   font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
+  font-weight: 800; line-height: 1.1; letter-spacing: -0.04em;
   color: var(--text); margin-bottom: 1rem;
 }
 .expert-role {
@@ -2849,22 +2856,12 @@ body {
       <div class="expert-photo-wrap reveal reveal-delay-2">
         <div class="expert-photo-glow"></div>
         <div class="expert-photo-slider" id="expertPhotoSlider">
-          <img src="egor-speaker.jpg" alt="Егор Борисенко — спикер" class="active" loading="lazy">
-          <img src="egor-photo-1.jpg" alt="Егор Борисенко — номинация ИИ Гуру" loading="lazy">
-          <img src="egor-photo-2.jpg" alt="Егор Борисенко — ЕАПК" loading="lazy">
-          <img src="egor-photo-3.jpg" alt="Егор Борисенко — выступление" loading="lazy">
-          <img src="egor-photo-4.jpg" alt="Егор Борисенко — награждение" loading="lazy">
+          <img src="egor-photo-1.jpg" alt="Егор Борисенко — номинация ИИ Гуру" class="active" loading="lazy">
           <img src="egor-photo-5.jpg" alt="Егор Борисенко — обучение" loading="lazy">
-          <img src="egor-photo-6.jpg" alt="Егор Борисенко — консультация" loading="lazy">
         </div>
         <div class="expert-photo-dots" id="expertPhotoDots">
           <button class="expert-photo-dot active" data-i="0"></button>
           <button class="expert-photo-dot" data-i="1"></button>
-          <button class="expert-photo-dot" data-i="2"></button>
-          <button class="expert-photo-dot" data-i="3"></button>
-          <button class="expert-photo-dot" data-i="4"></button>
-          <button class="expert-photo-dot" data-i="5"></button>
-          <button class="expert-photo-dot" data-i="6"></button>
         </div>
       </div>
     </div>
@@ -3754,12 +3751,12 @@ gsap.registerPlugin(ScrollTrigger);
   function randBetween(a,b){ return a + Math.random()*(b-a); }
 
   // Safe zone — keep centered text crisp and untouched.
-  // Sized to comfortably fit the longest line + sub-line at any breakpoint.
+  // Smaller text now → much smaller safe zone, more breathing room around it.
   function getSafeZone(){
     const cw = canvas.clientWidth || window.innerWidth;
     const ch = canvas.clientHeight || window.innerHeight;
-    const safeW = Math.min(cw * 0.78, 980);
-    const safeH = Math.min(ch * 0.5, 420);
+    const safeW = Math.min(cw * 0.62, 720);
+    const safeH = Math.min(ch * 0.32, 240);
     return {
       left: (cw - safeW) / 2,
       right: (cw + safeW) / 2,
@@ -3768,40 +3765,67 @@ gsap.registerPlugin(ScrollTrigger);
     };
   }
 
-  function pickPosition(w){
+  // Placed-cards bookkeeping — light overlap discouraged but allowed
+  function pickPosition(w, placed){
     const cw = canvas.clientWidth || window.innerWidth;
     const ch = canvas.clientHeight || window.innerHeight;
     const safe = getSafeZone();
-    const hEst = 150; // upper bound for terminal height incl. typed lines
-    const maxX = Math.max(2, ((cw - w - 20) / cw) * 100);
-    const maxY = Math.max(2, ((ch - hEst - 20) / ch) * 100);
-    for (let i = 0; i < 200; i++) {
-      const x = randBetween(2, maxX);
-      const y = randBetween(2, maxY);
+    const hEst = 110;
+    const maxX = Math.max(2, ((cw - w - 16) / cw) * 100);
+    const maxY = Math.max(2, ((ch - hEst - 16) / ch) * 100);
+    let best = null;
+    let bestScore = -Infinity;
+    for (let i = 0; i < 220; i++) {
+      const x = randBetween(1, maxX);
+      const y = randBetween(1, maxY);
       const left = (x / 100) * cw;
       const top  = (y / 100) * ch;
       const noHit =
-        (left + w) <= safe.left ||
-        left      >= safe.right ||
-        (top + hEst) <= safe.top ||
-        top       >= safe.bottom;
-      if (noHit) return { x, y };
+        (left + w) <= safe.left - 14 ||
+        left      >= safe.right + 14 ||
+        (top + hEst) <= safe.top - 14 ||
+        top       >= safe.bottom + 14;
+      if (!noHit) continue;
+      // Score: prefer positions that don't pile on top of an existing card
+      let minDist = 9999;
+      for (const p of placed) {
+        const dx = (left + w/2) - (p.left + p.w/2);
+        const dy = (top + hEst/2) - (p.top + hEst/2);
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < minDist) minDist = d;
+      }
+      const score = minDist + Math.random() * 30;
+      if (score > bestScore) {
+        bestScore = score;
+        best = { x, y, left, top };
+      }
     }
-    // Fallback — drop into top strip if nothing fit
-    return { x: randBetween(2, maxX), y: 2 };
+    if (!best) {
+      const x = randBetween(1, maxX);
+      const y = randBetween(1, 10);
+      best = { x, y, left: (x/100)*cw, top: (y/100)*ch };
+    }
+    return best;
   }
 
-  for(let i=0; i<40; i++){
+  // ~22 terminals — sparse, scattered, varied, slightly tilted.
+  const cw0 = canvas.clientWidth || window.innerWidth;
+  const COUNT = cw0 < 700 ? 12 : (cw0 < 1100 ? 18 : 22);
+  const placed = [];
+
+  for(let i=0; i<COUNT; i++){
     const d = agentDefs[i % agentDefs.length];
     const el = document.createElement('div');
     el.className = 'sw-term';
-    // Tighter widths on smaller screens so they always fit outside the safe zone
-    const cw0 = canvas.clientWidth || window.innerWidth;
-    const wMax = cw0 < 900 ? 220 : 300;
-    const w = Math.round(randBetween(140, wMax));
-    const { x, y } = pickPosition(w);
+    const wMax = cw0 < 900 ? 200 : 260;
+    const w = Math.round(randBetween(150, wMax));
+    const pos = pickPosition(w, placed);
+    placed.push({ left: pos.left, top: pos.top, w });
 
-    el.style.cssText = `width:${w}px; left:${x}%; top:${y}%; z-index:${Math.round(randBetween(1,5))};`;
+    const rot = (Math.random() * 10 - 5).toFixed(2) + 'deg';
+    const z = Math.round(randBetween(1, 5));
+    el.style.setProperty('--r', rot);
+    el.style.cssText += `width:${w}px; left:${pos.x}%; top:${pos.y}%; z-index:${z};`;
     el.innerHTML = '<div class="sw-term-bar"><i></i><i></i><i></i><span>'+d.name+'</span></div><div class="sw-term-body" id="swB'+i+'"><span class="sw-s">● </span><span class="sw-t">'+d.name+'</span><br></div>';
     canvas.appendChild(el);
     terminals.push({el, def: d, lineIdx: 0, charIdx: 0, bodyEl: null, w});
@@ -3812,12 +3836,14 @@ gsap.registerPlugin(ScrollTrigger);
   window.addEventListener('resize', () => {
     clearTimeout(resizeT);
     resizeT = setTimeout(() => {
+      const placed2 = [];
       terminals.forEach(t => {
-        const { x, y } = pickPosition(t.w);
-        t.el.style.left = x + '%';
-        t.el.style.top  = y + '%';
+        const pos = pickPosition(t.w, placed2);
+        placed2.push({ left: pos.left, top: pos.top, w: t.w });
+        t.el.style.left = pos.x + '%';
+        t.el.style.top  = pos.y + '%';
       });
-    }, 120);
+    }, 140);
   }, { passive: true });
 
   // Cache body elements
