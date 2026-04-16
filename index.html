@@ -1612,36 +1612,27 @@ body {
 .pricing-section {
   position: relative; z-index: 2;
   padding: clamp(80px, 10vw, 140px) 0;
-  background: var(--white);
   overflow: hidden;
 }
-/* Top ambient orange glow (like blue in reference) */
-.pricing-glow {
-  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-  width: 120%; height: 500px;
-  background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(255,160,0,0.25) 0%, rgba(255,180,0,0.1) 40%, transparent 70%);
-  pointer-events: none; z-index: 0;
+/* Hero-style shader background */
+.pricing-shader {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
 }
-/* Blurred orange ellipses (like border:200px solid #3131f5 blur(92px) in reference) */
-.pricing-glow::before {
-  content: ''; position: absolute;
-  left: 50%; top: -200px; transform: translateX(-50%);
-  width: 800px; height: 800px; border-radius: 50%;
-  border: 120px solid rgba(255,160,0,0.08);
-  filter: blur(80px);
-}
-.pricing-glow::after {
-  content: ''; position: absolute;
-  left: 50%; top: -100px; transform: translateX(-50%);
-  width: 600px; height: 600px; border-radius: 50%;
-  border: 80px solid rgba(255,140,0,0.06);
-  filter: blur(60px);
-}
+.pricing-shader canvas { width: 100%; height: 100%; display: block; }
 .pricing-section .s-container {
-  max-width: 900px; margin: 0 auto; padding: 0 2rem;
+  max-width: 1100px; margin: 0 auto; padding: 0 2rem;
   position: relative; z-index: 1;
 }
 @media (min-width: 768px) { .pricing-section .s-container { padding: 0 3rem; } }
+
+/* ВАЙБ-style title for pricing */
+#pricing .s-title {
+  font-size: clamp(72px, 14vw, 220px);
+  font-weight: 900; line-height: 0.9; letter-spacing: -0.04em;
+  color: var(--white); text-align: center;
+  margin-bottom: 3rem;
+}
 
 .pricing-grid {
   display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 3rem;
@@ -1650,87 +1641,95 @@ body {
   .pricing-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: stretch; }
 }
 
-/* Card base */
+/* Card base — glass on shader */
 .price-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.22);
   border-radius: 20px; padding: 2.5rem;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
   position: relative;
   display: flex; flex-direction: column;
+  color: var(--white);
 }
-.price-card:hover { transform: translateY(-4px); }
+.price-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.14);
+}
 
-/* Featured card — massive orange upward glow */
+/* Featured card — stronger glass + glow */
 .price-card--featured {
-  border-color: rgba(255,160,0,0.2);
-  box-shadow: 0px -20px 300px 30px rgba(255,140,0,0.25);
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0px -20px 200px 20px rgba(255,255,255,0.18), 0 8px 32px rgba(0,0,0,0.12);
   z-index: 2;
 }
 .price-card--featured:hover {
-  box-shadow: 0px -20px 350px 40px rgba(255,140,0,0.3);
+  background: rgba(255,255,255,0.20);
 }
 
 .price-name {
-  font-size: 1.5rem; font-weight: 800; color: var(--text);
+  font-size: 1.5rem; font-weight: 800; color: var(--white);
   margin-bottom: 1rem;
 }
 .price-amount {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 900; color: var(--text);
+  font-weight: 900; color: var(--white);
   letter-spacing: -0.03em; margin-bottom: 2rem;
 }
 
 /* Feature list */
 .price-features {
   list-style: none; margin-bottom: 2rem;
-  padding-top: 1.5rem; border-top: 1px solid var(--border);
+  padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.25);
   flex: 1;
 }
 .price-features li {
-  font-size: 0.95rem; color: var(--text-muted);
+  font-size: 0.95rem; color: rgba(255,255,255,0.92);
   padding: 0.45rem 0; line-height: 1.5;
   display: flex; align-items: center; gap: 0.65rem;
 }
 .price-features li::before {
   content: '';
   width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-  background: var(--border);
+  background: rgba(255,255,255,0.6);
 }
 .price-card--featured .price-features li::before {
-  background: var(--orange);
+  background: var(--white);
 }
 
 /* CTA buttons */
 .price-cta {
   display: block; text-align: center;
   padding: 1rem 2rem; border-radius: 14px;
-  background: var(--white); color: var(--text);
-  border: 2px solid var(--border);
+  background: rgba(255,255,255,0.15); color: var(--white);
+  border: 2px solid rgba(255,255,255,0.35);
   font-size: 1.05rem; font-weight: 700;
   text-decoration: none;
   transition: all var(--transition-fast);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .price-cta:hover {
   transform: translateY(-2px);
-  border-color: var(--text-muted);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.6);
 }
-/* Featured CTA — orange */
+/* Featured CTA — solid white on orange */
 .price-card--featured .price-cta {
-  background: linear-gradient(145deg, var(--orange), #FF8F00);
-  color: #FFF; border-color: var(--orange);
-  box-shadow: 0 4px 20px rgba(255,140,0,0.2);
+  background: var(--white); color: var(--orange);
+  border-color: var(--white);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
 }
 .price-card--featured .price-cta:hover {
-  box-shadow: 0 8px 30px rgba(255,140,0,0.3);
+  background: var(--white);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.18);
 }
 
 /* Badge */
 .price-badge {
   display: inline-block; padding: 0.3rem 0.75rem;
-  background: rgba(255,160,0,0.1); color: var(--orange);
-  border: 1px solid rgba(255,160,0,0.2);
+  background: rgba(255,255,255,0.22); color: var(--white);
+  border: 1px solid rgba(255,255,255,0.35);
   border-radius: 8px; font-size: 0.7rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.05em;
   margin-bottom: 1.25rem;
@@ -2865,7 +2864,7 @@ body {
 
 <!-- ==================== PRICING ==================== -->
 <section class="pricing-section" id="pricing">
-  <div class="pricing-glow"></div>
+  <div class="pricing-shader" id="pricingShader"></div>
   <div class="s-container">
     <div class="reveal">
       <h2 class="s-title">Выбери свой формат</h2>
@@ -3587,9 +3586,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-// === Stripe Gradient Shader (hero background) ===
-(function() {
-  const container = document.getElementById('heroShader');
+// === Stripe Gradient Shader (orange) — reusable ===
+function initOrangeShader(containerId) {
+  const container = document.getElementById(containerId);
   if (!container) return;
 
   const canvas = document.createElement('canvas');
@@ -3597,7 +3596,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   const gl = canvas.getContext('webgl');
   if (!gl) return;
 
-  // Shaders
   const vsrc = `attribute vec2 position; varying vec2 vUv;
     void main(){ vUv = position * 0.5 + 0.5; gl_Position = vec4(position,0.0,1.0); }`;
 
@@ -3613,10 +3611,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       a = smoothstep(cos(a) * 0.7, sin(a) * 0.7 + 1.0, cos(a - 4.0 * p.y) - sin(a + 3.0 * p.x));
       vec2 w = (cos(a) * p + sin(a) * vec2(-p.y, p.x)) * 0.5 + 0.5;
 
-      // Warm orange palette (no lemon/neon)
-      vec3 c1 = vec3(1.0, 0.76, 0.16);    // #FFC228 тёплый золотой
-      vec3 c2 = vec3(1.0, 0.63, 0.0);     // #FFA000 оранжевый
-      vec3 c3 = vec3(0.95, 0.50, 0.0);    // #F28000 тёмный оранжевый
+      vec3 c1 = vec3(1.0, 0.76, 0.16);
+      vec3 c2 = vec3(1.0, 0.63, 0.0);
+      vec3 c3 = vec3(0.95, 0.50, 0.0);
 
       vec3 col = mix(c1, c2, w.x);
       col = mix(col, c3, w.y);
@@ -3639,7 +3636,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   gl.linkProgram(prog);
   gl.useProgram(prog);
 
-  // Fullscreen quad
   const buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
@@ -3651,9 +3647,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   const uRes = gl.getUniformLocation(prog, 'u_resolution');
 
   function resize() {
-    const dpr = 1;
-    canvas.width = canvas.clientWidth * dpr;
-    canvas.height = canvas.clientHeight * dpr;
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(uRes, canvas.width, canvas.height);
   }
@@ -3671,13 +3666,15 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   }
   draw();
 
-  // Stop when not visible
   const obs = new IntersectionObserver(([e]) => {
     running = e.isIntersecting;
     if (running) draw();
   });
   obs.observe(container);
-})();
+}
+
+initOrangeShader('heroShader');
+initOrangeShader('pricingShader');
 </script>
 
 <!-- GSAP + Swarm -->
