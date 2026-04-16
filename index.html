@@ -1662,12 +1662,33 @@ body {
 
 .price-name {
   font-size: 1.5rem; font-weight: 800; color: var(--text);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+}
+.price-early {
+  display: inline-block; align-self: flex-start;
+  font-size: 0.72rem; font-weight: 800;
+  color: var(--orange); letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: rgba(255,140,0,0.10);
+  border: 1px solid rgba(255,140,0,0.25);
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
+}
+.price-amount-row {
+  display: flex; align-items: baseline; gap: 0.85rem;
+  flex-wrap: wrap; margin-bottom: 2rem;
 }
 .price-amount {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 900; color: var(--text);
-  letter-spacing: -0.03em; margin-bottom: 2rem;
+  letter-spacing: -0.03em;
+}
+.price-old {
+  font-size: 1.15rem; font-weight: 600;
+  color: var(--text-muted); text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(255,140,0,0.55);
 }
 
 /* Feature list */
@@ -2860,7 +2881,11 @@ body {
     <div class="pricing-grid">
       <div class="price-card reveal reveal-delay-1">
         <div class="price-name">Основной</div>
-        <div class="price-amount"><span>30 000</span> &#8381;</div>
+        <div class="price-early">Ранняя цена · −33%</div>
+        <div class="price-amount-row">
+          <div class="price-amount"><span>19 999</span> &#8381;</div>
+          <div class="price-old">30 000 &#8381;</div>
+        </div>
         <ul class="price-features">
           <li>7 уроков — эфиры + записи навсегда</li>
           <li>Закрытый чат с поддержкой</li>
@@ -2872,7 +2897,11 @@ body {
       <div class="price-card price-card--featured reveal reveal-delay-2">
         <div class="price-badge">Осталось 5 мест</div>
         <div class="price-name">Персональный</div>
-        <div class="price-amount"><span>65 000</span> &#8381;</div>
+        <div class="price-early">Ранняя цена · −38%</div>
+        <div class="price-amount-row">
+          <div class="price-amount"><span>39 999</span> &#8381;</div>
+          <div class="price-old">65 000 &#8381;</div>
+        </div>
         <ul class="price-features">
           <li>Всё из Основного тарифа</li>
           <li>Личный созвон на старте — цели и план</li>
