@@ -972,9 +972,53 @@ body {
 /* ========== PROJECTS SHOWCASE (айдентика + рендеры) ========== */
 .projects-showcase {
   background: linear-gradient(135deg, #FFA000 0%, #FF8F00 60%, #F28000 100%);
-  padding: clamp(60px, 8vw, 110px) 0;
+  padding: clamp(60px, 8vw, 110px) 0 clamp(60px, 8vw, 110px);
   position: relative; z-index: 2;
   overflow: hidden;
+}
+.ps-intro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.ps-intro-label {
+  display: inline-block;
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.01em;
+  padding: 0.65rem 1.5rem;
+  background: rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.ps-intro-arrows {
+  display: block;
+  margin: 0.5rem auto 0;
+  width: min(720px, 92%);
+  height: 110px;
+  pointer-events: none;
+  color: rgba(255,255,255,0.92);
+}
+.ps-intro-arrows path {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: psArrowDraw 1.4s 0.3s cubic-bezier(0.55, 0.05, 0.35, 1) forwards;
+}
+.ps-intro-arrows .ps-arrow-head {
+  opacity: 0;
+  animation: psArrowHead 0.3s 1.5s ease-out forwards;
+}
+@keyframes psArrowDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes psArrowHead {
+  to { opacity: 1; }
+}
+@media (max-width: 768px) {
+  .ps-intro-arrows { height: 70px; }
 }
 .projects-showcase::before {
   content: ''; position: absolute; inset: 0;
@@ -2608,6 +2652,17 @@ body {
 <!-- ==================== PROJECTS SHOWCASE ==================== -->
 <section class="projects-showcase" id="projects-showcase">
   <div class="s-container">
+    <div class="ps-intro reveal">
+      <span class="ps-intro-label">Что Аня создала с&nbsp;ИИ</span>
+      <svg class="ps-intro-arrows" viewBox="0 0 720 110" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <!-- Левая стрелка: из центра-вверху изгибается к нижнему-левому -->
+        <path d="M 360 5 C 320 30, 240 55, 130 85" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <polygon class="ps-arrow-head" points="130,85 142,72 148,90" fill="currentColor" transform="rotate(15 130 85)"/>
+        <!-- Правая стрелка: из центра-вверху изгибается к нижнему-правому -->
+        <path d="M 360 5 C 400 30, 480 55, 590 85" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <polygon class="ps-arrow-head" points="590,85 578,72 572,90" fill="currentColor" transform="rotate(-15 590 85)"/>
+      </svg>
+    </div>
     <div class="ps-grid">
       <div class="ps-item reveal">
         <div class="ps-screen">
