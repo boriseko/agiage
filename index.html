@@ -1802,13 +1802,30 @@ body {
   padding: clamp(40px, 6vw, 80px) 0 0;
 }
 
-/* Giant ВАЙБ text — sits ABOVE the white plate, partially covered by it */
+/* Full-width white plate — comes first */
+.cin-card {
+  position: relative;
+  width: 100%;
+  background: var(--white);
+  border: none;
+  padding: clamp(2.5rem, 5vw, 4rem) 1.5rem 2rem;
+  color: var(--text);
+}
+@media (min-width: 768px) {
+  .cin-card { padding: clamp(3rem, 5vw, 4.5rem) 3rem 2.25rem; }
+}
+
+.cin-card-inner {
+  max-width: 1200px; margin: 0 auto;
+}
+
+/* Giant ВАЙБ text — below the plate, original faint style */
 .cin-vibe-wrap {
   position: relative;
   width: 100%;
-  height: clamp(160px, 26vw, 340px);
+  max-width: 1400px; margin: 0 auto;
+  height: clamp(120px, 22vw, 280px);
   overflow: hidden;
-  margin-bottom: clamp(-90px, -10vw, -160px); /* plate overlaps the bottom of ВАЙБ */
 }
 .cin-vibe-wrap:hover .cin-vibe-fill { opacity: 1; }
 .cin-vibe-svg {
@@ -1818,37 +1835,18 @@ body {
 .cin-vibe-svg text {
   font-family: 'Geist', sans-serif;
   font-weight: 900;
-  font-size: 280px;
+  font-size: 240px;
   letter-spacing: -0.04em;
 }
 .cin-vibe-stroke {
-  fill: rgba(255,255,255,0.92);
-  stroke: none;
+  fill: none;
+  stroke: rgba(255,255,255,0.2);
+  stroke-width: 1.5;
 }
 .cin-vibe-fill {
   fill: url(#vibeGrad);
   opacity: 0;
   transition: opacity 0.3s ease;
-}
-
-/* Full-width white plate */
-.cin-card {
-  position: relative;
-  width: 100%;
-  background: var(--white);
-  border: none;
-  border-radius: 32px 32px 0 0;
-  padding: clamp(2.5rem, 5vw, 4rem) 1.5rem 1.75rem;
-  color: var(--text);
-  box-shadow: 0 -24px 60px rgba(0,0,0,0.08);
-  z-index: 2;
-}
-@media (min-width: 768px) {
-  .cin-card { padding: clamp(3rem, 5vw, 4.5rem) 3rem 2rem; border-radius: 40px 40px 0 0; }
-}
-
-.cin-card-inner {
-  max-width: 1200px; margin: 0 auto;
 }
 
 /* Footer grid */
@@ -1893,17 +1891,23 @@ body {
 
 /* Bottom row */
 .cin-bottom {
-  display: flex; flex-wrap: wrap; align-items: center;
-  justify-content: space-between; gap: 0.75rem;
+  display: flex; flex-wrap: wrap; align-items: flex-start;
+  justify-content: space-between; gap: 1rem;
+}
+.cin-copy-wrap {
+  display: flex; flex-direction: column; gap: 0.35rem;
 }
 .cin-copy {
-  font-size: 0.8rem; color: var(--text-light);
+  font-size: 0.85rem; color: var(--text-muted); font-weight: 500;
+}
+.cin-legal-entity {
+  font-size: 0.95rem; color: var(--text); font-weight: 600;
 }
 .cin-legal {
   display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
 }
 .cin-legal a {
-  font-size: 0.8rem; color: var(--text-light);
+  font-size: 0.85rem; color: var(--text-muted);
   text-decoration: none; transition: color 0.2s;
 }
 .cin-legal a:hover { color: var(--orange); }
@@ -2968,25 +2972,11 @@ body {
 
 <!-- ==================== HOVER FOOTER ==================== -->
 <footer class="cin-footer" id="cinFooter">
-  <!-- ВАЙБ — sits above, plate overlaps the bottom half -->
-  <div class="cin-vibe-wrap" id="vibeWrap">
-    <svg class="cin-vibe-svg" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <radialGradient id="vibeGrad" cx="50%" cy="50%" r="40%">
-          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.5"/>
-        </radialGradient>
-      </defs>
-      <text x="450" y="200" text-anchor="middle" class="cin-vibe-stroke">ВАЙБ</text>
-      <text x="450" y="200" text-anchor="middle" class="cin-vibe-fill">ВАЙБ</text>
-    </svg>
-  </div>
-
   <div class="cin-card">
     <div class="cin-card-inner">
       <div class="cin-grid">
         <div>
-          <div class="cin-brand-name">АГИ Age</div>
+          <div class="cin-brand-name">АГИ</div>
           <div class="cin-brand-desc">Курс по работе с <span class="cin-hl">AI-агентами</span> для специалистов любых профессий. <span class="cin-hl">Без кода, без опыта.</span></div>
         </div>
         <div>
@@ -3016,12 +3006,29 @@ body {
       </div>
       <div class="cin-divider"></div>
       <div class="cin-bottom">
-        <div class="cin-copy">&copy; 2026 АГИ Age &middot; ИП Борисенко Е.Т. &middot; Все права защищены</div>
+        <div class="cin-copy-wrap">
+          <div class="cin-legal-entity">ИП Борисенко Е.Т.</div>
+          <div class="cin-copy">&copy; 2026 АГИ &middot; Все права защищены</div>
+        </div>
         <div class="cin-legal">
           <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Наверх &#8593;</a>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ВАЙБ with mouse-tracking hover -->
+  <div class="cin-vibe-wrap" id="vibeWrap">
+    <svg class="cin-vibe-svg" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <radialGradient id="vibeGrad" cx="50%" cy="50%" r="40%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <text x="450" y="200" text-anchor="middle" class="cin-vibe-stroke">ВАЙБ</text>
+      <text x="450" y="200" text-anchor="middle" class="cin-vibe-fill">ВАЙБ</text>
+    </svg>
   </div>
 </footer>
 
