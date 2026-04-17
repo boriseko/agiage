@@ -295,6 +295,32 @@ body {
 @media (min-width: 640px) { .problem-grid { grid-template-columns: 1fr 1fr; gap: 2rem; grid-auto-rows: 1fr; } }
 @media (min-width: 1024px) { .problem-grid { grid-template-columns: 1fr 1fr 1fr; gap: 2rem; grid-auto-rows: 1fr; } }
 
+.problem-conclusion {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+}
+.problem-conclusion-text {
+  font-size: clamp(1.4rem, 3vw, 2.25rem);
+  font-weight: 800; line-height: 1.2; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 2rem;
+}
+.problem-conclusion-text .accent { color: var(--orange); }
+.problem-conclusion-cta {
+  display: inline-block;
+  padding: 1rem 2.25rem;
+  background: var(--orange); color: var(--white);
+  border-radius: 9999px;
+  font-size: 1.05rem; font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 6px 20px rgba(255,140,0,0.28);
+}
+.problem-conclusion-cta:hover {
+  transform: translateY(-2px);
+  background: var(--orange-dark);
+  box-shadow: 0 10px 28px rgba(255,140,0,0.38);
+}
+
 .problem-card {
   position: relative;
   padding: 1.5rem 1.75rem;
@@ -2369,6 +2395,11 @@ body {
         <div class="problem-card-num">6</div>
         <div class="problem-card-text">Хочешь запустить своё, но путь непонятен</div>
       </div>
+    </div>
+
+    <div class="problem-conclusion reveal">
+      <div class="problem-conclusion-text">…<span class="accent">то этот курс</span> — для&nbsp;тебя</div>
+      <a href="#pricing" class="problem-conclusion-cta">Узнать программу</a>
     </div>
   </div>
 </section>
