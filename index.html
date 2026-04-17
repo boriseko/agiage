@@ -296,30 +296,17 @@ body {
 @media (min-width: 1024px) { .problem-grid { grid-template-columns: 1fr 1fr 1fr; gap: 2rem; grid-auto-rows: 1fr; } }
 
 .problem-conclusion {
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-  text-align: center;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  text-align: right;
 }
 .problem-conclusion-text {
   font-size: clamp(1.4rem, 3vw, 2.25rem);
   font-weight: 800; line-height: 1.2; letter-spacing: -0.02em;
-  color: var(--text); margin-bottom: 2rem;
+  color: var(--text);
+  display: inline-block;
+  max-width: 100%;
 }
 .problem-conclusion-text .accent { color: var(--orange); }
-.problem-conclusion-cta {
-  display: inline-block;
-  padding: 1rem 2.25rem;
-  background: var(--orange); color: var(--white);
-  border-radius: 9999px;
-  font-size: 1.05rem; font-weight: 700;
-  text-decoration: none;
-  transition: all var(--transition-fast);
-  box-shadow: 0 6px 20px rgba(255,140,0,0.28);
-}
-.problem-conclusion-cta:hover {
-  transform: translateY(-2px);
-  background: var(--orange-dark);
-  box-shadow: 0 10px 28px rgba(255,140,0,0.38);
-}
 
 .problem-card {
   position: relative;
@@ -904,57 +891,56 @@ body {
 }
 @media (min-width: 768px) { .timeline-end { left: 1.5rem; } }
 
-/* ========== AUDIENCE (для кого — овал плашек) ========== */
+/* ========== AUDIENCE (для кого — широкая композиция) ========== */
 .audience-section {
   background: var(--white);
-  padding: clamp(80px, 10vw, 140px) 0;
+  padding: clamp(60px, 8vw, 110px) 0;
   position: relative; z-index: 2;
 }
 .audience-section .s-container {
-  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  max-width: 1340px; margin: 0 auto; padding: 0 2rem;
 }
 @media (min-width: 768px) { .audience-section .s-container { padding: 0 3rem; } }
 .audience-grid {
-  display: grid; grid-template-columns: 1fr; gap: 3rem;
+  display: grid; grid-template-columns: 1fr; gap: 2.5rem;
   align-items: center;
 }
 @media (min-width: 900px) {
-  .audience-grid { grid-template-columns: 1fr 1.1fr; gap: 4rem; }
+  .audience-grid { grid-template-columns: 5fr 7fr; gap: 4rem; }
 }
 .audience-left { text-align: left; }
 .audience-title {
-  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
   font-weight: 900; line-height: 1.05; letter-spacing: -0.04em;
   color: var(--text); margin-bottom: 1.25rem;
 }
 .audience-title .accent { color: var(--orange); }
 .audience-lead {
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
   color: var(--text-muted); line-height: 1.6;
   max-width: 460px;
 }
 .audience-right {
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: flex-end;
   position: relative;
-  min-height: 360px;
 }
 .oval-pills {
   display: flex; flex-direction: column;
-  gap: 0.75rem;
-  align-items: center;
+  gap: 0.85rem;
+  align-items: stretch;
   width: 100%;
 }
 .oval-row {
-  display: flex; justify-content: center;
-  gap: 0.65rem; flex-wrap: wrap;
+  display: flex; justify-content: flex-end;
+  gap: 0.7rem; flex-wrap: wrap;
 }
 .oval-pill {
   display: inline-block;
-  padding: 0.7rem 1.25rem;
+  padding: 0.85rem 1.4rem;
   background: var(--white);
   border: 1.5px solid var(--border);
   border-radius: 9999px;
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
@@ -2467,8 +2453,7 @@ body {
     </div>
 
     <div class="problem-conclusion reveal">
-      <div class="problem-conclusion-text">…<span class="accent">то этот курс</span> — для&nbsp;тебя</div>
-      <a href="#pricing" class="problem-conclusion-cta">Узнать программу</a>
+      <div class="problem-conclusion-text">…<span class="accent">то ты</span> по&nbsp;адресу</div>
     </div>
   </div>
 </section>
@@ -2493,31 +2478,25 @@ body {
         <div class="oval-pills">
           <div class="oval-row">
             <span class="oval-pill">Маркетолог</span>
-            <span class="oval-pill">HR</span>
-          </div>
-          <div class="oval-row">
             <span class="oval-pill">Юрист</span>
+            <span class="oval-pill">HR</span>
             <span class="oval-pill">Бухгалтер</span>
             <span class="oval-pill">Аналитик</span>
           </div>
           <div class="oval-row">
             <span class="oval-pill">Врач</span>
-            <span class="oval-pill">Преподаватель</span>
-            <span class="oval-pill">Дизайнер</span>
             <span class="oval-pill">Тренер</span>
+            <span class="oval-pill">Психолог</span>
+            <span class="oval-pill">Дизайнер</span>
+            <span class="oval-pill">Преподаватель</span>
+            <span class="oval-pill">Журналист</span>
           </div>
           <div class="oval-row">
             <span class="oval-pill">Фаундер</span>
             <span class="oval-pill">Продакт</span>
-            <span class="oval-pill">Журналист</span>
-            <span class="oval-pill">Психолог</span>
-          </div>
-          <div class="oval-row">
             <span class="oval-pill">Финдиректор</span>
             <span class="oval-pill">Консультант</span>
             <span class="oval-pill">Предприниматель</span>
-          </div>
-          <div class="oval-row">
             <span class="oval-pill">…и&nbsp;любая другая</span>
           </div>
         </div>
