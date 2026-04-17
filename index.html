@@ -4292,6 +4292,43 @@ gsap.registerPlugin(ScrollTrigger);
   margin-bottom: 0.5rem; letter-spacing: -0.02em;
 }
 .enroll-success p { color: var(--text-muted); line-height: 1.5; }
+.enroll-success__link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 1.35rem;
+  padding: 0.9rem 1.65rem;
+  background: linear-gradient(145deg, var(--orange), #FF8F00);
+  color: var(--white);
+  border-radius: 14px;
+  font-size: 1rem; font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(255,140,0,0.25);
+  transition: all var(--transition-fast);
+}
+.enroll-success__link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255,140,0,0.35);
+}
+.enroll-success__hint {
+  margin-top: 0.85rem;
+  font-size: 0.78rem; color: var(--text-light);
+}
+
+/* Field inline errors */
+.enroll-field-error {
+  font-size: 0.78rem;
+  color: #B13333;
+  line-height: 1.4;
+  margin-top: 0.35rem;
+  display: none;
+}
+.enroll-field.has-error .enroll-field-error { display: block; }
+.enroll-field.has-error input {
+  border-color: rgba(177, 51, 51, 0.5);
+}
+.enroll-field.has-error input:focus {
+  border-color: #B13333;
+  box-shadow: 0 0 0 4px rgba(177, 51, 51, 0.12);
+}
 
 button.price-cta {
   cursor: pointer; width: 100%; font-family: inherit;
@@ -4337,19 +4374,22 @@ button.price-cta {
         </label>
       </div>
 
-      <div class="enroll-field">
+      <div class="enroll-field" data-field="name">
         <label for="ef-name">Как тебя зовут?</label>
         <input id="ef-name" name="name" type="text" required placeholder="Имя и фамилия" maxlength="200" autocomplete="name">
+        <div class="enroll-field-error" data-error-for="name"></div>
       </div>
 
-      <div class="enroll-field">
+      <div class="enroll-field" data-field="email">
         <label for="ef-email">Email</label>
-        <input id="ef-email" name="email" type="email" placeholder="you@example.com" maxlength="200" autocomplete="email">
+        <input id="ef-email" name="email" type="email" placeholder="you@example.com" maxlength="200" autocomplete="email" inputmode="email">
+        <div class="enroll-field-error" data-error-for="email"></div>
       </div>
 
-      <div class="enroll-field">
+      <div class="enroll-field" data-field="phone">
         <label for="ef-phone">Телефон</label>
-        <input id="ef-phone" name="phone" type="tel" placeholder="+7 999 123-45-67" maxlength="50" autocomplete="tel">
+        <input id="ef-phone" name="phone" type="tel" placeholder="+7 999 123-45-67" maxlength="50" autocomplete="tel" inputmode="tel">
+        <div class="enroll-field-error" data-error-for="phone"></div>
       </div>
 
       <div class="enroll-hint">Достаточно email или телефон — как удобнее связаться.</div>
@@ -4375,7 +4415,9 @@ button.price-cta {
     <div class="enroll-success" id="enrollSuccess" hidden>
       <div class="enroll-success__icon">🔥</div>
       <h3>Ты в списке!</h3>
-      <p>Сейчас открою Telegram — там вся инфа.</p>
+      <p>Открываю Telegram — там вся инфа по курсу.</p>
+      <a href="#" class="enroll-success__link" id="enrollSuccessLink" target="_blank" rel="noopener">Открыть Telegram →</a>
+      <div class="enroll-success__hint">Можешь закрыть это окно</div>
     </div>
   </div>
 </div>
@@ -4425,6 +4467,7 @@ button.price-cta {
       form.hidden = false;
       submit.disabled = false;
       submit.classList.remove('is-loading');
+      ['name', 'email', 'phone'].forEach(function(n) { setFieldError(n, null); });
       if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch(e) {} }
     }, 320);
   }
@@ -4442,6 +4485,91 @@ button.price-cta {
       return '<div>• ' + String(e).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
     }).join('');
   }
+
+  // === Field-level validation ===
+  var DOMAIN_TYPOS = {
+    'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gmai.com': 'gmail.com',
+    'gmil.com': 'gmail.com', 'gmaill.com': 'gmail.com', 'gmail.ru': 'gmail.com',
+    'mial.ru': 'mail.ru', 'maii.ru': 'mail.ru', 'mal.ru': 'mail.ru',
+    'yandx.ru': 'yandex.ru', 'yadex.ru': 'yandex.ru', 'yandx.com': 'yandex.com',
+    'hotmial.com': 'hotmail.com', 'hotmal.com': 'hotmail.com',
+    'yaho.com': 'yahoo.com', 'yhoo.com': 'yahoo.com',
+    'icoud.com': 'icloud.com', 'iclud.com': 'icloud.com',
+    'bk.com': 'bk.ru', 'list.com': 'list.ru', 'inbox.com': 'inbox.ru'
+  };
+
+  function validateName(v) {
+    if (!v) return 'Напиши имя';
+    if (v.length < 2) return 'Имя слишком короткое';
+    if (/^\d+$/.test(v)) return 'Это номер, а не имя 🙃';
+    return null;
+  }
+
+  function validateEmail(v) {
+    if (!v) return null;
+    var lower = v.toLowerCase();
+    if (/\s/.test(lower)) return 'Убери пробелы из email';
+    if (lower.indexOf('@') === -1) return 'В email не хватает @';
+    var parts = lower.split('@');
+    if (parts.length > 2) return 'В email два @ — убери лишний';
+    if (!parts[0]) return 'Перед @ должно что-то быть';
+    var domain = parts[1];
+    if (!domain) return 'После @ должен быть домен';
+    if (domain.indexOf('.') === -1) return 'В домене не хватает точки (например .com)';
+    if (domain.indexOf('..') !== -1) return 'Две точки подряд — опечатка?';
+    if (domain.startsWith('.') || domain.endsWith('.')) return 'Точка в домене стоит криво';
+    var re = /^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i;
+    if (!re.test(lower)) return 'Email выглядит странно — проверь';
+    if (/\.(cpm|comm|con)$/.test(lower)) return 'Опечатка — наверное .com?';
+    if (/\.(ruu|ry|rus)$/.test(lower)) return 'Опечатка — наверное .ru?';
+    if (DOMAIN_TYPOS[domain]) {
+      return 'Возможно, имелось в виду ' + parts[0] + '@' + DOMAIN_TYPOS[domain] + '?';
+    }
+    return null;
+  }
+
+  function validatePhone(v) {
+    if (!v) return null;
+    var cleaned = v.replace(/[^\d+]/g, '');
+    var digits = cleaned.replace(/\D/g, '');
+    if (digits.length === 0) return 'В номере должны быть цифры';
+    if (digits.length < 10) return 'Маловато цифр — в номере обычно 10-11';
+    if (digits.length > 15) return 'Слишком много цифр — проверь';
+    return null;
+  }
+
+  function setFieldError(name, message) {
+    var wrap = form.querySelector('[data-field="' + name + '"]');
+    if (!wrap) return;
+    var box = wrap.querySelector('[data-error-for="' + name + '"]');
+    if (message) {
+      wrap.classList.add('has-error');
+      if (box) box.textContent = message;
+    } else {
+      wrap.classList.remove('has-error');
+      if (box) box.textContent = '';
+    }
+  }
+
+  function validateField(name, value) {
+    var v = (value || '').trim();
+    var err = null;
+    if (name === 'name') err = validateName(v);
+    else if (name === 'email') err = validateEmail(v);
+    else if (name === 'phone') err = validatePhone(v);
+    setFieldError(name, err);
+    return err;
+  }
+
+  ['name', 'email', 'phone'].forEach(function(fieldName) {
+    var input = form.querySelector('[name="' + fieldName + '"]');
+    if (!input) return;
+    input.addEventListener('blur', function() { validateField(fieldName, input.value); });
+    input.addEventListener('input', function() {
+      var wrap = form.querySelector('[data-field="' + fieldName + '"]');
+      if (wrap && wrap.classList.contains('has-error')) setFieldError(fieldName, null);
+    });
+  });
 
   document.querySelectorAll('[data-enroll-open]').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
@@ -4477,12 +4605,24 @@ button.price-cta {
       source: 'site'
     };
 
-    var localErrors = [];
-    if (!payload.name) localErrors.push('Напиши имя');
-    if (!payload.email && !payload.phone) localErrors.push('Укажи email или телефон');
-    if (!payload.consent_pd) localErrors.push('Нужно согласие на обработку ПД');
-    if (!payload.consent_offer) localErrors.push('Нужно согласие с офертой');
-    if (localErrors.length) { showErrors(localErrors); return; }
+    var nameErr = validateField('name', payload.name);
+    var emailErr = validateField('email', payload.email || '');
+    var phoneErr = validateField('phone', payload.phone || '');
+    var hasFieldErr = Boolean(nameErr || emailErr || phoneErr);
+
+    var topErrors = [];
+    if (!payload.email && !payload.phone && !hasFieldErr) {
+      topErrors.push('Нужен email или телефон — как удобнее связаться');
+    }
+    if (!payload.consent_pd) topErrors.push('Поставь галочку про обработку ПД');
+    if (!payload.consent_offer) topErrors.push('Поставь галочку про оферту');
+
+    if (hasFieldErr || topErrors.length) {
+      if (topErrors.length) showErrors(topErrors);
+      var firstErr = form.querySelector('.enroll-field.has-error input');
+      if (firstErr) { try { firstErr.focus(); } catch (e) {} }
+      return;
+    }
 
     submit.disabled = true;
     submit.classList.add('is-loading');
@@ -4502,7 +4642,9 @@ button.price-cta {
       }
       form.hidden = true;
       success.hidden = false;
-      setTimeout(function() { window.location.href = data.deeplink; }, 1600);
+      var manualLink = document.getElementById('enrollSuccessLink');
+      if (manualLink) manualLink.href = data.deeplink;
+      try { window.open(data.deeplink, '_blank', 'noopener'); } catch (e) {}
     } catch (err) {
       showErrors(['Сеть не отвечает. Проверь подключение и попробуй ещё раз.']);
       submit.disabled = false;
