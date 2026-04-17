@@ -531,11 +531,11 @@ body {
   transform-origin: calc(50% - 800px) calc(50% + 800px);
 }
 .results-blobs .blob-pointer {
-  width: 1000px; height: 1000px;
+  width: 900px; height: 900px;
   left: 50%; top: 50%;
-  margin-left: -500px; margin-top: -500px;
-  background: radial-gradient(circle, rgba(255,200,0,0.4) 0%, rgba(255,170,0,0.15) 40%, transparent 65%);
-  filter: blur(40px);
+  margin-left: -450px; margin-top: -450px;
+  background: radial-gradient(circle, rgba(255,200,0,0.18) 0%, rgba(255,170,0,0.06) 40%, transparent 65%);
+  filter: blur(55px);
   pointer-events: none;
   will-change: transform;
   transition: none;
@@ -993,39 +993,12 @@ body {
 }
 
 /* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
-.mindset-section.mindset-after-audience { padding-top: 0; }
-.mindset-section { position: relative; overflow: visible; }
-
-/* Стрелки от карточки Ани к скринам в orange-секции */
-.anya-arrows {
-  position: absolute;
-  left: 50%; transform: translateX(-50%);
-  bottom: -90px;            /* выходит вниз через границу секции в orange */
-  width: min(1100px, 90%);
-  height: 200px;
-  pointer-events: none;
-  z-index: 5;
-  color: #1a1a1a;           /* тёмный — виден на белом и на оранжевом */
-}
-.anya-arrows path {
-  stroke-dasharray: 320;
-  stroke-dashoffset: 320;
-  animation: anyaArrowDraw 1.4s 0.2s cubic-bezier(0.55, 0.05, 0.35, 1) forwards;
-}
-.anya-arrows .anya-arrow-head {
-  opacity: 0;
-  animation: anyaArrowHead 0.3s 1.5s ease-out forwards;
-}
-@keyframes anyaArrowDraw { to { stroke-dashoffset: 0; } }
-@keyframes anyaArrowHead { to { opacity: 1; } }
-@media (max-width: 768px) {
-  .anya-arrows { height: 130px; bottom: -60px; }
-}
+.mindset-section.mindset-after-audience { padding-top: 0; padding-bottom: clamp(20px, 3vw, 40px); }
 
 /* ========== PROJECTS SHOWCASE (айдентика + рендеры) ========== */
 .projects-showcase {
   background: linear-gradient(135deg, #FFA000 0%, #FF8F00 60%, #F28000 100%);
-  padding: clamp(60px, 8vw, 110px) 0 clamp(60px, 8vw, 110px);
+  padding: clamp(24px, 3vw, 40px) 0 clamp(60px, 8vw, 110px);
   position: relative; z-index: 2;
   overflow: hidden;
 }
@@ -2755,15 +2728,6 @@ body {
         </div>
       </div>
     </div>
-    <!-- Стрелки от карточки Ани через границу секций к скринам её проектов -->
-    <svg class="anya-arrows" viewBox="0 0 1100 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <!-- Левая стрелка: от низа-левой части карточки Ани вниз-влево к первому скрину -->
-      <path d="M 380 5 C 350 60, 280 110, 200 180" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <polygon class="anya-arrow-head" points="200,180 215,170 218,188" fill="currentColor" transform="rotate(28 200 180)"/>
-      <!-- Правая стрелка: от низа-правой части карточки Ани вниз-вправо ко второму скрину -->
-      <path d="M 720 5 C 750 60, 820 110, 900 180" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <polygon class="anya-arrow-head" points="900,180 885,170 882,188" fill="currentColor" transform="rotate(-28 900 180)"/>
-    </svg>
   </div>
 </section>
 
@@ -2835,11 +2799,11 @@ body {
         <div class="bento-label">Потенциал дохода без потолка.</div>
       </article>
 
-      <!-- Card 5: 0 строк -->
+      <!-- Card 5: -15ч в неделю -->
       <article class="bento-card bento-span-5 reveal">
 
-        <div class="bento-num" data-num="0">0</div>
-        <div class="bento-label">Строк кода — всё делает агент.</div>
+        <div class="bento-num" data-num="−15ч">&minus;15ч</div>
+        <div class="bento-label">В неделю — на рутину. ИИ заберёт её на себя.</div>
       </article>
     </div>
 
