@@ -888,28 +888,13 @@ body {
   max-width: 1100px; margin: 0 auto; padding: 0 2rem;
 }
 @media (min-width: 768px) { .mindset-section .s-container { padding: 0 3rem; } }
-.mindset-eyebrow {
-  display: inline-block;
-  font-size: 0.78rem; font-weight: 800;
-  color: var(--orange); letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.4rem 0.85rem;
-  background: rgba(255,140,0,0.10);
-  border: 1px solid rgba(255,140,0,0.25);
-  border-radius: 999px;
-  margin-bottom: 1.75rem;
-}
 .mindset-title {
-  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
-  font-weight: 900; line-height: 1.05; letter-spacing: -0.04em;
-  color: var(--text); margin-bottom: 1.5rem;
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 2.5rem;
+  max-width: 820px;
 }
 .mindset-title .accent { color: var(--orange); }
-.mindset-lead {
-  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-  color: var(--text-muted); max-width: 760px;
-  line-height: 1.6; margin-bottom: 4rem;
-}
 .mindset-case {
   background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
   border: 1px solid var(--border);
@@ -927,13 +912,15 @@ body {
   align-items: flex-start;
 }
 .case-avatar {
-  width: 100%; max-width: 280px; aspect-ratio: 1/1;
+  width: 100%; max-width: 280px; aspect-ratio: 3/4;
   border-radius: 24px;
-  background: linear-gradient(145deg, var(--orange), #FF8F00);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 6rem; font-weight: 900; color: white;
-  letter-spacing: -0.04em;
-  box-shadow: 0 12px 40px rgba(255,140,0,0.28);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+}
+.case-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
 }
 .mindset-section .case-tag {
   font-size: 0.7rem; font-weight: 800;
@@ -2794,29 +2781,17 @@ body {
 <section class="mindset-section" id="mindset">
   <div class="s-container">
     <div class="reveal">
-      <div class="mindset-eyebrow">Главное</div>
-      <h2 class="mindset-title">Это курс не по программированию.<br>А по новому <span class="accent">мышлению</span>, ускорению и&nbsp;вайбу.</h2>
-      <p class="mindset-lead">Никаких циклов, переменных, синтаксиса. Только новый способ работать: вместо того чтобы делать руками — ты ставишь задачу AI-агенту, и он делает. Время освобождается под жизнь.</p>
+      <h2 class="mindset-title">Это курс не по программированию. А по новому <span class="accent">мышлению</span>, ускорению и&nbsp;вайбу.</h2>
     </div>
 
     <div class="mindset-case reveal reveal-delay-1">
       <div class="case-avatar-wrap">
-        <div class="case-avatar">А</div>
+        <div class="case-avatar"><img src="anya.jpg" alt="Аня — ИИ-креатор" loading="lazy"></div>
         <div class="case-tag">Реальный кейс</div>
       </div>
       <div class="case-content">
-        <div class="case-name">Аня <span>· маркетолог, 32&nbsp;года</span></div>
-        <div class="case-quote">«Я не программист. Никогда им не была. Но я перешла на Claude — и за месяц настроила сама автоматизацию рутины: генерация постов, ответы клиентам, отчёты. Теперь я тусуюсь, наслаждаюсь жизнью — а агенты работают за меня.»</div>
-        <div class="case-arc">
-          <div class="arc-block">
-            <div class="arc-label">Было</div>
-            <div class="arc-text">12 часов в неделю на рутину: контент-планы, отчёты, ответы в чатах. Усталость, нет времени на семью и хобби.</div>
-          </div>
-          <div class="arc-block now">
-            <div class="arc-label">Стало</div>
-            <div class="arc-text">2 часа в неделю на постановку задач агентам. Остальное — спорт, друзья, новые проекты, путешествия.</div>
-          </div>
-        </div>
+        <div class="case-name">Аня <span>· ИИ-креатор</span></div>
+        <div class="case-quote">«Упорно не хотела переходить с ChatGPT на Claude — некогда было разбираться, а все видео по теме были про лендинги и ботов. На самом деле это абсолютно не так. Это про экономию времени и новый подход к решению задач.<br><br>Я работаю ИИ-креатором. И теперь моя задача не сделать 10 удачных генераций за час, а написать правильный запрос на автоматизацию этого процесса. Зачем? Потому что так быстрее и интереснее! Пока это всё делается без моего участия, я уже открываю следующий заказ.<br><br>Для меня время — деньги. И агент это то, что экономит моё внимание и фокус. Удивительно, что такое малое количество людей этим пользуется… всего за 100$ в месяц. Это то, что изменило мою работу на до и после.»</div>
       </div>
     </div>
   </div>
