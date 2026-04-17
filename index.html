@@ -1595,58 +1595,69 @@ body {
   text-align: center;
 }
 
-/* Stack wrapper */
-.practice-stack {
-  margin-top: 3rem; position: relative;
-  max-width: 720px; margin-left: auto; margin-right: auto;
+/* Subtitle */
+.practice-sub {
+  text-align: center;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  color: rgba(255,255,255,0.82);
+  margin-top: 1.1rem;
+  max-width: 620px; margin-left: auto; margin-right: auto;
+  line-height: 1.5;
+}
+.practice-sub b { color: var(--white); font-weight: 700; }
+
+/* Flow: 3 steps in a row (stacked on mobile) */
+.ps-flow {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  align-items: stretch;
+}
+@media (min-width: 900px) {
+  .ps-flow {
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
 }
 
-/* Navigation dots */
-.ps-nav {
-  display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
-  justify-content: center;
-}
-.ps-dot {
-  width: 40px; height: 40px; border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.35);
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.7);
-  font-size: 0.8rem; font-weight: 700;
+.ps-step { position: relative; display: flex; }
+.ps-step-badge {
+  position: absolute; top: -14px; left: 18px;
+  z-index: 3;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
-}
-.ps-dot:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.5);
-}
-.ps-dot.active {
-  background: var(--white);
-  border-color: var(--white);
-  color: var(--orange);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--orange); color: white;
+  font-size: 0.9rem; font-weight: 800;
+  box-shadow: 0 6px 18px rgba(255,140,0,0.45);
+  border: 3px solid var(--white);
+  letter-spacing: 0;
 }
 
-/* Cards container */
-.ps-cards {
-  position: relative;
-  perspective: 1200px;
-}
-
-/* Individual card */
+/* Card: uniform height via flex/stretch */
 .ps-card {
-  border-radius: 20px;
+  flex: 1;
+  display: flex; flex-direction: column;
   background: var(--white);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.04);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.04);
   overflow: hidden;
-  display: none; flex-direction: column;
-  transform-style: preserve-3d;
-  transform: rotateX(0) rotateY(0);
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-  will-change: transform;
 }
-.ps-card.active {
-  display: flex;
+
+/* Arrow between cards */
+.ps-arrow {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.5rem 0;
+  color: rgba(255,255,255,0.6);
+}
+.ps-arrow::before {
+  content: '↓';
+  font-size: 1.6rem; font-weight: 300;
+  line-height: 1;
+}
+@media (min-width: 900px) {
+  .ps-arrow::before { content: '→'; font-size: 2rem; }
 }
 
 /* Card header bar */
@@ -1678,11 +1689,12 @@ body {
 
 /* Card content area */
 .pc-body {
-  flex: 1; padding: 1.5rem 1.75rem;
+  flex: 1; padding: 1.25rem;
   display: flex; flex-direction: column;
   overflow: hidden; position: relative;
-  min-height: 420px;
+  min-height: 240px;
 }
+.pc-body--flush { padding: 1rem; }
 
 /* === CHAT MOCK === */
 .mock-chat {
@@ -1846,13 +1858,48 @@ body {
 
 /* Card caption */
 .pc-caption {
-  padding: 1.25rem 1.75rem; border-top: 1px solid rgba(0,0,0,0.05);
-  font-size: 1.2rem; color: var(--text); line-height: 1.5;
-  background: linear-gradient(135deg, #FFF8E1, #FFF3E0); flex-shrink: 0;
+  padding: 0.85rem 1rem; border-top: 1px solid rgba(0,0,0,0.05);
+  font-size: 0.9rem; color: var(--text-muted); line-height: 1.45;
+  background: #FAFAFA; flex-shrink: 0;
+  text-align: center;
 }
 .pc-caption strong {
-  color: var(--orange); font-weight: 800; font-size: 1.25rem;
+  color: var(--text); font-weight: 700;
 }
+
+/* Process steps mock — tasklist for step 2 */
+.mock-steps {
+  display: flex; flex-direction: column; gap: 0.7rem;
+  flex: 1; justify-content: center;
+}
+.ms-item {
+  display: flex; align-items: center; gap: 0.65rem;
+  font-size: 0.92rem; color: var(--text-light);
+  line-height: 1.3;
+}
+.ms-item.done { color: var(--text); }
+.ms-item.active { color: var(--text); font-weight: 600; }
+.ms-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  flex-shrink: 0;
+  background: rgba(40,200,64,0.12); color: #28C840;
+  font-weight: 800; font-size: 0.78rem;
+}
+.ms-item.active .ms-icon {
+  background: rgba(255,140,0,0.14); color: var(--orange);
+}
+.ms-icon.ms-spin {
+  border: 2px solid rgba(255,140,0,0.25);
+  border-top-color: var(--orange);
+  background: transparent !important;
+  animation: msSpin 0.9s linear infinite;
+}
+@keyframes msSpin { to { transform: rotate(360deg); } }
+
+/* Single-message chat in Step 1 */
+.ps-card .mock-chat { justify-content: center; }
+.ps-card .mock-msg { max-width: 100%; font-size: 0.95rem; }
 
 /* ========== EXPERT ========== */
 #expert .s-title { margin-left: -0.03em; }
@@ -2973,53 +3020,65 @@ body {
   </div>
 </section>
 
-<!-- ==================== STICKER WALL ==================== -->
+<!-- ==================== PRACTICE FLOW — 3 STEPS ==================== -->
 <section class="practice-section" id="practice">
   <div class="s-container">
     <div class="reveal reveal-big">
       <h2 class="s-title">Как это выглядит</h2>
+      <p class="practice-sub">Весь процесс — <b>три шага</b>: описываешь задачу → агент делает → получаешь результат.</p>
     </div>
 
-    <div class="practice-stack reveal reveal-delay-2">
-      <!-- Navigation dots -->
-      <div class="ps-nav" id="psNav">
-        <button class="ps-dot active" data-i="0">1</button>
-        <button class="ps-dot" data-i="1">2</button>
-        <button class="ps-dot" data-i="2">3</button>
-        <button class="ps-dot" data-i="3">4</button>
-        <button class="ps-dot" data-i="4">5</button>
-      </div>
-
-      <div class="ps-cards" id="psCards">
-
-        <!-- 1. CHAT WITH AGENT -->
-        <div class="ps-card active">
+    <div class="ps-flow">
+      <!-- Step 1: Запрос -->
+      <div class="ps-step reveal reveal-delay-1">
+        <div class="ps-step-badge">1</div>
+        <div class="ps-card">
           <div class="pc-bar">
             <div class="pc-dots"><span></span><span></span><span></span></div>
-            <div class="pc-bar-tag">Диалог</div>
-            <div class="pc-bar-title">Claude Code</div>
+            <div class="pc-bar-tag">Запрос</div>
           </div>
           <div class="pc-body">
             <div class="mock-chat">
-              <div class="mock-msg user"><div class="msg-role">Вы</div>Сделай мне лендинг для курса по фитнесу. Тёмный, стильный, с формой заявки.</div>
-              <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Создаю структуру проекта... Настраиваю hero-секцию с градиентным фоном, блок преимуществ и форму.</div>
-              <div class="mock-msg user"><div class="msg-role">Вы</div>Добавь секцию с отзывами и анимации при скролле.</div>
-              <div class="mock-msg agent"><div class="msg-role">AI-агент</div>Готово. Добавил карусель отзывов и reveal-анимации. Сайт на localhost:3000</div>
-              <div class="mock-msg user"><div class="msg-role">Вы</div>Идеально. Задеплой на сервер.</div>
-              <div class="mock-typing"><span></span><span></span><span></span></div>
+              <div class="mock-msg user"><div class="msg-role">Вы</div>Сделай лендинг для курса по фитнесу. Тёмный, стильный, с&nbsp;формой заявки.</div>
             </div>
           </div>
-          <div class="pc-caption"><strong>Диалог с агентом.</strong> Описываете задачу — агент создаёт, правит и запускает.</div>
+          <div class="pc-caption"><strong>Пишешь задачу словами.</strong></div>
         </div>
+      </div>
 
-        <!-- 2. BROWSER MOCKUP -->
+      <div class="ps-arrow" aria-hidden="true"></div>
+
+      <!-- Step 2: Процесс -->
+      <div class="ps-step reveal reveal-delay-2">
+        <div class="ps-step-badge">2</div>
+        <div class="ps-card">
+          <div class="pc-bar">
+            <div class="pc-dots"><span></span><span></span><span></span></div>
+            <div class="pc-bar-tag">Процесс</div>
+          </div>
+          <div class="pc-body">
+            <div class="mock-steps">
+              <div class="ms-item done"><span class="ms-icon">✓</span><span>Структура проекта</span></div>
+              <div class="ms-item done"><span class="ms-icon">✓</span><span>Hero с градиентом</span></div>
+              <div class="ms-item done"><span class="ms-icon">✓</span><span>Блок с отзывами</span></div>
+              <div class="ms-item active"><span class="ms-icon ms-spin"></span><span>Анимации при скролле…</span></div>
+            </div>
+          </div>
+          <div class="pc-caption"><strong>Агент делает сам.</strong></div>
+        </div>
+      </div>
+
+      <div class="ps-arrow" aria-hidden="true"></div>
+
+      <!-- Step 3: Результат -->
+      <div class="ps-step reveal reveal-delay-3">
+        <div class="ps-step-badge">3</div>
         <div class="ps-card">
           <div class="pc-bar">
             <div class="pc-dots"><span></span><span></span><span></span></div>
             <div class="pc-bar-tag">Результат</div>
-            <div class="pc-bar-title">Браузер</div>
           </div>
-          <div class="pc-body">
+          <div class="pc-body pc-body--flush">
             <div class="mock-browser">
               <div class="mock-url-bar">
                 <span class="mock-url-lock">&#128274;</span>
@@ -3027,7 +3086,6 @@ body {
               </div>
               <div class="mock-page">
                 <div class="mock-page-hero"></div>
-                <div class="mock-page-line"></div>
                 <div class="mock-page-line"></div>
                 <div class="mock-page-line"></div>
                 <div class="mock-page-cards">
@@ -3038,77 +3096,8 @@ body {
               </div>
             </div>
           </div>
-          <div class="pc-caption"><strong>Сайт в интернете.</strong> Ваш проект работает 24/7.</div>
+          <div class="pc-caption"><strong>Живой сайт в интернете.</strong></div>
         </div>
-
-        <!-- 3. TELEGRAM BOT -->
-        <div class="ps-card">
-          <div class="pc-bar">
-            <div class="pc-dots"><span></span><span></span><span></span></div>
-            <div class="pc-bar-tag">Автоматизация</div>
-            <div class="pc-bar-title">Telegram</div>
-          </div>
-          <div class="pc-body">
-            <div class="mock-tg">
-              <div class="mock-tg-header">
-                <div class="mock-tg-avatar">&#129302;</div>
-                <div>
-                  <div class="mock-tg-name">Бот заявок</div>
-                  <div class="mock-tg-status">онлайн</div>
-                </div>
-              </div>
-              <div class="mock-tg-msgs">
-                <div class="mock-tg-msg in">Привет! Хочу записаться на консультацию.<span class="tg-time">14:02</span></div>
-                <div class="mock-tg-msg out">Отлично! Выберите удобную дату:<br>1. Понедельник 15:00<br>2. Среда 12:00<br>3. Пятница 18:00<span class="tg-time">14:02</span></div>
-                <div class="mock-tg-msg in">Среда подойдёт!<span class="tg-time">14:03</span></div>
-                <div class="mock-tg-msg out">Записал вас на среду 12:00. Отправил подтверждение на почту.<span class="tg-time">14:03</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="pc-caption"><strong>Бот работает за вас.</strong> Собирает заявки пока вы спите.</div>
-        </div>
-
-        <!-- 4. TERMINAL -->
-        <div class="ps-card">
-          <div class="pc-bar">
-            <div class="pc-dots"><span></span><span></span><span></span></div>
-            <div class="pc-bar-tag">Код</div>
-            <div class="pc-bar-title">Terminal</div>
-          </div>
-          <div class="pc-body" style="padding:0;">
-            <div class="mock-term">
-              <div><span class="t-prompt">$</span> <span class="t-cmd">claude "собери REST API для обработки заявок"</span></div>
-              <div class="t-out">Creating project structure...</div>
-              <div class="t-out">Writing src/index.ts, src/routes.ts, src/db.ts</div>
-              <div class="t-out">Installing dependencies... done</div>
-              <div class="t-out">Running tests... <span class="t-success">4/4 passed</span></div>
-              <div><span class="t-prompt">$</span> <span class="t-cmd">npm start</span></div>
-              <div class="t-success">Server running on port 3000</div>
-              <div><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
-            </div>
-          </div>
-          <div class="pc-caption"><strong>Код пишется сам.</strong> Ставите задачу — агент делает.</div>
-        </div>
-
-        <!-- 5. CHECKLIST -->
-        <div class="ps-card">
-          <div class="pc-bar">
-            <div class="pc-dots"><span></span><span></span><span></span></div>
-            <div class="pc-bar-tag">Безопасность</div>
-            <div class="pc-bar-title">Чек-лист</div>
-          </div>
-          <div class="pc-body">
-            <div class="mock-check" id="mockCheck">
-              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">API-ключи не в коде</div></div>
-              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Данные пользователей зашифрованы</div></div>
-              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Бэкап настроен</div></div>
-              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Проверка перед деплоем</div></div>
-              <div class="mock-check-item checked"><div class="mock-check-box"></div><div class="mock-check-text">Мониторинг ошибок включён</div></div>
-            </div>
-          </div>
-          <div class="pc-caption"><strong>Безопасность.</strong> Знаете, что проверить перед запуском.</div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -3964,68 +3953,7 @@ function toggleFaq(item) {
   }, { threshold: 0.1 }).observe(container);
 })();
 
-// === Practice stack card switcher ===
-(function() {
-  const dots = document.querySelectorAll('#psNav .ps-dot');
-  const cards = document.querySelectorAll('#psCards .ps-card');
-  if (!dots.length || !cards.length) return;
-
-  // Measure tallest card and set all to same height
-  let maxH = 0;
-  cards.forEach(c => {
-    c.style.display = 'flex';
-    const h = c.offsetHeight;
-    if (h > maxH) maxH = h;
-    c.style.display = '';
-  });
-  if (maxH > 0) cards.forEach(c => c.style.minHeight = maxH + 'px');
-  // Re-activate first
-  cards[0].classList.add('active');
-
-  function showCard(i) {
-    dots.forEach(d => d.classList.remove('active'));
-    cards.forEach(c => c.classList.remove('active'));
-    dots[i].classList.add('active');
-    cards[i].classList.add('active');
-  }
-
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => showCard(+dot.dataset.i));
-  });
-
-  // Swipe support on mobile
-  const container = document.getElementById('psCards');
-  let startX = 0, current = 0;
-  container.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-  container.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      current = [...cards].findIndex(c => c.classList.contains('active'));
-      if (diff > 0 && current < cards.length - 1) showCard(current + 1);
-      if (diff < 0 && current > 0) showCard(current - 1);
-    }
-  }, { passive: true });
-
-  // 3D tilt on mouse move
-  const MAX_TILT = 4; // degrees — subtle
-  container.addEventListener('mousemove', e => {
-    const card = container.querySelector('.ps-card.active');
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `rotateY(${x * MAX_TILT}deg) rotateX(${-y * MAX_TILT}deg)`;
-    // shift shadow opposite to tilt
-    const sx = -x * 12, sy = -y * 12;
-    card.style.boxShadow = `${sx}px ${sy + 8}px 32px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.04)`;
-  });
-  container.addEventListener('mouseleave', () => {
-    const card = container.querySelector('.ps-card.active');
-    if (!card) return;
-    card.style.transform = '';
-    card.style.boxShadow = '';
-  });
-})();
+// Practice stack carousel: replaced by static 3-step flow (no JS needed)
 
 // === Expert photo slider ===
 (function() {
