@@ -720,6 +720,50 @@ body {
   width: 100%; aspect-ratio: 16/10;
   border-radius: 18px; overflow: hidden;
   background: var(--white);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.cases-screen-arrow {
+  position: absolute; top: 50%;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  font-size: 1.2rem; font-weight: 800;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 5;
+  opacity: 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+.cases-screen:hover .cases-screen-arrow,
+.cases-screen-arrow:focus { opacity: 1; }
+.cases-screen-arrow:hover {
+  background: var(--white);
+  transform: translateY(-50%) scale(1.08);
+}
+.cases-screen-arrow.prev {
+  left: 14px;
+  transform: translateY(-50%);
+}
+.cases-screen-arrow.next {
+  right: 14px;
+  transform: translateY(-50%);
+}
+.cases-screen-arrow.prev:hover,
+.cases-screen-arrow.next:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+.cases-screen-arrow.is-disabled {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .cases-screen-arrow { opacity: 0.85; width: 38px; height: 38px; }
 }
 .cases-screen-img {
   position: absolute; inset: 0;
@@ -2952,10 +2996,12 @@ body {
     </div>
 
     <div class="cases-stage reveal reveal-delay-1">
-      <!-- LEFT: screenshot with mini-dots if multiple -->
+      <!-- LEFT: screenshot slider with arrows + dots -->
       <div class="cases-screen-wrap">
         <div class="cases-screen" id="casesScreen">
           <img class="cases-screen-img is-active" id="casesScreenImg" src="case-content-1.png" alt="" loading="lazy">
+          <button type="button" class="cases-screen-arrow prev" id="casesPrevBtn" aria-label="Предыдущий скрин">‹</button>
+          <button type="button" class="cases-screen-arrow next" id="casesNextBtn" aria-label="Следующий скрин">›</button>
         </div>
         <div class="cases-screen-dots" id="casesScreenDots"></div>
       </div>
@@ -3868,7 +3914,7 @@ function toggleFaq(item) {
       title: 'Система ведения соцсетей',
       desc: 'Парсер источников, автоматическое написание постов, мониторинг метрик и планирование контента — всё в одном агенте.',
       time: '3 дня',
-      client: 'Контент-агентство',
+      client: 'Малый и средний бизнес',
       shots: ['case-content-1.png','case-content-2.png','case-content-3.png']
     },
     {
@@ -3876,7 +3922,7 @@ function toggleFaq(item) {
       title: 'CRM-агент для предпринимателя',
       desc: 'Уникальная система мониторинга задач и работы с людьми. Агент собирает данные, анализирует, ставит задачи команде — без участия человека.',
       time: '5 дней',
-      client: 'Малый бизнес',
+      client: 'Я',
       shots: ['case-crm-1.jpg']
     },
     {
@@ -3884,7 +3930,7 @@ function toggleFaq(item) {
       title: 'Анонимизатор персональных данных',
       desc: 'Сервис для юр. фирмы: автоматическая замена и обезличивание любых ПДн в документах — ФИО, адреса, даты, паспортные данные.',
       time: '1 день',
-      client: 'Юридическая фирма',
+      client: 'Юр. фирма',
       shots: ['case-anon-1.png','case-anon-2.png','case-anon-3.png']
     },
     {
@@ -3892,7 +3938,7 @@ function toggleFaq(item) {
       title: 'Лайв-опросник + ведение презентации',
       desc: 'Единый интерфейс: на эфире зрители проходят интерактивный опрос прямо в окне презентации, без переключений и доп. ссылок.',
       time: '2 часа',
-      client: 'Edtech',
+      client: 'Малый/средний бизнес, edtech',
       shots: ['case-livepoll-1.png','case-livepoll-2.png','case-livepoll-3.png']
     },
     {
@@ -4041,6 +4087,58 @@ function toggleFaq(item) {
       if (e.isIntersecting) startAuto(); else stopAuto();
     }, { threshold: 0.3 });
     obs.observe(sec);
+  }
+
+  // Slider arrows + swipe (prev/next по скринам внутри проекта; на краях — пере-проект)
+  const prevBtn = document.getElementById('casesPrevBtn');
+  const nextBtn = document.getElementById('casesNextBtn');
+
+  function goPrev() {
+    stopAuto();
+    if (sIdx > 0) { selectShot(sIdx - 1); return; }
+    // на первом скрине — предыдущий проект, последний скрин
+    const prev = (pIdx - 1 + PROJECTS.length) % PROJECTS.length;
+    pIdx = prev;
+    sIdx = PROJECTS[pIdx].shots.length - 1;
+    renderInfo();
+    renderDots();
+    setScreen(PROJECTS[pIdx].shots[sIdx]);
+    list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
+      b.classList.toggle('is-active', idx === pIdx);
+    });
+  }
+  function goNext() {
+    stopAuto();
+    const p = PROJECTS[pIdx];
+    if (sIdx + 1 < p.shots.length) { selectShot(sIdx + 1); return; }
+    const next = (pIdx + 1) % PROJECTS.length;
+    pIdx = next; sIdx = 0;
+    renderInfo();
+    renderDots();
+    setScreen(PROJECTS[pIdx].shots[0]);
+    list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
+      b.classList.toggle('is-active', idx === pIdx);
+    });
+  }
+  if (prevBtn) prevBtn.addEventListener('click', goPrev);
+  if (nextBtn) nextBtn.addEventListener('click', goNext);
+
+  // Touch swipe
+  const screen = document.getElementById('casesScreen');
+  if (screen) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    screen.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    screen.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) goNext(); else goPrev();
+      }
+    }, { passive: true });
   }
 
   // Init
