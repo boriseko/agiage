@@ -692,77 +692,156 @@ body {
 }
 
 
-/* ========== CASES (Horizontal scroll) ========== */
-.cases-scroll {
-  display: flex; gap: 1.25rem; overflow-x: auto;
-  padding: 2.5rem 1.5rem 2rem;
-  scroll-snap-type: x proximity;
-  scroll-padding-left: 1.5rem;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+/* ========== CASES (showcase: screen + side list) ========== */
+.cases-section {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  padding: clamp(70px, 9vw, 130px) 0;
+  position: relative; z-index: 2;
+  color: var(--white);
 }
-.cases-scroll::-webkit-scrollbar { display: none; }
-@media (min-width: 768px) {
-  .cases-scroll { padding: 2.5rem 2.5rem 2rem; scroll-padding-left: 2.5rem; }
+.cases-section .s-container {
+  max-width: 1340px; margin: 0 auto; padding: 0 2rem;
 }
-@media (min-width: 1280px) {
-  .cases-scroll { padding: 2.5rem 3rem 2rem; scroll-padding-left: 3rem; }
+@media (min-width: 768px) { .cases-section .s-container { padding: 0 3rem; } }
+.cases-section .s-title { color: var(--white); }
+.cases-section .s-desc { color: rgba(255,255,255,0.65); margin: 1rem auto 3rem; max-width: 560px; }
+.cases-stage {
+  display: grid; grid-template-columns: 1fr; gap: 2rem;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .cases-stage { grid-template-columns: 1.4fr 1fr; gap: 3rem; }
 }
 
-.case-card {
-  flex: 0 0 300px; scroll-snap-align: start;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-  border: 2px solid rgba(255,255,255,0.65);
-  border-radius: 20px; padding: 2rem;
-  transition: transform var(--transition-fast), border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
+/* LEFT — screenshot panel */
+.cases-screen-wrap { display: flex; flex-direction: column; gap: 1rem; }
+.cases-screen {
+  position: relative;
+  width: 100%; aspect-ratio: 16/10;
+  border-radius: 18px; overflow: hidden;
+  background: #0a0a0a;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.08);
 }
-@media (min-width: 768px) { .case-card { flex: 0 0 360px; } }
-.case-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255,255,255,0.85);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+.cases-screen-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.case-tag {
-  display: inline-block; padding: 0.35rem 0.75rem;
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 8px;
-  font-size: 0.7rem; font-weight: 600; color: var(--white);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  margin-bottom: 1.25rem;
+.cases-screen-img.is-active { opacity: 1; }
+.cases-screen-dots {
+  display: flex; justify-content: center; gap: 0.5rem;
+  min-height: 28px;
 }
-.case-title {
-  font-size: 1.35rem; font-weight: 700; color: var(--white);
-  line-height: 1.3; margin-bottom: 0.75rem;
-}
-.case-desc {
-  font-size: 1.05rem; font-weight: 500; color: rgba(255,255,255,0.8); line-height: 1.5;
-  margin-bottom: 1.25rem;
-}
-.case-time {
-  font-size: 0.85rem; font-weight: 700; color: var(--white);
-}
-/* Nav arrows */
-.cases-nav {
-  display: flex; justify-content: center; gap: 0.75rem;
-  padding: 0.5rem 0 0;
-}
-.cases-nav button {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.35);
-  background: rgba(255,255,255,0.1);
-  color: var(--white); font-size: 1rem;
+.cases-screen-dots button {
+  width: 32px; height: 4px;
+  border: none; background: rgba(255,255,255,0.18);
+  border-radius: 999px;
   cursor: pointer;
+  padding: 0;
   transition: all 0.25s ease;
-  display: flex; align-items: center; justify-content: center;
 }
-.cases-nav button:hover {
-  background: rgba(255,255,255,0.25);
-  border-color: rgba(255,255,255,0.55);
+.cases-screen-dots button:hover { background: rgba(255,255,255,0.4); }
+.cases-screen-dots button.is-active {
+  background: var(--orange);
+  width: 56px;
+}
+
+/* RIGHT — info + project list */
+.cases-side { display: flex; flex-direction: column; gap: 1.5rem; }
+.cases-info {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px; padding: 1.75rem;
+  transition: opacity 0.3s ease;
+}
+.cases-info-tag {
+  display: inline-block; padding: 0.35rem 0.75rem;
+  background: rgba(255,140,0,0.15);
+  border: 1px solid rgba(255,140,0,0.4);
+  border-radius: 6px;
+  font-size: 0.7rem; font-weight: 800; color: var(--orange);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.cases-info-title {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 800; line-height: 1.25; letter-spacing: -0.02em;
+  color: var(--white); margin-bottom: 0.85rem;
+}
+.cases-info-desc {
+  font-size: 0.95rem; line-height: 1.6;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 1.5rem;
+}
+.cases-info-meta {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+.cases-info-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+.cases-meta-label {
+  font-size: 0.7rem; font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.cases-meta-value {
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--white);
+}
+
+/* Project list (numbered) */
+.cases-list {
+  display: flex; flex-direction: column;
+  gap: 0.4rem;
+  max-height: 360px; overflow-y: auto;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+.cases-list::-webkit-scrollbar { width: 4px; }
+.cases-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.case-list-btn {
+  display: flex; align-items: center; gap: 0.85rem;
+  width: 100%; text-align: left;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  cursor: pointer;
+  font-family: inherit; color: var(--white);
+  transition: all 0.25s ease;
+}
+.case-list-btn:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.18);
+}
+.case-list-btn.is-active {
+  background: rgba(255,140,0,0.10);
+  border-color: rgba(255,140,0,0.45);
+}
+.case-list-num {
+  font-size: 0.78rem; font-weight: 800;
+  color: rgba(255,255,255,0.45);
+  min-width: 22px;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.case-list-btn.is-active .case-list-num { color: var(--orange); }
+.case-list-name {
+  font-size: 0.92rem; font-weight: 600;
+  flex: 1;
+  line-height: 1.35;
+}
+.case-list-arrow {
+  font-size: 0.85rem; color: rgba(255,255,255,0.3);
+  transition: all 0.25s ease;
+}
+.case-list-btn.is-active .case-list-arrow {
+  color: var(--orange);
+  transform: translateX(3px);
 }
 
 /* ========== PROGRAM TIMELINE ========== */
@@ -2805,90 +2884,46 @@ body {
   </div>
 </section>
 
-<!-- ==================== CASES ==================== -->
-<section class="section-grad" id="cases" style="background:var(--grad-page-dark);">
+<!-- ==================== CASES (showcase) ==================== -->
+<section class="cases-section" id="cases">
   <div class="s-container">
-    <div class="reveal">
-      <h2 class="s-title">Реальные проекты,<br>сделанные с ИИ</h2>
+    <div class="reveal" style="text-align:center;">
+      <h2 class="s-title">Реальные проекты,<br>сделанные с&nbsp;ИИ</h2>
+      <p class="s-desc">Кликай по&nbsp;проектам справа &mdash; смотри, как выглядит результат.</p>
     </div>
-  </div>
-  <div class="cases-scroll" id="casesScroll">
-    <div class="case-card reveal">
-      <div class="case-tag">Контент</div>
-      <div class="case-title">Система ведения соцсетей</div>
-      <div class="case-desc">Парсинг источников, автоматическое написание постов, мониторинг метрик, аналитика и планирование контента в одном месте.</div>
-      <div class="case-time">3 дня</div>
+
+    <div class="cases-stage reveal reveal-delay-1">
+      <!-- LEFT: screenshot with mini-dots if multiple -->
+      <div class="cases-screen-wrap">
+        <div class="cases-screen" id="casesScreen">
+          <img class="cases-screen-img is-active" id="casesScreenImg" src="case-content-1.png" alt="" loading="lazy">
+        </div>
+        <div class="cases-screen-dots" id="casesScreenDots"></div>
+      </div>
+
+      <!-- RIGHT: project info + list -->
+      <div class="cases-side">
+        <div class="cases-info" id="casesInfo">
+          <span class="cases-info-tag" id="casesInfoTag">Контент</span>
+          <h3 class="cases-info-title" id="casesInfoTitle">Система ведения соцсетей</h3>
+          <p class="cases-info-desc" id="casesInfoDesc">Парсинг источников, автоматическое написание постов, мониторинг метрик, аналитика и планирование контента в одном месте.</p>
+          <div class="cases-info-meta">
+            <div class="cases-info-meta-item">
+              <span class="cases-meta-label">Срок</span>
+              <span class="cases-meta-value" id="casesInfoTime">3 дня</span>
+            </div>
+            <div class="cases-info-meta-item">
+              <span class="cases-meta-label">Заказчик</span>
+              <span class="cases-meta-value" id="casesInfoClient">Контент-агентство</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cases-list" id="casesList">
+          <!-- список рендерится из JS -->
+        </div>
+      </div>
     </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Live-формат</div>
-      <div class="case-title">Интерактивные презентации и опросы</div>
-      <div class="case-desc">Единый интерфейс для live-презентаций: в конце каждого блока зрители проходят интерактивный тест прямо в том же окне, без переключений.</div>
-      <div class="case-time">2 часа</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Фронтенд</div>
-      <div class="case-title">Лендинг для девелопера</div>
-      <div class="case-desc">Полноценный фронтенд с анимациями, адаптивной вёрсткой, интерактивными секциями и формой заявки.</div>
-      <div class="case-time">10 дней</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">AI First</div>
-      <div class="case-title">CRM-система на агентах</div>
-      <div class="case-desc">Своя система мониторинга задач, постановки и работы с людьми. Всё на AI-агентах, они работают автономно, в том числе без участия человека.</div>
-      <div class="case-time">2 дня</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Чат-бот</div>
-      <div class="case-title">Персональный AI-ассистент</div>
-      <div class="case-desc">Чат-бот для личных задач: напоминания, заметки, быстрые ответы на вопросы. Работает в Telegram 24/7.</div>
-      <div class="case-time">2 часа</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Автоматизация</div>
-      <div class="case-title">Анонимизатор персональных данных</div>
-      <div class="case-desc">Сервис для юридической компании, автоматическая замена и обезличивание любых ПДн: ФИО, адреса, даты, паспортные данные.</div>
-      <div class="case-time">1 день</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Сервис</div>
-      <div class="case-title">Автоматические претензии</div>
-      <div class="case-desc">Сервис для логистической компании, генерация юридических претензий по шаблонам с автоподстановкой данных.</div>
-      <div class="case-time">7 дней</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">CRM</div>
-      <div class="case-title">Кастомная CRM для предпринимателя</div>
-      <div class="case-desc">Уникальная система мониторинга данных: заказчик определил, откуда получать информацию и как её анализировать. Собрали с нуля.</div>
-      <div class="case-time">5 дней</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Презентация</div>
-      <div class="case-title">Презентация для ведущего юрвуза</div>
-      <div class="case-desc">Презентация магистерских программ для одного из ведущих юридических вузов страны: структура, дизайн, контент.</div>
-      <div class="case-time">30 минут</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Юриспруденция</div>
-      <div class="case-title">Проверка соответствия НПА</div>
-      <div class="case-desc">Система проверки локальных нормативных актов юридического вуза на соответствие критериям Министерства просвещения РФ.</div>
-      <div class="case-time">8 дней</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Производство</div>
-      <div class="case-title">Видео + тех.документация</div>
-      <div class="case-desc">Система сопоставления обучающих видео и технической документации на сложном производстве для снижения количества поломок оборудования.</div>
-      <div class="case-time">4 дня</div>
-    </div>
-    <div class="case-card reveal">
-      <div class="case-tag">Дизайн</div>
-      <div class="case-title">Автогенерация айдентики</div>
-      <div class="case-desc">Система автоматического создания фирменного стиля для крупного девелопера: логотипы, палитры, шрифтовые пары, гайдлайны.</div>
-      <div class="case-time">3 дня</div>
-    </div>
-  </div>
-  <div class="cases-nav">
-    <button onclick="document.getElementById('casesScroll').scrollBy({left:-380,behavior:'smooth'})" aria-label="Назад">&larr;</button>
-    <button onclick="document.getElementById('casesScroll').scrollBy({left:380,behavior:'smooth'})" aria-label="Вперёд">&rarr;</button>
   </div>
 </section>
 
@@ -3757,6 +3792,159 @@ function toggleFaq(item) {
     current = (current + 1) % items.length;
     items[current].classList.add('active');
   }, 2500);
+})();
+
+// === Cases showcase: project switcher + screenshot dots ===
+(function() {
+  const screenImg = document.getElementById('casesScreenImg');
+  const screenDots = document.getElementById('casesScreenDots');
+  const infoTag = document.getElementById('casesInfoTag');
+  const infoTitle = document.getElementById('casesInfoTitle');
+  const infoDesc = document.getElementById('casesInfoDesc');
+  const infoTime = document.getElementById('casesInfoTime');
+  const infoClient = document.getElementById('casesInfoClient');
+  const list = document.getElementById('casesList');
+  if (!screenImg || !list) return;
+
+  const PROJECTS = [
+    {
+      tag: 'Контент',
+      title: 'Система ведения соцсетей',
+      desc: 'Парсер источников, автоматическое написание постов, мониторинг метрик и планирование контента — всё в одном агенте.',
+      time: '3 дня',
+      client: 'Контент-агентство',
+      shots: ['case-content-1.png','case-content-2.png','case-content-3.png']
+    },
+    {
+      tag: 'CRM',
+      title: 'CRM-агент для предпринимателя',
+      desc: 'Уникальная система мониторинга задач и работы с людьми. Агент собирает данные, анализирует, ставит задачи команде — без участия человека.',
+      time: '5 дней',
+      client: 'Малый бизнес',
+      shots: ['case-crm-1.jpg']
+    },
+    {
+      tag: 'Юриспруденция',
+      title: 'Анонимизатор персональных данных',
+      desc: 'Сервис для юр. фирмы: автоматическая замена и обезличивание любых ПДн в документах — ФИО, адреса, даты, паспортные данные.',
+      time: '1 день',
+      client: 'Юридическая фирма',
+      shots: ['case-anon-1.png','case-anon-2.png','case-anon-3.png']
+    },
+    {
+      tag: 'Live-формат',
+      title: 'Лайв-опросник + ведение презентации',
+      desc: 'Единый интерфейс: на эфире зрители проходят интерактивный опрос прямо в окне презентации, без переключений и доп. ссылок.',
+      time: '2 часа',
+      client: 'Edtech',
+      shots: ['case-livepoll-1.png','case-livepoll-2.png','case-livepoll-3.png']
+    },
+    {
+      tag: 'Сервис',
+      title: 'Автоматическая генерация претензий',
+      desc: 'Сервис для логистической компании: формирует юридические претензии по шаблонам с автоподстановкой данных и выгрузкой.',
+      time: '7 дней',
+      client: 'Логистическая компания',
+      shots: ['case-claim-1.png']
+    },
+    {
+      tag: 'Юриспруденция',
+      title: 'Проверка РПД на соответствие НПА',
+      desc: 'Система проверки рабочих программ дисциплин юр. вуза на соответствие критериям Минпросвещения РФ — отчёт по несоответствиям + рекомендации.',
+      time: '8 дней',
+      client: 'Юридический вуз',
+      shots: ['case-rpd-1.png','case-rpd-2.png']
+    }
+  ];
+
+  let pIdx = 0;
+  let sIdx = 0;
+  let imgEls = [screenImg];
+
+  function renderList() {
+    list.innerHTML = '';
+    PROJECTS.forEach((p, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'case-list-btn' + (i === pIdx ? ' is-active' : '');
+      btn.dataset.i = i;
+      btn.innerHTML =
+        '<span class="case-list-num">' + String(i+1).padStart(2,'0') + '</span>' +
+        '<span class="case-list-name">' + p.title + '</span>' +
+        '<span class="case-list-arrow">→</span>';
+      btn.addEventListener('click', () => selectProject(i));
+      list.appendChild(btn);
+    });
+  }
+
+  function renderInfo() {
+    const p = PROJECTS[pIdx];
+    infoTag.textContent = p.tag;
+    infoTitle.textContent = p.title;
+    infoDesc.textContent = p.desc;
+    infoTime.textContent = p.time;
+    infoClient.textContent = p.client;
+  }
+
+  function renderDots() {
+    const p = PROJECTS[pIdx];
+    screenDots.innerHTML = '';
+    if (p.shots.length < 2) return;
+    p.shots.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = i === sIdx ? 'is-active' : '';
+      b.setAttribute('aria-label', 'Скрин ' + (i+1));
+      b.addEventListener('click', () => selectShot(i));
+      screenDots.appendChild(b);
+    });
+  }
+
+  function setScreen(src) {
+    // crossfade: keep old img active until new one loads
+    const next = document.createElement('img');
+    next.className = 'cases-screen-img';
+    next.alt = '';
+    next.loading = 'eager';
+    next.src = src;
+    next.addEventListener('load', () => {
+      const screen = document.getElementById('casesScreen');
+      screen.appendChild(next);
+      requestAnimationFrame(() => {
+        next.classList.add('is-active');
+        setTimeout(() => {
+          // remove old images
+          screen.querySelectorAll('.cases-screen-img').forEach(el => {
+            if (el !== next) el.remove();
+          });
+        }, 500);
+      });
+    }, { once: true });
+  }
+
+  function selectProject(i) {
+    if (i === pIdx) return;
+    pIdx = i;
+    sIdx = 0;
+    renderInfo();
+    renderDots();
+    setScreen(PROJECTS[pIdx].shots[0]);
+    list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
+      b.classList.toggle('is-active', idx === pIdx);
+    });
+  }
+
+  function selectShot(i) {
+    if (i === sIdx) return;
+    sIdx = i;
+    renderDots();
+    setScreen(PROJECTS[pIdx].shots[sIdx]);
+  }
+
+  // Init
+  renderList();
+  renderInfo();
+  renderDots();
 })();
 
 // === Audience pills: flip-clock style profession swap ===
