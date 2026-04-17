@@ -904,6 +904,75 @@ body {
 }
 @media (min-width: 768px) { .timeline-end { left: 1.5rem; } }
 
+/* ========== AUDIENCE (для кого — овал плашек) ========== */
+.audience-section {
+  background: var(--white);
+  padding: clamp(80px, 10vw, 140px) 0;
+  position: relative; z-index: 2;
+}
+.audience-section .s-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+}
+@media (min-width: 768px) { .audience-section .s-container { padding: 0 3rem; } }
+.audience-grid {
+  display: grid; grid-template-columns: 1fr; gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .audience-grid { grid-template-columns: 1fr 1.1fr; gap: 4rem; }
+}
+.audience-left { text-align: left; }
+.audience-title {
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  font-weight: 900; line-height: 1.05; letter-spacing: -0.04em;
+  color: var(--text); margin-bottom: 1.25rem;
+}
+.audience-title .accent { color: var(--orange); }
+.audience-lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: var(--text-muted); line-height: 1.6;
+  max-width: 460px;
+}
+.audience-right {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  min-height: 360px;
+}
+.oval-pills {
+  display: flex; flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  width: 100%;
+}
+.oval-row {
+  display: flex; justify-content: center;
+  gap: 0.65rem; flex-wrap: wrap;
+}
+.oval-pill {
+  display: inline-block;
+  padding: 0.7rem 1.25rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 9999px;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: default;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.oval-pill:hover {
+  background: var(--orange);
+  color: var(--white);
+  border-color: var(--orange);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 22px rgba(255,140,0,0.35);
+}
+
+/* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
+.mindset-section.mindset-after-audience { padding-top: 0; }
+
 /* ========== MINDSET / АНЯ ========== */
 .mindset-section {
   background: var(--white);
@@ -2412,6 +2481,77 @@ body {
   <div class="flip-line" data-flip="Нового поколения">Нового поколения</div>
 </section>
 
+<!-- ==================== AUDIENCE (для кого) ==================== -->
+<section class="audience-section" id="audience">
+  <div class="s-container">
+    <div class="audience-grid">
+      <div class="audience-left reveal">
+        <h2 class="audience-title">Это <span class="accent">не</span> курс программирования</h2>
+        <p class="audience-lead">ИИ-агент — не код, а помощник. Это новый способ работать с задачами в&nbsp;любой профессии.</p>
+      </div>
+      <div class="audience-right reveal reveal-delay-1">
+        <div class="oval-pills">
+          <div class="oval-row">
+            <span class="oval-pill">Маркетолог</span>
+            <span class="oval-pill">HR</span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill">Юрист</span>
+            <span class="oval-pill">Бухгалтер</span>
+            <span class="oval-pill">Аналитик</span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill">Врач</span>
+            <span class="oval-pill">Преподаватель</span>
+            <span class="oval-pill">Дизайнер</span>
+            <span class="oval-pill">Тренер</span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill">Фаундер</span>
+            <span class="oval-pill">Продакт</span>
+            <span class="oval-pill">Журналист</span>
+            <span class="oval-pill">Психолог</span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill">Финдиректор</span>
+            <span class="oval-pill">Консультант</span>
+            <span class="oval-pill">Предприниматель</span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill">…и&nbsp;любая другая</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MINDSET / АНЯ (без заголовка — он выше) ==================== -->
+<section class="mindset-section mindset-after-audience" id="mindset">
+  <div class="s-container">
+    <div class="mindset-case reveal">
+      <div class="case-avatar-wrap">
+        <div class="case-avatar"><img src="anya.jpg" alt="Аня — ИИ-креатор" loading="lazy"></div>
+        <div class="case-tag">Реальный кейс</div>
+      </div>
+      <div class="case-content">
+        <div class="case-name">Аня <span>· ИИ-креатор, 26&nbsp;лет</span></div>
+        <div class="case-quote">«Упорно не хотела переходить с ChatGPT на Claude — некогда было разбираться, а все видео по теме были про лендинги и ботов. На самом деле это абсолютно не так. Это про экономию времени и новый подход к решению задач.<br><br>Я работаю ИИ-креатором. И теперь моя задача не сделать 10 удачных генераций за час, а написать правильный запрос на автоматизацию этого процесса. Зачем? Потому что так быстрее и интереснее! Пока это всё делается без моего участия, я уже открываю следующий заказ.<br><br>Для меня время — деньги. И агент это то, что экономит моё внимание и фокус. Удивительно, что такое малое количество людей этим пользуется… всего за 100$ в месяц. Это то, что изменило мою работу на до и после.»</div>
+        <div class="case-arc">
+          <div class="arc-block">
+            <div class="arc-label">Было</div>
+            <div class="arc-text">Много времени на ручные генерации — правки, повторы, новые попытки. Внимание уходило на сам процесс, фокус рассыпался. Не успевала брать больше заказов — рутина съедала всё.</div>
+          </div>
+          <div class="arc-block now">
+            <div class="arc-label">Стало</div>
+            <div class="arc-text">−10&nbsp;часов в неделю. Фокус вернулся на творческую часть работы. Беру на 2–3&nbsp;заказа больше в месяц, остаюсь свежей и в&nbsp;потоке.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ==================== RESULTS (Bento) ==================== -->
 <section class="results-section" id="results">
   <div class="results-blobs" id="resultsBlobs">
@@ -2807,36 +2947,6 @@ body {
   </div>
 </section>
 
-
-<!-- ==================== MINDSET / АНЯ ==================== -->
-<section class="mindset-section" id="mindset">
-  <div class="s-container">
-    <div class="reveal">
-      <h2 class="mindset-title">Это курс не по программированию.<br>А по новому <span class="accent">мышлению</span>, ускорению и&nbsp;вайбу.</h2>
-    </div>
-
-    <div class="mindset-case reveal reveal-delay-1">
-      <div class="case-avatar-wrap">
-        <div class="case-avatar"><img src="anya.jpg" alt="Аня — ИИ-креатор" loading="lazy"></div>
-        <div class="case-tag">Реальный кейс</div>
-      </div>
-      <div class="case-content">
-        <div class="case-name">Аня <span>· ИИ-креатор, 26&nbsp;лет</span></div>
-        <div class="case-quote">«Упорно не хотела переходить с ChatGPT на Claude — некогда было разбираться, а все видео по теме были про лендинги и ботов. На самом деле это абсолютно не так. Это про экономию времени и новый подход к решению задач.<br><br>Я работаю ИИ-креатором. И теперь моя задача не сделать 10 удачных генераций за час, а написать правильный запрос на автоматизацию этого процесса. Зачем? Потому что так быстрее и интереснее! Пока это всё делается без моего участия, я уже открываю следующий заказ.<br><br>Для меня время — деньги. И агент это то, что экономит моё внимание и фокус. Удивительно, что такое малое количество людей этим пользуется… всего за 100$ в месяц. Это то, что изменило мою работу на до и после.»</div>
-        <div class="case-arc">
-          <div class="arc-block">
-            <div class="arc-label">Было</div>
-            <div class="arc-text">Много времени на ручные генерации — правки, повторы, новые попытки. Внимание уходило на сам процесс, фокус рассыпался. Не успевала брать больше заказов — рутина съедала всё.</div>
-          </div>
-          <div class="arc-block now">
-            <div class="arc-label">Стало</div>
-            <div class="arc-text">−10&nbsp;часов в неделю. Фокус вернулся на творческую часть работы. Беру на 2–3&nbsp;заказа больше в месяц, остаюсь свежей и в&nbsp;потоке.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ==================== WORTH ==================== -->
 <section class="worth" id="worth">
