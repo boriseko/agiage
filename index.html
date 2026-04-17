@@ -924,27 +924,38 @@ body {
   display: block; width: 100%; position: relative;
 }
 .oval-pills {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.7rem;
+  display: flex; flex-direction: column;
+  gap: 0.8rem;
   width: 100%;
+  padding: 0 1rem;
 }
-@media (max-width: 1024px) {
-  .oval-pills { grid-template-columns: repeat(3, 1fr); }
+.oval-row {
+  display: flex; gap: 0.7rem;
+  justify-content: center;
 }
-@media (max-width: 600px) {
-  .oval-pills { grid-template-columns: repeat(2, 1fr); }
+/* Chaos: alternating horizontal offsets on rows */
+.oval-row:nth-child(1) { transform: translateX(-14px); }
+.oval-row:nth-child(2) { transform: translateX(42px); }
+.oval-row:nth-child(3) { transform: translateX(-28px); }
+.oval-row:nth-child(4) { transform: translateX(36px); }
+.oval-row:nth-child(5) { transform: translateX(-10px); }
+@media (max-width: 768px) {
+  .oval-pills { padding: 0; }
+  .oval-row { flex-wrap: wrap; gap: 0.5rem; }
+  .oval-row:nth-child(n) { transform: none; }
 }
 .oval-pill {
+  flex: 0 0 auto;
+  width: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 56px;
-  padding: 0.6rem 0.85rem;
+  min-height: 54px;
+  padding: 0.55rem 0.75rem;
   background: var(--white);
   border: 1.5px solid var(--border);
   border-radius: 14px;
-  font-size: clamp(0.92rem, 1.05vw, 1.02rem);
+  font-size: clamp(0.9rem, 1vw, 1rem);
   font-weight: 600;
   color: var(--text);
   text-align: center;
@@ -956,12 +967,18 @@ body {
   perspective: 800px;
   -webkit-perspective: 800px;
 }
+/* Chaos: subtle pill rotations */
+.oval-pill:nth-child(3n+1) { transform: rotate(-1.2deg); }
+.oval-pill:nth-child(3n+2) { transform: rotate(0.8deg); }
+.oval-pill:nth-child(3n)   { transform: rotate(-0.4deg); }
+.oval-pill:nth-child(5n)   { transform: rotate(1.5deg); }
 .oval-pill:hover {
   background: var(--orange);
   color: var(--white);
   border-color: var(--orange);
-  transform: translateY(-2px);
+  transform: translateY(-3px) rotate(0) scale(1.03);
   box-shadow: 0 8px 22px rgba(255,140,0,0.35);
+  z-index: 2;
 }
 .flip-text {
   display: inline-block;
@@ -2679,26 +2696,36 @@ body {
       </div>
       <div class="audience-right reveal reveal-delay-1">
         <div class="oval-pills" id="ovalPills">
-          <span class="oval-pill flip-pill"><span class="flip-text">Маркетолог</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Юрист</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">HR</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Бухгалтер</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Аналитик</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Врач</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Тренер</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Психолог</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Дизайнер</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Учитель</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Журналист</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Фаундер</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Продакт</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Менеджер</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Сценарист</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Архитектор</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">SMM-щик</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Адвокат</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Эксперт</span></span>
-          <span class="oval-pill flip-pill"><span class="flip-text">Бизнесмен</span></span>
+          <div class="oval-row">
+            <span class="oval-pill flip-pill"><span class="flip-text">Маркетолог</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Юрист</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">HR</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Бухгалтер</span></span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill flip-pill"><span class="flip-text">Аналитик</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Врач</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Тренер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Психолог</span></span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill flip-pill"><span class="flip-text">Дизайнер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Учитель</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Журналист</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Фаундер</span></span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill flip-pill"><span class="flip-text">Продакт</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Менеджер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Сценарист</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Архитектор</span></span>
+          </div>
+          <div class="oval-row">
+            <span class="oval-pill flip-pill"><span class="flip-text">SMM-щик</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Адвокат</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Эксперт</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Бизнесмен</span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -3833,13 +3860,28 @@ function toggleFaq(item) {
   let interval = null;
   let active = false;
 
+  function tick() {
+    // 35% шанс перевернуть сразу 2 плашки для большей хаотичности
+    const burst = Math.random() < 0.35 ? 2 : 1;
+    const picked = new Set();
+    for (let i = 0; i < burst; i++) {
+      let attempts = 0;
+      let pill;
+      do {
+        pill = pills[Math.floor(Math.random() * pills.length)];
+        attempts++;
+      } while ((picked.has(pill) || pill.matches(':hover')) && attempts < 5);
+      if (!picked.has(pill) && !pill.matches(':hover')) {
+        picked.add(pill);
+        // лёгкая задержка чтобы 2 плашки не флипались абсолютно одновременно
+        setTimeout(() => flipPill(pill), i * 90);
+      }
+    }
+  }
+
   function start() {
     if (interval) return;
-    interval = setInterval(() => {
-      const pill = pills[Math.floor(Math.random() * pills.length)];
-      if (pill.matches(':hover')) return; // не флипаем при наведении
-      flipPill(pill);
-    }, 1700);
+    interval = setInterval(tick, 750);
   }
   function stop() { clearInterval(interval); interval = null; }
 
