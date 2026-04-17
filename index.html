@@ -2204,7 +2204,7 @@ body {
     <a href="#pricing">Тарифы</a>
     <a href="#faq">FAQ</a>
   </nav>
-  <a href="https://t.me/agiage" class="header-cta" target="_blank">Записаться</a>
+  <a href="#pricing" class="header-cta">Записаться</a>
 </header>
 
 <!-- ==================== HERO ==================== -->
@@ -2221,7 +2221,7 @@ body {
       <div class="hero-rotate-item">&bull; без кода</div>
       <div class="hero-rotate-item">&bull; без опыта</div>
     </div>
-    <a href="https://t.me/agiage" class="hero-cta-btn hero-fade hero-fade-4" target="_blank">Хочу на курс</a>
+    <a href="#pricing" class="hero-cta-btn hero-fade hero-fade-4">Хочу на курс</a>
   </div>
 </section>
 
@@ -2919,7 +2919,7 @@ body {
           <li>Групповой Q&A созвон</li>
           <li>Доступ в комьюнити</li>
         </ul>
-        <a href="https://t.me/agiage" class="price-cta" target="_blank">Записаться</a>
+        <button type="button" class="price-cta" data-enroll-open="standard">Записаться</button>
       </div>
       <div class="price-card price-card--featured reveal reveal-delay-2">
         <div class="price-badge">Осталось 5 мест</div>
@@ -2936,7 +2936,7 @@ body {
           <li>Персональный разбор проекта</li>
           <li>Доведение до результата</li>
         </ul>
-        <a href="https://t.me/agiage" class="price-cta" target="_blank">Записаться</a>
+        <button type="button" class="price-cta" data-enroll-open="personal">Записаться</button>
       </div>
     </div>
   </div>
@@ -4081,6 +4081,453 @@ gsap.registerPlugin(ScrollTrigger);
   }
 })();
 
+</script>
+
+<!-- ==================== ENROLLMENT MODAL ==================== -->
+<style>
+.enroll-modal {
+  position: fixed; inset: 0; z-index: 10000;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.32, 0, 0.12, 1),
+              visibility 0.35s cubic-bezier(0.32, 0, 0.12, 1);
+  overflow: hidden;
+}
+.enroll-modal.is-open { opacity: 1; visibility: visible; }
+.enroll-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+}
+.enroll-modal__panel {
+  position: relative;
+  max-width: 560px; width: calc(100% - 2rem);
+  max-height: calc(100vh - 2rem);
+  margin: min(5vh, 4rem) auto 1rem;
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px -10px rgba(255, 140, 0, 0.25), 0 30px 100px -20px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem 2rem 2rem;
+  overflow-y: auto;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.4s cubic-bezier(0.32, 0, 0.12, 1);
+  -webkit-overflow-scrolling: touch;
+}
+.enroll-modal.is-open .enroll-modal__panel { transform: translateY(0) scale(1); }
+@media (min-width: 640px) { .enroll-modal__panel { padding: 2.75rem 2.5rem 2.25rem; } }
+
+.enroll-modal__close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 36px; height: 36px; z-index: 2;
+  border: none; background: rgba(0,0,0,0.04);
+  border-radius: 50%;
+  font-size: 1.05rem; line-height: 1; color: var(--text-muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition-fast);
+}
+.enroll-modal__close:hover {
+  background: rgba(0,0,0,0.08); color: var(--text);
+  transform: rotate(90deg);
+}
+
+.enroll-modal__head { text-align: center; margin-bottom: 1.75rem; }
+.enroll-modal__eyebrow {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 800;
+  color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: rgba(255,140,0,0.10);
+  border: 1px solid rgba(255,140,0,0.25);
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+.enroll-modal__head h2 {
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  font-weight: 800; color: var(--text);
+  letter-spacing: -0.02em; line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.enroll-modal__head p {
+  font-size: 0.93rem; color: var(--text-muted); line-height: 1.55;
+  max-width: 420px; margin: 0 auto;
+}
+
+.enroll-form { display: flex; flex-direction: column; gap: 1rem; }
+
+.enroll-tariffs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.enroll-tariff {
+  position: relative;
+  padding: 1rem 1rem 1.1rem;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex; flex-direction: column; gap: 0.3rem;
+  background: var(--white);
+}
+.enroll-tariff:hover { border-color: rgba(255,140,0,0.4); }
+.enroll-tariff input { position: absolute; opacity: 0; pointer-events: none; }
+.enroll-tariff.is-selected {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(255,160,0,0.12), 0 4px 16px rgba(255,140,0,0.15);
+}
+.enroll-tariff__badge {
+  position: absolute; top: -9px; right: 10px;
+  padding: 0.2rem 0.55rem;
+  background: var(--orange); color: var(--white);
+  border-radius: 6px;
+  font-size: 0.62rem; font-weight: 800;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(255,140,0,0.3);
+}
+.enroll-tariff__name { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+.enroll-tariff__price {
+  font-size: 1.05rem; font-weight: 900; color: var(--text);
+  letter-spacing: -0.02em;
+}
+.enroll-tariff__price s {
+  font-size: 0.72rem; font-weight: 500; color: var(--text-light);
+  margin-left: 0.35rem;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(255,140,0,0.5);
+}
+
+.enroll-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.enroll-field label {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.02em;
+}
+.enroll-field input {
+  font-family: inherit;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.98rem; color: var(--text);
+  background: var(--white);
+  transition: all var(--transition-fast);
+  outline: none;
+  -webkit-appearance: none;
+}
+.enroll-field input::placeholder { color: var(--text-light); }
+.enroll-field input:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(255,160,0,0.12);
+}
+.enroll-hint {
+  font-size: 0.78rem; color: var(--text-light); line-height: 1.4;
+  margin-top: -0.35rem;
+}
+
+.enroll-consent {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;
+  cursor: pointer; user-select: none;
+}
+.enroll-consent input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 18px; height: 18px; flex-shrink: 0;
+  margin-top: 2px;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--white);
+  position: relative;
+}
+.enroll-consent input[type="checkbox"]:checked {
+  background: var(--orange); border-color: var(--orange);
+}
+.enroll-consent input[type="checkbox"]:checked::after {
+  content: ''; position: absolute;
+  left: 5px; top: 1px;
+  width: 5px; height: 10px;
+  border: solid white; border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.enroll-consent a {
+  color: var(--orange); font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 2px;
+}
+.enroll-consent a:hover { color: var(--orange-dark); }
+
+.enroll-errors {
+  padding: 0.8rem 1rem;
+  background: rgba(200, 40, 40, 0.06);
+  border: 1px solid rgba(200, 40, 40, 0.2);
+  border-radius: 10px;
+  font-size: 0.85rem; color: #B13333; line-height: 1.5;
+}
+.enroll-errors div { padding: 0.1rem 0; }
+
+.enroll-submit {
+  font-family: inherit;
+  margin-top: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(145deg, var(--orange), #FF8F00);
+  color: var(--white);
+  border: 2px solid var(--orange);
+  border-radius: 14px;
+  font-size: 1.05rem; font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 20px rgba(255,140,0,0.25);
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.enroll-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255,140,0,0.35);
+}
+.enroll-submit:disabled { opacity: 0.75; cursor: wait; }
+.enroll-submit.is-loading .enroll-submit__text { display: none; }
+.enroll-submit:not(.is-loading) .enroll-submit__loader { display: none; }
+.enroll-submit__loader::before {
+  content: ''; width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.35); border-top-color: white;
+  border-radius: 50%;
+  display: inline-block; margin-right: 0.5rem; vertical-align: -3px;
+  animation: enroll-spin 0.7s linear infinite;
+}
+@keyframes enroll-spin { to { transform: rotate(360deg); } }
+
+.enroll-success { text-align: center; padding: 1.5rem 0 0.5rem; }
+.enroll-success__icon {
+  font-size: 3.5rem; margin-bottom: 0.75rem;
+  animation: enroll-pop 0.5s cubic-bezier(0.22, 1.5, 0.56, 1);
+}
+@keyframes enroll-pop {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.enroll-success h3 {
+  font-size: 1.5rem; font-weight: 800; color: var(--text);
+  margin-bottom: 0.5rem; letter-spacing: -0.02em;
+}
+.enroll-success p { color: var(--text-muted); line-height: 1.5; }
+
+button.price-cta {
+  cursor: pointer; width: 100%; font-family: inherit;
+}
+
+@media (max-width: 520px) {
+  .enroll-modal__panel {
+    margin-top: 0.5rem;
+    max-height: calc(100vh - 1rem);
+    border-radius: 20px;
+    padding: 2rem 1.25rem 1.25rem;
+  }
+  .enroll-tariffs { gap: 0.4rem; }
+  .enroll-tariff { padding: 0.85rem 0.75rem 0.9rem; }
+  .enroll-tariff__name { font-size: 0.88rem; }
+  .enroll-tariff__price { font-size: 0.98rem; }
+}
+</style>
+
+<div class="enroll-modal" id="enrollModal" aria-hidden="true">
+  <div class="enroll-modal__backdrop" data-enroll-close></div>
+  <div class="enroll-modal__panel" role="dialog" aria-modal="true" aria-labelledby="enrollTitle">
+    <button type="button" class="enroll-modal__close" data-enroll-close aria-label="Закрыть">✕</button>
+
+    <div class="enroll-modal__head">
+      <div class="enroll-modal__eyebrow">Запись · ВАЙБ</div>
+      <h2 id="enrollTitle">Давай знакомиться</h2>
+      <p>После записи перекинем в Telegram — там вся инфа по курсу и связь.</p>
+    </div>
+
+    <form class="enroll-form" id="enrollForm" novalidate>
+      <div class="enroll-tariffs" role="radiogroup" aria-label="Тариф">
+        <label class="enroll-tariff" data-tariff="standard">
+          <input type="radio" name="tariff" value="standard" checked>
+          <div class="enroll-tariff__name">Основной</div>
+          <div class="enroll-tariff__price">19 999 ₽ <s>30 000 ₽</s></div>
+        </label>
+        <label class="enroll-tariff" data-tariff="personal">
+          <input type="radio" name="tariff" value="personal">
+          <div class="enroll-tariff__badge">5 мест</div>
+          <div class="enroll-tariff__name">Персональный</div>
+          <div class="enroll-tariff__price">39 999 ₽ <s>65 000 ₽</s></div>
+        </label>
+      </div>
+
+      <div class="enroll-field">
+        <label for="ef-name">Как тебя зовут?</label>
+        <input id="ef-name" name="name" type="text" required placeholder="Имя и фамилия" maxlength="200" autocomplete="name">
+      </div>
+
+      <div class="enroll-field">
+        <label for="ef-email">Email</label>
+        <input id="ef-email" name="email" type="email" placeholder="you@example.com" maxlength="200" autocomplete="email">
+      </div>
+
+      <div class="enroll-field">
+        <label for="ef-phone">Телефон</label>
+        <input id="ef-phone" name="phone" type="tel" placeholder="+7 999 123-45-67" maxlength="50" autocomplete="tel">
+      </div>
+
+      <div class="enroll-hint">Достаточно email или телефон — как удобнее связаться.</div>
+
+      <label class="enroll-consent">
+        <input type="checkbox" name="consent_pd" required>
+        <span>Согласен на <a href="policy.html" target="_blank" rel="noopener">обработку персональных данных</a></span>
+      </label>
+
+      <label class="enroll-consent">
+        <input type="checkbox" name="consent_offer" required>
+        <span>Принимаю условия <a href="offer.html" target="_blank" rel="noopener">оферты</a></span>
+      </label>
+
+      <div class="enroll-errors" id="enrollErrors" role="alert" hidden></div>
+
+      <button type="submit" class="enroll-submit" id="enrollSubmit">
+        <span class="enroll-submit__text">Записаться на ВАЙБ</span>
+        <span class="enroll-submit__loader">Записываю...</span>
+      </button>
+    </form>
+
+    <div class="enroll-success" id="enrollSuccess" hidden>
+      <div class="enroll-success__icon">🔥</div>
+      <h3>Ты в списке!</h3>
+      <p>Сейчас открою Telegram — там вся инфа.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var modal = document.getElementById('enrollModal');
+  if (!modal) return;
+  var form = document.getElementById('enrollForm');
+  var errorsBox = document.getElementById('enrollErrors');
+  var success = document.getElementById('enrollSuccess');
+  var submit = document.getElementById('enrollSubmit');
+  var tariffs = form.querySelectorAll('.enroll-tariff');
+
+  var API_BASE = (location.hostname === 'agiage.ru' || location.hostname === 'www.agiage.ru')
+    ? ''
+    : (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:')
+      ? 'http://localhost:3008'
+      : '';
+
+  var lastFocus = null;
+
+  function openModal(tariff) {
+    lastFocus = document.activeElement;
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    if (tariff) {
+      var radio = form.querySelector('input[name="tariff"][value="' + tariff + '"]');
+      if (radio) radio.checked = true;
+    }
+    updateTariffUI();
+    setTimeout(function() {
+      var first = document.getElementById('ef-name');
+      if (first && !first.value) first.focus();
+    }, 320);
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    setTimeout(function() {
+      modal.setAttribute('aria-hidden', 'true');
+      errorsBox.hidden = true;
+      errorsBox.innerHTML = '';
+      success.hidden = true;
+      form.hidden = false;
+      submit.disabled = false;
+      submit.classList.remove('is-loading');
+      if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch(e) {} }
+    }, 320);
+  }
+
+  function updateTariffUI() {
+    tariffs.forEach(function(el) {
+      var input = el.querySelector('input');
+      el.classList.toggle('is-selected', input.checked);
+    });
+  }
+
+  function showErrors(list) {
+    errorsBox.hidden = false;
+    errorsBox.innerHTML = list.map(function(e) {
+      return '<div>• ' + String(e).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
+    }).join('');
+  }
+
+  document.querySelectorAll('[data-enroll-open]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal(btn.getAttribute('data-enroll-open') || 'standard');
+    });
+  });
+
+  modal.querySelectorAll('[data-enroll-close]').forEach(function(el) {
+    el.addEventListener('click', closeModal);
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+  });
+
+  tariffs.forEach(function(el) {
+    el.addEventListener('click', function() { setTimeout(updateTariffUI, 0); });
+  });
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    errorsBox.hidden = true;
+    errorsBox.innerHTML = '';
+
+    var fd = new FormData(form);
+    var payload = {
+      name: (fd.get('name') || '').toString().trim(),
+      email: (fd.get('email') || '').toString().trim() || null,
+      phone: (fd.get('phone') || '').toString().trim() || null,
+      tariff: (fd.get('tariff') || '').toString(),
+      consent_pd: fd.get('consent_pd') === 'on',
+      consent_offer: fd.get('consent_offer') === 'on',
+      source: 'site'
+    };
+
+    var localErrors = [];
+    if (!payload.name) localErrors.push('Напиши имя');
+    if (!payload.email && !payload.phone) localErrors.push('Укажи email или телефон');
+    if (!payload.consent_pd) localErrors.push('Нужно согласие на обработку ПД');
+    if (!payload.consent_offer) localErrors.push('Нужно согласие с офертой');
+    if (localErrors.length) { showErrors(localErrors); return; }
+
+    submit.disabled = true;
+    submit.classList.add('is-loading');
+
+    try {
+      var res = await fetch(API_BASE + '/api/enroll', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      var data = await res.json();
+      if (!res.ok || !data.ok) {
+        showErrors(data.errors && data.errors.length ? data.errors : ['Что-то пошло не так. Попробуй ещё раз.']);
+        submit.disabled = false;
+        submit.classList.remove('is-loading');
+        return;
+      }
+      form.hidden = true;
+      success.hidden = false;
+      setTimeout(function() { window.location.href = data.deeplink; }, 1600);
+    } catch (err) {
+      showErrors(['Сеть не отвечает. Проверь подключение и попробуй ещё раз.']);
+      submit.disabled = false;
+      submit.classList.remove('is-loading');
+    }
+  });
+
+  window.openEnrollModal = openModal;
+})();
 </script>
 
 </body>
