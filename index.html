@@ -1937,6 +1937,44 @@ body {
 }
 .cin-legal a:hover { color: var(--orange); }
 
+/* ========== COOKIE BANNER ========== */
+.cookie-banner {
+  position: fixed; bottom: 1rem; left: 1rem; right: 1rem;
+  max-width: 580px; margin: 0 auto;
+  background: rgba(20,20,20,0.93);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  color: #FFFFFF; padding: 1rem 1.25rem;
+  border-radius: 16px;
+  display: none;
+  align-items: center; gap: 1rem;
+  font-size: 0.88rem; line-height: 1.5;
+  z-index: 9999;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.cookie-banner.visible { display: flex; animation: cookieIn 0.4s cubic-bezier(0.23,1,0.32,1); }
+@keyframes cookieIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cookie-text { flex: 1; }
+.cookie-text a { color: var(--orange); text-decoration: none; border-bottom: 1px solid rgba(255,160,0,0.4); }
+.cookie-text a:hover { border-bottom-color: var(--orange); }
+.cookie-btn {
+  background: var(--orange); color: #FFFFFF;
+  border: none; border-radius: 10px;
+  padding: 0.65rem 1.2rem;
+  font-weight: 700; font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer; flex-shrink: 0;
+  transition: transform 0.2s, background 0.2s;
+}
+.cookie-btn:hover { transform: translateY(-1px); background: var(--orange-dark); }
+@media (max-width: 600px) {
+  .cookie-banner { flex-direction: column; align-items: stretch; text-align: center; padding: 1rem; }
+  .cookie-btn { width: 100%; padding: 0.75rem 1rem; }
+}
+
 /* Cookie banner */
 .cookie-banner {
   position: fixed; bottom: 1.5rem; left: 50%;
@@ -3027,6 +3065,7 @@ body {
           <div class="cin-col-links">
             <a href="oferta.html" target="_blank">Договор-оферта</a>
             <a href="policy.html" target="_blank">Политика обработки ПД</a>
+            <a href="consent.html" target="_blank">Согласие на обработку ПД</a>
           </div>
         </div>
       </div>
@@ -4053,6 +4092,21 @@ gsap.registerPlugin(ScrollTrigger);
     }, { threshold: 0.3 });
     obs.observe(filmEl);
   }
+})();
+
+// Cookie consent banner
+(function(){
+  if (localStorage.getItem('cookieAccepted') === '1') return;
+  const banner = document.createElement('div');
+  banner.className = 'cookie-banner visible';
+  banner.innerHTML = '<div class="cookie-text">Сайт использует cookies для аналитики и улучшения работы. Продолжая использование, вы соглашаетесь с <a href="/policy.html" target="_blank">Политикой обработки ПД</a>.</div><button class="cookie-btn" type="button">Принять</button>';
+  banner.querySelector('.cookie-btn').addEventListener('click', function(){
+    localStorage.setItem('cookieAccepted', '1');
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(20px)';
+    setTimeout(() => banner.remove(), 300);
+  });
+  document.body.appendChild(banner);
 })();
 </script>
 
