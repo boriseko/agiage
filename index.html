@@ -9,7 +9,8 @@
 <meta property="og:description" content="Зарабатывай больше с помощью ИИ — на вайбе">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1798,20 +1799,57 @@ body {
   position: relative; z-index: 2;
   background: var(--grad-page);
   overflow: hidden;
-  padding: clamp(60px, 8vw, 100px) 2rem 0;
+  padding: clamp(40px, 6vw, 80px) 0 0;
 }
-@media (min-width: 768px) { .cin-footer { padding: clamp(60px, 8vw, 100px) 3rem 0; } }
 
-/* Footer content card */
-.cin-card {
-  max-width: 1200px; margin: 0 auto;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 24px;
-  padding: 3rem 2.5rem 2rem;
+/* Giant ВАЙБ text — sits ABOVE the white plate, partially covered by it */
+.cin-vibe-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(160px, 26vw, 340px);
+  overflow: hidden;
+  margin-bottom: clamp(-90px, -10vw, -160px); /* plate overlaps the bottom of ВАЙБ */
 }
-@media (min-width: 768px) { .cin-card { padding: 3.5rem 3.5rem 2rem; } }
+.cin-vibe-wrap:hover .cin-vibe-fill { opacity: 1; }
+.cin-vibe-svg {
+  width: 100%; height: 100%;
+  display: block;
+}
+.cin-vibe-svg text {
+  font-family: 'Geist', sans-serif;
+  font-weight: 900;
+  font-size: 280px;
+  letter-spacing: -0.04em;
+}
+.cin-vibe-stroke {
+  fill: rgba(255,255,255,0.92);
+  stroke: none;
+}
+.cin-vibe-fill {
+  fill: url(#vibeGrad);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Full-width white plate */
+.cin-card {
+  position: relative;
+  width: 100%;
+  background: var(--white);
+  border: none;
+  border-radius: 32px 32px 0 0;
+  padding: clamp(2.5rem, 5vw, 4rem) 1.5rem 1.75rem;
+  color: var(--text);
+  box-shadow: 0 -24px 60px rgba(0,0,0,0.08);
+  z-index: 2;
+}
+@media (min-width: 768px) {
+  .cin-card { padding: clamp(3rem, 5vw, 4.5rem) 3rem 2rem; border-radius: 40px 40px 0 0; }
+}
+
+.cin-card-inner {
+  max-width: 1200px; margin: 0 auto;
+}
 
 /* Footer grid */
 .cin-grid {
@@ -1824,47 +1862,33 @@ body {
 
 /* Brand column */
 .cin-brand-name {
-  font-size: 1.5rem; font-weight: 800; color: var(--white);
+  font-size: 1.6rem; font-weight: 800; color: var(--text);
   letter-spacing: -0.03em; margin-bottom: 0.75rem;
 }
 .cin-brand-desc {
-  font-size: 0.9rem; color: rgba(255,255,255,0.65);
-  line-height: 1.7; max-width: 280px;
+  font-size: 0.95rem; color: var(--text-muted);
+  line-height: 1.7; max-width: 320px;
 }
+.cin-hl { color: var(--orange); font-weight: 600; }
 
 /* Link columns */
 .cin-col-title {
-  font-size: 0.9rem; font-weight: 700; color: var(--white);
+  font-size: 0.9rem; font-weight: 700; color: var(--text);
   margin-bottom: 1rem;
 }
 .cin-col-links {
   display: flex; flex-direction: column; gap: 0.6rem;
 }
 .cin-col-links a {
-  font-size: 0.85rem; color: rgba(255,255,255,0.55);
+  font-size: 0.9rem; color: var(--text-muted);
   text-decoration: none; transition: color 0.2s ease;
 }
-.cin-col-links a:hover { color: var(--white); }
-
-/* CTA in footer */
-.cin-cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.75rem; border-radius: 9999px;
-  background: var(--white); color: var(--orange);
-  font-size: 0.95rem; font-weight: 700;
-  text-decoration: none; margin-top: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-.cin-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}
+.cin-col-links a:hover { color: var(--orange); }
 
 /* Divider */
 .cin-divider {
-  height: 1px; background: rgba(255,255,255,0.12);
-  margin: 2rem 0 1.5rem;
+  height: 1px; background: rgba(0,0,0,0.08);
+  margin: 2.5rem 0 1.5rem;
 }
 
 /* Bottom row */
@@ -1873,49 +1897,16 @@ body {
   justify-content: space-between; gap: 0.75rem;
 }
 .cin-copy {
-  font-size: 0.8rem; color: rgba(255,255,255,0.4);
+  font-size: 0.8rem; color: var(--text-light);
 }
 .cin-legal {
   display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
 }
 .cin-legal a {
-  font-size: 0.8rem; color: rgba(255,255,255,0.4);
+  font-size: 0.8rem; color: var(--text-light);
   text-decoration: none; transition: color 0.2s;
 }
-.cin-legal a:hover { color: var(--white); }
-
-/* Giant ВАЙБ text with hover effect */
-.cin-vibe-wrap {
-  position: relative;
-  max-width: 1200px; margin: 0 auto;
-  height: clamp(120px, 22vw, 280px);
-  overflow: hidden;
-  margin-top: 2rem;
-}
-.cin-vibe-svg {
-  width: 100%; height: 100%;
-}
-.cin-vibe-svg text {
-  font-family: 'Geist', sans-serif;
-  font-weight: 900;
-  font-size: 240px;
-  letter-spacing: -0.04em;
-}
-/* Stroke outline layer */
-.cin-vibe-stroke {
-  fill: none;
-  stroke: rgba(255,255,255,0.15);
-  stroke-width: 1.5;
-}
-/* Mouse-tracking gradient fill */
-.cin-vibe-fill {
-  fill: url(#vibeGrad);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.cin-vibe-wrap:hover .cin-vibe-fill {
-  opacity: 1;
-}
+.cin-legal a:hover { color: var(--orange); }
 
 /* Cookie banner */
 .cookie-banner {
@@ -2916,12 +2907,19 @@ body {
 </section>
 
 <!-- ==================== FAQ ==================== -->
-<section class="section-white" id="faq" style="padding-top:0;">
+<section class="section-white" id="faq">
   <div class="s-container">
-    <div class="reveal">
+    <div class="reveal" style="text-align:center;">
       <h2 class="s-title">Частые вопросы</h2>
     </div>
     <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this.parentElement)">
+          <h3>Для каких профессий подходит?</h3>
+          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="faq-answer"><div class="faq-answer-inner">Для всех без исключения. Предприниматели, маркетологи, дизайнеры, менеджеры, фрилансеры, юристы, преподаватели, врачи — AI усиливает любую роль и любую профессию. Неважно, чем ты занимаешься сейчас: курс одинаково работает и для тех, кто хочет автоматизировать рутину на работе, и для тех, кто запускает свой проект.</div></div>
+      </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
           <h3>Нужен ли опыт в программировании?</h3>
@@ -2941,28 +2939,21 @@ body {
           <h3>Что я смогу сделать после курса?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Создавать сайты, телеграм-ботов, автоматизации, мини-сервисы. Запускать MVP за часы, а не месяцы. Автоматизировать рутину. Решать задачи, за которые раньше платил подрядчикам.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Практически всё, что угодно. Если ты можешь это описать словами — ты сможешь это собрать. Автоматизация рутины, внутренние инструменты для команды, мини-сервисы под свои задачи, личные ассистенты, интеграции между системами, MVP идеи за вечер. Курс даёт не набор готовых рецептов, а универсальный навык — превращать любую идею в работающий продукт своими руками.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
           <h3>Сколько времени нужно уделять?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Уроки в формате живых эфиров + записи. Можно смотреть в своём темпе. Основная работа — практика на своих задачах, а значит, время идёт на пользу напрямую.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Один урок в среднем идёт полтора часа, иногда растягивается до двух — если активно разбираем проекты участников и отвечаем на вопросы. Плюс практика на своих задачах между уроками. Всё в записи — можно смотреть в своём темпе.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
           <h3>А если у меня нет идеи для проекта?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Мы поможем найти. На курсе есть примеры, шаблоны, и живая сборка проекта от аудитории. Часто идея появляется прямо в процессе обучения.</div></div>
-      </div>
-      <div class="faq-item reveal">
-        <div class="faq-question" onclick="toggleFaq(this.parentElement)">
-          <h3>Почему так дорого, если есть курсы за 2000₽?</h3>
-          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Курсы за 2000₽ — это записанные видео, которые ты посмотришь и забудешь. Здесь — живые эфиры, персональная обратная связь, реальные проекты, и доведение до результата. Ты платишь за навык, который окупится многократно.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Не проблема — у нас есть готовые шаблоны проектов, с которых можно стартовать. Например, один из шаблонов — собрать своего телеграм-бота с нуля: каждый участник выходит с курса с рабочим ботом под свою задачу. Также есть шаблоны лендинга, мини-сервиса для автоматизации работы и внутреннего инструмента для команды. Каждый шаблон — это реальный проект, который ты собираешь вместе с группой и адаптируешь под себя.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
@@ -2971,72 +2962,66 @@ body {
         </div>
         <div class="faq-answer"><div class="faq-answer-inner">Да, записи всех уроков остаются навсегда. Можно пересматривать сколько угодно раз.</div></div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-question" onclick="toggleFaq(this.parentElement)">
-          <h3>Для каких профессий подходит?</h3>
-          <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Для всех. Предприниматели, маркетологи, дизайнеры, менеджеры, фрилансеры — AI усиливает любую роль. Неважно, чем ты занимаешься.</div></div>
-      </div>
     </div>
   </div>
 </section>
 
 <!-- ==================== HOVER FOOTER ==================== -->
 <footer class="cin-footer" id="cinFooter">
-  <div class="cin-card">
-    <div class="cin-grid">
-      <div>
-        <div class="cin-brand-name">AGI Age</div>
-        <div class="cin-brand-desc">Курс по работе с AI-агентами для специалистов любых профессий. Без кода, без опыта.</div>
-        <a href="https://t.me/agiage" class="cin-cta" target="_blank">Записаться</a>
-      </div>
-      <div>
-        <div class="cin-col-title">Курс</div>
-        <div class="cin-col-links">
-          <a href="#program">Программа</a>
-          <a href="#cases">Кейсы</a>
-          <a href="#pricing">Тарифы</a>
-          <a href="#faq">FAQ</a>
-        </div>
-      </div>
-      <div>
-        <div class="cin-col-title">Контакты</div>
-        <div class="cin-col-links">
-          <a href="https://t.me/agiage" target="_blank">Telegram</a>
-          <a href="mailto:agi.help@yandex.ru">agi.help@yandex.ru</a>
-          <a href="#expert">Автор курса</a>
-        </div>
-      </div>
-      <div>
-        <div class="cin-col-title">Документы</div>
-        <div class="cin-col-links">
-          <a href="oferta.html" target="_blank">Договор-оферта</a>
-          <a href="policy.html" target="_blank">Политика обработки ПД</a>
-        </div>
-      </div>
-    </div>
-    <div class="cin-divider"></div>
-    <div class="cin-bottom">
-      <div class="cin-copy">&copy; 2026 AGI Age &middot; ИП Борисенко Е.Т.</div>
-      <div class="cin-legal">
-        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Наверх &#8593;</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ВАЙБ with mouse-tracking hover -->
+  <!-- ВАЙБ — sits above, plate overlaps the bottom half -->
   <div class="cin-vibe-wrap" id="vibeWrap">
     <svg class="cin-vibe-svg" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet">
       <defs>
         <radialGradient id="vibeGrad" cx="50%" cy="50%" r="40%">
-          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.5"/>
         </radialGradient>
       </defs>
       <text x="450" y="200" text-anchor="middle" class="cin-vibe-stroke">ВАЙБ</text>
       <text x="450" y="200" text-anchor="middle" class="cin-vibe-fill">ВАЙБ</text>
     </svg>
+  </div>
+
+  <div class="cin-card">
+    <div class="cin-card-inner">
+      <div class="cin-grid">
+        <div>
+          <div class="cin-brand-name">АГИ Age</div>
+          <div class="cin-brand-desc">Курс по работе с <span class="cin-hl">AI-агентами</span> для специалистов любых профессий. <span class="cin-hl">Без кода, без опыта.</span></div>
+        </div>
+        <div>
+          <div class="cin-col-title">Курс</div>
+          <div class="cin-col-links">
+            <a href="#program">Программа</a>
+            <a href="#cases">Кейсы</a>
+            <a href="#pricing">Тарифы</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
+        <div>
+          <div class="cin-col-title">Контакты</div>
+          <div class="cin-col-links">
+            <a href="https://t.me/agiage" target="_blank">Telegram</a>
+            <a href="mailto:agi.help@yandex.ru">agi.help@yandex.ru</a>
+            <a href="#expert">Автор курса</a>
+          </div>
+        </div>
+        <div>
+          <div class="cin-col-title">Документы</div>
+          <div class="cin-col-links">
+            <a href="oferta.html" target="_blank">Договор-оферта</a>
+            <a href="policy.html" target="_blank">Политика обработки ПД</a>
+          </div>
+        </div>
+      </div>
+      <div class="cin-divider"></div>
+      <div class="cin-bottom">
+        <div class="cin-copy">&copy; 2026 АГИ Age &middot; ИП Борисенко Е.Т. &middot; Все права защищены</div>
+        <div class="cin-legal">
+          <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Наверх &#8593;</a>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>
 
