@@ -921,29 +921,35 @@ body {
   max-width: 460px;
 }
 .audience-right {
-  display: flex; align-items: center; justify-content: flex-end;
-  position: relative;
+  display: block; width: 100%; position: relative;
 }
 .oval-pills {
-  display: flex; flex-direction: column;
-  gap: 0.85rem;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
   width: 100%;
 }
-.oval-row {
-  display: flex; justify-content: flex-end;
-  gap: 0.7rem; flex-wrap: wrap;
+@media (max-width: 1024px) {
+  .oval-pills { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .oval-pills { grid-template-columns: repeat(2, 1fr); }
 }
 .oval-pill {
-  display: inline-block;
-  padding: 0.85rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0.6rem 0.85rem;
   background: var(--white);
   border: 1.5px solid var(--border);
-  border-radius: 9999px;
-  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
+  border-radius: 14px;
+  font-size: clamp(0.92rem, 1.05vw, 1.02rem);
   font-weight: 600;
   color: var(--text);
+  text-align: center;
   white-space: nowrap;
+  overflow: hidden;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   cursor: default;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
@@ -954,7 +960,7 @@ body {
   background: var(--orange);
   color: var(--white);
   border-color: var(--orange);
-  transform: translateY(-3px) scale(1.04);
+  transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(255,140,0,0.35);
 }
 .flip-text {
@@ -964,10 +970,40 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   will-change: transform;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 /* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
 .mindset-section.mindset-after-audience { padding-top: 0; }
+.mindset-section { position: relative; overflow: visible; }
+
+/* Стрелки от карточки Ани к скринам в orange-секции */
+.anya-arrows {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: -90px;            /* выходит вниз через границу секции в orange */
+  width: min(1100px, 90%);
+  height: 200px;
+  pointer-events: none;
+  z-index: 5;
+  color: #1a1a1a;           /* тёмный — виден на белом и на оранжевом */
+}
+.anya-arrows path {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: anyaArrowDraw 1.4s 0.2s cubic-bezier(0.55, 0.05, 0.35, 1) forwards;
+}
+.anya-arrows .anya-arrow-head {
+  opacity: 0;
+  animation: anyaArrowHead 0.3s 1.5s ease-out forwards;
+}
+@keyframes anyaArrowDraw { to { stroke-dashoffset: 0; } }
+@keyframes anyaArrowHead { to { opacity: 1; } }
+@media (max-width: 768px) {
+  .anya-arrows { height: 130px; bottom: -60px; }
+}
 
 /* ========== PROJECTS SHOWCASE (айдентика + рендеры) ========== */
 .projects-showcase {
@@ -2594,29 +2630,26 @@ body {
       </div>
       <div class="audience-right reveal reveal-delay-1">
         <div class="oval-pills" id="ovalPills">
-          <div class="oval-row">
-            <span class="oval-pill flip-pill"><span class="flip-text">Маркетолог</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Юрист</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">HR</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Бухгалтер</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Аналитик</span></span>
-          </div>
-          <div class="oval-row">
-            <span class="oval-pill flip-pill"><span class="flip-text">Врач</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Тренер</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Психолог</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Дизайнер</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Преподаватель</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Журналист</span></span>
-          </div>
-          <div class="oval-row">
-            <span class="oval-pill flip-pill"><span class="flip-text">Фаундер</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Продакт</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Финдиректор</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Консультант</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Предприниматель</span></span>
-            <span class="oval-pill flip-pill"><span class="flip-text">Менеджер</span></span>
-          </div>
+          <span class="oval-pill flip-pill"><span class="flip-text">Маркетолог</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Юрист</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">HR</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Бухгалтер</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Аналитик</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Врач</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Тренер</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Психолог</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Дизайнер</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Учитель</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Журналист</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Фаундер</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Продакт</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Менеджер</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Сценарист</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Архитектор</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">SMM-щик</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Адвокат</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Эксперт</span></span>
+          <span class="oval-pill flip-pill"><span class="flip-text">Бизнесмен</span></span>
         </div>
       </div>
     </div>
@@ -2646,23 +2679,21 @@ body {
         </div>
       </div>
     </div>
+    <!-- Стрелки от карточки Ани через границу секций к скринам её проектов -->
+    <svg class="anya-arrows" viewBox="0 0 1100 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <!-- Левая стрелка: от низа-левой части карточки Ани вниз-влево к первому скрину -->
+      <path d="M 380 5 C 350 60, 280 110, 200 180" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <polygon class="anya-arrow-head" points="200,180 215,170 218,188" fill="currentColor" transform="rotate(28 200 180)"/>
+      <!-- Правая стрелка: от низа-правой части карточки Ани вниз-вправо ко второму скрину -->
+      <path d="M 720 5 C 750 60, 820 110, 900 180" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <polygon class="anya-arrow-head" points="900,180 885,170 882,188" fill="currentColor" transform="rotate(-28 900 180)"/>
+    </svg>
   </div>
 </section>
 
 <!-- ==================== PROJECTS SHOWCASE ==================== -->
 <section class="projects-showcase" id="projects-showcase">
   <div class="s-container">
-    <div class="ps-intro reveal">
-      <span class="ps-intro-label">Что Аня создала с&nbsp;ИИ</span>
-      <svg class="ps-intro-arrows" viewBox="0 0 720 110" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <!-- Левая стрелка: из центра-вверху изгибается к нижнему-левому -->
-        <path d="M 360 5 C 320 30, 240 55, 130 85" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <polygon class="ps-arrow-head" points="130,85 142,72 148,90" fill="currentColor" transform="rotate(15 130 85)"/>
-        <!-- Правая стрелка: из центра-вверху изгибается к нижнему-правому -->
-        <path d="M 360 5 C 400 30, 480 55, 590 85" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <polygon class="ps-arrow-head" points="590,85 578,72 572,90" fill="currentColor" transform="rotate(-15 590 85)"/>
-      </svg>
-    </div>
     <div class="ps-grid">
       <div class="ps-item reveal">
         <div class="ps-screen">
@@ -3759,12 +3790,15 @@ function toggleFaq(item) {
   if (!pills.length) return;
 
   const POOL = [
+    // visible (initial)
     'Маркетолог','Юрист','HR','Бухгалтер','Аналитик','Врач','Тренер','Психолог',
-    'Дизайнер','Преподаватель','Журналист','Фаундер','Продакт','Финдиректор',
-    'Консультант','Предприниматель','Менеджер','SMM-щик','Сценарист','Архитектор',
-    'Стартапер','Копирайтер','Инвестор','Стилист','Учёный','Финансист','Кулинар',
-    'Риэлтор','Логист','Хедхантер','Продюсер','Куратор','Райтер','Корректор',
-    'Адвокат','Нутрициолог','Коуч','Брокер','Эксперт','Иллюстратор'
+    'Дизайнер','Учитель','Журналист','Фаундер','Продакт','Менеджер','Сценарист',
+    'Архитектор','SMM-щик','Адвокат','Эксперт','Бизнесмен',
+    // pool (rotation only)
+    'Стилист','Финансист','Логист','Хедхантер','Продюсер','Инвестор','Райтер',
+    'Куратор','Стартапер','Брокер','Риэлтор','Учёный','Кулинар','Коуч',
+    'Спикер','Косметолог','Геймдев','Корректор','Копирайтер','Копирайтер',
+    'Технолог','Девелопер','Кадровик','Дилер','Пилот'
   ];
 
   // Track currently shown words to avoid duplicates
