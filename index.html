@@ -1836,7 +1836,7 @@ body {
   transition: filter 0.4s ease;
 }
 .cin-vibe-wrap:hover .cin-vibe-svg {
-  filter: drop-shadow(0 0 32px rgba(255,160,0,0.25));
+  filter: drop-shadow(0 0 32px rgba(255,255,255,0.25));
 }
 @keyframes vibeBreath {
   0%, 100% { transform: scale(1); }
@@ -1855,7 +1855,7 @@ body {
   transition: stroke 0.4s ease;
 }
 .cin-vibe-wrap:hover .cin-vibe-stroke {
-  stroke: rgba(255,160,0,0.35);
+  stroke: rgba(255,255,255,0.45);
 }
 .cin-vibe-fill {
   fill: url(#vibeGrad);
@@ -3087,9 +3087,8 @@ body {
     <svg class="cin-vibe-svg" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet">
       <defs>
         <radialGradient id="vibeGrad" cx="50%" cy="50%" r="45%">
-          <stop offset="0%" stop-color="#FFA000" stop-opacity="1"/>
-          <stop offset="60%" stop-color="#FF8F00" stop-opacity="0.6"/>
-          <stop offset="100%" stop-color="#FFA000" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <text x="450" y="200" text-anchor="middle" class="cin-vibe-stroke">ВАЙБ</text>
