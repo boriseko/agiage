@@ -3076,27 +3076,11 @@ body {
 // === Cookie banner ===
 (function() {
   const banner = document.getElementById('cookieBanner');
+  const accepted = localStorage.getItem('cookieAccepted') === '1' || localStorage.getItem('cookieOk') === '1';
+  console.log('[cookie-banner]', { element: !!banner, accepted, storage: Object.keys(localStorage) });
   if (!banner) return;
-  // Honour either legacy key so previous visitors don't see it twice
-  if (localStorage.getItem('cookieAccepted') === '1' || localStorage.getItem('cookieOk') === '1') {
-    banner.remove();
-    return;
-  }
-  const show = () => banner.classList.add('visible');
-  const intro = document.getElementById('intro');
-  if (intro && !intro.classList.contains('dissolve')) {
-    // Wait for intro to dissolve, then show banner ~400ms later
-    const poll = setInterval(() => {
-      if (!document.body.contains(intro) || intro.classList.contains('dissolve')) {
-        clearInterval(poll);
-        setTimeout(show, 400);
-      }
-    }, 150);
-    // Hard fallback if intro never dissolves
-    setTimeout(() => { clearInterval(poll); show(); }, 6000);
-  } else {
-    setTimeout(show, 500);
-  }
+  if (accepted) { banner.remove(); return; }
+  setTimeout(() => banner.classList.add('visible'), 500);
   document.getElementById('cookieAccept').addEventListener('click', () => {
     localStorage.setItem('cookieAccepted', '1');
     banner.classList.remove('visible');
