@@ -944,9 +944,11 @@ body {
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
-  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   cursor: default;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  perspective: 800px;
+  -webkit-perspective: 800px;
 }
 .oval-pill:hover {
   background: var(--orange);
@@ -954,6 +956,14 @@ body {
   border-color: var(--orange);
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 22px rgba(255,140,0,0.35);
+}
+.flip-text {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  -webkit-transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
@@ -2539,29 +2549,29 @@ body {
         <p class="audience-lead">ИИ-агент — не код, а помощник. Это новый способ работать с задачами в&nbsp;любой профессии.</p>
       </div>
       <div class="audience-right reveal reveal-delay-1">
-        <div class="oval-pills">
+        <div class="oval-pills" id="ovalPills">
           <div class="oval-row">
-            <span class="oval-pill">Маркетолог</span>
-            <span class="oval-pill">Юрист</span>
-            <span class="oval-pill">HR</span>
-            <span class="oval-pill">Бухгалтер</span>
-            <span class="oval-pill">Аналитик</span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Маркетолог</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Юрист</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">HR</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Бухгалтер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Аналитик</span></span>
           </div>
           <div class="oval-row">
-            <span class="oval-pill">Врач</span>
-            <span class="oval-pill">Тренер</span>
-            <span class="oval-pill">Психолог</span>
-            <span class="oval-pill">Дизайнер</span>
-            <span class="oval-pill">Преподаватель</span>
-            <span class="oval-pill">Журналист</span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Врач</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Тренер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Психолог</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Дизайнер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Преподаватель</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Журналист</span></span>
           </div>
           <div class="oval-row">
-            <span class="oval-pill">Фаундер</span>
-            <span class="oval-pill">Продакт</span>
-            <span class="oval-pill">Финдиректор</span>
-            <span class="oval-pill">Консультант</span>
-            <span class="oval-pill">Предприниматель</span>
-            <span class="oval-pill">…и&nbsp;любая другая</span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Фаундер</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Продакт</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Финдиректор</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Консультант</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Предприниматель</span></span>
+            <span class="oval-pill flip-pill"><span class="flip-text">Менеджер</span></span>
           </div>
         </div>
       </div>
@@ -3684,6 +3694,81 @@ function toggleFaq(item) {
     current = (current + 1) % items.length;
     items[current].classList.add('active');
   }, 2500);
+})();
+
+// === Audience pills: flip-clock style profession swap ===
+(function() {
+  const wrap = document.getElementById('ovalPills');
+  if (!wrap) return;
+  const pills = wrap.querySelectorAll('.flip-pill');
+  if (!pills.length) return;
+
+  const POOL = [
+    'Маркетолог','Юрист','HR','Бухгалтер','Аналитик','Врач','Тренер','Психолог',
+    'Дизайнер','Преподаватель','Журналист','Фаундер','Продакт','Финдиректор',
+    'Консультант','Предприниматель','Менеджер','SMM-щик','Сценарист','Архитектор',
+    'Стартапер','Копирайтер','Инвестор','Стилист','Учёный','Финансист','Кулинар',
+    'Риэлтор','Логист','Хедхантер','Продюсер','Куратор','Райтер','Корректор',
+    'Адвокат','Нутрициолог','Коуч','Брокер','Эксперт','Иллюстратор'
+  ];
+
+  // Track currently shown words to avoid duplicates
+  const shown = new Set();
+  pills.forEach(p => shown.add(p.querySelector('.flip-text').textContent));
+
+  function pickNew(currentWord) {
+    const available = POOL.filter(w => !shown.has(w));
+    if (!available.length) return null;
+    return available[Math.floor(Math.random() * available.length)];
+  }
+
+  function flipPill(pill) {
+    const text = pill.querySelector('.flip-text');
+    if (!text) return;
+    const cur = text.textContent;
+    const newWord = pickNew(cur);
+    if (!newWord) return;
+
+    // Step 1: rotate down (top falls)
+    text.style.transition = 'transform 0.22s cubic-bezier(0.6, 0, 0.5, 1)';
+    text.style.transform = 'rotateX(-90deg)';
+
+    setTimeout(() => {
+      // Step 2: swap text + jump to +90deg without animating
+      text.textContent = newWord;
+      shown.delete(cur);
+      shown.add(newWord);
+      text.style.transition = 'none';
+      text.style.transform = 'rotateX(90deg)';
+
+      // Force reflow
+      void text.offsetWidth;
+
+      // Step 3: rotate down to 0 (new text falls into place)
+      text.style.transition = 'transform 0.22s cubic-bezier(0.5, 0, 0.4, 1)';
+      text.style.transform = 'rotateX(0deg)';
+    }, 230);
+  }
+
+  let interval = null;
+  let active = false;
+
+  function start() {
+    if (interval) return;
+    interval = setInterval(() => {
+      const pill = pills[Math.floor(Math.random() * pills.length)];
+      if (pill.matches(':hover')) return; // не флипаем при наведении
+      flipPill(pill);
+    }, 1700);
+  }
+  function stop() { clearInterval(interval); interval = null; }
+
+  // Запускаем только когда секция видна
+  const obs = new IntersectionObserver(([e]) => {
+    active = e.isIntersecting;
+    if (active) start(); else stop();
+  }, { threshold: 0.15 });
+  obs.observe(wrap);
 })();
 
 
