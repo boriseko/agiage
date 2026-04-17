@@ -1937,62 +1937,26 @@ body {
 }
 .cin-legal a:hover { color: var(--orange); }
 
-/* ========== COOKIE BANNER ========== */
-.cookie-banner {
-  position: fixed; bottom: 1rem; left: 1rem; right: 1rem;
-  max-width: 580px; margin: 0 auto;
-  background: rgba(20,20,20,0.93);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  color: #FFFFFF; padding: 1rem 1.25rem;
-  border-radius: 16px;
-  display: none;
-  align-items: center; gap: 1rem;
-  font-size: 0.88rem; line-height: 1.5;
-  z-index: 9999;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.22);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.cookie-banner.visible { display: flex; animation: cookieIn 0.4s cubic-bezier(0.23,1,0.32,1); }
-@keyframes cookieIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.cookie-text { flex: 1; }
-.cookie-text a { color: var(--orange); text-decoration: none; border-bottom: 1px solid rgba(255,160,0,0.4); }
-.cookie-text a:hover { border-bottom-color: var(--orange); }
-.cookie-btn {
-  background: var(--orange); color: #FFFFFF;
-  border: none; border-radius: 10px;
-  padding: 0.65rem 1.2rem;
-  font-weight: 700; font-size: 0.9rem;
-  font-family: inherit;
-  cursor: pointer; flex-shrink: 0;
-  transition: transform 0.2s, background 0.2s;
-}
-.cookie-btn:hover { transform: translateY(-1px); background: var(--orange-dark); }
-@media (max-width: 600px) {
-  .cookie-banner { flex-direction: column; align-items: stretch; text-align: center; padding: 1rem; }
-  .cookie-btn { width: 100%; padding: 0.75rem 1rem; }
-}
-
-/* Cookie banner — bottom-left compact card */
+/* ========== COOKIE BANNER — bottom-left compact card, above intro ========== */
 .cookie-banner {
   position: fixed; bottom: 1.25rem; left: 1.25rem;
-  z-index: 9990;
+  z-index: 10001; /* above intro overlay (9999) */
   max-width: 360px; width: calc(100% - 2.5rem);
   padding: 1rem 1.25rem;
   border-radius: 14px;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.94);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.14);
   display: flex; flex-direction: column; align-items: stretch; gap: 0.75rem;
   font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;
   opacity: 0; transform: translateY(20px);
   transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
 }
 .cookie-banner.visible {
   opacity: 1; transform: translateY(0);
+  pointer-events: auto;
 }
 .cookie-banner.hidden { display: none; }
 .cookie-text { flex: 1; }
@@ -3118,7 +3082,21 @@ body {
     banner.remove();
     return;
   }
-  setTimeout(() => banner.classList.add('visible'), 800);
+  const show = () => banner.classList.add('visible');
+  const intro = document.getElementById('intro');
+  if (intro && !intro.classList.contains('dissolve')) {
+    // Wait for intro to dissolve, then show banner ~400ms later
+    const poll = setInterval(() => {
+      if (!document.body.contains(intro) || intro.classList.contains('dissolve')) {
+        clearInterval(poll);
+        setTimeout(show, 400);
+      }
+    }, 150);
+    // Hard fallback if intro never dissolves
+    setTimeout(() => { clearInterval(poll); show(); }, 6000);
+  } else {
+    setTimeout(show, 500);
+  }
   document.getElementById('cookieAccept').addEventListener('click', () => {
     localStorage.setItem('cookieAccepted', '1');
     banner.classList.remove('visible');
