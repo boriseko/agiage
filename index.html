@@ -694,7 +694,7 @@ body {
 
 /* ========== CASES (showcase: screen + side list) ========== */
 .cases-section {
-  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  background: var(--grad-page-dark);
   padding: clamp(70px, 9vw, 130px) 0;
   position: relative; z-index: 2;
   color: var(--white);
@@ -704,7 +704,7 @@ body {
 }
 @media (min-width: 768px) { .cases-section .s-container { padding: 0 3rem; } }
 .cases-section .s-title { color: var(--white); }
-.cases-section .s-desc { color: rgba(255,255,255,0.65); margin: 1rem auto 3rem; max-width: 560px; }
+.cases-section .s-desc { color: rgba(255,255,255,0.85); margin: 1rem auto 3rem; max-width: 560px; }
 .cases-stage {
   display: grid; grid-template-columns: 1fr; gap: 2rem;
   align-items: start;
@@ -822,14 +822,18 @@ body {
   background: rgba(255,140,0,0.10);
   border-color: rgba(255,140,0,0.45);
 }
-.case-list-num {
-  font-size: 0.78rem; font-weight: 800;
-  color: rgba(255,255,255,0.45);
-  min-width: 22px;
-  letter-spacing: 0.05em;
-  font-variant-numeric: tabular-nums;
+.case-list-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.30);
+  flex-shrink: 0;
+  transition: all 0.25s ease;
 }
-.case-list-btn.is-active .case-list-num { color: var(--orange); }
+.case-list-btn.is-active .case-list-dot {
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  transform: scale(1.1);
+}
 .case-list-name {
   font-size: 0.92rem; font-weight: 600;
   flex: 1;
@@ -3922,10 +3926,10 @@ function toggleFaq(item) {
       btn.className = 'case-list-btn' + (i === pIdx ? ' is-active' : '');
       btn.dataset.i = i;
       btn.innerHTML =
-        '<span class="case-list-num">' + String(i+1).padStart(2,'0') + '</span>' +
+        '<span class="case-list-dot"></span>' +
         '<span class="case-list-name">' + p.title + '</span>' +
         '<span class="case-list-arrow">→</span>';
-      btn.addEventListener('click', () => selectProject(i));
+      btn.addEventListener('click', () => { stopAuto(); selectProject(i); });
       list.appendChild(btn);
     });
   }
@@ -3948,7 +3952,7 @@ function toggleFaq(item) {
       b.type = 'button';
       b.className = i === sIdx ? 'is-active' : '';
       b.setAttribute('aria-label', 'Скрин ' + (i+1));
-      b.addEventListener('click', () => selectShot(i));
+      b.addEventListener('click', () => { stopAuto(); selectShot(i); });
       screenDots.appendChild(b);
     });
   }
@@ -3992,6 +3996,52 @@ function toggleFaq(item) {
     sIdx = i;
     renderDots();
     setScreen(PROJECTS[pIdx].shots[sIdx]);
+  }
+
+  // Auto-cycle through every screenshot, then next project
+  let autoTimer = null;
+  function autoTick() {
+    const p = PROJECTS[pIdx];
+    if (sIdx + 1 < p.shots.length) {
+      // следующий скрин в текущем проекте
+      sIdx++;
+      renderDots();
+      setScreen(p.shots[sIdx]);
+    } else {
+      // переход на следующий проект
+      const next = (pIdx + 1) % PROJECTS.length;
+      pIdx = next;
+      sIdx = 0;
+      renderInfo();
+      renderDots();
+      setScreen(PROJECTS[pIdx].shots[0]);
+      list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
+        b.classList.toggle('is-active', idx === pIdx);
+      });
+    }
+  }
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(autoTick, 1000);
+  }
+  function stopAuto() {
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+  }
+
+  // Hover scope — pause auto when mouse over the stage
+  const stage = document.querySelector('.cases-stage');
+  if (stage) {
+    stage.addEventListener('mouseenter', stopAuto);
+    stage.addEventListener('mouseleave', startAuto);
+  }
+
+  // Запускаем только когда секция видна
+  const sec = document.getElementById('cases');
+  if (sec) {
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) startAuto(); else stopAuto();
+    }, { threshold: 0.3 });
+    obs.observe(sec);
   }
 
   // Init
