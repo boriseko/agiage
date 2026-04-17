@@ -1819,7 +1819,7 @@ body {
   max-width: 1200px; margin: 0 auto;
 }
 
-/* Giant ВАЙБ text — below the plate, original faint style */
+/* Giant ВАЙБ text — below the plate */
 .cin-vibe-wrap {
   position: relative;
   width: 100%;
@@ -1831,6 +1831,16 @@ body {
 .cin-vibe-svg {
   width: 100%; height: 100%;
   display: block;
+  animation: vibeBreath 6s ease-in-out infinite;
+  transform-origin: center center;
+  transition: filter 0.4s ease;
+}
+.cin-vibe-wrap:hover .cin-vibe-svg {
+  filter: drop-shadow(0 0 32px rgba(255,160,0,0.25));
+}
+@keyframes vibeBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
 }
 .cin-vibe-svg text {
   font-family: 'Geist', sans-serif;
@@ -1842,11 +1852,15 @@ body {
   fill: none;
   stroke: rgba(255,255,255,0.2);
   stroke-width: 1.5;
+  transition: stroke 0.4s ease;
+}
+.cin-vibe-wrap:hover .cin-vibe-stroke {
+  stroke: rgba(255,160,0,0.35);
 }
 .cin-vibe-fill {
   fill: url(#vibeGrad);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 /* Footer grid */
@@ -1860,8 +1874,19 @@ body {
 
 /* Brand column */
 .cin-brand-name {
-  font-size: 1.6rem; font-weight: 800; color: var(--text);
-  letter-spacing: -0.03em; margin-bottom: 0.75rem;
+  display: inline-block;
+  font-size: 2.25rem; font-weight: 900;
+  letter-spacing: -0.04em; line-height: 1;
+  color: var(--orange);
+}
+.cin-brand-tagline {
+  font-size: 0.8rem; color: var(--text-light);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-top: 0.5rem; margin-bottom: 1rem;
+  font-weight: 500;
+}
+.cin-brand-tagline em {
+  font-style: normal; color: var(--text-muted); font-weight: 600;
 }
 .cin-brand-desc {
   font-size: 0.95rem; color: var(--text-muted);
@@ -2977,6 +3002,7 @@ body {
       <div class="cin-grid">
         <div>
           <div class="cin-brand-name">АГИ</div>
+          <div class="cin-brand-tagline">Агенты <em>·</em> Без кода</div>
           <div class="cin-brand-desc">Курс по работе с <span class="cin-hl">AI-агентами</span> для специалистов любых профессий. <span class="cin-hl">Без кода, без опыта.</span></div>
         </div>
         <div>
@@ -3021,9 +3047,10 @@ body {
   <div class="cin-vibe-wrap" id="vibeWrap">
     <svg class="cin-vibe-svg" viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <radialGradient id="vibeGrad" cx="50%" cy="50%" r="40%">
-          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+        <radialGradient id="vibeGrad" cx="50%" cy="50%" r="45%">
+          <stop offset="0%" stop-color="#FFA000" stop-opacity="1"/>
+          <stop offset="60%" stop-color="#FF8F00" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#FFA000" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <text x="450" y="200" text-anchor="middle" class="cin-vibe-stroke">ВАЙБ</text>
