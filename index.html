@@ -694,7 +694,7 @@ body {
 
 /* ========== CASES (showcase: screen + side list) ========== */
 .cases-section {
-  background: var(--grad-page-dark);
+  background: linear-gradient(135deg, #FFA000 0%, #FF8F00 60%, #F28000 100%);
   padding: clamp(70px, 9vw, 130px) 0;
   position: relative; z-index: 2;
   color: var(--white);
@@ -719,9 +719,7 @@ body {
   position: relative;
   width: 100%; aspect-ratio: 16/10;
   border-radius: 18px; overflow: hidden;
-  background: #0a0a0a;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--white);
 }
 .cases-screen-img {
   position: absolute; inset: 0;
@@ -737,30 +735,29 @@ body {
 }
 .cases-screen-dots button {
   width: 32px; height: 4px;
-  border: none; background: rgba(255,255,255,0.18);
+  border: none; background: rgba(255,255,255,0.45);
   border-radius: 999px;
   cursor: pointer;
   padding: 0;
   transition: all 0.25s ease;
 }
-.cases-screen-dots button:hover { background: rgba(255,255,255,0.4); }
+.cases-screen-dots button:hover { background: rgba(255,255,255,0.7); }
 .cases-screen-dots button.is-active {
-  background: var(--orange);
+  background: var(--white);
   width: 56px;
 }
 
 /* RIGHT — info + project list */
 .cases-side { display: flex; flex-direction: column; gap: 1.5rem; }
 .cases-info {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.10);
+  background: var(--white);
   border-radius: 18px; padding: 1.75rem;
   transition: opacity 0.3s ease;
 }
 .cases-info-tag {
   display: inline-block; padding: 0.35rem 0.75rem;
-  background: rgba(255,140,0,0.15);
-  border: 1px solid rgba(255,140,0,0.4);
+  background: rgba(255,140,0,0.10);
+  border: 1px solid rgba(255,140,0,0.30);
   border-radius: 6px;
   font-size: 0.7rem; font-weight: 800; color: var(--orange);
   text-transform: uppercase; letter-spacing: 0.1em;
@@ -769,27 +766,27 @@ body {
 .cases-info-title {
   font-size: clamp(1.25rem, 2vw, 1.6rem);
   font-weight: 800; line-height: 1.25; letter-spacing: -0.02em;
-  color: var(--white); margin-bottom: 0.85rem;
+  color: var(--text); margin-bottom: 0.85rem;
 }
 .cases-info-desc {
   font-size: 0.95rem; line-height: 1.6;
-  color: rgba(255,255,255,0.78);
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
 .cases-info-meta {
   display: flex; gap: 1.5rem; flex-wrap: wrap;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(255,255,255,0.10);
+  border-top: 1px solid var(--border);
 }
 .cases-info-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
 .cases-meta-label {
   font-size: 0.7rem; font-weight: 700;
-  color: rgba(255,255,255,0.45);
+  color: var(--text-light);
   letter-spacing: 0.08em; text-transform: uppercase;
 }
 .cases-meta-value {
   font-size: 0.95rem; font-weight: 700;
-  color: var(--white);
+  color: var(--text);
 }
 
 /* Project list (numbered) */
@@ -815,12 +812,12 @@ body {
   transition: all 0.25s ease;
 }
 .case-list-btn:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.30);
 }
 .case-list-btn.is-active {
-  background: rgba(255,140,0,0.10);
-  border-color: rgba(255,140,0,0.45);
+  background: rgba(255,255,255,0.20);
+  border-color: rgba(255,255,255,0.55);
 }
 .case-list-dot {
   width: 8px; height: 8px;
@@ -840,11 +837,11 @@ body {
   line-height: 1.35;
 }
 .case-list-arrow {
-  font-size: 0.85rem; color: rgba(255,255,255,0.3);
+  font-size: 0.85rem; color: rgba(255,255,255,0.45);
   transition: all 0.25s ease;
 }
 .case-list-btn.is-active .case-list-arrow {
-  color: var(--orange);
+  color: var(--white);
   transform: translateX(3px);
 }
 
@@ -4049,6 +4046,8 @@ function toggleFaq(item) {
   renderList();
   renderInfo();
   renderDots();
+  // Стартуем авто-смену сразу — observer добавит паузу при выходе из вьюпорта
+  startAuto();
 })();
 
 // === Audience pills: flip-clock style profession swap ===
