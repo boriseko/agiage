@@ -959,6 +959,70 @@ body {
 /* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
 .mindset-section.mindset-after-audience { padding-top: 0; }
 
+/* ========== PROJECTS SHOWCASE (айдентика + рендеры) ========== */
+.projects-showcase {
+  background: linear-gradient(135deg, #FFA000 0%, #FF8F00 60%, #F28000 100%);
+  padding: clamp(60px, 8vw, 110px) 0;
+  position: relative; z-index: 2;
+  overflow: hidden;
+}
+.projects-showcase::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255,255,255,0.10), transparent 55%);
+  pointer-events: none;
+}
+.projects-showcase .s-container {
+  max-width: 1340px; margin: 0 auto; padding: 0 2rem;
+  position: relative; z-index: 1;
+}
+@media (min-width: 768px) { .projects-showcase .s-container { padding: 0 3rem; } }
+.ps-grid {
+  display: grid; grid-template-columns: 1fr; gap: 2rem;
+}
+@media (min-width: 900px) {
+  .ps-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+.ps-item {
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+.ps-screen {
+  position: relative;
+  border-radius: 20px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.10);
+  border: 1px solid rgba(255,255,255,0.25);
+  background: var(--white);
+  aspect-ratio: 16/10;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ps-screen:hover { transform: translateY(-6px); }
+.ps-screen img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  display: block;
+}
+.ps-caption { color: var(--white); }
+.ps-caption-tag {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  padding: 0.3rem 0.7rem;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 6px;
+  margin-bottom: 0.85rem;
+}
+.ps-caption-title {
+  font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+  font-weight: 800; line-height: 1.2; letter-spacing: -0.02em;
+  color: var(--white); margin-bottom: 0.6rem;
+}
+.ps-caption-desc {
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.92);
+}
+
 /* ========== MINDSET / АНЯ ========== */
 .mindset-section {
   background: var(--white);
@@ -2525,6 +2589,34 @@ body {
             <div class="arc-label">Стало</div>
             <div class="arc-text">−10&nbsp;часов в неделю. Фокус вернулся на творческую часть работы. Беру на 2–3&nbsp;заказа больше в месяц, остаюсь свежей и в&nbsp;потоке.</div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROJECTS SHOWCASE ==================== -->
+<section class="projects-showcase" id="projects-showcase">
+  <div class="s-container">
+    <div class="ps-grid">
+      <div class="ps-item reveal">
+        <div class="ps-screen">
+          <img src="project-identika.png" alt="Айдентика — генератор брендированных предметов" loading="lazy">
+        </div>
+        <div class="ps-caption">
+          <span class="ps-caption-tag">Айдентика</span>
+          <h3 class="ps-caption-title">Каталог предметов под твой бренд</h3>
+          <p class="ps-caption-desc">Выбираешь из каталога — ручка, блокнот, бутылка, визитка, дождевик, кепка, чашка, упаковка. ИИ примеряет твой фирменный стиль на десятки предметов за минуты.</p>
+        </div>
+      </div>
+      <div class="ps-item reveal reveal-delay-1">
+        <div class="ps-screen">
+          <img src="project-renderi.png" alt="Renderi — фотореалистичные рендеры по референсам" loading="lazy">
+        </div>
+        <div class="ps-caption">
+          <span class="ps-caption-tag">Рендеры</span>
+          <h3 class="ps-caption-title">Фотореалистичные рендеры из референсов</h3>
+          <p class="ps-caption-desc">Загружаешь несколько референсных фотографий — ИИ создаёт фотореалистичный рендер и кинематографичное видео. Презентация концепции за вечер.</p>
         </div>
       </div>
     </div>
