@@ -967,16 +967,11 @@ body {
   perspective: 800px;
   -webkit-perspective: 800px;
 }
-/* Chaos: subtle pill rotations */
-.oval-pill:nth-child(3n+1) { transform: rotate(-1.2deg); }
-.oval-pill:nth-child(3n+2) { transform: rotate(0.8deg); }
-.oval-pill:nth-child(3n)   { transform: rotate(-0.4deg); }
-.oval-pill:nth-child(5n)   { transform: rotate(1.5deg); }
 .oval-pill:hover {
   background: var(--orange);
   color: var(--white);
   border-color: var(--orange);
-  transform: translateY(-3px) rotate(0) scale(1.03);
+  transform: translateY(-3px) scale(1.03);
   box-shadow: 0 8px 22px rgba(255,140,0,0.35);
   z-index: 2;
 }
