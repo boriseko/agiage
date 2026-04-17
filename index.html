@@ -3103,21 +3103,26 @@ body {
 </footer>
 
 <!-- Cookie banner -->
-<div class="cookie-banner" id="cookieBanner">
-  <div class="cookie-text">Мы используем cookie для улучшения работы сайта. Подробнее — <a href="privacy.html" target="_blank">политика конфиденциальности</a></div>
-  <button class="cookie-btn" id="cookieAccept">Принять</button>
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Согласие на использование cookies">
+  <div class="cookie-text">Сайт использует cookies для аналитики и улучшения работы. Продолжая, вы соглашаетесь с <a href="policy.html" target="_blank">Политикой обработки ПД</a>.</div>
+  <button class="cookie-btn" id="cookieAccept" type="button">Принять</button>
 </div>
 
 <script>
 // === Cookie banner ===
 (function() {
-  if (localStorage.getItem('cookieOk')) return;
   const banner = document.getElementById('cookieBanner');
-  setTimeout(() => banner.classList.add('visible'), 2000);
+  if (!banner) return;
+  // Honour either legacy key so previous visitors don't see it twice
+  if (localStorage.getItem('cookieAccepted') === '1' || localStorage.getItem('cookieOk') === '1') {
+    banner.remove();
+    return;
+  }
+  setTimeout(() => banner.classList.add('visible'), 800);
   document.getElementById('cookieAccept').addEventListener('click', () => {
-    localStorage.setItem('cookieOk', '1');
+    localStorage.setItem('cookieAccepted', '1');
     banner.classList.remove('visible');
-    setTimeout(() => banner.classList.add('hidden'), 500);
+    setTimeout(() => banner.remove(), 400);
   });
 })();
 
@@ -4098,20 +4103,6 @@ gsap.registerPlugin(ScrollTrigger);
   }
 })();
 
-// Cookie consent banner
-(function(){
-  if (localStorage.getItem('cookieAccepted') === '1') return;
-  const banner = document.createElement('div');
-  banner.className = 'cookie-banner visible';
-  banner.innerHTML = '<div class="cookie-text">Сайт использует cookies для аналитики и улучшения работы. Продолжая использование, вы соглашаетесь с <a href="/policy.html" target="_blank">Политикой обработки ПД</a>.</div><button class="cookie-btn" type="button">Принять</button>';
-  banner.querySelector('.cookie-btn').addEventListener('click', function(){
-    localStorage.setItem('cookieAccepted', '1');
-    banner.style.opacity = '0';
-    banner.style.transform = 'translateY(20px)';
-    setTimeout(() => banner.remove(), 300);
-  });
-  document.body.appendChild(banner);
-})();
 </script>
 
 </body>
