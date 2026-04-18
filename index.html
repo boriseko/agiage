@@ -1114,6 +1114,21 @@ body {
 /* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
 .mindset-section.mindset-after-audience { padding-top: 0; padding-bottom: clamp(20px, 3vw, 40px); }
 
+.mindset-eyebrow-wrap {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.mindset-top-pill {
+  display: inline-block;
+  font-size: 0.74rem; font-weight: 800;
+  color: var(--orange);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.45rem 1rem;
+  background: rgba(255,140,0,0.10);
+  border: 1px solid rgba(255,140,0,0.30);
+  border-radius: 9999px;
+}
+
 /* ========== PROJECTS SHOWCASE (айдентика + рендеры) ========== */
 .projects-showcase {
   background: linear-gradient(135deg, #FFA000 0%, #FF8F00 60%, #F28000 100%);
@@ -2889,10 +2904,12 @@ body {
 <!-- ==================== MINDSET / АНЯ (без заголовка — он выше) ==================== -->
 <section class="mindset-section mindset-after-audience" id="mindset">
   <div class="s-container">
+    <div class="mindset-eyebrow-wrap reveal">
+      <span class="mindset-top-pill">Реальный кейс</span>
+    </div>
     <div class="mindset-case reveal">
       <div class="case-avatar-wrap">
         <div class="case-avatar"><img src="anya.jpg" alt="Аня — ИИ-креатор" loading="lazy"></div>
-        <div class="case-tag">Реальный кейс</div>
       </div>
       <div class="case-content">
         <div class="case-name">Аня <span>· ИИ-креатор, 26&nbsp;лет</span></div>
@@ -3003,7 +3020,7 @@ body {
       <!-- LEFT: screenshot slider with arrows + dots -->
       <div class="cases-screen-wrap">
         <div class="cases-screen" id="casesScreen">
-          <img class="cases-screen-img is-active" id="casesScreenImg" src="case-oda-3.jpg" alt="" loading="lazy">
+          <img class="cases-screen-img is-active" id="casesScreenImg" src="case-content-1.png" alt="" loading="lazy">
           <button type="button" class="cases-screen-arrow prev" id="casesPrevBtn" aria-label="Предыдущий скрин">‹</button>
           <button type="button" class="cases-screen-arrow next" id="casesNextBtn" aria-label="Следующий скрин">›</button>
         </div>
@@ -3305,22 +3322,22 @@ body {
       <div class="film-terminal">
         <div class="film-terminal-bar">
           <div class="film-terminal-dot"></div><div class="film-terminal-dot"></div><div class="film-terminal-dot"></div>
-          <span style="margin-left:auto;color:#666;font-size:0.75rem;">AI Агент — проект для заказчика</span>
+          <span style="margin-left:auto;color:#666;font-size:0.75rem;">AI Агент — задачи дня</span>
         </div>
         <div class="film-terminal-lines" id="filmTerminal">
-          <div class="film-term-line" data-step="1"><span class="cmd">$</span> Новая задача получена</div>
-          <div class="film-term-line" data-step="1"><span class="dim">→ Анализирую бриф от заказчика...</span></div>
-          <div class="film-term-line" data-step="2"><span class="accent">⚙</span> Собираю структуру проекта</div>
-          <div class="film-term-line" data-step="2"><span class="dim">→ Создаю файлы, компоненты, стили...</span></div>
+          <div class="film-term-line" data-step="1"><span class="cmd">›</span> 7 задач на сегодня от&nbsp;тебя</div>
+          <div class="film-term-line" data-step="1"><span class="dim">→ Отчёт + презентация + 5 ответов клиентам</span></div>
+          <div class="film-term-line" data-step="2"><span class="accent">⚙</span> Собираю данные для отчёта</div>
+          <div class="film-term-line" data-step="2"><span class="dim">→ Подтягиваю выгрузки, анализирую цифры...</span></div>
           <div class="film-term-line" data-step="2"><div class="film-progress"><div class="film-progress-bar" id="filmProgress1"></div></div></div>
-          <div class="film-term-line" data-step="3"><span class="accent">⚙</span> Генерирую дизайн и контент</div>
-          <div class="film-term-line" data-step="3"><span class="dim">→ Адаптивная вёрстка, API...</span></div>
+          <div class="film-term-line" data-step="3"><span class="accent">⚙</span> Параллельно готовлю презентацию</div>
+          <div class="film-term-line" data-step="3"><span class="dim">→ 14 слайдов, графики, тезисы, выводы...</span></div>
           <div class="film-term-line" data-step="3"><div class="film-progress"><div class="film-progress-bar" id="filmProgress2"></div></div></div>
-          <div class="film-term-line" data-step="4"><span class="cmd">!</span> Готов к проверке. Жду правки.</div>
-          <div class="film-term-line" data-step="4"><span class="dim">→ Правки получены, вношу...</span></div>
-          <div class="film-term-line" data-step="5"><span class="accent">⚙</span> Финализация и тесты...</div>
+          <div class="film-term-line" data-step="4"><span class="cmd">!</span> Отчёт и презентация готовы</div>
+          <div class="film-term-line" data-step="4"><span class="dim">→ Пишу ответы 5 клиентам...</span></div>
+          <div class="film-term-line" data-step="5"><span class="accent">⚙</span> Финализирую и отправляю</div>
           <div class="film-term-line" data-step="5"><div class="film-progress"><div class="film-progress-bar" id="filmProgress3"></div></div></div>
-          <div class="film-term-line" data-step="6"><span style="color:#28c840;">✅ Проект готов. Деплой выполнен.</span></div>
+          <div class="film-term-line" data-step="6"><span style="color:#28c840;">✅ Все 7 задач закрыты. Можешь отдыхать.</span></div>
         </div>
         <div class="film-term-status"><span class="live" id="filmStatus">● Агент работает</span></div>
       </div>
@@ -3331,38 +3348,35 @@ body {
         <div class="film-phone-status" id="filmPhoneTime">09:00</div>
         <div class="film-phone-screen" id="filmChats">
           <div class="film-chat active" data-step="1">
-            <div class="film-chat-header">💼 Заказчик</div>
-            <div class="film-msg film-msg-in">Привет! Нужен лендинг для нового продукта. Когда сможешь?</div>
-            <div class="film-msg film-msg-out">Принял! К вечеру готово 👌</div>
+            <div class="film-chat-header">📝 Задачи на день</div>
+            <div class="film-msg film-msg-out">Отчёт за квартал, презентация совету, ответить 5 клиентам</div>
+            <div class="film-msg film-msg-in">Принял! 7 задач, начинаю ⚙️</div>
           </div>
           <div class="film-chat" data-step="2">
-            <div class="film-chat-header">❤️ Любимая</div>
-            <div class="film-msg film-msg-out">Доброе утро ☀️ Пошёл на спорт</div>
-            <div class="film-msg film-msg-in">Хорошего дня! 💛</div>
+            <div class="film-chat-header">👨‍👩‍👧 Семья</div>
+            <div class="film-msg film-msg-in">Завтрак готов ☕</div>
+            <div class="film-msg film-msg-out">Иду! 💛</div>
           </div>
           <div class="film-chat" data-step="3">
             <div class="film-chat-header" style="text-align:center;color:#aaa;padding:3rem 0;font-size:2rem;">🏃<br><span style="font-size:0.85rem;">На пробежке</span></div>
           </div>
           <div class="film-chat" data-step="4">
-            <div class="film-chat-header">🤖 AI Агент</div>
-            <div class="film-msg film-msg-in">Проект собран. Проверь.</div>
-            <div class="film-msg film-msg-out">Поменяй hero, добавь анимацию</div>
-            <div class="film-msg film-msg-in">Принял ⚙️</div>
+            <div class="film-chat-header">🍕 Друзья</div>
+            <div class="film-msg film-msg-in">Обедаем сегодня?</div>
+            <div class="film-msg film-msg-out">Го! В 14:30 🙌</div>
           </div>
           <div class="film-chat" data-step="5">
-            <div class="film-chat-header">🍕 Друзья</div>
-            <div class="film-msg film-msg-out">Го вечером встретимся?</div>
-            <div class="film-msg film-msg-in">Давайте! В 19:00 🙌</div>
+            <div class="film-chat-header" style="text-align:center;color:#aaa;padding:3rem 0;font-size:2rem;">🌳<br><span style="font-size:0.85rem;">Прогулка в парке</span></div>
           </div>
           <div class="film-chat" data-step="6">
-            <div class="film-chat-header">💼 Заказчик</div>
-            <div class="film-msg film-msg-out">Готово! Вот ссылка 🔗</div>
-            <div class="film-msg film-msg-in">Круто! Оплачиваю 🔥</div>
+            <div class="film-chat-header">🤖 AI Агент</div>
+            <div class="film-msg film-msg-in">Все 7 задач закрыты. Отчёт + презентация на email. Ответы клиентам отправлены.</div>
+            <div class="film-msg film-msg-out">Огонь 🔥</div>
             <div class="film-notification">
-              <div class="film-notif-icon">🏦</div>
+              <div class="film-notif-icon">⏱️</div>
               <div class="film-notif-text">
-                <div class="film-notif-title">Сбербанк</div>
-                <div class="film-notif-body">Зачисление +100 000 ₽</div>
+                <div class="film-notif-title">Сэкономлено сегодня</div>
+                <div class="film-notif-body">9 часов твоей жизни</div>
               </div>
             </div>
           </div>
@@ -3373,17 +3387,17 @@ body {
   </div>
 
   <div class="film-timeline" id="filmTimeline">
-    <div class="film-step active" data-step="1" onclick="filmGoTo(1)"><div class="film-step-time">09:00</div><div class="film-step-dot"></div><div class="film-step-label">Задача</div></div>
+    <div class="film-step active" data-step="1" onclick="filmGoTo(1)"><div class="film-step-time">09:00</div><div class="film-step-dot"></div><div class="film-step-label">Задачи</div></div>
     <div class="film-step-line"></div>
-    <div class="film-step" data-step="2" onclick="filmGoTo(2)"><div class="film-step-time">09:30</div><div class="film-step-dot"></div><div class="film-step-label">Утро</div></div>
+    <div class="film-step" data-step="2" onclick="filmGoTo(2)"><div class="film-step-time">10:00</div><div class="film-step-dot"></div><div class="film-step-label">Семья</div></div>
     <div class="film-step-line"></div>
     <div class="film-step" data-step="3" onclick="filmGoTo(3)"><div class="film-step-time">12:00</div><div class="film-step-dot"></div><div class="film-step-label">Спорт</div></div>
     <div class="film-step-line"></div>
-    <div class="film-step" data-step="4" onclick="filmGoTo(4)"><div class="film-step-time">14:00</div><div class="film-step-dot"></div><div class="film-step-label">Правки</div></div>
+    <div class="film-step" data-step="4" onclick="filmGoTo(4)"><div class="film-step-time">14:30</div><div class="film-step-dot"></div><div class="film-step-label">Друзья</div></div>
     <div class="film-step-line"></div>
-    <div class="film-step" data-step="5" onclick="filmGoTo(5)"><div class="film-step-time">17:00</div><div class="film-step-dot"></div><div class="film-step-label">Друзья</div></div>
+    <div class="film-step" data-step="5" onclick="filmGoTo(5)"><div class="film-step-time">17:00</div><div class="film-step-dot"></div><div class="film-step-label">Прогулка</div></div>
     <div class="film-step-line"></div>
-    <div class="film-step" data-step="6" onclick="filmGoTo(6)"><div class="film-step-time">19:30</div><div class="film-step-dot"></div><div class="film-step-label">Оплата</div></div>
+    <div class="film-step" data-step="6" onclick="filmGoTo(6)"><div class="film-step-time">19:30</div><div class="film-step-dot"></div><div class="film-step-label">Итоги</div></div>
   </div>
 </section>
 
@@ -3917,14 +3931,6 @@ function toggleFaq(item) {
 
   const PROJECTS = [
     {
-      tag: 'Девелопмент',
-      title: 'Сайт для проекта застройщика',
-      desc: 'Сайт для проекта застройщика с интересным визуальным наполнением: кинематографичные рендеры, авторская типографика, рисованные иллюстрации, интерактивные элементы.',
-      time: '2 недели',
-      client: 'Крупный девелопер',
-      shots: ['case-oda-3.jpg','case-oda-1.jpg','case-oda-2.jpg']
-    },
-    {
       tag: 'Контент',
       title: 'Система ведения соцсетей',
       desc: 'Парсер источников, автоматическое написание постов, мониторинг метрик и планирование контента — всё в одном агенте.',
@@ -3939,6 +3945,14 @@ function toggleFaq(item) {
       time: '5 дней',
       client: 'Я',
       shots: ['case-crm-1.jpg']
+    },
+    {
+      tag: 'Девелопмент',
+      title: 'Сайт для проекта застройщика',
+      desc: 'Сайт для проекта застройщика с интересным визуальным наполнением: кинематографичные рендеры, авторская типографика, рисованные иллюстрации, интерактивные элементы.',
+      time: '2 недели',
+      client: 'Крупный девелопер',
+      shots: ['case-oda-3.jpg','case-oda-1.jpg','case-oda-2.jpg']
     },
     {
       tag: 'Юриспруденция',
