@@ -924,20 +924,20 @@ body {
 .timeline-item:last-child { padding-bottom: 0; }
 
 .timeline-marker {
-  position: absolute; left: -2.5rem; top: 0;
-  width: 42px; height: 42px; border-radius: 50%;
+  position: absolute; left: -2.4rem; top: 0.85rem;
+  width: 36px; height: 36px; border-radius: 50%;
   background: var(--white); border: 2px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; font-weight: 800; color: var(--text-light);
+  font-size: 0.78rem; font-weight: 800; color: var(--text-light);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 2;
 }
 @media (min-width: 768px) {
-  .timeline-marker { left: -3.5rem; width: 50px; height: 50px; font-size: 0.95rem; }
+  .timeline-marker { left: -3.2rem; width: 40px; height: 40px; font-size: 0.85rem; top: 1.2rem; }
 }
 .timeline-item.revealed .timeline-marker {
   background: linear-gradient(135deg, #FFD54F, #FFA000);
   border-color: transparent; color: var(--white);
-  box-shadow: 0 4px 16px rgba(255,160,0,0.3);
+  box-shadow: 0 2px 8px rgba(255,160,0,0.18);
   animation: markerPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes markerPop {
@@ -947,17 +947,19 @@ body {
 }
 
 .timeline-card {
-  border-radius: 16px; padding: 1.5rem 1.75rem;
-  border: 1px solid var(--border); background: var(--white);
+  border-radius: 24px; padding: 1.75rem 2rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFB 100%);
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   opacity: 0; transform: translateX(-20px) translateY(15px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
 }
 .timeline-item.revealed .timeline-card {
   opacity: 1; transform: translateX(0) translateY(0);
 }
 .timeline-card:hover {
-  border-color: rgba(255,160,0,0.3);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.04); transform: translateY(-2px);
+  border-color: rgba(255,160,0,0.25);
+  box-shadow: 0 12px 32px rgba(255,160,0,0.08); transform: translateY(-2px);
 }
 .timeline-card h3 {
   font-size: clamp(1.05rem, 1.8vw, 1.3rem);
@@ -1114,19 +1116,24 @@ body {
 /* Mindset section без заголовка — убираем верхний отступ для случая когда идёт после AUDIENCE */
 .mindset-section.mindset-after-audience { padding-top: 0; padding-bottom: clamp(20px, 3vw, 40px); }
 
+/* Стикер "Реальный кейс" — слева на стыке между секциями */
+.mindset-section { position: relative; }
 .mindset-eyebrow-wrap {
-  text-align: center;
-  margin-bottom: 1.5rem;
+  position: absolute;
+  top: -22px;
+  left: clamp(2rem, 5vw, 4.5rem);
+  z-index: 5;
 }
 .mindset-top-pill {
   display: inline-block;
   font-size: 0.74rem; font-weight: 800;
-  color: var(--orange);
+  color: var(--white);
   letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 0.45rem 1rem;
-  background: rgba(255,140,0,0.10);
-  border: 1px solid rgba(255,140,0,0.30);
+  padding: 0.6rem 1.25rem;
+  background: var(--orange);
+  border: none;
   border-radius: 9999px;
+  box-shadow: 0 8px 22px rgba(255,140,0,0.35), 0 2px 6px rgba(0,0,0,0.10);
 }
 
 /* ========== PROJECTS SHOWCASE (айдентика + рендеры) ========== */
@@ -2913,7 +2920,7 @@ body {
       </div>
       <div class="case-content">
         <div class="case-name">Аня <span>· ИИ-креатор, 26&nbsp;лет</span></div>
-        <div class="case-quote">«Упорно не хотела переходить с ChatGPT на Claude — некогда было разбираться, а все видео по теме были про лендинги и ботов. На самом деле это абсолютно не так. Это про экономию времени и новый подход к решению задач.<br><br>Я работаю ИИ-креатором. И теперь моя задача не сделать 10 удачных генераций за час, а написать правильный запрос на автоматизацию этого процесса. Зачем? Потому что так быстрее и интереснее! Пока это всё делается без моего участия, я уже открываю следующий заказ.<br><br>Для меня время — деньги. И агент это то, что экономит моё внимание и фокус. Удивительно, что такое малое количество людей этим пользуется… всего за 100$ в месяц. Это то, что изменило мою работу на до и после.»</div>
+        <div class="case-quote">«Долго не хотела переходить с&nbsp;ChatGPT на Claude — думала, это для&nbsp;разработчиков. Оказалось — нет. Это про экономию времени и&nbsp;новый подход к&nbsp;задачам.<br><br>Раньше делала 10 генераций за&nbsp;час руками. Теперь пишу один запрос на&nbsp;автоматизацию — пока агент работает, открываю следующий заказ.<br><br>Удивительно, как мало людей этим пользуется. Всего&nbsp;100$ в&nbsp;месяц — и&nbsp;работа разделилась на&nbsp;до и&nbsp;после.»</div>
         <div class="case-arc">
           <div class="arc-block">
             <div class="arc-label">Было</div>
@@ -4072,51 +4079,9 @@ function toggleFaq(item) {
     setScreen(PROJECTS[pIdx].shots[sIdx]);
   }
 
-  // Auto-cycle through every screenshot, then next project
-  let autoTimer = null;
-  function autoTick() {
-    const p = PROJECTS[pIdx];
-    if (sIdx + 1 < p.shots.length) {
-      // следующий скрин в текущем проекте
-      sIdx++;
-      renderDots();
-      setScreen(p.shots[sIdx]);
-    } else {
-      // переход на следующий проект
-      const next = (pIdx + 1) % PROJECTS.length;
-      pIdx = next;
-      sIdx = 0;
-      renderInfo();
-      renderDots();
-      setScreen(PROJECTS[pIdx].shots[0]);
-      list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
-        b.classList.toggle('is-active', idx === pIdx);
-      });
-    }
-  }
-  function startAuto() {
-    stopAuto();
-    autoTimer = setInterval(autoTick, 1000);
-  }
-  function stopAuto() {
-    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
-  }
-
-  // Hover scope — pause auto when mouse over the stage
-  const stage = document.querySelector('.cases-stage');
-  if (stage) {
-    stage.addEventListener('mouseenter', stopAuto);
-    stage.addEventListener('mouseleave', startAuto);
-  }
-
-  // Запускаем только когда секция видна
-  const sec = document.getElementById('cases');
-  if (sec) {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) startAuto(); else stopAuto();
-    }, { threshold: 0.3 });
-    obs.observe(sec);
-  }
+  // Авто-смена убрана — пользователь сам кликает по списку и стрелкам
+  function startAuto() {}
+  function stopAuto() {}
 
   // Slider arrows + swipe (prev/next по скринам внутри проекта; на краях — пере-проект)
   const prevBtn = document.getElementById('casesPrevBtn');
@@ -4174,8 +4139,6 @@ function toggleFaq(item) {
   renderList();
   renderInfo();
   renderDots();
-  // Стартуем авто-смену сразу — observer добавит паузу при выходе из вьюпорта
-  startAuto();
 })();
 
 // === Audience pills: flip-clock style profession swap ===
