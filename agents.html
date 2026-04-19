@@ -569,10 +569,10 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 /* ===================================================================
-   COMPARE (interactive chat animation) — on yellow-tinted section
+   COMPARE (interactive chat animation) — white
    =================================================================== */
 .compare-section {
-  background: linear-gradient(180deg, var(--white) 0%, #FFFDE7 100%);
+  background: var(--white);
 }
 .compare-head {
   max-width: 700px; margin: 0 auto 2.5rem;
@@ -809,6 +809,21 @@ section[id] { scroll-margin-top: 80px; }
 }
 .island-section .bab-badge::before { color: var(--white); }
 .island-section .bab-badge em { color: rgba(255,255,255,0.75); }
+.island-section .pullquote {
+  color: var(--white);
+  border-left-color: rgba(255,255,255,0.6);
+}
+.island-section .shock-line { color: var(--white); }
+.island-section .shock-line span:nth-child(2) { color: #FFF59D; }
+.island-section hr.divider { background: rgba(255,255,255,0.28); }
+.island-section .longread a {
+  color: var(--white);
+  border-bottom-color: rgba(255,255,255,0.45);
+}
+.island-section .longread a:hover {
+  color: var(--white);
+  border-bottom-color: var(--white);
+}
 
 .bucket {
   font-size: 1.08rem;
@@ -861,26 +876,14 @@ section[id] { scroll-margin-top: 80px; }
 .manifesto-section .longread { position: relative; z-index: 1; }
 
 /* ===================================================================
-   METR chart (on tinted island)
+   METR chart — now on orange island (uses .island-section styles)
    =================================================================== */
-.metr-section {
-  background: linear-gradient(180deg, #FFFDE7 0%, #FFF59D 100%);
-  position: relative; overflow: hidden;
-}
-.metr-section::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.5) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 50%);
-  pointer-events: none;
-}
-.metr-section .longread { position: relative; z-index: 2; }
 .metr-chart {
   margin: 2.25rem -0.5rem;
   padding: 2rem 1.25rem 1.5rem;
   background: var(--white);
   border-radius: 20px;
-  box-shadow: 0 30px 70px -30px rgba(0,0,0,0.15), 0 4px 14px rgba(0,0,0,0.06);
+  box-shadow: 0 40px 100px -30px rgba(0,0,0,0.35), 0 4px 14px rgba(0,0,0,0.12);
   border: 1px solid rgba(255,255,255,0.7);
 }
 @media (min-width: 768px) {
@@ -943,13 +946,40 @@ section[id] { scroll-margin-top: 80px; }
 
 .persona {
   position: relative; overflow: hidden;
-  padding: 1.75rem 1.75rem;
+  padding: 1.75rem 1.75rem 1.75rem 1.75rem;
+  padding-top: 4rem; /* space for marker */
   border-radius: 22px;
   border: 1px solid rgba(0,0,0,0.06);
   background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFB 100%);
   box-shadow: 0 1px 0 rgba(0,0,0,0.02);
   transition: all var(--transition-slow);
   display: flex; flex-direction: column;
+}
+.persona-marker {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem; font-weight: 800;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 8px 20px rgba(255,160,0,0.35), 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 2;
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+.persona:hover .persona-marker {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(255,160,0,0.45), 0 2px 6px rgba(0,0,0,0.08);
+}
+.persona--self .persona-marker {
+  background: var(--white);
+  color: var(--orange-dark);
+  border: 2px solid var(--orange);
+  box-shadow: 0 6px 16px rgba(255,160,0,0.25);
 }
 .persona::before {
   content: ''; position: absolute; inset: 0; border-radius: 22px;
@@ -1012,11 +1042,11 @@ section[id] { scroll-margin-top: 80px; }
 }
 
 /* ===================================================================
-   CTA SOFT-PITCH — lamp-light + liquid glass tariffs
+   CTA SOFT-PITCH — white + lamp light + solid tariffs
    =================================================================== */
 .cta-section {
   position: relative; overflow: hidden;
-  background: linear-gradient(180deg, #FFFDE7 0%, #FFF9C4 50%, #FFE082 100%);
+  background: var(--white);
   padding: clamp(100px, 12vw, 160px) 0 clamp(60px, 8vw, 110px);
 }
 .cta-inner {
@@ -1090,47 +1120,23 @@ section[id] { scroll-margin-top: 80px; }
   position: relative; overflow: hidden;
   padding: 1.75rem 1.5rem;
   border-radius: 22px;
-  border: 1px solid rgba(255,255,255,0.55);
-  background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 100%);
-  backdrop-filter: blur(20px) saturate(1.6);
-  -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.04),
-    0 8px 32px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFB 100%);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 20px 50px -20px rgba(0,0,0,0.08);
   transition: all var(--transition-slow);
-}
-.tariff::before {
-  content: ''; position: absolute; inset: 0; border-radius: 22px;
-  background:
-    radial-gradient(ellipse 55% 45% at 20% 15%, rgba(255,255,255,0.75), transparent 60%),
-    radial-gradient(ellipse 70% 35% at 80% 90%, rgba(255,200,50,0.06), transparent 50%);
-  pointer-events: none;
-}
-.tariff::after {
-  content: ''; position: absolute; inset: 0; border-radius: 22px;
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, rgba(255,255,255,0.6), transparent 40%, transparent 60%, rgba(255,255,255,0.2)) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
 }
 .tariff:hover {
   transform: translateY(-4px);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.04),
-    0 24px 60px rgba(255,160,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.95);
+  border-color: rgba(255,160,0,0.3);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 24px 60px rgba(255,160,0,0.18);
 }
 .tariff--premium {
-  border-color: rgba(255,160,0,0.4);
-  background: linear-gradient(135deg, rgba(255,213,79,0.55) 0%, rgba(255,160,0,0.28) 100%);
+  border-color: rgba(255,160,0,0.5);
+  background: linear-gradient(155deg, #FFFDE7 0%, #FFF59D 100%);
   box-shadow:
-    0 1px 2px rgba(0,0,0,0.04),
-    0 14px 50px rgba(255,160,0,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.75),
-    0 -15px 140px 10px rgba(255,140,0,0.12);
+    0 1px 0 rgba(0,0,0,0.02),
+    0 24px 60px -20px rgba(255,160,0,0.30),
+    0 -20px 140px 10px rgba(255,140,0,0.10);
 }
 .tariff__kind {
   position: relative; z-index: 1;
@@ -1443,7 +1449,7 @@ section[id] { scroll-margin-top: 80px; }
 </section>
 
 <!-- ==================== EVOLUTION ==================== -->
-<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, #FFFDE7 100%);">
+<section class="section section-white">
   <div class="longread">
     <div class="reveal"><div class="s-label">02 · что изменилось</div></div>
     <h2 class="s-title reveal reveal-delay-1">Чтобы понять, что случилось, нужно <em>три картинки.</em></h2>
@@ -1452,19 +1458,19 @@ section[id] { scroll-margin-top: 80px; }
 
     <div class="ladder">
       <div class="ladder-card reveal">
-        <div class="ladder-card__num">①  ЧАТ</div>
+        <div class="ladder-card__num">01 · чат</div>
         <div class="ladder-card__title">ChatGPT-3.5</div>
         <div class="ladder-card__sub">Как калькулятор</div>
         <div class="ladder-card__desc">Ты спрашиваешь — он отвечает. Быстро, но плоско. Если сложнее «напиши письмо» — ломается. Это 2023-й. Игрушка.</div>
       </div>
       <div class="ladder-card reveal reveal-delay-1">
-        <div class="ladder-card__num">②  REASONING</div>
+        <div class="ladder-card__num">02 · reasoning</div>
         <div class="ladder-card__title">o1, o3</div>
         <div class="ladder-card__sub">Как стажёр</div>
         <div class="ladder-card__desc">Модель, которая <strong>думает перед ответом.</strong> Берёт задачу, расписывает шаги, проверяет себя. Уровень мидла. Но всё ещё — советчик.</div>
       </div>
       <div class="ladder-card ladder-card--agent reveal reveal-delay-2">
-        <div class="ladder-card__num">③  АГЕНТ</div>
+        <div class="ladder-card__num">03 · агент</div>
         <div class="ladder-card__title">ИИ-агент</div>
         <div class="ladder-card__sub">Как сотрудник с доступом к твоему ноуту</div>
         <div class="ladder-card__desc">Думает — <strong>и делает.</strong> Пишет код. Открывает файлы. Запускает команды. Видит ошибку — чинит. Делает следующий шаг. Сам.</div>
@@ -1600,8 +1606,8 @@ section[id] { scroll-margin-top: 80px; }
   </div>
 </section>
 
-<!-- ==================== STORY 3 — tinted white w/ blobs ==================== -->
-<section class="section section-white" id="story-3" style="background: linear-gradient(180deg, #FFFDE7 0%, #FFFFFF 40%);">
+<!-- ==================== STORY 3 — white w/ blobs ==================== -->
+<section class="section section-white" id="story-3">
   <div class="blobs">
     <div class="blob blob-1"></div>
     <div class="blob blob-4"></div>
@@ -1707,13 +1713,13 @@ section[id] { scroll-margin-top: 80px; }
   </div>
 </section>
 
-<!-- ==================== METR ==================== -->
-<section class="section metr-section" id="metr">
+<!-- ==================== METR — orange island ==================== -->
+<section class="section island-section metr-section" id="metr">
   <div class="longread">
     <div class="reveal"><div class="s-label">07 · и это не я один</div></div>
     <h2 class="s-title reveal reveal-delay-1">Это не ощущение. Это <em>измерили.</em></h2>
 
-    <p class="reveal reveal-delay-2">В марте 2025-го ребята из <a href="https://metr.org" target="_blank" rel="noopener">METR</a> (независимые исследователи ИИ) опубликовали странную штуку.</p>
+    <p class="reveal reveal-delay-2">В марте 2025-го независимая лаборатория <a href="https://metr.org" target="_blank" rel="noopener">METR</a> — те, кто меряет, на что реально способны модели — опубликовала странную штуку.</p>
 
     <p class="reveal">Они измерили, <strong>как долго ИИ может делать задачу самостоятельно</strong> — и как эта длительность меняется от модели к модели.</p>
 
@@ -1821,14 +1827,14 @@ section[id] { scroll-margin-top: 80px; }
 <section class="applicability-section" id="applicability">
   <div class="longread">
     <div class="reveal"><div class="s-label">08 · а что конкретно — тебе</div></div>
-    <h2 class="s-title reveal reveal-delay-1">У каждого своя «презентация в&nbsp;PowerPoint».</h2>
-    <p class="s-desc reveal reveal-delay-2" style="margin-bottom: 0.8rem;">У всех есть рутина, которая отжирает половину недели. Которую ты ненавидишь. Без которой нельзя.</p>
-    <p class="s-desc reveal reveal-delay-3">Вот <strong style="color:var(--black);">что ты можешь поручить агенту уже сейчас</strong> — в зависимости от того, чем ты занимаешься.</p>
+    <h2 class="s-title reveal reveal-delay-1">У каждого — <em>своя рутина.</em> Вот что заберёт агент.</h2>
+    <p class="s-desc reveal reveal-delay-2">У всех есть задачи, на которых ты теряешь больше всего времени. Вот что можно поручить агенту уже сейчас — в зависимости от того, чем ты занимаешься.</p>
   </div>
 
   <div class="persona-grid">
     <div class="persona reveal">
-      <div class="persona__kind">① Маркетолог</div>
+      <div class="persona-marker">01</div>
+      <div class="persona__kind">Маркетолог</div>
       <div class="persona__name">Парсинг и отчёты без рутины</div>
       <ul class="persona__tasks">
         <li>Собрать цены, офферы и креативы конкурентов по ключевикам</li>
@@ -1837,7 +1843,8 @@ section[id] { scroll-margin-top: 80px; }
       </ul>
     </div>
     <div class="persona reveal reveal-delay-1">
-      <div class="persona__kind">② Предприниматель</div>
+      <div class="persona-marker">02</div>
+      <div class="persona__kind">Предприниматель</div>
       <div class="persona__name">Управленческий слой на автомате</div>
       <ul class="persona__tasks">
         <li>Собрать финмодель из выгрузки банка за час</li>
@@ -1846,7 +1853,8 @@ section[id] { scroll-margin-top: 80px; }
       </ul>
     </div>
     <div class="persona reveal reveal-delay-2">
-      <div class="persona__kind">③ Юрист</div>
+      <div class="persona-marker">03</div>
+      <div class="persona__kind">Юрист</div>
       <div class="persona__name">Больше практики, меньше бумаги</div>
       <ul class="persona__tasks">
         <li>Сравнить две версии договора и показать отличия</li>
@@ -1855,7 +1863,8 @@ section[id] { scroll-margin-top: 80px; }
       </ul>
     </div>
     <div class="persona reveal">
-      <div class="persona__kind">④ Аналитик / продакт</div>
+      <div class="persona-marker">04</div>
+      <div class="persona__kind">Аналитик / продакт</div>
       <div class="persona__name">Дашборды и ресёрч без недели настройки</div>
       <ul class="persona__tasks">
         <li>Дашборд из Google Sheets за час — не за спринт</li>
@@ -1864,19 +1873,21 @@ section[id] { scroll-margin-top: 80px; }
       </ul>
     </div>
     <div class="persona reveal reveal-delay-1">
-      <div class="persona__kind">⑤ HR / обучение</div>
+      <div class="persona-marker">05</div>
+      <div class="persona__kind">HR / обучение</div>
       <div class="persona__name">Процессы, которые раньше требовали отдел</div>
       <ul class="persona__tasks">
         <li>Автопроверка тестов и ДЗ с обратной связью</li>
         <li>Подборка кандидатов по скрытым критериям</li>
-        <li>Онбординг-бот для повторяющихся вопросов 24/7</li>
+        <li>Онбординг-бот для повторяющихся вопросов</li>
       </ul>
     </div>
     <div class="persona persona--self reveal reveal-delay-2">
-      <div class="persona__kind">⑥ А ты?</div>
-      <div class="persona__name">У тебя — своя. Найдёшь за один разговор с&nbsp;агентом.</div>
+      <div class="persona-marker">06</div>
+      <div class="persona__kind">А ты?</div>
+      <div class="persona__name">У тебя — своя. Вспомни её прямо сейчас.</div>
       <ul class="persona__tasks">
-        <li>Выпиши три задачи, которые отжирают половину твоей недели</li>
+        <li>Выпиши три задачи, на которых теряешь больше всего времени</li>
         <li>Открой агента: «Вот что у меня болит. Что можем автоматизировать?»</li>
         <li>Через полчаса — первый рабочий прототип</li>
       </ul>
