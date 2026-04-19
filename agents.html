@@ -164,13 +164,22 @@ section[id] { scroll-margin-top: 80px; }
   text-decoration: none;
   transition: all var(--transition-fast);
   box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-}
-.header-cta:hover { transform: translateY(-1px); border-color: rgba(0,0,0,0.15); }
-@media (min-width: 768px) {
-  .header-cta { padding: 0.7rem 1.4rem; font-size: 0.88rem; }
+  opacity: 0;
+  pointer-events: none;
 }
 .header.scrolled .header-cta {
+  opacity: 1;
+  pointer-events: auto;
   background: var(--orange); color: var(--white); border-color: var(--orange);
+  box-shadow: 0 6px 18px rgba(255,160,0,0.35);
+}
+.header.scrolled .header-cta:hover {
+  transform: translateY(-1px);
+  background: var(--orange-dark);
+  box-shadow: 0 10px 24px rgba(255,140,0,0.45);
+}
+@media (min-width: 768px) {
+  .header-cta { padding: 0.7rem 1.4rem; font-size: 0.88rem; }
 }
 
 /* ===================================================================
@@ -197,8 +206,8 @@ section[id] { scroll-margin-top: 80px; }
 .hero-eyebrow {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.74rem; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
   padding: 0.4rem 0.9rem;
   background: rgba(255,255,255,0.78);
   border: 1px solid rgba(255,255,255,0.5);
@@ -208,22 +217,31 @@ section[id] { scroll-margin-top: 80px; }
   -webkit-backdrop-filter: blur(8px);
   margin-bottom: 1.5rem;
   opacity: 0;
+  max-width: calc(100vw - 2rem);
   transition: opacity 0.8s ease 0.2s;
+}
+@media (max-width: 400px) {
+  .hero-eyebrow { font-size: 0.64rem; letter-spacing: 0.08em; padding: 0.35rem 0.75rem; }
 }
 .hero-eyebrow.visible { opacity: 1; }
 .hero-title-big {
-  font-size: clamp(80px, 20vw, 240px);
-  font-weight: 900; line-height: 0.85;
-  letter-spacing: -0.04em;
+  font-size: clamp(80px, 18vw, 220px);
+  font-weight: 900; line-height: 0.88;
+  letter-spacing: -0.035em;
   color: var(--white);
   margin-bottom: 1.5rem;
   opacity: 0;
   transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1);
   text-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  max-width: 100%;
+  overflow: hidden;
 }
 .hero-title-big.visible { opacity: 1; }
 @media (max-width: 767px) {
-  .hero-title-big { font-size: clamp(90px, 30vw, 150px); margin-bottom: 1.25rem; }
+  .hero-title-big { font-size: clamp(68px, 20vw, 120px); margin-bottom: 1.25rem; letter-spacing: -0.025em; }
+}
+@media (max-width: 380px) {
+  .hero-title-big { font-size: 64px; letter-spacing: -0.02em; }
 }
 
 .hero-fade {
@@ -258,12 +276,12 @@ section[id] { scroll-margin-top: 80px; }
   display: inline-block;
   padding: 1rem 2.5rem;
   font-size: 1.05rem; font-weight: 700;
-  color: #555;
+  color: var(--black);
   text-decoration: none;
   background: var(--white);
   border-radius: 9999px;
   transition: all var(--transition);
-  box-shadow: 0 14px 36px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.1);
 }
 .hero-cta-btn:hover {
   transform: translateY(-3px) scale(1.03);
@@ -332,35 +350,35 @@ section[id] { scroll-margin-top: 80px; }
 .blob {
   position: absolute;
   border-radius: 50%;
-  width: 600px; height: 600px;
-  filter: blur(20px);
+  width: 680px; height: 680px;
+  filter: blur(30px);
 }
 .blob-1 {
   top: -200px; left: 10%;
-  background: radial-gradient(circle, rgba(255,213,79,0.38) 0%, transparent 50%);
+  background: radial-gradient(circle, rgba(255,213,79,0.55) 0%, transparent 55%);
   animation: blobVertical 30s ease infinite;
 }
 .blob-2 {
   top: 20%; right: -100px;
-  background: radial-gradient(circle, rgba(255,176,0,0.35) 0%, transparent 50%);
+  background: radial-gradient(circle, rgba(255,176,0,0.5) 0%, transparent 55%);
   animation: blobCircle 24s reverse infinite;
   transform-origin: calc(50% - 400px);
 }
 .blob-3 {
   bottom: 10%; left: 20%;
-  background: radial-gradient(circle, rgba(255,160,0,0.32) 0%, transparent 50%);
+  background: radial-gradient(circle, rgba(255,160,0,0.45) 0%, transparent 55%);
   animation: blobCircle 36s linear infinite;
   transform-origin: calc(50% + 400px);
 }
 .blob-4 {
   top: 40%; left: 40%;
-  background: radial-gradient(circle, rgba(255,140,0,0.28) 0%, transparent 50%);
+  background: radial-gradient(circle, rgba(255,140,0,0.4) 0%, transparent 55%);
   animation: blobHorizontal 32s ease infinite;
   transform-origin: calc(50% - 200px);
 }
 .blob-5 {
   bottom: -150px; right: 10%;
-  background: radial-gradient(circle, rgba(255,213,79,0.34) 0%, transparent 50%);
+  background: radial-gradient(circle, rgba(255,213,79,0.48) 0%, transparent 55%);
   animation: blobCircle 28s ease infinite;
   transform-origin: calc(50% - 800px) calc(50% + 800px);
 }
@@ -593,7 +611,7 @@ section[id] { scroll-margin-top: 80px; }
   box-shadow: 0 20px 60px -20px rgba(0,0,0,0.1);
   overflow: hidden;
   display: flex; flex-direction: column;
-  min-height: 520px;
+  min-height: 460px;
   transition: all var(--transition);
 }
 .chat-window--agent {
@@ -1007,11 +1025,12 @@ section[id] { scroll-margin-top: 80px; }
 }
 .persona__name {
   position: relative; z-index: 1;
-  font-size: 1.28rem; font-weight: 800;
+  font-size: 1.2rem; font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--black);
   margin-bottom: 1rem;
-  line-height: 1.2;
+  line-height: 1.25;
+  min-height: 3em;
 }
 .persona__tasks {
   position: relative; z-index: 1;
@@ -1277,9 +1296,15 @@ section[id] { scroll-margin-top: 80px; }
 }
 .footer a:hover { color: var(--orange); }
 .footer-links {
-  display: inline-flex; gap: 1.25rem;
+  display: inline-flex; gap: 0.25rem;
   margin-bottom: 0.5rem;
   flex-wrap: wrap; justify-content: center;
+}
+.footer-links a {
+  padding: 0.6rem 0.9rem;
+  display: inline-block;
+  min-height: 44px;
+  line-height: 1.5;
 }
 
 /* ===================================================================
@@ -1287,8 +1312,9 @@ section[id] { scroll-margin-top: 80px; }
    =================================================================== */
 .sticky-cta {
   position: fixed;
-  bottom: 1.25rem; left: 50%;
-  transform: translateX(-50%) translateY(150%);
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%) translateY(200%);
   z-index: 150;
   padding: 0.8rem 1.4rem;
   background: var(--orange-dark);
@@ -1312,11 +1338,7 @@ section[id] { scroll-margin-top: 80px; }
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--white);
   box-shadow: 0 0 8px var(--white);
-  animation: blinkDot 1.8s infinite;
-}
-@keyframes blinkDot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  opacity: 0.9;
 }
 
 /* ===================================================================
@@ -1338,11 +1360,34 @@ section[id] { scroll-margin-top: 80px; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 .reveal-delay-5 { transition-delay: 0.5s; }
 
+/* ===================================================================
+   FOCUS STATES (a11y)
+   =================================================================== */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+.hero-cta-btn:focus-visible,
+.cta-btn:focus-visible,
+.final-btn:focus-visible,
+.sticky-cta:focus-visible,
+.header-cta:focus-visible,
+.replay-btn:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-big, .hero-fade, .hero-title-big, .hero-eyebrow {
     opacity: 1; transform: none; transition: none;
   }
-  .hero-scroll, .sticky-cta::before, .blob { animation: none; }
+  .hero-scroll, .blob,
+  .marquee-track,
+  #heroShader canvas {
+    animation: none !important;
+  }
 }
 
 /* ===================================================================
@@ -1356,8 +1401,20 @@ section[id] { scroll-margin-top: 80px; }
   .shock-line span:nth-child(2)::before { content: ' '; }
   .cta-btn, .final-btn { padding: 0.95rem 1.85rem; font-size: 0.98rem; }
   .metr-chart { padding: 1.5rem 1rem 1.25rem; }
-  .blob { width: 350px; height: 350px; }
+  .blob { width: 420px; height: 420px; filter: blur(40px); }
   .hero-subtitle { letter-spacing: 0.02em; }
+  .easy-list__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.7rem 0;
+  }
+  .easy-list__mark { font-size: 0.9rem; }
+  .persona-marker { width: 40px; height: 40px; font-size: 0.76rem; top: 1rem; right: 1rem; }
+  .persona__name { min-height: 0; }
+  .header { padding: 0.7rem 0.9rem; }
+  .header-logo { font-size: 1rem; }
+  .header-cta { font-size: 0.78rem; padding: 0.45rem 0.85rem; }
 }
 </style>
 </head>
@@ -1369,17 +1426,17 @@ section[id] { scroll-margin-top: 80px; }
 <!-- ==================== HEADER ==================== -->
 <header class="header" id="header">
   <a href="/" class="header-logo">АГИ</a>
-  <a href="/" class="header-cta">← На главную</a>
+  <a href="#pitch" class="header-cta">Записаться →</a>
 </header>
 
 <!-- ==================== HERO (WebGL shader) ==================== -->
 <section class="hero" id="hero">
   <div class="hero-shader" id="heroShader"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Лонгрид · 10 минут · от Егора</div>
+    <div class="hero-eyebrow">Лонгрид · 10&nbsp;минут · от&nbsp;Егора</div>
     <div class="hero-title-big" id="heroTitle">АГЕНТ</div>
-    <h1 class="hero-subtitle hero-fade hero-fade-1">ТЫ ЕЩЁ НЕ ПОНЯЛ,<br>ЧТО ЭТО</h1>
-    <p class="hero-desc hero-fade hero-fade-2">Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я <strong>не программист</strong> — и сейчас расскажу, почему это уже не важно.</p>
+    <h1 class="hero-subtitle hero-fade hero-fade-1">ПОКА ТЫ ЧИТАЕШЬ<br>ПРО АГЕНТОВ —<br>ОНИ УЖЕ РАБОТАЮТ</h1>
+    <p class="hero-desc hero-fade hero-fade-2">Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я <strong>не программист</strong>. И через 10&nbsp;минут ты поймёшь, почему это больше не имеет значения.</p>
     <a href="#story-1" class="hero-cta-btn hero-fade hero-fade-3">Начать читать</a>
   </div>
   <div class="hero-scroll">Листай ↓</div>
@@ -1416,7 +1473,7 @@ section[id] { scroll-margin-top: 80px; }
 
     <p class="reveal">Звучит просто. На практике — ад.</p>
 
-    <p class="reveal">Я смотрел на это ещё полгода назад и думал: это кастомное приложение, которое должен делать отдел разработки. Полгода работы. Сотни тысяч бюджета. И никто не возьмётся, потому что задача узкая, заказчик один, окупаемость туманная. Поэтому почти все компании на это забивают. Как забили эти ребята.</p>
+    <p class="reveal">Полгода назад я глянул и подумал: это работа для отдела разработки. Полгода, сотни тысяч бюджета. И никто не возьмётся — задача узкая, заказчик один, окупаемости не видно. Поэтому почти все компании на это забивают. Как забили эти ребята.</p>
 
     <p class="reveal"><strong>А теперь смотри, что было месяц назад.</strong></p>
 
@@ -1452,7 +1509,7 @@ section[id] { scroll-margin-top: 80px; }
 <section class="section section-white">
   <div class="longread">
     <div class="reveal"><div class="s-label">02 · что изменилось</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Чтобы понять, что случилось, нужно <em>три картинки.</em></h2>
+    <h2 class="s-title reveal reveal-delay-1">Чтобы понять, что&nbsp;случилось — нужно <em>три&nbsp;картинки.</em></h2>
 
     <p class="s-desc reveal reveal-delay-2" style="margin-bottom: 1.75rem;">За последние два года ИИ прошёл три этапа. Если ты пропустил хотя бы один — вот тебе лестница. Без жаргона.</p>
 
@@ -1479,7 +1536,7 @@ section[id] { scroll-margin-top: 80px; }
 
     <div class="longread" style="padding: 0;">
       <div class="callout reveal">
-        Разница между ② и ③ выглядит как маленький шаг. На самом деле это момент, когда молоток перестал быть молотком и стал плотником.
+        Разница между ② и ③ выглядит как маленький шаг. На самом деле — это момент, когда инструмент перестал ждать в ящике и сам взял работу в руки.
       </div>
 
       <p class="reveal">С этого момента работа с ИИ перестаёт быть про «подсказал → я сделал». Она становится про <strong>«поставил задачу → пришёл готовый результат».</strong></p>
@@ -1552,20 +1609,6 @@ section[id] { scroll-margin-top: 80px; }
     <div class="compare-summary__line">Чат даёт тебе инструкции. Агент даёт тебе сделанную работу.</div>
   </div>
 </section>
-
-<!-- ==================== MARQUEE 2 (orange, transition) ==================== -->
-<div class="marquee marquee-grad">
-  <div class="marquee-track">
-    <span class="marquee-item">ИСТОРИЯ ВТОРАЯ</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">БЕЗ КЛИЕНТА</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">БЕЗ ДЕНЕГ</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">ТОЛЬКО ДЛЯ СЕБЯ</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">ИСТОРИЯ ВТОРАЯ</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">БЕЗ КЛИЕНТА</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">БЕЗ ДЕНЕГ</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">ТОЛЬКО ДЛЯ СЕБЯ</span><span class="marquee-dot">•</span>
-  </div>
-</div>
 
 <!-- ==================== STORY 2 — ORANGE ISLAND ==================== -->
 <section class="section island-section" id="story-2">
@@ -1661,8 +1704,8 @@ section[id] { scroll-margin-top: 80px; }
 <section class="manifesto-section" id="manifesto">
   <div class="lamp"><div class="lamp-line"></div></div>
   <div class="longread">
-    <div class="reveal"><div class="s-label">06 · эпоха заёба прошла</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Я перестал <em>отказываться</em> от проектов.</h2>
+    <div class="reveal"><div class="s-label">06 · что изменилось во мне</div></div>
+    <h2 class="s-title reveal reveal-delay-1">Я перестал <em>отказываться</em> от&nbsp;проектов.</h2>
 
     <p class="reveal reveal-delay-2">Раньше передо мной ставили задачу — и первая мысль была «успею / не успею», «хватит скилла / не хватит», «возьмусь / откажусь». Теперь первой мысли нет. Есть только «ок, давай разберёмся». Потому что где-то глубоко я знаю: чего бы ни потребовала задача — я найду способ с агентом.</p>
 
@@ -1674,8 +1717,6 @@ section[id] { scroll-margin-top: 80px; }
     </div>
 
     <p class="reveal">Это не потому, что я стал гением. Это потому, что <strong>у меня появился второй я.</strong></p>
-
-    <hr class="divider">
 
     <div class="pullquote reveal">Эпоха заёба — закончилась.</div>
 
@@ -1697,7 +1738,7 @@ section[id] { scroll-margin-top: 80px; }
 
     <p class="reveal"><strong>Ты занимаешься бумажками?</strong> Перестаёшь. Отчёты, сводки, письма клиентам, договоры по шаблону — забирает агент.</p>
 
-    <p class="reveal">Ты не станешь ленивым. <strong>Ты станешь лучшим в своём деле.</strong> Потому что наконец-то начнёшь делать только то, что делаешь лучше всего.</p>
+    <p class="reveal">Ты не станешь ленивым. <strong>Ты займёшься тем, ради чего вообще пошёл в это дело.</strong> Потому что наконец-то начнёшь делать только то, что делаешь лучше всего.</p>
 
     <hr class="divider">
 
@@ -1705,7 +1746,7 @@ section[id] { scroll-margin-top: 80px; }
 
     <p class="reveal">Сколько бы ты платил сотруднику, который закрывает половину твоих задач? Который ускоряет тебя в пять раз на остальном? Не болеет. Не выгорает. Не увольняется. Не просит отпуск. На связи 24/7. Понимает тебя через слово.</p>
 
-    <p class="reveal">100 тысяч в месяц? Мало. 200? Мало. Хороший специалист такого уровня стоит в полмиллиона-миллион.</p>
+    <p class="reveal">100 тысяч в месяц? Мало. 200? Мало. Такой человек стоит 500К–1М в месяц.</p>
 
     <p class="reveal">А агент — <strong>около 10 тысяч рублей в месяц. Сто долларов.</strong></p>
 
@@ -1813,7 +1854,7 @@ section[id] { scroll-margin-top: 80px; }
 
     <div class="pullquote reveal">Это как интернет в 98-м. Все уже слышали слово — но мало кто умел HTML.</div>
 
-    <p class="reveal">Тогда было окно. Люди, которые в 1998-м вложили вечер в изучение HTML, через пять лет делали сайты для Coca-Cola. Люди, которые открыли интернет-магазин в 2000-м, через десять лет продали его за 100 миллионов. А люди, которые сказали «интернет — это несерьёзно, подождём» — ну, ты их знаешь.</p>
+    <p class="reveal">Тогда было окно. Люди, которые в 98-м вложили вечер в изучение HTML, через пять лет делали сайты для Coca-Cola. Остальные — не делали.</p>
 
     <p class="reveal">Агенты сегодня — это тот же момент.</p>
 
@@ -1903,7 +1944,7 @@ section[id] { scroll-margin-top: 80px; }
 <section class="section section-white" id="degot">
   <div class="longread">
     <div class="reveal"><div class="s-label">09 · честно</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Но это работает не с первого щелчка. И вот почему.</h2>
+    <h2 class="s-title reveal reveal-delay-1">Но это работает не с&nbsp;первого щелчка. И&nbsp;вот почему.</h2>
 
     <p class="reveal reveal-delay-2">Если ты дочитал до сюда и у тебя в голове ощущение «да это магия, сейчас открою Claude и всё получится» — я должен тебя слегка осадить.</p>
 
@@ -1925,7 +1966,7 @@ section[id] { scroll-margin-top: 80px; }
 
     <p class="reveal"><strong>Плохая:</strong> порог входа существует. Месяц-два ты будешь биться, злиться, чувствовать себя идиотом. Это реальность.</p>
 
-    <p class="reveal"><strong>Хорошая:</strong> этот порог в десять раз ниже, чем был два года назад. И в сто раз ниже, чем любая другая технология, которая когда-либо меняла рынок.</p>
+    <p class="reveal"><strong>Хорошая:</strong> этот порог в десять раз ниже, чем был два года назад. И ниже, чем у любой технологии из последних двадцати лет.</p>
 
     <p class="reveal">Раньше, чтобы войти в AI, нужно было учить Python, математику, ML, разбираться в архитектурах. Сейчас нужно уметь одно: <strong>правильно ставить задачу словами.</strong></p>
 
@@ -1960,8 +2001,8 @@ section[id] { scroll-margin-top: 80px; }
       <li><strong>Ты перестанешь отказываться от проектов</strong> — как перестал я</li>
       <li><strong>Поставишь задачу так,</strong> чтобы агент понял с первого раза</li>
       <li><strong>Будешь чувствовать,</strong> за какими задачами к нему идти, а за какими — нет</li>
-      <li><strong>Свой проект на сервере</strong> — живая штука, работающая 24/7</li>
-      <li><strong>Закрытое комьюнити</strong> — люди, прошедшие путь рядом с тобой</li>
+      <li><strong>Свой проект на сервере</strong> — живая штука, не демка</li>
+      <li><strong>Закрытое комьюнити</strong> — люди, которые прошли это с тобой</li>
     </ul>
 
     <div class="tariffs reveal">
