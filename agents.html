@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ты ещё не понял, что такое ИИ-агент — АГИ</title>
-<meta name="description" content="Лонгрид Егора Борисенко о том, что такое ИИ-агент, зачем он тебе и почему это окно возможностей закроется через год. Честно, без хайпа.">
+<meta name="description" content="Лонгрид Егора Борисенко о том, что такое ИИ-агент, зачем он тебе и почему это окно возможностей закроется через год.">
 <meta property="og:title" content="Ты ещё не понял, что такое ИИ-агент">
 <meta property="og:description" content="Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я не программист.">
 <meta property="og:type" content="article">
@@ -16,321 +16,406 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+/* ===================================================================
+   BASE — identical to index.html
+   =================================================================== */
 :root {
   --white: #FFFFFF;
   --black: #1A1A1A;
   --text: #333333;
   --text-muted: #666666;
   --text-light: #999999;
-  --text-soft: #B8B8B8;
   --border: #E5E5E5;
-  --border-soft: #F0F0F0;
   --card-bg: #F5F5F5;
-
-  --sun-100: #FFFDE7;
-  --sun-200: #FFF9C4;
-  --sun-300: #FFF59D;
-  --sun-400: #FFE082;
-  --sun-500: #FFD54F;
-  --sun-600: #FFC107;
-  --sun-700: #FFB300;
-  --sun-800: #FFA000;
-  --sun-900: #FF8F00;
 
   --yellow: #FFD54F;
   --yellow-light: #FFE082;
   --orange: #FFA000;
   --orange-dark: #FF8F00;
-  --red-danger: #C62828;
 
   --grad-warm: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
-  --grad-hero: linear-gradient(180deg, #FFFDE7 0%, #FFF59D 35%, #FFE082 65%, #FFC107 90%, #FFA000 100%);
-  --grad-soft: linear-gradient(135deg, #FFFDE7 0%, #FFF59D 50%, #FFE082 100%);
-  --grad-sunrise: linear-gradient(135deg, #FFF59D 0%, #FFD54F 40%, #FFA000 100%);
-  --grad-agent-bg: linear-gradient(165deg, #FFFDE7 0%, #FFF59D 100%);
-
-  --shadow-soft: 0 20px 60px -20px rgba(0,0,0,0.10);
-  --shadow-warm: 0 30px 80px -30px rgba(255,140,0,0.38);
+  --grad-page: linear-gradient(160deg, #FFD54F 0%, #FFB300 50%, #FFA000 100%);
+  --grad-island: linear-gradient(135deg, #FFA000 0%, #FF8F00 60%, #F28000 100%);
 
   --transition: 0.5s cubic-bezier(0.32, 0, 0.12, 1);
   --transition-fast: 0.3s cubic-bezier(0.32, 0, 0.12, 1);
-  --transition-spring: 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-slow: 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-html { scroll-behavior: smooth; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   font-family: 'Geist', -apple-system, system-ui, sans-serif;
   background: var(--white);
   color: var(--text);
-  line-height: 1.7;
-  font-size: 1.075rem;
+  overflow-x: clip; max-width: 100vw;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
   font-variant-numeric: tabular-nums;
 }
-
+section[id] { scroll-margin-top: 80px; }
 ::selection { background: rgba(255,160,0,0.22); color: var(--text); }
 
-/* ========== PROGRESS BAR ========== */
-.progress-bar {
-  position: fixed; top: 0; left: 0;
-  height: 3px; width: 0%;
-  background: var(--grad-warm);
-  z-index: 200;
-  transition: width 0.1s linear;
-  box-shadow: 0 0 8px rgba(255,160,0,0.5);
+/* ===================================================================
+   S-CONTAINER / TYPOGRAPHY — from index.html
+   =================================================================== */
+.s-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
 }
-
-/* ========== HEADER ========== */
-.header {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 1rem 1.25rem;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,0.78);
-  backdrop-filter: saturate(1.4) blur(16px);
-  -webkit-backdrop-filter: saturate(1.4) blur(16px);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  transition: background var(--transition-fast), border-color var(--transition-fast);
-}
-.header.scrolled {
-  background: rgba(255,255,255,0.92);
-  border-bottom-color: rgba(0,0,0,0.08);
-}
-.header-logo {
-  font-weight: 900; font-size: 1.1rem; color: var(--text);
-  letter-spacing: -0.01em; text-decoration: none;
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.header-logo::before {
-  content: ''; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--grad-warm);
-  display: inline-block;
-}
-.header-back {
-  font-size: 0.88rem; font-weight: 600; color: var(--text-muted);
-  text-decoration: none;
-  padding: 0.5rem 1rem; border-radius: 9999px;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: var(--white);
-  transition: all var(--transition-fast);
-}
-.header-back:hover {
-  color: var(--text); border-color: rgba(0,0,0,0.15);
-  transform: translateY(-1px);
-}
-@media (min-width: 768px) {
-  .header { padding: 1.1rem 2.5rem; }
-  .header-logo { font-size: 1.15rem; }
-}
-
-/* ========== LAYOUT ========== */
-.container { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
-@media (min-width: 768px) { .container { padding: 0 2.5rem; } }
+@media (min-width: 768px) { .s-container { padding: 0 3rem; } }
+@media (min-width: 1280px) { .s-container { padding: 0 5rem; } }
 
 .longread {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
+  max-width: 700px; margin: 0 auto;
+  padding: 0 1.5rem;
 }
-@media (min-width: 768px) { .longread { padding: 0 1.5rem; } }
-
 .longread p {
   margin-bottom: 1.35rem;
   color: var(--text);
-  font-size: 1.075rem;
+  font-size: 1.08rem;
   line-height: 1.72;
 }
-.longread p strong {
-  font-weight: 700;
-  color: var(--black);
-}
-.longread p em {
-  font-style: italic;
-  color: var(--text-muted);
-}
+.longread p strong { font-weight: 700; color: var(--black); }
+.longread p em { font-style: italic; color: var(--text-muted); }
 .longread a {
-  color: var(--text);
-  text-decoration: none;
+  color: var(--text); text-decoration: none;
   border-bottom: 1.5px solid rgba(255,160,0,0.35);
   transition: all var(--transition-fast);
 }
-.longread a:hover {
-  color: var(--orange-dark);
-  border-bottom-color: var(--orange);
-}
+.longread a:hover { color: var(--orange-dark); border-bottom-color: var(--orange); }
 .longread code {
   font-family: 'JetBrains Mono', monospace;
   background: var(--card-bg);
   padding: 0.1em 0.4em;
   border-radius: 4px;
   font-size: 0.92em;
-  color: var(--text);
 }
 
-/* ========== HERO ========== */
-.hero {
-  min-height: 92vh;
-  padding: 7rem 0 4.5rem;
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-  background: var(--grad-hero);
-  text-align: center;
-  overflow: hidden;
-}
-.hero-noise {
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle at 15% 25%, rgba(255,255,255,0.5) 0%, transparent 40%),
-    radial-gradient(circle at 85% 75%, rgba(255,255,255,0.4) 0%, transparent 40%);
-  pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 100px;
-  background: linear-gradient(to top, var(--white), transparent);
-  pointer-events: none; z-index: 1;
-}
-.hero-inner {
-  position: relative; z-index: 2;
-  max-width: 920px; padding: 0 1.5rem;
-}
-.hero-eyebrow {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.74rem; font-weight: 600;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 0.4rem 0.95rem;
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 9999px;
-  color: var(--text-muted);
-  backdrop-filter: blur(8px);
-  margin-bottom: 2rem;
-}
-.hero-title {
-  font-size: clamp(2.1rem, 6.5vw, 4.6rem);
-  font-weight: 900; line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: var(--black);
-  margin-bottom: 2rem;
-  max-width: 900px;
-  margin-left: auto; margin-right: auto;
-  word-break: keep-all;
-  overflow-wrap: normal;
-  hyphens: none;
-  -webkit-hyphens: none;
-}
-.hero-sub {
-  font-size: clamp(1.05rem, 1.95vw, 1.35rem);
-  font-weight: 500;
-  color: var(--text);
-  max-width: 680px; margin: 0 auto 2.75rem;
-  line-height: 1.5; letter-spacing: -0.005em;
-}
-.hero-sub strong { font-weight: 700; color: var(--black); }
-
-/* HERO CTA — белая пилюля (на бренде) */
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 1.05rem 2.4rem;
-  background: var(--white);
-  color: var(--text);
-  border-radius: 9999px;
-  font-size: 1.02rem; font-weight: 700;
-  text-decoration: none;
-  transition: all var(--transition);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06);
-}
-.hero-cta:hover {
-  transform: translateY(-3px) scale(1.03);
-  background: #FAFAFA;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-}
-.hero-scroll {
-  position: absolute; bottom: 1.5rem; left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  color: var(--text-muted); font-size: 0.78rem;
-  font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-  opacity: 0.7;
-  animation: floatdown 2.5s ease-in-out infinite;
-}
-@keyframes floatdown {
-  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.55; }
-  50% { transform: translateX(-50%) translateY(6px); opacity: 0.9; }
-}
-
-/* ========== SECTIONS ========== */
-.section { padding: clamp(4rem, 8vw, 6.5rem) 0; }
-
-.section-label {
+.s-label {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem; font-weight: 600;
   color: var(--orange-dark);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 0.3rem 0.7rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.35rem 0.8rem;
   background: rgba(255,160,0,0.08);
   border: 1px solid rgba(255,160,0,0.2);
   border-radius: 9999px;
   margin-bottom: 1.5rem;
 }
-.section-title {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 900; line-height: 1.12;
-  letter-spacing: -0.03em;
+.s-title {
+  font-size: clamp(1.85rem, 4.4vw, 3rem);
+  font-weight: 800; line-height: 1.1;
+  letter-spacing: -0.035em;
   color: var(--black);
   margin-bottom: 1.5rem;
 }
-.section-title em {
+.s-title em {
   font-style: normal;
   color: var(--orange);
 }
-.section-lead {
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1.55;
-  margin-bottom: 1.75rem;
-  letter-spacing: -0.005em;
-}
-
-/* Bucket brigade opener */
-.bucket {
-  font-size: 1.08rem;
+.s-desc {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
   color: var(--text-muted);
-  font-style: italic;
-  margin-bottom: 1.75rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--sun-500);
+  line-height: 1.65;
 }
 
-/* ========== PULL-QUOTE / BAB / CALLOUT ========== */
+/* ===================================================================
+   PROGRESS BAR + HEADER
+   =================================================================== */
+.progress-bar {
+  position: fixed; top: 0; left: 0;
+  height: 3px; width: 0%;
+  background: var(--grad-warm);
+  z-index: 1001;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(255,160,0,0.5);
+}
+
+.header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  transition: transform var(--transition), background var(--transition);
+}
+.header.scrolled {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+@media (min-width: 768px) { .header { padding: 1rem 2rem; } }
+.header-logo {
+  font-weight: 900; font-size: 1.1rem; color: var(--black);
+  letter-spacing: -0.02em; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.header-logo::before {
+  content: ''; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--grad-warm);
+}
+.header-cta {
+  padding: 0.5rem 1rem;
+  background: var(--white);
+  color: var(--text);
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 9999px;
+  font-size: 0.82rem; font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.header-cta:hover { transform: translateY(-1px); border-color: rgba(0,0,0,0.15); }
+@media (min-width: 768px) {
+  .header-cta { padding: 0.7rem 1.4rem; font-size: 0.88rem; }
+}
+.header.scrolled .header-cta {
+  background: var(--orange); color: var(--white); border-color: var(--orange);
+}
+
+/* ===================================================================
+   HERO — WebGL shader + giant type (index.html style)
+   =================================================================== */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-shader { position: absolute; inset: 0; z-index: 0; }
+.hero-shader canvas { width: 100%; height: 100%; display: block; }
+.hero::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 200px;
+  background: linear-gradient(to top, var(--white), transparent);
+  pointer-events: none; z-index: 1;
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  text-align: center; padding: 120px 1.5rem 80px;
+  width: 100%;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 9999px;
+  color: var(--text);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.2s;
+}
+.hero-eyebrow.visible { opacity: 1; }
+.hero-title-big {
+  font-size: clamp(80px, 20vw, 240px);
+  font-weight: 900; line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1);
+  text-shadow: 0 6px 24px rgba(0,0,0,0.08);
+}
+.hero-title-big.visible { opacity: 1; }
+@media (max-width: 767px) {
+  .hero-title-big { font-size: clamp(90px, 30vw, 150px); margin-bottom: 1.25rem; }
+}
+
+.hero-fade {
+  opacity: 0; transform: translateY(25px);
+  transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.hero-fade.visible { opacity: 1; transform: translateY(0); }
+.hero-fade-1 { transition-delay: 0.15s; }
+.hero-fade-2 { transition-delay: 0.3s; }
+.hero-fade-3 { transition-delay: 0.45s; }
+.hero-fade-4 { transition-delay: 0.6s; }
+
+.hero-subtitle {
+  font-size: clamp(1rem, 3.4vw, 1.95rem);
+  font-weight: 700; line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  max-width: 900px; margin: 0 auto 1.25rem;
+  padding: 0 0.5rem;
+  text-transform: uppercase;
+}
+.hero-desc {
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.88);
+  max-width: 640px; margin: 0 auto 2.25rem;
+  line-height: 1.55;
+  padding: 0 0.5rem;
+}
+.hero-desc strong { color: var(--white); font-weight: 700; }
+
+.hero-cta-btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.05rem; font-weight: 700;
+  color: #555;
+  text-decoration: none;
+  background: var(--white);
+  border-radius: 9999px;
+  transition: all var(--transition);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.08);
+}
+.hero-cta-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: #FAFAFA;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+}
+
+.hero-scroll {
+  position: absolute; bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  animation: floatdown 2.5s ease-in-out infinite;
+}
+@keyframes floatdown {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.65; }
+  50% { transform: translateX(-50%) translateY(6px); opacity: 0.95; }
+}
+
+/* ===================================================================
+   MARQUEE (between sections)
+   =================================================================== */
+.marquee {
+  overflow: hidden; white-space: nowrap;
+  padding: 1.25rem 0; position: relative; z-index: 2;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.marquee-white { background: var(--white); }
+.marquee-grad { background: var(--grad-page); border: none; }
+.marquee-track {
+  display: inline-flex; animation: ticker 42s linear infinite;
+}
+.marquee-item {
+  font-family: 'Geist', sans-serif;
+  font-size: clamp(0.95rem, 1.8vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 0 1.5rem;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center;
+}
+.marquee-white .marquee-item { color: var(--text-light); }
+.marquee-grad .marquee-item { color: rgba(255,255,255,0.75); }
+.marquee-dot { opacity: 0.35; font-size: 1em; margin: 0 0.75em; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ===================================================================
+   SECTIONS (base padding)
+   =================================================================== */
+.section {
+  padding: clamp(60px, 8vw, 110px) 0;
+  position: relative;
+}
+.section-white { background: var(--white); }
+
+/* ===================================================================
+   BLOBS background (on white sections)
+   =================================================================== */
+.blobs {
+  position: absolute; inset: 0; overflow: hidden;
+  pointer-events: none; z-index: 0;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  width: 600px; height: 600px;
+  filter: blur(20px);
+}
+.blob-1 {
+  top: -200px; left: 10%;
+  background: radial-gradient(circle, rgba(255,213,79,0.38) 0%, transparent 50%);
+  animation: blobVertical 30s ease infinite;
+}
+.blob-2 {
+  top: 20%; right: -100px;
+  background: radial-gradient(circle, rgba(255,176,0,0.35) 0%, transparent 50%);
+  animation: blobCircle 24s reverse infinite;
+  transform-origin: calc(50% - 400px);
+}
+.blob-3 {
+  bottom: 10%; left: 20%;
+  background: radial-gradient(circle, rgba(255,160,0,0.32) 0%, transparent 50%);
+  animation: blobCircle 36s linear infinite;
+  transform-origin: calc(50% + 400px);
+}
+.blob-4 {
+  top: 40%; left: 40%;
+  background: radial-gradient(circle, rgba(255,140,0,0.28) 0%, transparent 50%);
+  animation: blobHorizontal 32s ease infinite;
+  transform-origin: calc(50% - 200px);
+}
+.blob-5 {
+  bottom: -150px; right: 10%;
+  background: radial-gradient(circle, rgba(255,213,79,0.34) 0%, transparent 50%);
+  animation: blobCircle 28s ease infinite;
+  transform-origin: calc(50% - 800px) calc(50% + 800px);
+}
+@keyframes blobVertical {
+  0%, 100% { transform: translateY(-50%); }
+  50% { transform: translateY(50%); }
+}
+@keyframes blobCircle {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes blobHorizontal {
+  0%, 100% { transform: translateX(-50%) translateY(-10%); }
+  50% { transform: translateX(50%) translateY(10%); }
+}
+.section > .s-container,
+.section > .longread,
+.section > .blobs-inner { position: relative; z-index: 1; }
+
+/* ===================================================================
+   PULL-QUOTE / BAB / CALLOUT / EASY-LIST
+   =================================================================== */
+.pullquote {
+  margin: 2rem -0.5rem;
+  padding: 1.1rem 0 1.1rem 1.4rem;
+  border-left: 4px solid var(--orange);
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--black);
+}
+@media (min-width: 768px) {
+  .pullquote { margin: 2.25rem -1.5rem; padding-left: 1.75rem; }
+}
+
 .bab-badge {
   margin: 2rem -0.5rem;
-  padding: 1.5rem 1.75rem;
-  background: var(--grad-soft);
+  padding: 1.4rem 1.6rem;
+  background: linear-gradient(135deg, #FFFDE7 0%, #FFF59D 50%, #FFE082 100%);
   border: 1px solid rgba(255,160,0,0.25);
-  border-radius: 16px;
-  font-size: 1.15rem;
+  border-radius: 18px;
+  font-size: 1.12rem;
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.01em;
   line-height: 1.4;
-  position: relative;
   box-shadow: 0 20px 50px -20px rgba(255,140,0,0.22);
 }
 .bab-badge::before {
-  content: '→';
+  content: '→ ';
   font-family: 'JetBrains Mono', monospace;
   color: var(--orange-dark);
   font-weight: 700;
-  margin-right: 0.5rem;
 }
 .bab-badge em {
   display: block;
@@ -338,34 +423,20 @@ body {
   font-weight: 500;
   color: var(--text-muted);
   font-size: 0.95rem;
-  margin-top: 0.45rem;
+  margin-top: 0.5rem;
   letter-spacing: 0;
 }
 @media (min-width: 768px) {
-  .bab-badge { margin: 2.25rem -1.5rem; padding: 1.75rem 2.25rem; font-size: 1.25rem; }
-}
-
-.pullquote {
-  margin: 2rem -0.5rem;
-  padding: 1.1rem 0 1.1rem 1.4rem;
-  border-left: 4px solid var(--orange);
-  font-size: 1.4rem;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  color: var(--black);
-}
-@media (min-width: 768px) {
-  .pullquote { margin: 2.25rem -1.5rem; font-size: 1.65rem; padding-left: 1.75rem; }
+  .bab-badge { margin: 2.25rem -1.5rem; padding: 1.65rem 2rem; font-size: 1.22rem; }
 }
 
 .callout {
   margin: 1.75rem 0;
-  padding: 1.1rem 1.35rem;
+  padding: 1.1rem 1.3rem;
   background: var(--card-bg);
   border-radius: 12px;
-  border-left: 3px solid var(--text-soft);
-  font-size: 1rem;
+  border-left: 3px solid var(--text-light);
+  font-size: 0.98rem;
   color: var(--text-muted);
   line-height: 1.6;
   font-style: italic;
@@ -373,9 +444,9 @@ body {
 
 .easy-list {
   margin: 1.75rem 0;
-  padding: 1.5rem 1.75rem;
+  padding: 1.5rem 1.65rem;
   background: var(--card-bg);
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid var(--border);
 }
 .easy-list__row {
@@ -383,12 +454,12 @@ body {
   gap: 1rem;
   padding: 0.6rem 0;
   border-bottom: 1px dashed var(--border);
-  font-size: 1.05rem;
+  font-size: 1.03rem;
 }
 .easy-list__row:last-child { border-bottom: none; }
 .easy-list__task { color: var(--text); font-weight: 500; }
 .easy-list__mark {
-  font-weight: 800; color: var(--orange-dark);
+  font-weight: 900; color: var(--orange-dark);
   font-style: italic; letter-spacing: -0.02em;
   flex-shrink: 0;
 }
@@ -400,12 +471,14 @@ body {
   border: none;
 }
 
-/* ========== STORY IMAGE ========== */
+/* ===================================================================
+   STORY IMAGE (screenshot frame)
+   =================================================================== */
 .story-image {
-  margin: 2.25rem -1.25rem;
-  border-radius: 14px;
+  margin: 2.25rem -1rem;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.06);
   border: 1px solid var(--border);
 }
 .story-image img { width: 100%; height: auto; display: block; }
@@ -422,91 +495,111 @@ body {
   .story-image { margin: 2.5rem -2.5rem; }
 }
 
-/* ========== EVOLUTION LADDER ========== */
+/* ===================================================================
+   LADDER (evolution) — uses problem-card liquid glass
+   =================================================================== */
 .ladder {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  margin: 2rem 0 2rem;
+  margin: 2rem 0;
 }
 @media (min-width: 768px) {
   .ladder { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 }
-.ladder__item {
-  padding: 1.5rem 1.35rem;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFB 100%);
-  border: 1px solid rgba(0,0,0,0.05);
-  border-radius: 20px;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-  transition: all var(--transition-spring);
+.ladder-card {
   position: relative;
+  padding: 1.75rem 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.05);
+  background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.35) 100%);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.03),
+    0 4px 16px rgba(0,0,0,0.025),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all var(--transition);
+  overflow: hidden;
 }
-.ladder__item:hover {
-  border-color: rgba(255,160,0,0.25);
+.ladder-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: 20px;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 12%, rgba(255,255,255,0.7), transparent 55%),
+    radial-gradient(ellipse 70% 35% at 85% 90%, rgba(255,220,80,0.05), transparent 50%);
+  pointer-events: none;
+}
+.ladder-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(255,180,0,0.08), 0 2px 8px rgba(0,0,0,0.03);
-}
-.ladder__item--agent {
-  background: linear-gradient(155deg, var(--sun-100) 0%, var(--sun-300) 100%);
   border-color: rgba(255,160,0,0.3);
+  box-shadow: 0 12px 32px rgba(255,160,0,0.1), 0 2px 8px rgba(0,0,0,0.04);
 }
-.ladder__num {
+.ladder-card--agent {
+  background: linear-gradient(135deg, rgba(255,245,157,0.75) 0%, rgba(255,224,130,0.55) 100%);
+  border-color: rgba(255,160,0,0.35);
+}
+.ladder-card__num {
+  position: relative; z-index: 1;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem; font-weight: 700;
   color: var(--orange-dark);
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
 }
-.ladder__title {
+.ladder-card__title {
+  position: relative; z-index: 1;
   font-size: 1.3rem; font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--black);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
 }
-.ladder__sub {
+.ladder-card__sub {
+  position: relative; z-index: 1;
   font-size: 0.9rem;
   color: var(--orange-dark);
   font-style: italic;
   font-weight: 500;
   margin-bottom: 0.8rem;
 }
-.ladder__desc {
+.ladder-card__desc {
+  position: relative; z-index: 1;
   font-size: 0.97rem;
   color: var(--text-muted);
   line-height: 1.55;
 }
 
-/* ========== COMPARE (interactive) ========== */
-.compare-section { background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%); }
-.compare-head { max-width: 700px; margin: 0 auto 3rem; text-align: center; padding: 0 1.5rem; }
-.compare-head .section-label { margin-bottom: 1rem; }
-
+/* ===================================================================
+   COMPARE (interactive chat animation) — on yellow-tinted section
+   =================================================================== */
+.compare-section {
+  background: linear-gradient(180deg, var(--white) 0%, #FFFDE7 100%);
+}
+.compare-head {
+  max-width: 700px; margin: 0 auto 2.5rem;
+  text-align: center; padding: 0 1.5rem;
+}
 .chat-grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: grid; grid-template-columns: 1fr;
   gap: 1.25rem;
-  margin-bottom: 1rem;
+  max-width: 1120px; margin: 0 auto; padding: 0 1.5rem;
 }
-@media (min-width: 640px) {
-  .chat-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-}
-@media (min-width: 900px) {
-  .chat-grid { gap: 2rem; }
-}
+@media (min-width: 640px) { .chat-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
+@media (min-width: 900px) { .chat-grid { gap: 2rem; } }
+
 .chat-window {
   background: var(--white);
   border-radius: 20px;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.1);
   overflow: hidden;
   display: flex; flex-direction: column;
   min-height: 520px;
   transition: all var(--transition);
 }
 .chat-window--agent {
-  background: var(--grad-agent-bg);
-  border-color: rgba(255,160,0,0.25);
-  box-shadow: var(--shadow-warm);
+  background: linear-gradient(165deg, #FFFDE7 0%, #FFF59D 100%);
+  border-color: rgba(255,160,0,0.3);
+  box-shadow: 0 30px 80px -30px rgba(255,140,0,0.4);
 }
 .chat-header {
   padding: 1rem 1.25rem;
@@ -517,18 +610,14 @@ body {
 }
 .chat-window--agent .chat-header {
   background: rgba(255,255,255,0.4);
-  border-bottom-color: rgba(255,160,0,0.15);
+  border-bottom-color: rgba(255,160,0,0.18);
 }
 .header-dot {
   width: 10px; height: 10px; border-radius: 50%;
-  background: #999;
-  flex-shrink: 0;
+  background: #999; flex-shrink: 0;
 }
 .header-dot--agent { background: var(--grad-warm); }
-.header-title {
-  font-size: 0.95rem; font-weight: 700; color: var(--text);
-  letter-spacing: -0.01em;
-}
+.header-title { font-size: 0.94rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
 .header-kind {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem; font-weight: 600;
@@ -536,60 +625,52 @@ body {
   letter-spacing: 0.08em; text-transform: uppercase;
   margin-left: auto;
 }
-.chat-window--agent .header-kind { color: var(--orange); }
+.chat-window--agent .header-kind { color: var(--orange-dark); }
 .messages {
-  padding: 1.25rem;
-  flex: 1;
-  display: flex; flex-direction: column;
-  gap: 0.75rem;
+  padding: 1.25rem; flex: 1;
+  display: flex; flex-direction: column; gap: 0.75rem;
 }
 .msg {
   max-width: 85%;
   padding: 0.75rem 1rem;
   border-radius: 16px;
   font-size: 0.92rem; line-height: 1.5;
-  opacity: 0;
-  transform: translateY(8px);
+  opacity: 0; transform: translateY(8px);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .msg.show { opacity: 1; transform: translateY(0); }
 .msg--user {
   align-self: flex-end;
-  background: #EEEEEE;
-  color: var(--black);
+  background: #EEEEEE; color: var(--black);
   border-bottom-right-radius: 4px;
 }
 .msg--bot {
   align-self: flex-start;
-  background: #F5F5F5;
-  color: var(--text);
+  background: #F5F5F5; color: var(--text);
   border-bottom-left-radius: 4px;
 }
 .msg--bot-muted { color: var(--text-muted); font-size: 0.88rem; }
 .msg--agent {
   align-self: flex-start;
-  background: var(--white);
-  color: var(--text);
+  background: var(--white); color: var(--text);
   border: 1px solid rgba(255,160,0,0.3);
   border-bottom-left-radius: 4px;
-  box-shadow: 0 4px 16px -4px rgba(255,140,0,0.18);
+  box-shadow: 0 4px 16px -4px rgba(255,140,0,0.2);
 }
 .msg code {
   font-family: 'JetBrains Mono', monospace;
   background: rgba(0,0,0,0.05);
   padding: 0.05em 0.3em;
-  border-radius: 3px;
-  font-size: 0.88em;
+  border-radius: 3px; font-size: 0.88em;
 }
 .todo {
   align-self: flex-start;
   background: var(--white);
-  border: 1px solid rgba(255,160,0,0.2);
+  border: 1px solid rgba(255,160,0,0.22);
   border-radius: 14px;
   padding: 0.9rem 1.1rem;
   width: 100%;
-  opacity: 0;
-  transform: translateY(8px);
+  opacity: 0; transform: translateY(8px);
   transition: opacity 0.4s ease, transform 0.4s ease;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.82rem;
@@ -597,7 +678,7 @@ body {
 .todo.show { opacity: 1; transform: translateY(0); }
 .todo__label {
   font-size: 0.65rem; font-weight: 700;
-  color: var(--orange); letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--orange-dark); letter-spacing: 0.15em; text-transform: uppercase;
   margin-bottom: 0.6rem;
   font-family: 'Geist', sans-serif;
 }
@@ -612,28 +693,26 @@ body {
   width: 16px; height: 16px;
   border: 1.5px solid var(--text-light);
   border-radius: 4px;
-  flex-shrink: 0;
-  position: relative;
+  flex-shrink: 0; position: relative;
   transition: all 0.3s ease;
 }
 .todo__item.running .todo__box {
   border-color: var(--orange);
-  animation: pulse 0.8s infinite ease-in-out;
+  animation: pulseBox 0.8s infinite ease-in-out;
 }
 .todo__item.done .todo__box {
   background: var(--grad-warm);
   border-color: transparent;
 }
 .todo__item.done .todo__box::after {
-  content: '';
-  position: absolute;
+  content: ''; position: absolute;
   left: 4px; top: 0;
   width: 5px; height: 9px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
-@keyframes pulse {
+@keyframes pulseBox {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.1); opacity: 0.7; }
 }
@@ -643,64 +722,153 @@ body {
   font-size: 0.82rem; font-weight: 600;
   display: flex; align-items: center; gap: 0.5rem;
   background: rgba(255,255,255,0.4);
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  opacity: 0; transition: opacity 0.5s ease;
 }
 .chat-footer.show { opacity: 1; }
-.chat-window--agent .chat-footer { border-top-color: rgba(255,160,0,0.15); }
-.status-bad { color: var(--red-danger); }
+.chat-window--agent .chat-footer { border-top-color: rgba(255,160,0,0.18); }
+.status-bad { color: #C62828; }
 .status-good { color: var(--orange-dark); }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 .replay-wrap { text-align: center; margin-top: 1.25rem; }
 .replay-btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.7rem 1.4rem;
-  background: var(--white);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 9999px;
+  background: var(--white); color: var(--text);
+  border: 1px solid var(--border); border-radius: 9999px;
   font-size: 0.88rem; font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
+  font-family: inherit; cursor: pointer;
   transition: all var(--transition-fast);
 }
 .replay-btn:hover {
-  border-color: var(--orange);
-  color: var(--orange-dark);
+  border-color: var(--orange); color: var(--orange-dark);
   transform: translateY(-1px);
   box-shadow: 0 8px 20px -8px rgba(255,160,0,0.3);
 }
 .compare-summary {
   text-align: center;
-  max-width: 640px;
-  margin: 2.5rem auto 0;
-  padding: 0 1.25rem;
+  max-width: 640px; margin: 2.5rem auto 0;
+  padding: 0 1.5rem;
 }
 .compare-summary__punch {
-  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-size: clamp(1.3rem, 2.6vw, 1.75rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--black);
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
 }
 .compare-summary__punch em {
   font-style: normal;
   color: var(--orange);
 }
-.compare-summary__line {
-  font-size: 1rem;
+.compare-summary__line { font-size: 1rem; color: var(--text-muted); line-height: 1.5; }
+
+/* ===================================================================
+   STORY 2 — ORANGE ISLAND
+   =================================================================== */
+.island-section {
+  background: var(--grad-island);
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+.island-section::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.22), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.14), transparent 55%);
+  pointer-events: none;
+}
+.island-section .longread { position: relative; z-index: 1; }
+.island-section .s-label {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.35);
+  color: var(--white);
+  backdrop-filter: blur(10px);
+}
+.island-section .s-title {
+  color: var(--white);
+}
+.island-section .s-title em { color: var(--sun-300, #FFF59D); }
+.island-section .longread p { color: rgba(255,255,255,0.92); }
+.island-section .longread p strong { color: var(--white); }
+.island-section .longread p em { color: rgba(255,255,255,0.75); }
+.island-section .bucket {
+  font-size: 1.08rem;
+  color: rgba(255,255,255,0.85);
+  font-style: italic;
+  margin-bottom: 1.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(255,255,255,0.4);
+}
+.island-section .bab-badge {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.35);
+  backdrop-filter: blur(20px) saturate(1.5);
+  color: var(--white);
+  box-shadow: 0 20px 50px -20px rgba(0,0,0,0.25);
+}
+.island-section .bab-badge::before { color: var(--white); }
+.island-section .bab-badge em { color: rgba(255,255,255,0.75); }
+
+.bucket {
+  font-size: 1.08rem;
   color: var(--text-muted);
-  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: 1.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--yellow);
 }
 
-/* ========== METR ========== */
+/* ===================================================================
+   MANIFESTO — lamp-light on white
+   =================================================================== */
+.manifesto-section {
+  position: relative; overflow: hidden;
+  background: var(--white);
+  padding: clamp(80px, 11vw, 140px) 0 clamp(60px, 8vw, 110px);
+}
+.lamp {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 320px;
+  pointer-events: none; z-index: 0;
+}
+.lamp::before {
+  content: ''; position: absolute;
+  top: 0; left: 50%;
+  width: min(1200px, 100%); height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 80% 100% at 50% 0%,
+    rgba(255,180,0,0.35) 0%,
+    rgba(255,200,0,0.15) 40%,
+    transparent 80%);
+}
+.lamp::after {
+  content: ''; position: absolute;
+  top: 0; left: 50%;
+  width: min(1600px, 100%); height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 80% 100% at 50% 0%,
+    rgba(255,200,0,0.18) 0%,
+    rgba(255,213,79,0.06) 50%,
+    transparent 80%);
+}
+.lamp-line {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 20%, rgba(255,160,0,0.5) 50%, transparent 80%);
+  box-shadow: 0 0 40px 15px rgba(255,180,0,0.12);
+}
+.manifesto-section .longread { position: relative; z-index: 1; }
+
+/* ===================================================================
+   METR chart (on tinted island)
+   =================================================================== */
 .metr-section {
-  background: linear-gradient(180deg, var(--sun-100) 0%, var(--sun-300) 100%);
+  background: linear-gradient(180deg, #FFFDE7 0%, #FFF59D 100%);
   position: relative; overflow: hidden;
 }
 .metr-section::before {
-  content: '';
-  position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0;
   background:
     radial-gradient(circle at 20% 30%, rgba(255,255,255,0.5) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 50%);
@@ -709,11 +877,11 @@ body {
 .metr-section .longread { position: relative; z-index: 2; }
 .metr-chart {
   margin: 2.25rem -0.5rem;
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 2rem 1.25rem 1.5rem;
   background: var(--white);
-  border-radius: 18px;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,0.15), 0 4px 14px rgba(0,0,0,0.06);
+  border: 1px solid rgba(255,255,255,0.7);
 }
 @media (min-width: 768px) {
   .metr-chart { margin: 2.5rem -2rem; padding: 2.25rem 2rem 1.75rem; }
@@ -728,29 +896,22 @@ body {
 .metr-chart__sub {
   font-size: 1.02rem; font-weight: 600;
   color: var(--black);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.01em;
 }
+.metr-chart svg { width: 100%; height: auto; display: block; }
 .metr-chart__legend {
-  display: flex; gap: 1.5rem;
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
+  display: flex; gap: 1.25rem;
+  margin-top: 1.25rem; padding-top: 1.25rem;
   border-top: 1px solid var(--border);
-  font-size: 0.82rem;
-  flex-wrap: wrap;
+  font-size: 0.82rem; flex-wrap: wrap;
 }
 .metr-chart__legend-item {
   display: flex; align-items: center; gap: 0.5rem;
   color: var(--text-muted);
 }
-.metr-chart__legend-dot { width: 10px; height: 2px; border-radius: 2px; }
-.metr-chart__source {
-  font-size: 0.78rem;
-  color: var(--text-light);
-  margin-top: 1rem;
-  font-style: italic;
-}
-.metr-chart svg { width: 100%; height: auto; display: block; }
+.metr-chart__legend-dot { width: 12px; height: 2px; border-radius: 2px; }
+.metr-chart__source { font-size: 0.78rem; color: var(--text-light); margin-top: 1rem; font-style: italic; }
 
 .shock-line {
   margin: 1.75rem 0;
@@ -761,42 +922,53 @@ body {
 }
 .shock-line span:nth-child(2) { color: var(--orange-dark); }
 
-/* ========== APPLICABILITY (новая секция) ========== */
+/* ===================================================================
+   APPLICABILITY — bento grid with liquid glass cards
+   =================================================================== */
 .applicability-section {
   background: var(--white);
-  position: relative;
+  padding: clamp(60px, 8vw, 110px) 0;
+  position: relative; overflow: hidden;
 }
-.applicability-lead {
-  max-width: 700px; margin: 0 auto 2.5rem;
-  padding: 0 1.25rem;
-}
-
 .persona-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
+  display: grid; grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 1200px; margin: 2.5rem auto 0;
+  padding: 0 1.5rem;
 }
-@media (min-width: 640px) { .persona-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
+@media (min-width: 640px) { .persona-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
 @media (min-width: 1024px) { .persona-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px) { .persona-grid { padding: 0 3rem; } }
+@media (min-width: 1280px) { .persona-grid { padding: 0 5rem; } }
 
 .persona {
+  position: relative; overflow: hidden;
   padding: 1.75rem 1.75rem;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
-  border: 1px solid rgba(0,0,0,0.05);
-  border-radius: 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFB 100%);
   box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-  transition: all var(--transition-spring);
+  transition: all var(--transition-slow);
   display: flex; flex-direction: column;
 }
+.persona::before {
+  content: ''; position: absolute; inset: 0; border-radius: 22px;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 12%, rgba(255,255,255,0.7), transparent 55%),
+    radial-gradient(ellipse 70% 35% at 85% 90%, rgba(255,220,80,0.05), transparent 50%);
+  pointer-events: none;
+}
 .persona:hover {
-  border-color: rgba(255,160,0,0.28);
+  border-color: rgba(255,160,0,0.3);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -20px rgba(255,180,0,0.25), 0 2px 8px rgba(0,0,0,0.03);
+  box-shadow: 0 24px 50px -24px rgba(255,180,0,0.28), 0 2px 10px rgba(0,0,0,0.04);
+}
+.persona--self {
+  background: linear-gradient(155deg, #FFFDE7 0%, #FFF59D 100%);
+  border-color: rgba(255,160,0,0.35);
 }
 .persona__kind {
+  position: relative; z-index: 1;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem; font-weight: 700;
   color: var(--orange-dark);
@@ -804,74 +976,52 @@ body {
   margin-bottom: 0.6rem;
 }
 .persona__name {
-  font-size: 1.35rem; font-weight: 800;
+  position: relative; z-index: 1;
+  font-size: 1.28rem; font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--black);
   margin-bottom: 1rem;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 .persona__tasks {
-  list-style: none;
-  display: flex; flex-direction: column;
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0;
-  flex: 1;
+  position: relative; z-index: 1;
+  list-style: none; display: flex; flex-direction: column;
+  gap: 0.5rem; margin: 0; padding: 0; flex: 1;
 }
 .persona__tasks li {
-  padding-left: 1.1rem;
-  position: relative;
-  font-size: 0.96rem;
-  color: var(--text);
+  padding-left: 1.1rem; position: relative;
+  font-size: 0.95rem; color: var(--text);
   line-height: 1.45;
 }
 .persona__tasks li::before {
-  content: '';
-  position: absolute;
+  content: ''; position: absolute;
   left: 0; top: 0.55em;
-  width: 5px; height: 5px;
-  border-radius: 50%;
+  width: 5px; height: 5px; border-radius: 50%;
   background: var(--orange);
 }
 
 .persona-note {
   max-width: 700px;
   margin: 2.5rem auto 0;
-  padding: 0 1.25rem;
-  font-size: 1.02rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.55;
   text-align: center;
   font-style: italic;
 }
 
-/* ========== CTA (soft-pitch) — СВЕТЛАЯ, на бренде ========== */
+/* ===================================================================
+   CTA SOFT-PITCH — lamp-light + liquid glass tariffs
+   =================================================================== */
 .cta-section {
-  background: var(--grad-soft);
-  padding: clamp(5rem, 9vw, 7rem) 0;
   position: relative; overflow: hidden;
-}
-.cta-lamp {
-  position: absolute;
-  top: 0; left: 50%; transform: translateX(-50%);
-  width: min(1400px, 110%); height: 320px;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255,180,0,0.35), rgba(255,200,0,0.12) 40%, transparent 78%);
-  z-index: 0;
-}
-.cta-lamp-line {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 15%, rgba(255,160,0,0.55) 50%, transparent 85%);
-  box-shadow: 0 0 40px 12px rgba(255,180,0,0.18);
-  pointer-events: none; z-index: 1;
+  background: linear-gradient(180deg, #FFFDE7 0%, #FFF9C4 50%, #FFE082 100%);
+  padding: clamp(100px, 12vw, 160px) 0 clamp(60px, 8vw, 110px);
 }
 .cta-inner {
   position: relative; z-index: 2;
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 720px; margin: 0 auto;
   padding: 0 1.5rem;
 }
 .cta-eyebrow {
@@ -880,37 +1030,36 @@ body {
   font-size: 0.72rem; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--orange-dark);
-  background: rgba(255,255,255,0.6);
-  border: 1px solid rgba(255,160,0,0.2);
-  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255,160,0,0.25);
+  backdrop-filter: blur(10px);
   padding: 0.35rem 0.85rem;
   border-radius: 9999px;
   margin-bottom: 1.5rem;
 }
 .cta-title {
-  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+  font-size: clamp(1.95rem, 4.6vw, 3rem);
   font-weight: 900; line-height: 1.1;
   letter-spacing: -0.03em;
   color: var(--black);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.35rem;
 }
 .cta-title em {
-  font-style: normal; color: var(--orange);
+  font-style: normal; color: var(--orange-dark);
 }
 .cta-lead {
   font-size: 1.12rem;
   color: var(--text);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   line-height: 1.55;
 }
 .cta-lead strong { color: var(--black); }
-.cta-course { font-weight: 800; color: var(--orange-dark); letter-spacing: 0.02em; }
 
 .cta-list {
   list-style: none;
   margin: 1.75rem 0 2rem;
   padding: 0;
-  display: grid; gap: 0.45rem;
+  display: grid; gap: 0.4rem;
 }
 .cta-list li {
   padding: 0.65rem 0 0.65rem 1.75rem;
@@ -930,7 +1079,6 @@ body {
 }
 .cta-list li strong { color: var(--black); font-weight: 700; }
 
-/* Liquid-glass tariff cards */
 .tariffs {
   display: grid; gap: 1rem;
   margin: 2.25rem 0 2rem;
@@ -941,76 +1089,90 @@ body {
 .tariff {
   position: relative; overflow: hidden;
   padding: 1.75rem 1.5rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.55);
   background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 100%);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
   box-shadow:
     0 1px 2px rgba(0,0,0,0.04),
     0 8px 32px rgba(0,0,0,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.85),
-    inset 0 -1px 0 rgba(0,0,0,0.02);
-  transition: transform var(--transition-spring), box-shadow var(--transition-spring);
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all var(--transition-slow);
 }
 .tariff::before {
-  content: ''; position: absolute; inset: 0;
-  border-radius: inherit; pointer-events: none;
+  content: ''; position: absolute; inset: 0; border-radius: 22px;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 15%, rgba(255,255,255,0.7), transparent 60%),
-    radial-gradient(ellipse 80% 40% at 80% 90%, rgba(255,200,50,0.06), transparent 50%);
+    radial-gradient(ellipse 55% 45% at 20% 15%, rgba(255,255,255,0.75), transparent 60%),
+    radial-gradient(ellipse 70% 35% at 80% 90%, rgba(255,200,50,0.06), transparent 50%);
+  pointer-events: none;
+}
+.tariff::after {
+  content: ''; position: absolute; inset: 0; border-radius: 22px;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(255,255,255,0.6), transparent 40%, transparent 60%, rgba(255,255,255,0.2)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 .tariff:hover {
   transform: translateY(-4px);
   box-shadow:
     0 1px 2px rgba(0,0,0,0.04),
-    0 24px 60px rgba(255,160,0,0.18),
+    0 24px 60px rgba(255,160,0,0.22),
     inset 0 1px 0 rgba(255,255,255,0.95);
 }
 .tariff--premium {
-  border-color: rgba(255,160,0,0.35);
-  background: linear-gradient(135deg, rgba(255,213,79,0.45) 0%, rgba(255,160,0,0.22) 100%);
+  border-color: rgba(255,160,0,0.4);
+  background: linear-gradient(135deg, rgba(255,213,79,0.55) 0%, rgba(255,160,0,0.28) 100%);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 14px 50px rgba(255,160,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.75),
+    0 -15px 140px 10px rgba(255,140,0,0.12);
 }
 .tariff__kind {
+  position: relative; z-index: 1;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.68rem; font-weight: 700;
   color: var(--orange-dark);
   letter-spacing: 0.12em; text-transform: uppercase;
   margin-bottom: 0.5rem;
-  position: relative; z-index: 1;
 }
 .tariff__name {
-  font-size: 1.25rem; font-weight: 800;
+  position: relative; z-index: 1;
+  font-size: 1.3rem; font-weight: 800;
   color: var(--black);
   letter-spacing: -0.02em;
-  margin-bottom: 0.75rem;
-  position: relative; z-index: 1;
+  margin-bottom: 0.8rem;
 }
 .tariff__price {
-  display: flex; align-items: baseline; gap: 0.5rem;
-  margin-bottom: 0.65rem;
   position: relative; z-index: 1;
+  display: flex; align-items: baseline; gap: 0.5rem;
+  margin-bottom: 0.7rem;
 }
 .tariff__price-now {
-  font-size: 1.5rem; font-weight: 900;
+  font-size: 1.6rem; font-weight: 900;
   color: var(--black);
   letter-spacing: -0.02em;
 }
 .tariff__price-old {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
   text-decoration: line-through;
 }
 .tariff__desc {
+  position: relative; z-index: 1;
   font-size: 0.95rem;
   color: var(--text);
   line-height: 1.5;
-  position: relative; z-index: 1;
 }
 .tariff__slots {
+  position: relative; z-index: 1;
   display: inline-block;
-  margin-top: 0.75rem;
-  padding: 0.25rem 0.65rem;
+  margin-top: 0.8rem;
+  padding: 0.3rem 0.7rem;
   background: var(--orange);
   color: var(--white);
   font-size: 0.72rem;
@@ -1018,7 +1180,6 @@ body {
   border-radius: 6px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  position: relative; z-index: 1;
 }
 
 .cta-btn {
@@ -1030,7 +1191,7 @@ body {
   font-size: 1.05rem; font-weight: 800;
   text-decoration: none;
   transition: all var(--transition);
-  box-shadow: 0 20px 50px rgba(255,140,0,0.38), 0 4px 12px rgba(255,140,0,0.18);
+  box-shadow: 0 20px 50px rgba(255,140,0,0.4), 0 4px 12px rgba(255,140,0,0.2);
   margin-top: 0.5rem;
 }
 .cta-btn:hover {
@@ -1038,62 +1199,53 @@ body {
   box-shadow: 0 26px 60px rgba(255,140,0,0.5);
 }
 .cta-guarantee {
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
   font-size: 0.9rem;
   color: var(--text-muted);
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.55;
   max-width: 480px;
 }
 
-/* ========== FINAL ========== */
+/* ===================================================================
+   FINAL section
+   =================================================================== */
 .final-section {
-  padding: clamp(5rem, 9vw, 7rem) 0;
+  padding: clamp(60px, 9vw, 110px) 0;
   text-align: center;
   background: var(--white);
   position: relative;
 }
-.final-inner {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
+.final-inner { max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
 .final-lines {
-  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.25;
+  line-height: 1.3;
   color: var(--text-muted);
   margin-bottom: 2.25rem;
 }
-.final-lines span {
-  display: block;
-  margin-bottom: 0.5rem;
-}
+.final-lines span { display: block; margin-bottom: 0.5rem; }
 .final-lines span:last-child {
-  color: var(--black);
-  font-weight: 900;
-  margin-top: 1.25rem;
-  margin-bottom: 0;
+  color: var(--black); font-weight: 900;
+  margin-top: 1.25rem; margin-bottom: 0;
 }
-.final-lines span:last-child em {
-  font-style: normal; color: var(--orange);
-}
+.final-lines span:last-child em { font-style: normal; color: var(--orange); }
+
 .final-btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 1.1rem 2.5rem;
-  background: var(--black);
-  color: var(--white);
+  background: var(--black); color: var(--white);
   border-radius: 9999px;
   font-size: 1.05rem; font-weight: 800;
   text-decoration: none;
   transition: all var(--transition);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.22);
 }
 .final-btn:hover {
   transform: translateY(-3px) scale(1.02);
   background: var(--orange-dark);
-  box-shadow: 0 22px 50px rgba(255,140,0,0.35);
+  box-shadow: 0 22px 50px rgba(255,140,0,0.4);
 }
 .final-sign {
   margin-top: 2rem;
@@ -1102,7 +1254,9 @@ body {
   font-style: italic;
 }
 
-/* ========== FOOTER ========== */
+/* ===================================================================
+   FOOTER
+   =================================================================== */
 .footer {
   padding: 2.5rem 1.5rem;
   text-align: center;
@@ -1112,8 +1266,7 @@ body {
   border-top: 1px solid var(--border);
 }
 .footer a {
-  color: var(--text-muted);
-  text-decoration: none;
+  color: var(--text-muted); text-decoration: none;
   transition: color var(--transition-fast);
 }
 .footer a:hover { color: var(--orange); }
@@ -1123,7 +1276,9 @@ body {
   flex-wrap: wrap; justify-content: center;
 }
 
-/* ========== STICKY CTA ========== */
+/* ===================================================================
+   STICKY CTA
+   =================================================================== */
 .sticky-cta {
   position: fixed;
   bottom: 1.25rem; left: 50%;
@@ -1151,42 +1306,52 @@ body {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--white);
   box-shadow: 0 0 8px var(--white);
-  animation: blink 1.8s infinite;
+  animation: blinkDot 1.8s infinite;
 }
-@keyframes blink {
+@keyframes blinkDot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
 
-/* ========== REVEAL ========== */
+/* ===================================================================
+   REVEAL
+   =================================================================== */
 .reveal {
-  opacity: 0; transform: translateY(18px);
-  transition: opacity var(--transition-spring), transform var(--transition-spring);
+  opacity: 0; transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.reveal.is-in { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.08s; }
-.reveal-d2 { transition-delay: 0.16s; }
-.reveal-d3 { transition-delay: 0.24s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-big {
+  opacity: 0; transform: translateY(80px) scale(0.95);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.reveal-big.visible { opacity: 1; transform: translateY(0) scale(1); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
-  .hero-scroll { animation: none; }
-  .sticky-cta::before { animation: none; }
+  .reveal, .reveal-big, .hero-fade, .hero-title-big, .hero-eyebrow {
+    opacity: 1; transform: none; transition: none;
+  }
+  .hero-scroll, .sticky-cta::before, .blob { animation: none; }
 }
 
-/* ========== MOBILE TWEAKS ========== */
+/* ===================================================================
+   MOBILE tweaks
+   =================================================================== */
 @media (max-width: 600px) {
-  .longread p { font-size: 1.03rem; line-height: 1.68; }
-  .section-lead { font-size: 1.05rem; }
-  .hero-title { font-size: clamp(1.9rem, 8.5vw, 2.6rem); line-height: 1.1; }
-  .hero-sub { font-size: 1rem; }
-  .bab-badge { font-size: 1.03rem; padding: 1.25rem 1.35rem; }
-  .pullquote { font-size: 1.25rem; padding: 1rem 0 1rem 1.15rem; }
-  .shock-line { font-size: 1.4rem; }
+  .longread p { font-size: 1.02rem; line-height: 1.68; }
+  .pullquote { font-size: 1.2rem; padding: 1rem 0 1rem 1.2rem; }
+  .shock-line { font-size: 1.3rem; }
   .shock-line span { display: inline; }
   .shock-line span:nth-child(2)::before { content: ' '; }
   .cta-btn, .final-btn { padding: 0.95rem 1.85rem; font-size: 0.98rem; }
   .metr-chart { padding: 1.5rem 1rem 1.25rem; }
+  .blob { width: 350px; height: 350px; }
+  .hero-subtitle { letter-spacing: 0.02em; }
 }
 </style>
 </head>
@@ -1198,30 +1363,48 @@ body {
 <!-- ==================== HEADER ==================== -->
 <header class="header" id="header">
   <a href="/" class="header-logo">АГИ</a>
-  <a href="/" class="header-back">← На главную</a>
+  <a href="/" class="header-cta">← На главную</a>
 </header>
 
-<!-- ==================== HERO ==================== -->
-<section class="hero">
-  <div class="hero-noise"></div>
+<!-- ==================== HERO (WebGL shader) ==================== -->
+<section class="hero" id="hero">
+  <div class="hero-shader" id="heroShader"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow reveal">Лонгрид · 10 минут · от Егора</div>
-    <h1 class="hero-title reveal reveal-d1">Ты ещё не&nbsp;понял,<br>что&nbsp;такое ИИ&#8209;агент.</h1>
-    <p class="hero-sub reveal reveal-d2">
-      Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я не программист — и сейчас расскажу, почему это уже не важно.
-    </p>
-    <a href="#story-1" class="hero-cta reveal reveal-d3">Начать читать ↓</a>
+    <div class="hero-eyebrow">Лонгрид · 10 минут · от Егора</div>
+    <div class="hero-title-big" id="heroTitle">АГЕНТ</div>
+    <h1 class="hero-subtitle hero-fade hero-fade-1">ТЫ ЕЩЁ НЕ ПОНЯЛ,<br>ЧТО ЭТО</h1>
+    <p class="hero-desc hero-fade hero-fade-2">Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я <strong>не программист</strong> — и сейчас расскажу, почему это уже не важно.</p>
+    <a href="#story-1" class="hero-cta-btn hero-fade hero-fade-3">Начать читать</a>
   </div>
   <div class="hero-scroll">Листай ↓</div>
 </section>
 
-<!-- ==================== STORY 1 ==================== -->
-<section class="section" id="story-1">
-  <div class="longread">
-    <div class="reveal"><div class="section-label">01 · с чего всё началось</div></div>
-    <h2 class="section-title reveal reveal-d1">Первую историю расскажу сразу. Без разгона.</h2>
+<!-- ==================== MARQUEE ==================== -->
+<div class="marquee marquee-white">
+  <div class="marquee-track">
+    <span class="marquee-item">ЧТО ТАКОЕ ИИ-АГЕНТ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">КАК ОН МЕНЯЕТ РАБОТУ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">ПОЧЕМУ ИМЕННО СЕЙЧАС</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">И ЧТО С ЭТИМ ДЕЛАТЬ ТЕБЕ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">ЧТО ТАКОЕ ИИ-АГЕНТ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">КАК ОН МЕНЯЕТ РАБОТУ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">ПОЧЕМУ ИМЕННО СЕЙЧАС</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">И ЧТО С ЭТИМ ДЕЛАТЬ ТЕБЕ</span><span class="marquee-dot">•</span>
+  </div>
+</div>
 
-    <p class="reveal reveal-d2">Юркомпания, для которой я вёл корпоративное обучение. Им нужны LLM в работе — как и всем сейчас. Но есть одна штука: <strong>данные.</strong> Персональные, коммерческая тайна, внутренние документы. Просто закинуть это в ChatGPT — уволят в тот же день.</p>
+<!-- ==================== STORY 1 — white w/ blobs ==================== -->
+<section class="section section-white" id="story-1">
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="longread">
+    <div class="reveal"><div class="s-label">01 · с чего всё началось</div></div>
+    <h2 class="s-title reveal reveal-delay-1">Первую историю расскажу сразу. Без&nbsp;разгона.</h2>
+
+    <p class="reveal reveal-delay-2">Юркомпания, для которой я вёл корпоративное обучение. Им нужны LLM в работе — как и всем сейчас. Но есть одна штука: <strong>данные.</strong> Персональные, коммерческая тайна, внутренние документы. Просто закинуть это в ChatGPT — уволят в тот же день.</p>
 
     <p class="reveal">Единственный вариант — <strong>анонимизировать всё перед тем, как отдать ИИ.</strong> Заменить имена, суммы, адреса, номера договоров на заглушки, а потом вернуть обратно.</p>
 
@@ -1260,119 +1443,131 @@ body {
 </section>
 
 <!-- ==================== EVOLUTION ==================== -->
-<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%);">
+<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, #FFFDE7 100%);">
   <div class="longread">
-    <div class="reveal"><div class="section-label">02 · что изменилось</div></div>
-    <h2 class="section-title reveal reveal-d1">Чтобы понять, что случилось, нужно три картинки.</h2>
+    <div class="reveal"><div class="s-label">02 · что изменилось</div></div>
+    <h2 class="s-title reveal reveal-delay-1">Чтобы понять, что случилось, нужно <em>три картинки.</em></h2>
 
-    <p class="section-lead reveal reveal-d2">За последние два года ИИ прошёл три этапа. Если ты пропустил хотя бы один — вот тебе лестница. Без жаргона.</p>
+    <p class="s-desc reveal reveal-delay-2" style="margin-bottom: 1.75rem;">За последние два года ИИ прошёл три этапа. Если ты пропустил хотя бы один — вот тебе лестница. Без жаргона.</p>
 
     <div class="ladder">
-      <div class="ladder__item reveal">
-        <div class="ladder__num">①  ЧАТ</div>
-        <div class="ladder__title">ChatGPT-3.5</div>
-        <div class="ladder__sub">Как калькулятор</div>
-        <div class="ladder__desc">Ты спрашиваешь — он отвечает. Быстро, но плоско. Если надо сложнее «напиши письмо» — ломается. Это 2023-й. Игрушка.</div>
+      <div class="ladder-card reveal">
+        <div class="ladder-card__num">①  ЧАТ</div>
+        <div class="ladder-card__title">ChatGPT-3.5</div>
+        <div class="ladder-card__sub">Как калькулятор</div>
+        <div class="ladder-card__desc">Ты спрашиваешь — он отвечает. Быстро, но плоско. Если сложнее «напиши письмо» — ломается. Это 2023-й. Игрушка.</div>
       </div>
-      <div class="ladder__item reveal reveal-d1">
-        <div class="ladder__num">②  REASONING</div>
-        <div class="ladder__title">o1, o3</div>
-        <div class="ladder__sub">Как стажёр</div>
-        <div class="ladder__desc">Модель, которая <strong>думает перед ответом.</strong> Берёт задачу, расписывает шаги, проверяет себя. Уровень мидла. Но всё ещё — советчик.</div>
+      <div class="ladder-card reveal reveal-delay-1">
+        <div class="ladder-card__num">②  REASONING</div>
+        <div class="ladder-card__title">o1, o3</div>
+        <div class="ladder-card__sub">Как стажёр</div>
+        <div class="ladder-card__desc">Модель, которая <strong>думает перед ответом.</strong> Берёт задачу, расписывает шаги, проверяет себя. Уровень мидла. Но всё ещё — советчик.</div>
       </div>
-      <div class="ladder__item ladder__item--agent reveal reveal-d2">
-        <div class="ladder__num">③  АГЕНТ</div>
-        <div class="ladder__title">ИИ-агент</div>
-        <div class="ladder__sub">Как сотрудник с доступом к твоему ноуту</div>
-        <div class="ladder__desc">Думает — <strong>и делает.</strong> Пишет код. Открывает файлы. Запускает команды. Видит ошибку — чинит. Делает следующий шаг. Сам.</div>
+      <div class="ladder-card ladder-card--agent reveal reveal-delay-2">
+        <div class="ladder-card__num">③  АГЕНТ</div>
+        <div class="ladder-card__title">ИИ-агент</div>
+        <div class="ladder-card__sub">Как сотрудник с доступом к твоему ноуту</div>
+        <div class="ladder-card__desc">Думает — <strong>и делает.</strong> Пишет код. Открывает файлы. Запускает команды. Видит ошибку — чинит. Делает следующий шаг. Сам.</div>
       </div>
     </div>
 
-    <div class="callout reveal">
-      Разница между ② и ③ выглядит как маленький шаг. На самом деле это момент, когда молоток перестал быть молотком и стал плотником.
+    <div class="longread" style="padding: 0;">
+      <div class="callout reveal">
+        Разница между ② и ③ выглядит как маленький шаг. На самом деле это момент, когда молоток перестал быть молотком и стал плотником.
+      </div>
+
+      <p class="reveal">С этого момента работа с ИИ перестаёт быть про «подсказал → я сделал». Она становится про <strong>«поставил задачу → пришёл готовый результат».</strong></p>
+
+      <p class="reveal">Это и есть то, что произошло полгода назад. И почему моя история с юркомпанией — не везение.</p>
     </div>
-
-    <p class="reveal">С этого момента работа с ИИ перестаёт быть про «подсказал → я сделал». Она становится про <strong>«поставил задачу → пришёл готовый результат».</strong></p>
-
-    <p class="reveal">Это и есть то, что произошло полгода назад. И почему моя история с юркомпанией — не везение.</p>
   </div>
 </section>
 
 <!-- ==================== COMPARE (interactive) ==================== -->
 <section class="section compare-section">
   <div class="compare-head reveal">
-    <div class="section-label">03 · почувствуй разницу</div>
-    <h2 class="section-title">Одна и та же задача. Два исхода.</h2>
-    <p class="section-lead">Если ты всё ещё не чувствуешь разницу — смотри.</p>
+    <div class="s-label">03 · почувствуй разницу</div>
+    <h2 class="s-title">Одна и та же задача. <em>Два исхода.</em></h2>
+    <p class="s-desc">Если ты всё ещё не чувствуешь разницу — смотри.</p>
   </div>
 
-  <div class="container">
-    <div class="chat-grid" id="chatGrid">
-      <!-- LEFT: CHAT -->
-      <div class="chat-window chat-window--gpt">
-        <div class="chat-header">
-          <span class="header-dot"></span>
-          <span class="header-title">ChatGPT</span>
-          <span class="header-kind">чат</span>
-        </div>
-        <div class="messages" data-role="gpt">
-          <div class="msg msg--user" data-delay="300">Собери мне сайт-визитку и выложи в интернет</div>
-          <div class="msg msg--bot" data-delay="1400">Конечно. Вот HTML-разметка и CSS, вставь в файл <code>index.html</code>. Чтобы выложить — нужно:<br><br>1. Купить домен<br>2. Настроить хостинг<br>3. Залить файлы через FTP<br>4. Настроить SSL</div>
-          <div class="msg msg--user" data-delay="3000">А что такое FTP? А где купить домен?</div>
-          <div class="msg msg--bot msg--bot-muted" data-delay="4200">FTP — это File Transfer Protocol… <em>ещё 300 слов теории</em></div>
-          <div class="msg msg--user" data-delay="5600">У меня ошибка на третьей строчке. Что делать?</div>
-        </div>
-        <div class="chat-footer" data-delay="6800">
-          <span class="status-dot" style="background:var(--red-danger);"></span>
-          <span class="status-bad">Сайт не сделан · ты всё ещё разбираешься</span>
-        </div>
+  <div class="chat-grid reveal" id="chatGrid">
+    <div class="chat-window chat-window--gpt">
+      <div class="chat-header">
+        <span class="header-dot"></span>
+        <span class="header-title">ChatGPT</span>
+        <span class="header-kind">чат</span>
       </div>
-
-      <!-- RIGHT: AGENT -->
-      <div class="chat-window chat-window--agent">
-        <div class="chat-header">
-          <span class="header-dot header-dot--agent"></span>
-          <span class="header-title">ИИ-агент</span>
-          <span class="header-kind">автоном</span>
-        </div>
-        <div class="messages" data-role="agent">
-          <div class="msg msg--user" data-delay="300">Собери мне сайт-визитку и выложи в интернет</div>
-          <div class="todo" data-delay="1400">
-            <div class="todo__label">Агент → план работы</div>
-            <ul class="todo__list">
-              <li class="todo__item" data-step="0"><span class="todo__box"></span>Спроектировать структуру сайта</li>
-              <li class="todo__item" data-step="1"><span class="todo__box"></span>Сгенерировать HTML + CSS</li>
-              <li class="todo__item" data-step="2"><span class="todo__box"></span>Проверить вёрстку, починить ошибки</li>
-              <li class="todo__item" data-step="3"><span class="todo__box"></span>Задеплоить на сервер, получить ссылку</li>
-            </ul>
-          </div>
-          <div class="msg msg--agent" data-delay="6800">Готово. Держи ссылку: <strong>your-site.app</strong><br><br>Подключить твой домен? Скажи — сделаю.</div>
-        </div>
-        <div class="chat-footer" data-delay="7400">
-          <span class="status-dot" style="background:var(--orange-dark);"></span>
-          <span class="status-good">Работа сделана · ~2 минуты</span>
-        </div>
+      <div class="messages" data-role="gpt">
+        <div class="msg msg--user" data-delay="300">Собери мне сайт-визитку и выложи в интернет</div>
+        <div class="msg msg--bot" data-delay="1400">Конечно. Вот HTML-разметка и CSS, вставь в файл <code>index.html</code>. Чтобы выложить — нужно:<br><br>1. Купить домен<br>2. Настроить хостинг<br>3. Залить файлы через FTP<br>4. Настроить SSL</div>
+        <div class="msg msg--user" data-delay="3000">А что такое FTP? А где купить домен?</div>
+        <div class="msg msg--bot msg--bot-muted" data-delay="4200">FTP — это File Transfer Protocol… <em>ещё 300 слов теории</em></div>
+        <div class="msg msg--user" data-delay="5600">У меня ошибка на третьей строчке. Что делать?</div>
+      </div>
+      <div class="chat-footer" data-delay="6800">
+        <span class="status-dot" style="background:#C62828;"></span>
+        <span class="status-bad">Сайт не сделан · ты всё ещё разбираешься</span>
       </div>
     </div>
 
-    <div class="replay-wrap">
-      <button class="replay-btn" id="replayBtn">↻ Запустить ещё раз</button>
+    <div class="chat-window chat-window--agent">
+      <div class="chat-header">
+        <span class="header-dot header-dot--agent"></span>
+        <span class="header-title">ИИ-агент</span>
+        <span class="header-kind">автоном</span>
+      </div>
+      <div class="messages" data-role="agent">
+        <div class="msg msg--user" data-delay="300">Собери мне сайт-визитку и выложи в интернет</div>
+        <div class="todo" data-delay="1400">
+          <div class="todo__label">Агент → план работы</div>
+          <ul class="todo__list">
+            <li class="todo__item" data-step="0"><span class="todo__box"></span>Спроектировать структуру сайта</li>
+            <li class="todo__item" data-step="1"><span class="todo__box"></span>Сгенерировать HTML + CSS</li>
+            <li class="todo__item" data-step="2"><span class="todo__box"></span>Проверить вёрстку, починить ошибки</li>
+            <li class="todo__item" data-step="3"><span class="todo__box"></span>Задеплоить на сервер, получить ссылку</li>
+          </ul>
+        </div>
+        <div class="msg msg--agent" data-delay="6800">Готово. Держи ссылку: <strong>your-site.app</strong><br><br>Подключить твой домен? Скажи — сделаю.</div>
+      </div>
+      <div class="chat-footer" data-delay="7400">
+        <span class="status-dot" style="background:var(--orange-dark);"></span>
+        <span class="status-good">Работа сделана · ~2 минуты</span>
+      </div>
     </div>
+  </div>
 
-    <div class="compare-summary">
-      <div class="compare-summary__punch">Вся разница — в одном слове: <em>делает</em>.</div>
-      <div class="compare-summary__line">Чат даёт тебе инструкции. Агент даёт тебе сделанную работу.</div>
-    </div>
+  <div class="replay-wrap reveal">
+    <button class="replay-btn" id="replayBtn">↻ Запустить ещё раз</button>
+  </div>
+
+  <div class="compare-summary reveal">
+    <div class="compare-summary__punch">Вся разница — в одном слове: <em>делает</em>.</div>
+    <div class="compare-summary__line">Чат даёт тебе инструкции. Агент даёт тебе сделанную работу.</div>
   </div>
 </section>
 
-<!-- ==================== STORY 2 ==================== -->
-<section class="section">
-  <div class="longread">
-    <div class="reveal"><div class="section-label">04 · история вторая</div></div>
-    <h2 class="section-title reveal reveal-d1">Ты можешь сказать: «У тебя был клиент и деньги. А если просто для себя?»</h2>
+<!-- ==================== MARQUEE 2 (orange, transition) ==================== -->
+<div class="marquee marquee-grad">
+  <div class="marquee-track">
+    <span class="marquee-item">ИСТОРИЯ ВТОРАЯ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">БЕЗ КЛИЕНТА</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">БЕЗ ДЕНЕГ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">ТОЛЬКО ДЛЯ СЕБЯ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">ИСТОРИЯ ВТОРАЯ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">БЕЗ КЛИЕНТА</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">БЕЗ ДЕНЕГ</span><span class="marquee-dot">•</span>
+    <span class="marquee-item">ТОЛЬКО ДЛЯ СЕБЯ</span><span class="marquee-dot">•</span>
+  </div>
+</div>
 
-    <p class="bucket reveal reveal-d2">Справедливо. Смотри вторую историю. Без клиента.</p>
+<!-- ==================== STORY 2 — ORANGE ISLAND ==================== -->
+<section class="section island-section" id="story-2">
+  <div class="longread">
+    <div class="reveal"><div class="s-label">04 · история вторая</div></div>
+    <h2 class="s-title reveal reveal-delay-1">«А если просто для себя?»</h2>
+
+    <p class="bucket reveal reveal-delay-2">Справедливо. Смотри вторую историю. Без клиента.</p>
 
     <p class="reveal">У меня есть одна проблема — я живу в AI уже четыре года, и инфополе по теме разрослось до невыносимого. В какой-то момент я понял, что <strong>я теряюсь.</strong> Десятки каналов в Telegram, сотни статей в неделю, блоги, релизы моделей, твиттер — это не читается. Это сжирается глазами.</p>
 
@@ -1399,19 +1594,24 @@ body {
 
     <p class="reveal">Всё остальное — его забота.</p>
 
-    <p class="reveal">Это называется <strong>личный инструмент.</strong> Раньше личный инструмент мог позволить себе программист. Или тот, кто нанял программиста за 300 тысяч. Теперь — любой, у кого есть агент и полчаса свободного времени.</p>
+    <p class="reveal">Это называется <strong>личный инструмент.</strong> Раньше такое мог позволить себе программист. Или тот, кто нанял программиста за 300 тысяч. Теперь — любой, у кого есть агент и полчаса свободного времени.</p>
 
     <p class="reveal"><strong>Ты замечаешь паттерн?</strong></p>
   </div>
 </section>
 
-<!-- ==================== STORY 3 ==================== -->
-<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%);">
+<!-- ==================== STORY 3 — tinted white w/ blobs ==================== -->
+<section class="section section-white" id="story-3" style="background: linear-gradient(180deg, #FFFDE7 0%, #FFFFFF 40%);">
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-4"></div>
+    <div class="blob blob-5"></div>
+  </div>
   <div class="longread">
-    <div class="reveal"><div class="section-label">05 · история третья</div></div>
-    <h2 class="section-title reveal reveal-d1">А теперь то, что я до сих пор сам не могу осознать.</h2>
+    <div class="reveal"><div class="s-label">05 · история третья</div></div>
+    <h2 class="s-title reveal reveal-delay-1">А теперь то, что я до сих пор сам не могу осознать.</h2>
 
-    <p class="reveal reveal-d2">У меня есть давняя боль. Я <strong>никогда не умел вести заметки.</strong></p>
+    <p class="reveal reveal-delay-2">У меня есть давняя боль. Я <strong>никогда не умел вести заметки.</strong></p>
 
     <p class="reveal">Пробовал всё. Notion, Obsidian, Todoist, Apple Notes, бумажные дневники, Bullet Journal, десятки приложений «для осознанной жизни». Всё одно — я сдаюсь через неделю. Высокий порог входа: надо что-то настроить, куда-то что-то вписать, вспомнить тег, выбрать папку. Не моё.</p>
 
@@ -1451,31 +1651,20 @@ body {
   </div>
 </section>
 
-<!-- ==================== MANIFESTO ==================== -->
-<section class="section" style="background: var(--white);">
+<!-- ==================== MANIFESTO — lamp light ==================== -->
+<section class="manifesto-section" id="manifesto">
+  <div class="lamp"><div class="lamp-line"></div></div>
   <div class="longread">
-    <div class="reveal"><div class="section-label">06 · эпоха заёба прошла</div></div>
-    <h2 class="section-title reveal reveal-d1">Я перестал отказываться от проектов.</h2>
+    <div class="reveal"><div class="s-label">06 · эпоха заёба прошла</div></div>
+    <h2 class="s-title reveal reveal-delay-1">Я перестал <em>отказываться</em> от проектов.</h2>
 
-    <p class="reveal reveal-d2">Раньше передо мной ставили задачу — и первая мысль была «успею / не успею», «хватит скилла / не хватит», «возьмусь / откажусь». Теперь первой мысли нет. Есть только «ок, давай разберёмся». Потому что где-то глубоко я знаю: чего бы ни потребовала задача — я найду способ с агентом.</p>
+    <p class="reveal reveal-delay-2">Раньше передо мной ставили задачу — и первая мысль была «успею / не успею», «хватит скилла / не хватит», «возьмусь / откажусь». Теперь первой мысли нет. Есть только «ок, давай разберёмся». Потому что где-то глубоко я знаю: чего бы ни потребовала задача — я найду способ с агентом.</p>
 
     <div class="easy-list reveal">
-      <div class="easy-list__row">
-        <span class="easy-list__task">3D-модель в Blender?</span>
-        <span class="easy-list__mark">Easy</span>
-      </div>
-      <div class="easy-list__row">
-        <span class="easy-list__task">Сайт для крупного девелопера?</span>
-        <span class="easy-list__mark">Easy</span>
-      </div>
-      <div class="easy-list__row">
-        <span class="easy-list__task">Внутренняя CRM для маленькой команды?</span>
-        <span class="easy-list__mark">Easy</span>
-      </div>
-      <div class="easy-list__row">
-        <span class="easy-list__task">Автоматизация на полмиллиона в квартал?</span>
-        <span class="easy-list__mark">Easy</span>
-      </div>
+      <div class="easy-list__row"><span class="easy-list__task">3D-модель в Blender?</span><span class="easy-list__mark">Easy</span></div>
+      <div class="easy-list__row"><span class="easy-list__task">Сайт для крупного девелопера?</span><span class="easy-list__mark">Easy</span></div>
+      <div class="easy-list__row"><span class="easy-list__task">Внутренняя CRM для маленькой команды?</span><span class="easy-list__mark">Easy</span></div>
+      <div class="easy-list__row"><span class="easy-list__task">Автоматизация на полмиллиона в квартал?</span><span class="easy-list__mark">Easy</span></div>
     </div>
 
     <p class="reveal">Это не потому, что я стал гением. Это потому, что <strong>у меня появился второй я.</strong></p>
@@ -1519,22 +1708,20 @@ body {
 </section>
 
 <!-- ==================== METR ==================== -->
-<section class="section metr-section">
+<section class="section metr-section" id="metr">
   <div class="longread">
-    <div class="reveal"><div class="section-label">07 · и это не я один</div></div>
-    <h2 class="section-title reveal reveal-d1">Это не ощущение. Это <em>измерили.</em></h2>
+    <div class="reveal"><div class="s-label">07 · и это не я один</div></div>
+    <h2 class="s-title reveal reveal-delay-1">Это не ощущение. Это <em>измерили.</em></h2>
 
-    <p class="reveal reveal-d2">В марте 2025-го ребята из <a href="https://metr.org" target="_blank" rel="noopener">METR</a> (независимые исследователи ИИ) опубликовали странную штуку.</p>
+    <p class="reveal reveal-delay-2">В марте 2025-го ребята из <a href="https://metr.org" target="_blank" rel="noopener">METR</a> (независимые исследователи ИИ) опубликовали странную штуку.</p>
 
     <p class="reveal">Они измерили, <strong>как долго ИИ может делать задачу самостоятельно</strong> — и как эта длительность меняется от модели к модели.</p>
 
     <p class="reveal">Вот что получилось:</p>
 
-    <!-- METR CHART -->
     <div class="metr-chart reveal">
       <div class="metr-chart__title">METR · Time horizon of autonomous AI</div>
       <div class="metr-chart__sub">Длительность задачи, которую агент делает самостоятельно</div>
-
       <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="График роста автономности ИИ по данным METR">
         <g stroke="#F0F0F0" stroke-width="1">
           <line x1="60" y1="40" x2="620" y2="40" />
@@ -1556,8 +1743,6 @@ body {
           <text x="380" y="265" text-anchor="middle">2025</text>
           <text x="560" y="265" text-anchor="middle">сейчас</text>
         </g>
-
-        <!-- 50% line (orange, upper) -->
         <path d="M 90 232 Q 160 210 230 175 T 380 115 T 560 55"
               fill="none" stroke="#FFA000" stroke-width="3" stroke-linecap="round"/>
         <g fill="#FFA000">
@@ -1566,8 +1751,6 @@ body {
           <circle cx="380" cy="115" r="5" />
           <circle cx="560" cy="55" r="6" stroke="#FFFFFF" stroke-width="2"/>
         </g>
-
-        <!-- 80% line (darker, lower) -->
         <path d="M 90 248 Q 160 232 230 205 T 380 155 T 560 100"
               fill="none" stroke="#333333" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"/>
         <g fill="#333333">
@@ -1576,13 +1759,11 @@ body {
           <circle cx="380" cy="155" r="4" />
           <circle cx="560" cy="100" r="5" stroke="#FFFFFF" stroke-width="2"/>
         </g>
-
         <g font-family="Geist, sans-serif" font-size="11" font-weight="600">
           <text x="570" y="48" fill="#FF8F00">~12 ч</text>
           <text x="570" y="92" fill="#333">~4–6 ч</text>
         </g>
       </svg>
-
       <div class="metr-chart__legend">
         <div class="metr-chart__legend-item">
           <span class="metr-chart__legend-dot" style="background:#FFA000;"></span>
@@ -1636,16 +1817,13 @@ body {
   </div>
 </section>
 
-<!-- ==================== APPLICABILITY — 5 ПЕРСОН ==================== -->
-<section class="section applicability-section">
-  <div class="longread reveal">
-    <div class="section-label">08 · а что конкретно — тебе</div>
-    <h2 class="section-title">У каждого своя «презентация в&nbsp;PowerPoint».</h2>
-  </div>
-
-  <div class="applicability-lead reveal">
-    <p>У всех есть рутина, которая отжирает половину недели. Которую ты ненавидишь. Без которой нельзя.</p>
-    <p>Вот <strong>что ты можешь поручить агенту уже сейчас</strong> — в зависимости от того, чем ты занимаешься.</p>
+<!-- ==================== APPLICABILITY (5 personas) ==================== -->
+<section class="applicability-section" id="applicability">
+  <div class="longread">
+    <div class="reveal"><div class="s-label">08 · а что конкретно — тебе</div></div>
+    <h2 class="s-title reveal reveal-delay-1">У каждого своя «презентация в&nbsp;PowerPoint».</h2>
+    <p class="s-desc reveal reveal-delay-2" style="margin-bottom: 0.8rem;">У всех есть рутина, которая отжирает половину недели. Которую ты ненавидишь. Без которой нельзя.</p>
+    <p class="s-desc reveal reveal-delay-3">Вот <strong style="color:var(--black);">что ты можешь поручить агенту уже сейчас</strong> — в зависимости от того, чем ты занимаешься.</p>
   </div>
 
   <div class="persona-grid">
@@ -1658,27 +1836,24 @@ body {
         <li>Вычитать тысячу отзывов и разложить по тегам боли</li>
       </ul>
     </div>
-
-    <div class="persona reveal reveal-d1">
+    <div class="persona reveal reveal-delay-1">
       <div class="persona__kind">② Предприниматель</div>
       <div class="persona__name">Управленческий слой на автомате</div>
       <ul class="persona__tasks">
         <li>Собрать финмодель из выгрузки банка за час</li>
         <li>Поднять мониторинг цен конкурентов с уведомлениями</li>
-        <li>Сделать автоответчик на входящие заявки с квалификацией</li>
+        <li>Автоответчик на входящие заявки с квалификацией</li>
       </ul>
     </div>
-
-    <div class="persona reveal reveal-d2">
+    <div class="persona reveal reveal-delay-2">
       <div class="persona__kind">③ Юрист</div>
       <div class="persona__name">Больше практики, меньше бумаги</div>
       <ul class="persona__tasks">
-        <li>Сравнить две версии договора и показать отличия по пунктам</li>
+        <li>Сравнить две версии договора и показать отличия</li>
         <li>Извлечь данные из скан-PDF в таблицу</li>
-        <li>Шаблонизатор допсоглашений под твой стиль формулировок</li>
+        <li>Шаблонизатор допсоглашений под твой стиль</li>
       </ul>
     </div>
-
     <div class="persona reveal">
       <div class="persona__kind">④ Аналитик / продакт</div>
       <div class="persona__name">Дашборды и ресёрч без недели настройки</div>
@@ -1688,24 +1863,22 @@ body {
         <li>Собрать отзывы из App Store и ранжировать по боли</li>
       </ul>
     </div>
-
-    <div class="persona reveal reveal-d1">
+    <div class="persona reveal reveal-delay-1">
       <div class="persona__kind">⑤ HR / обучение</div>
       <div class="persona__name">Процессы, которые раньше требовали отдел</div>
       <ul class="persona__tasks">
         <li>Автопроверка тестов и ДЗ с обратной связью</li>
-        <li>Подборка кандидатов из LinkedIn по скрытым критериям</li>
-        <li>Онбординг-бот, который отвечает 24/7 на повторяющиеся вопросы</li>
+        <li>Подборка кандидатов по скрытым критериям</li>
+        <li>Онбординг-бот для повторяющихся вопросов 24/7</li>
       </ul>
     </div>
-
-    <div class="persona reveal reveal-d2" style="background: linear-gradient(155deg, var(--sun-100) 0%, var(--sun-300) 100%); border-color: rgba(255,160,0,0.3);">
+    <div class="persona persona--self reveal reveal-delay-2">
       <div class="persona__kind">⑥ А ты?</div>
-      <div class="persona__name">У тебя — своя. Найдёшь за один разговор с агентом.</div>
+      <div class="persona__name">У тебя — своя. Найдёшь за один разговор с&nbsp;агентом.</div>
       <ul class="persona__tasks">
         <li>Выпиши три задачи, которые отжирают половину твоей недели</li>
-        <li>Открой агента. Скажи: «Вот что у меня болит. Что можем автоматизировать?»</li>
-        <li>Через полчаса у тебя будет первый рабочий прототип</li>
+        <li>Открой агента: «Вот что у меня болит. Что можем автоматизировать?»</li>
+        <li>Через полчаса — первый рабочий прототип</li>
       </ul>
     </div>
   </div>
@@ -1716,12 +1889,12 @@ body {
 </section>
 
 <!-- ==================== LOZHKA DEGTYA ==================== -->
-<section class="section" style="background: var(--white);">
+<section class="section section-white" id="degot">
   <div class="longread">
-    <div class="reveal"><div class="section-label">09 · честно</div></div>
-    <h2 class="section-title reveal reveal-d1">Но это работает не с первого щелчка. И вот почему.</h2>
+    <div class="reveal"><div class="s-label">09 · честно</div></div>
+    <h2 class="s-title reveal reveal-delay-1">Но это работает не с первого щелчка. И вот почему.</h2>
 
-    <p class="reveal reveal-d2">Если ты дочитал до сюда и у тебя в голове ощущение «да это магия, сейчас открою Claude и всё получится» — я должен тебя слегка осадить.</p>
+    <p class="reveal reveal-delay-2">Если ты дочитал до сюда и у тебя в голове ощущение «да это магия, сейчас открою Claude и всё получится» — я должен тебя слегка осадить.</p>
 
     <div class="pullquote reveal">Нет. Не получится.</div>
 
@@ -1743,7 +1916,7 @@ body {
 
     <p class="reveal"><strong>Хорошая:</strong> этот порог в десять раз ниже, чем был два года назад. И в сто раз ниже, чем любая другая технология, которая когда-либо меняла рынок.</p>
 
-    <p class="reveal">Раньше, чтобы войти в AI, нужно было идти учить Python, математику, ML, разбираться в архитектурах. Сейчас нужно уметь одно: <strong>правильно ставить задачу словами.</strong></p>
+    <p class="reveal">Раньше, чтобы войти в AI, нужно было учить Python, математику, ML, разбираться в архитектурах. Сейчас нужно уметь одно: <strong>правильно ставить задачу словами.</strong></p>
 
     <p class="reveal">Это не «не нужно учиться». Это «учиться надо совсем другому».</p>
 
@@ -1761,15 +1934,14 @@ body {
   </div>
 </section>
 
-<!-- ==================== SOFT PITCH (CTA) ==================== -->
-<section class="section cta-section">
-  <div class="cta-lamp"></div>
-  <div class="cta-lamp-line"></div>
+<!-- ==================== CTA (soft-pitch, lamp + glass) ==================== -->
+<section class="cta-section" id="pitch">
+  <div class="lamp"><div class="lamp-line"></div></div>
   <div class="cta-inner">
     <div class="reveal"><div class="cta-eyebrow">10 · если зацепило</div></div>
-    <h2 class="cta-title reveal reveal-d1">Практикум <em>«ВАЙБ»</em> — семь вечеров, чтобы ты начал жить с агентом.</h2>
+    <h2 class="cta-title reveal reveal-delay-1">Практикум <em>«ВАЙБ»</em> — семь вечеров, чтобы ты начал жить с агентом.</h2>
 
-    <p class="cta-lead reveal reveal-d2">На первом уроке ты собираешь <strong>свой реальный проект.</strong> Не «Hello world» — рабочую штуку, которая уже решает твою задачу.</p>
+    <p class="cta-lead reveal reveal-delay-2">На первом уроке ты собираешь <strong>свой реальный проект.</strong> Не «Hello world» — рабочую штуку, которая уже решает твою задачу.</p>
 
     <p class="cta-lead reveal">К концу практикума у тебя:</p>
 
@@ -1778,7 +1950,7 @@ body {
       <li><strong>Поставишь задачу так,</strong> чтобы агент понял с первого раза</li>
       <li><strong>Будешь чувствовать,</strong> за какими задачами к нему идти, а за какими — нет</li>
       <li><strong>Свой проект на сервере</strong> — живая штука, работающая 24/7</li>
-      <li><strong>Закрытое комьюнити</strong> — люди, которые прошли путь рядом с тобой</li>
+      <li><strong>Закрытое комьюнити</strong> — люди, прошедшие путь рядом с тобой</li>
     </ul>
 
     <div class="tariffs reveal">
@@ -1818,8 +1990,8 @@ body {
       <span>Можно дождаться момента, когда эту штуку освоят все.</span>
       <span>Или можно за месяц <em>собрать своего</em>.</span>
     </div>
-    <a href="https://t.me/agiage_bot?start=src_agents" class="final-btn reveal reveal-d1" target="_blank" rel="noopener">Начать → @agiage_bot</a>
-    <div class="final-sign reveal reveal-d2">Егор Борисенко · АГИ · апрель 2026</div>
+    <a href="https://t.me/agiage_bot?start=src_agents" class="final-btn reveal reveal-delay-1" target="_blank" rel="noopener">Начать → @agiage_bot</a>
+    <div class="final-sign reveal reveal-delay-2">Егор Борисенко · АГИ · апрель 2026</div>
   </div>
 </section>
 
@@ -1841,23 +2013,133 @@ body {
 </a>
 
 <script>
+/* ===================================================================
+   WebGL orange shader (from index.html)
+   =================================================================== */
+function initOrangeShader(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const canvas = document.createElement('canvas');
+  container.appendChild(canvas);
+  const gl = canvas.getContext('webgl');
+  if (!gl) {
+    // fallback: simple gradient
+    container.style.background = 'linear-gradient(180deg, #FFD54F, #FFB300, #FFA000)';
+    return;
+  }
+
+  const vsrc = 'attribute vec2 position; varying vec2 vUv;' +
+    'void main(){ vUv = position * 0.5 + 0.5; gl_Position = vec4(position,0.0,1.0); }';
+
+  const fsrc = 'precision mediump float;' +
+    'varying vec2 vUv;' +
+    'uniform float u_time;' +
+    'uniform vec2 u_resolution;' +
+    'void main(){' +
+    '  vec2 p = ((vUv * u_resolution * 2.0 - u_resolution) / (u_resolution.x + u_resolution.y) * 2.0) * 1.0;' +
+    '  float t = u_time * 0.4;' +
+    '  float a = 4.0 * p.y - sin(-p.x * 3.0 + p.y - t);' +
+    '  a = smoothstep(cos(a) * 0.7, sin(a) * 0.7 + 1.0, cos(a - 4.0 * p.y) - sin(a + 3.0 * p.x));' +
+    '  vec2 w = (cos(a) * p + sin(a) * vec2(-p.y, p.x)) * 0.5 + 0.5;' +
+    '  vec3 c1 = vec3(1.0, 0.76, 0.16);' +
+    '  vec3 c2 = vec3(1.0, 0.63, 0.0);' +
+    '  vec3 c3 = vec3(0.95, 0.50, 0.0);' +
+    '  vec3 col = mix(c1, c2, w.x);' +
+    '  col = mix(col, c3, w.y);' +
+    '  col *= col + 0.6 * sqrt(col);' +
+    '  col = clamp(col, 0.0, 1.0);' +
+    '  gl_FragColor = vec4(col, 1.0);' +
+    '}';
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vsrc));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fsrc));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+  function resize() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let time = 0, running = true;
+  function draw() {
+    if (!running) return;
+    time += 0.016;
+    gl.uniform1f(uTime, time);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  const obs = new IntersectionObserver(function(entries) {
+    running = entries[0].isIntersecting;
+    if (running) draw();
+  });
+  obs.observe(container);
+}
+
+initOrangeShader('heroShader');
+
+/* ===================================================================
+   Hero fade-in sequence (on load)
+   =================================================================== */
 (function() {
-  // ===== reveal on scroll =====
-  var io = new IntersectionObserver(function(entries) {
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.querySelectorAll('.hero-eyebrow, .hero-title-big, .hero-fade').forEach(function(el) {
+        el.classList.add('visible');
+      });
+    }, 100);
+  });
+})();
+
+/* ===================================================================
+   Reveal on scroll
+   =================================================================== */
+(function() {
+  const reveals = document.querySelectorAll('.reveal, .reveal-big');
+  const io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) {
-        e.target.classList.add('is-in');
+        e.target.classList.add('visible');
         io.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach(function(el) { io.observe(el); });
+})();
 
-  // ===== compare: interactive chat animation =====
-  var grid = document.getElementById('chatGrid');
-  var replayBtn = document.getElementById('replayBtn');
-  var timers = [];
-  var started = false;
+/* ===================================================================
+   Compare interactive chat
+   =================================================================== */
+(function() {
+  const grid = document.getElementById('chatGrid');
+  const replayBtn = document.getElementById('replayBtn');
+  if (!grid) return;
+  let timers = [];
+  let started = false;
 
   function clearAll() {
     timers.forEach(function(t) { clearTimeout(t); });
@@ -1869,16 +2151,16 @@ body {
   function runStory() {
     clearAll();
     grid.querySelectorAll('.msg, .todo').forEach(function(el) {
-      var delay = parseInt(el.dataset.delay || '0', 10);
+      const delay = parseInt(el.dataset.delay || '0', 10);
       timers.push(setTimeout(function() { el.classList.add('show'); }, delay));
     });
     grid.querySelectorAll('.chat-footer').forEach(function(el) {
-      var delay = parseInt(el.dataset.delay || '0', 10);
+      const delay = parseInt(el.dataset.delay || '0', 10);
       timers.push(setTimeout(function() { el.classList.add('show'); }, delay));
     });
-    var todoStart = 1700;
-    var stepDuration = 1250;
-    var steps = grid.querySelectorAll('.todo__item');
+    const todoStart = 1700;
+    const stepDuration = 1250;
+    const steps = grid.querySelectorAll('.todo__item');
     steps.forEach(function(item, i) {
       timers.push(setTimeout(function() { item.classList.add('running'); }, todoStart + i * stepDuration));
       timers.push(setTimeout(function() {
@@ -1888,7 +2170,7 @@ body {
     });
   }
 
-  var cio = new IntersectionObserver(function(entries) {
+  const cio = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting && !started) {
         started = true;
@@ -1896,26 +2178,30 @@ body {
       }
     });
   }, { threshold: 0.3 });
-  if (grid) cio.observe(grid);
+  cio.observe(grid);
   if (replayBtn) replayBtn.addEventListener('click', runStory);
+})();
 
-  // ===== progress bar + sticky CTA + header scrolled =====
-  var progressBar = document.getElementById('progressBar');
-  var stickyCta = document.getElementById('stickyCta');
-  var ctaSection = document.querySelector('.cta-section');
-  var header = document.getElementById('header');
+/* ===================================================================
+   Progress bar + sticky CTA + header scrolled state
+   =================================================================== */
+(function() {
+  const progressBar = document.getElementById('progressBar');
+  const stickyCta = document.getElementById('stickyCta');
+  const ctaSection = document.getElementById('pitch');
+  const header = document.getElementById('header');
 
   function onScroll() {
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var scrolled = window.scrollY;
-    var percent = docHeight > 0 ? (scrolled / docHeight) * 100 : 0;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY;
+    const percent = docHeight > 0 ? (scrolled / docHeight) * 100 : 0;
     if (progressBar) progressBar.style.width = percent + '%';
-    if (header) header.classList.toggle('scrolled', scrolled > 20);
+    if (header) header.classList.toggle('scrolled', scrolled > 40);
 
     if (stickyCta) {
-      var show = percent > 60;
+      let show = percent > 60;
       if (ctaSection) {
-        var rect = ctaSection.getBoundingClientRect();
+        const rect = ctaSection.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) show = false;
       }
       stickyCta.classList.toggle('show', show);
