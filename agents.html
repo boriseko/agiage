@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Что такое ИИ-агент — АГИ</title>
-<meta name="description" content="ИИ-агент — не чат, а сотрудник. Пишет код, создаёт файлы, запускает сервисы. Разобрались что это и зачем.">
-<meta property="og:title" content="Что такое ИИ-агент — АГИ">
-<meta property="og:description" content="ИИ-агент — не чат, а сотрудник. Разобрались что это и зачем.">
+<title>Ты ещё не понял, что такое ИИ-агент — АГИ</title>
+<meta name="description" content="Лонгрид Егора Борисенко о том, что такое ИИ-агент, зачем он тебе и почему это окно возможностей закроется через год. Честно, без хайпа.">
+<meta property="og:title" content="Ты ещё не понял, что такое ИИ-агент">
+<meta property="og:description" content="Четыре дня назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я не программист.">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ru_RU">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="icon" type="image/png" href="/favicon.png?v=4">
+<link rel="icon" type="image/x-icon" href="/favicon.ico?v=4">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,11 +21,14 @@
 :root {
   --white: #FFFFFF;
   --black: #1A1A1A;
-  --text: #333333;
-  --text-muted: #666666;
-  --text-light: #999999;
-  --border: #E5E5E5;
+  --text: #2B2B2B;
+  --text-muted: #5C5C5C;
+  --text-light: #8F8F8F;
+  --text-soft: #B8B8B8;
+  --border: #E8E8E8;
+  --border-soft: #F0F0F0;
   --card-bg: #F8F8F8;
+
   --sun-100: #FFFDE7;
   --sun-200: #FFF9C4;
   --sun-300: #FFF59D;
@@ -34,14 +38,21 @@
   --sun-700: #FFB300;
   --sun-800: #FFA000;
   --sun-900: #FF8F00;
-  --yellow: #FFD54F;
+
   --orange: #FFA000;
   --orange-dark: #FF8F00;
+  --red-danger: #C62828;
+
   --grad-warm: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
   --grad-hero: linear-gradient(180deg, #FFFDE7 0%, #FFF59D 35%, #FFE082 65%, #FFC107 90%, #FFA000 100%);
   --grad-soft: linear-gradient(135deg, #FFFDE7 0%, #FFF59D 60%, #FFE082 100%);
-  --transition: 0.5s cubic-bezier(0.32, 0, 0.12, 1);
-  --transition-fast: 0.3s cubic-bezier(0.32, 0, 0.12, 1);
+  --grad-agent-bg: linear-gradient(165deg, #FFFDE7 0%, #FFF59D 100%);
+
+  --shadow-soft: 0 20px 60px -20px rgba(0,0,0,0.10);
+  --shadow-agent: 0 30px 80px -30px rgba(255,140,0,0.38);
+
+  --transition: 0.45s cubic-bezier(0.32, 0, 0.12, 1);
+  --transition-fast: 0.25s cubic-bezier(0.32, 0, 0.12, 1);
 }
 
 html { scroll-behavior: smooth; }
@@ -49,26 +60,38 @@ body {
   font-family: 'Geist', -apple-system, system-ui, sans-serif;
   background: var(--white);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 1.075rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+::selection { background: rgba(255,140,0,0.2); color: var(--text); }
+
+/* ========== PROGRESS BAR ========== */
+.progress-bar {
+  position: fixed; top: 0; left: 0;
+  height: 3px; width: 0%;
+  background: var(--grad-warm);
+  z-index: 200;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(255,140,0,0.5);
 }
 
 /* ========== HEADER ========== */
 .header {
   position: fixed; top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.25rem;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: saturate(1.4) blur(14px);
-  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: saturate(1.4) blur(16px);
+  -webkit-backdrop-filter: saturate(1.4) blur(16px);
   border-bottom: 1px solid rgba(0,0,0,0.04);
-  transition: background var(--transition-fast);
 }
 .header-logo {
-  font-weight: 900; font-size: 1.15rem; color: var(--text);
+  font-weight: 900; font-size: 1.1rem; color: var(--text);
   letter-spacing: -0.01em; text-decoration: none;
   display: flex; align-items: center; gap: 0.5rem;
 }
@@ -78,7 +101,7 @@ body {
   display: inline-block;
 }
 .header-back {
-  font-size: 0.9rem; font-weight: 600; color: var(--text-muted);
+  font-size: 0.88rem; font-weight: 600; color: var(--text-muted);
   text-decoration: none;
   padding: 0.5rem 1rem; border-radius: 999px;
   border: 1px solid rgba(0,0,0,0.08);
@@ -91,15 +114,52 @@ body {
 }
 @media (min-width: 768px) {
   .header { padding: 1.1rem 2.5rem; }
-  .header-logo { font-size: 1.2rem; }
+  .header-logo { font-size: 1.15rem; }
 }
 
-/* ========== CONTAINER ========== */
-.container {
-  max-width: 1120px; margin: 0 auto;
+/* ========== LAYOUT ========== */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+@media (min-width: 768px) { .container { padding: 0 2.5rem; } }
+
+.longread {
+  max-width: 700px;
+  margin: 0 auto;
   padding: 0 1.25rem;
 }
-@media (min-width: 768px) { .container { padding: 0 2.5rem; } }
+@media (min-width: 768px) { .longread { padding: 0 1.5rem; } }
+
+.longread p {
+  margin-bottom: 1.35rem;
+  color: var(--text);
+  font-size: 1.09rem;
+  line-height: 1.72;
+}
+.longread p strong {
+  font-weight: 700;
+  color: var(--black);
+}
+.longread p em {
+  font-style: italic;
+  color: var(--text-muted);
+}
+.longread a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(255,140,0,0.35);
+  transition: all var(--transition-fast);
+}
+.longread a:hover {
+  color: var(--orange-dark);
+  border-bottom-color: var(--orange);
+}
+.longread code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--card-bg);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.92em;
+  color: var(--text);
+}
 
 /* ========== HERO ========== */
 .hero {
@@ -113,13 +173,14 @@ body {
 }
 .hero-noise {
   position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 15% 25%, rgba(255,255,255,0.5) 0%, transparent 40%),
-                    radial-gradient(circle at 85% 75%, rgba(255,255,255,0.4) 0%, transparent 40%);
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(255,255,255,0.5) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(255,255,255,0.4) 0%, transparent 40%);
   pointer-events: none;
 }
 .hero-inner {
   position: relative; z-index: 2;
-  max-width: 960px; padding: 0 1.5rem;
+  max-width: 920px; padding: 0 1.5rem;
 }
 .hero-eyebrow {
   display: inline-block;
@@ -134,36 +195,32 @@ body {
   margin-bottom: 2rem;
 }
 .hero-title {
-  font-size: clamp(3.5rem, 14vw, 10rem);
-  font-weight: 900; line-height: 0.92;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.3rem, 6.5vw, 4.8rem);
+  font-weight: 900; line-height: 1;
+  letter-spacing: -0.035em;
   color: var(--text);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 900px;
+  margin-left: auto; margin-right: auto;
 }
-.hero-title-dot {
-  display: inline-block; color: var(--orange);
+.hero-sub {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 500;
+  color: var(--text);
+  max-width: 680px; margin: 0 auto 2.75rem;
+  line-height: 1.5; letter-spacing: -0.005em;
 }
-.hero-subtitle {
-  font-size: clamp(1.25rem, 3vw, 1.95rem);
-  font-weight: 600; color: var(--text);
-  max-width: 620px; margin: 0 auto 2rem;
-  line-height: 1.3; letter-spacing: -0.01em;
-}
-.hero-desc {
-  font-size: clamp(1rem, 1.6vw, 1.15rem);
-  color: var(--text-muted);
-  max-width: 540px; margin: 0 auto 2.5rem;
-}
+.hero-sub strong { font-weight: 700; color: var(--black); }
 .hero-cta {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 1.1rem 2.5rem;
-  background: var(--text);
+  padding: 1.1rem 2.4rem;
+  background: var(--black);
   color: var(--white);
   border-radius: 999px;
-  font-size: 1.05rem; font-weight: 700;
+  font-size: 1.02rem; font-weight: 700;
   text-decoration: none;
   transition: all var(--transition);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
 .hero-cta:hover {
   transform: translateY(-3px) scale(1.02);
@@ -172,7 +229,7 @@ body {
 .hero-scroll {
   position: absolute; bottom: 2rem; left: 50%;
   transform: translateX(-50%);
-  color: var(--text-muted); font-size: 0.8rem;
+  color: var(--text-muted); font-size: 0.78rem;
   font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
   opacity: 0.7;
   animation: floatdown 2.5s ease-in-out infinite;
@@ -184,292 +241,561 @@ body {
 
 /* ========== SECTION ========== */
 .section {
-  padding: clamp(5rem, 10vw, 8rem) 0;
+  padding: clamp(4rem, 8vw, 6.5rem) 0;
 }
 .section-label {
   display: inline-block;
-  font-size: 0.7rem; font-weight: 800;
-  color: var(--orange); letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 0.3rem 0.7rem;
-  background: rgba(255,140,0,0.10);
-  border: 1px solid rgba(255,140,0,0.25);
-  border-radius: 999px;
-  margin-bottom: 1.25rem;
-}
-.section-title {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 900; line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: var(--text);
-  margin-bottom: 1rem;
-}
-.section-sub {
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  color: var(--text-muted);
-  max-width: 560px; line-height: 1.55;
-}
-
-/* ========== COMPARE (ChatGPT vs Agent) ========== */
-.compare-section { background: var(--white); }
-.compare-head {
-  text-align: center; max-width: 700px; margin: 0 auto 4rem;
-}
-.compare-head .section-sub { margin: 0 auto; }
-.compare-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-}
-@media (min-width: 860px) {
-  .compare-grid { grid-template-columns: 1fr auto 1fr; align-items: stretch; }
-}
-.compare-vs {
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.78rem; font-weight: 800;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--text-light);
-  padding: 1rem 0;
-}
-@media (min-width: 860px) {
-  .compare-vs { padding: 0 0.5rem; }
-}
-.compare-card {
-  padding: 2.25rem;
-  border-radius: 22px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  position: relative;
-  display: flex; flex-direction: column;
-  transition: all var(--transition);
-}
-.compare-card--agent {
-  background: linear-gradient(155deg, #FFFDE7 0%, #FFF59D 100%);
-  border-color: rgba(255,140,0,0.25);
-  box-shadow: 0 30px 80px -30px rgba(255,140,0,0.4);
-}
-.compare-card__kind {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-light);
-  margin-bottom: 0.85rem;
-}
-.compare-card--agent .compare-card__kind { color: var(--orange); }
-.compare-card__name {
-  font-size: 2rem; font-weight: 900;
-  letter-spacing: -0.03em; color: var(--text);
-  margin-bottom: 0.5rem; line-height: 1;
-}
-.compare-card__mode {
-  font-size: 0.95rem; color: var(--text-muted);
+  color: var(--orange-dark); letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: rgba(255,140,0,0.08);
+  border: 1px solid rgba(255,140,0,0.2);
+  border-radius: 999px;
   margin-bottom: 1.5rem;
 }
-.compare-card__demo {
-  background: var(--white);
-  border-radius: 14px;
-  padding: 1rem 1.2rem;
-  border: 1px solid rgba(0,0,0,0.05);
-  margin-bottom: 1rem;
-  font-size: 0.92rem;
-}
-.compare-card--agent .compare-card__demo {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(8px);
-}
-.demo-line { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.35rem 0; line-height: 1.45; }
-.demo-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem; font-weight: 700;
-  padding: 0.15rem 0.45rem; border-radius: 5px;
-  flex-shrink: 0; margin-top: 2px;
-  letter-spacing: 0.04em;
-}
-.demo-tag--you { background: rgba(0,0,0,0.08); color: var(--text); }
-.demo-tag--bot { background: rgba(0,0,0,0.04); color: var(--text-muted); }
-.demo-tag--agent { background: var(--grad-warm); color: var(--white); }
-.demo-text { color: var(--text); font-size: 0.92rem; }
-.demo-text--muted { color: var(--text-muted); font-size: 0.86rem; font-style: italic; }
-.compare-card__summary {
-  font-size: 0.95rem; color: var(--text-muted);
-  line-height: 1.55; margin-top: auto; padding-top: 1rem;
-}
-.compare-card--agent .compare-card__summary {
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 900; line-height: 1.12;
+  letter-spacing: -0.03em;
   color: var(--text);
+  margin-bottom: 2rem;
+}
+.section-title em {
+  font-style: normal;
+  background: var(--grad-warm);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-lead {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.005em;
 }
 
-/* ========== CAPS (что умеет) ========== */
-.caps-section {
-  background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%);
+/* bucket brigade — dialog-style opener after heading */
+.bucket {
+  font-size: 1.12rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 1.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--sun-500);
 }
-.caps-head { margin-bottom: 3rem; text-align: center; }
-.caps-head .section-sub { margin: 0 auto; }
-.caps-grid {
+
+/* ========== PULL-QUOTE / BAB BADGE ========== */
+.bab-badge {
+  margin: 2.5rem -0.5rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--grad-soft);
+  border: 1px solid rgba(255,140,0,0.25);
+  border-radius: 16px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+  position: relative;
+  box-shadow: 0 20px 50px -20px rgba(255,140,0,0.25);
+}
+.bab-badge::before {
+  content: '→';
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--orange-dark);
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+.bab-badge em {
+  display: block;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  letter-spacing: 0;
+}
+@media (min-width: 768px) {
+  .bab-badge { margin: 2.5rem -1.5rem; padding: 1.75rem 2.25rem; font-size: 1.25rem; }
+}
+
+.pullquote {
+  margin: 2.75rem -0.5rem;
+  padding: 1.25rem 0 1.25rem 1.5rem;
+  border-left: 4px solid var(--orange);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+@media (min-width: 768px) {
+  .pullquote { margin: 2.75rem -1.5rem; font-size: 1.75rem; padding-left: 2rem; }
+}
+
+.callout {
+  margin: 2rem 0;
+  padding: 1.15rem 1.35rem;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border-left: 3px solid var(--text-soft);
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.easy-list {
+  margin: 1.75rem 0;
+  padding: 1.5rem 1.75rem;
+  background: var(--card-bg);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+.easy-list__row {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 1.05rem;
+}
+.easy-list__row:last-child { border-bottom: none; }
+.easy-list__task {
+  color: var(--text);
+  font-weight: 500;
+}
+.easy-list__mark {
+  font-weight: 800;
+  color: var(--orange-dark);
+  font-style: italic;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+/* divider */
+.divider {
+  width: 60px; height: 2px;
+  background: var(--border);
+  margin: 2.75rem auto;
+  border: none;
+}
+
+/* ========== HR-1 (story 1 image) ========== */
+.story-image {
+  margin: 2.5rem -1.5rem;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+}
+.story-image img {
+  width: 100%; height: auto; display: block;
+}
+.story-image__cap {
+  padding: 0.85rem 1.2rem;
+  background: var(--card-bg);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 768px) {
+  .story-image { margin: 2.5rem -3rem; }
+}
+
+/* ========== COMPARE (interactive) ========== */
+.compare-section { background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%); }
+.compare-head { max-width: 700px; margin: 0 auto 3rem; text-align: center; padding: 0 1.5rem; }
+.compare-head .section-label { margin-bottom: 1rem; }
+
+.chat-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.85rem;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
 }
-@media (min-width: 600px) { .caps-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 960px) { .caps-grid { grid-template-columns: repeat(3, 1fr); } }
-.cap {
-  padding: 1.75rem;
+@media (min-width: 900px) {
+  .chat-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+.chat-window {
   background: var(--white);
-  border-radius: 18px;
+  border-radius: 20px;
   border: 1px solid var(--border);
-  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  min-height: 520px;
+  transition: all var(--transition);
 }
-.cap:hover {
+.chat-window--agent {
+  background: var(--grad-agent-bg);
+  border-color: rgba(255,140,0,0.25);
+  box-shadow: var(--shadow-agent);
+}
+.chat-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  display: flex; align-items: center; gap: 0.65rem;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+}
+.chat-window--agent .chat-header {
+  background: rgba(255,255,255,0.4);
+  border-bottom-color: rgba(255,140,0,0.15);
+}
+.header-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #999;
+  flex-shrink: 0;
+}
+.header-dot--agent { background: var(--grad-warm); }
+.header-title {
+  font-size: 0.95rem; font-weight: 700; color: var(--text);
+  letter-spacing: -0.01em;
+}
+.header-kind {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-left: auto;
+}
+.chat-window--agent .header-kind { color: var(--orange); }
+.messages {
+  padding: 1.25rem;
+  flex: 1;
+  display: flex; flex-direction: column;
+  gap: 0.75rem;
+}
+.msg {
+  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  font-size: 0.92rem; line-height: 1.5;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.msg.show { opacity: 1; transform: translateY(0); }
+.msg--user {
+  align-self: flex-end;
+  background: var(--black);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+.msg--bot {
+  align-self: flex-start;
+  background: #F0F0F0;
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+.msg--bot-muted { color: var(--text-muted); font-size: 0.88rem; }
+.msg--agent {
+  align-self: flex-start;
+  background: var(--white);
+  color: var(--text);
+  border: 1px solid rgba(255,140,0,0.25);
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 4px 16px -4px rgba(255,140,0,0.15);
+}
+.msg code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0,0,0,0.05);
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.msg--user code { background: rgba(255,255,255,0.15); color: var(--sun-300); }
+.todo {
+  align-self: flex-start;
+  background: var(--white);
+  border: 1px solid rgba(255,140,0,0.2);
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+}
+.todo.show { opacity: 1; transform: translateY(0); }
+.todo__label {
+  font-size: 0.65rem; font-weight: 700;
+  color: var(--orange); letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-family: 'Geist', sans-serif;
+}
+.todo__list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.todo__item {
+  display: flex; align-items: center; gap: 0.55rem;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+.todo__item.done { color: var(--text); }
+.todo__box {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--text-light);
+  border-radius: 4px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.todo__item.running .todo__box {
+  border-color: var(--orange);
+  animation: pulse 0.8s infinite ease-in-out;
+}
+.todo__item.done .todo__box {
+  background: var(--grad-warm);
+  border-color: transparent;
+}
+.todo__item.done .todo__box::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 0;
+  width: 5px; height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+.chat-footer {
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex; align-items: center; gap: 0.5rem;
+  background: rgba(255,255,255,0.4);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.chat-footer.show { opacity: 1; }
+.chat-window--agent .chat-footer { border-top-color: rgba(255,140,0,0.15); }
+.status-bad { color: var(--red-danger); }
+.status-good { color: var(--orange-dark); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.replay-wrap { text-align: center; margin-top: 1.25rem; }
+.replay-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  background: var(--white);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.88rem; font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.replay-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -8px rgba(255,140,0,0.3);
+}
+.compare-summary {
+  text-align: center;
+  max-width: 640px;
+  margin: 2.5rem auto 0;
+}
+.compare-summary__punch {
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.compare-summary__punch strong {
+  background: var(--grad-warm);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+}
+.compare-summary__line {
+  font-size: 1.02rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ========== EVOLUTION LADDER ========== */
+.ladder {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+}
+@media (min-width: 768px) {
+  .ladder { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+}
+.ladder__item {
+  padding: 1.5rem 1.35rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all var(--transition);
+  position: relative;
+}
+.ladder__item:hover {
   border-color: rgba(255,140,0,0.3);
   transform: translateY(-3px);
   box-shadow: 0 20px 40px -20px rgba(255,140,0,0.2);
 }
-.cap__emoji { font-size: 2rem; display: block; margin-bottom: 0.75rem; line-height: 1; }
-.cap__title {
-  font-size: 1.1rem; font-weight: 800; color: var(--text);
-  letter-spacing: -0.015em; margin-bottom: 0.4rem;
-}
-.cap__desc {
-  font-size: 0.92rem; color: var(--text-muted); line-height: 1.55;
-}
-
-/* ========== EXAMPLES ========== */
-.examples-section {
-  background: var(--white);
-}
-.examples-head { text-align: center; margin-bottom: 3.5rem; }
-.examples-head .section-sub { margin: 0 auto; }
-.examples-list {
-  display: grid; gap: 1.25rem;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 900px) { .examples-list { grid-template-columns: 1fr 1fr; } }
-.example {
-  background: linear-gradient(155deg, var(--white) 0%, var(--sun-100) 100%);
-  border: 1px solid var(--border);
-  border-radius: 22px;
-  padding: 1.75rem 1.5rem 1.5rem;
-  display: flex; flex-direction: column;
-  transition: all var(--transition);
-}
-.example:hover {
+.ladder__item--agent {
+  background: linear-gradient(155deg, var(--sun-100) 0%, var(--sun-300) 100%);
   border-color: rgba(255,140,0,0.3);
-  transform: translateY(-4px);
-  box-shadow: 0 30px 60px -30px rgba(255,140,0,0.3);
 }
-.example__task {
-  display: flex; align-items: flex-start; gap: 0.75rem;
-  padding-bottom: 1.1rem;
-  border-bottom: 1px dashed rgba(0,0,0,0.08);
-  margin-bottom: 1.1rem;
-}
-.example__icon {
-  width: 34px; height: 34px;
-  background: var(--grad-warm);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(255,140,0,0.3);
-}
-.example__prompt {
-  font-size: 1rem; font-weight: 600; color: var(--text);
-  line-height: 1.4; letter-spacing: -0.01em;
-}
-.example__arrow {
-  display: flex; align-items: center; gap: 0.6rem;
+.ladder__num {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem; font-weight: 600;
-  color: var(--orange);
-  letter-spacing: 0.15em; text-transform: uppercase;
-  margin-bottom: 0.7rem;
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--orange-dark);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
 }
-.example__arrow::before {
-  content: ''; width: 18px; height: 1.5px; background: var(--orange);
+.ladder__title {
+  font-size: 1.35rem; font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.25rem;
 }
-.example__result {
-  font-size: 0.95rem; color: var(--text); line-height: 1.55;
+.ladder__sub {
+  font-size: 0.9rem;
+  color: var(--orange-dark);
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
 }
-.example__time {
-  margin-top: auto;
-  display: inline-block;
-  margin-top: 0.9rem;
-  padding: 0.3rem 0.7rem;
-  background: rgba(255,140,0,0.08);
-  border-radius: 6px;
-  font-size: 0.78rem; font-weight: 600;
-  color: var(--orange);
-  align-self: flex-start;
+.ladder__desc {
+  font-size: 0.97rem;
+  color: var(--text-muted);
+  line-height: 1.55;
 }
 
-/* ========== TIMING ========== */
-.timing-section {
-  background: linear-gradient(160deg, var(--sun-100) 0%, var(--sun-300) 100%);
+/* ========== METR SECTION ========== */
+.metr-section {
+  background: linear-gradient(180deg, var(--sun-100) 0%, var(--sun-300) 100%);
   position: relative; overflow: hidden;
 }
-.timing-noise {
+.metr-section::before {
+  content: '';
   position: absolute; inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.5) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.5) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 50%);
   pointer-events: none;
 }
-.timing-inner {
-  position: relative; z-index: 2;
-  max-width: 780px; margin: 0 auto; text-align: center;
+.metr-section .longread { position: relative; z-index: 2; }
+.metr-chart {
+  margin: 2.5rem -0.5rem;
+  padding: 2rem 1.5rem 1.5rem;
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
 }
-.timing-quote {
-  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
-  font-weight: 800; color: var(--text);
-  line-height: 1.25; letter-spacing: -0.025em;
-  margin-bottom: 2rem;
-}
-.timing-quote mark {
-  background: linear-gradient(180deg, transparent 60%, rgba(255,140,0,0.35) 60%);
-  color: inherit; padding: 0 0.2rem;
-}
-.timing-points {
-  display: grid; gap: 0.75rem; margin: 2.5rem 0;
-  grid-template-columns: 1fr;
-  text-align: left;
-}
-@media (min-width: 720px) { .timing-points { grid-template-columns: 1fr 1fr; } }
-.timing-point {
-  padding: 1.2rem 1.4rem;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.8);
-  display: flex; gap: 0.85rem; align-items: flex-start;
-}
-.timing-point__num {
+@media (min-width: 768px) { .metr-chart { margin: 2.5rem -2rem; padding: 2.25rem 2rem 1.75rem; } }
+.metr-chart__title {
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.15em; text-transform: uppercase;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem; font-weight: 700;
-  color: var(--orange);
-  letter-spacing: 0.05em;
-  flex-shrink: 0;
-  background: rgba(255,140,0,0.1);
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
+  margin-bottom: 0.5rem;
 }
-.timing-point__text {
-  font-size: 0.95rem; color: var(--text); line-height: 1.5;
-  font-weight: 500;
+.metr-chart__sub {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.01em;
+}
+.metr-chart__legend {
+  display: flex; gap: 1.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+.metr-chart__legend-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: var(--text-muted);
+}
+.metr-chart__legend-dot {
+  width: 10px; height: 2px; border-radius: 2px;
+}
+.metr-chart__source {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 1rem;
+  font-style: italic;
+}
+.metr-chart svg { width: 100%; height: auto; display: block; }
+
+/* shock line */
+.shock-line {
+  margin: 2rem 0;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+.shock-line span { display: block; }
+.shock-line span:nth-child(2), .shock-line span:nth-child(3) {
+  color: var(--orange-dark);
 }
 
-/* ========== CTA ========== */
+/* ========== SOFT BRIDGE ========== */
+.bridge {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,140,0,0.2);
+  border-radius: 14px;
+  font-size: 1rem;
+  color: var(--text);
+  text-align: center;
+  line-height: 1.55;
+}
+.bridge a {
+  color: var(--orange-dark);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(255,140,0,0.4);
+}
+.bridge a:hover { border-bottom-color: var(--orange); }
+
+/* ========== DEGOT ========== */
+.degot-section { background: var(--white); }
+
+/* ========== CTA (soft-pitch) ========== */
 .cta-section {
-  background: var(--text);
+  background: var(--black);
   color: var(--white);
   padding: clamp(5rem, 9vw, 7rem) 0;
-  text-align: center;
   position: relative; overflow: hidden;
 }
-.cta-glow {
+.cta-section::before {
+  content: '';
   position: absolute;
   top: -200px; left: 50%; transform: translateX(-50%);
   width: 800px; height: 600px;
-  background: radial-gradient(circle, rgba(255,140,0,0.25) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(255,140,0,0.28) 0%, transparent 60%);
   pointer-events: none;
 }
-.cta-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
+.cta-inner {
+  position: relative; z-index: 2;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
 .cta-eyebrow {
   font-size: 0.72rem; font-weight: 800;
   letter-spacing: 0.18em; text-transform: uppercase;
@@ -477,36 +803,181 @@ body {
   margin-bottom: 1.25rem;
 }
 .cta-title {
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
   font-weight: 900; line-height: 1.1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
   color: var(--white);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
-.cta-sub {
-  font-size: clamp(1rem, 1.6vw, 1.1rem);
-  color: rgba(255,255,255,0.75);
-  max-width: 500px; margin: 0 auto 2.25rem;
+.cta-lead {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 2rem;
   line-height: 1.55;
 }
+.cta-course { font-weight: 800; color: var(--sun-300); }
+.cta-list {
+  list-style: none;
+  margin: 2rem 0;
+  padding: 0;
+  display: grid; gap: 0.75rem;
+}
+.cta-list li {
+  padding: 0.75rem 0 0.75rem 1.75rem;
+  position: relative;
+  font-size: 1.02rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.cta-list li:last-child { border-bottom: none; }
+.cta-list li::before {
+  content: '→';
+  position: absolute; left: 0; top: 0.75rem;
+  color: var(--orange);
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+}
+.cta-list li strong { color: var(--white); font-weight: 700; }
+
+.tariffs {
+  display: grid; gap: 1rem;
+  margin: 2.5rem 0 2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 600px) { .tariffs { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
+.tariff {
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+}
+.tariff--premium {
+  background: rgba(255,140,0,0.1);
+  border-color: rgba(255,160,0,0.3);
+}
+.tariff__kind {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.tariff__name {
+  font-size: 1.25rem; font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.tariff__price {
+  display: flex; align-items: baseline; gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.tariff__price-now {
+  font-size: 1.35rem; font-weight: 800;
+  color: var(--white);
+}
+.tariff__price-old {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  text-decoration: line-through;
+}
+.tariff__desc {
+  font-size: 0.93rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+}
+.tariff__slots {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  background: rgba(255,140,0,0.2);
+  color: var(--orange);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .cta-btn {
   display: inline-flex; align-items: center; gap: 0.6rem;
   padding: 1.15rem 2.75rem;
   background: var(--grad-warm);
   color: var(--white);
   border-radius: 999px;
-  font-size: 1.1rem; font-weight: 800;
+  font-size: 1.08rem; font-weight: 800;
   text-decoration: none;
   transition: all var(--transition);
   box-shadow: 0 20px 50px rgba(255,140,0,0.4);
+  margin-top: 1rem;
 }
 .cta-btn:hover {
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 26px 60px rgba(255,140,0,0.55);
 }
-.cta-small {
+.cta-guarantee {
   margin-top: 1.5rem;
-  font-size: 0.85rem; color: rgba(255,255,255,0.5);
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
+  font-style: italic;
+  line-height: 1.5;
+  max-width: 460px;
+}
+
+/* ========== FINAL ========== */
+.final-section {
+  padding: clamp(5rem, 9vw, 7rem) 0;
+  text-align: center;
+  background: var(--grad-soft);
+  position: relative;
+  overflow: hidden;
+}
+.final-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.final-lines {
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 2.5rem;
+}
+.final-lines span {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+.final-lines span:last-child {
+  color: var(--text);
+  font-weight: 900;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+}
+.final-btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1.15rem 2.75rem;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 999px;
+  font-size: 1.08rem; font-weight: 800;
+  text-decoration: none;
+  transition: all var(--transition);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+.final-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.35);
+}
+.final-sign {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  font-style: italic;
 }
 
 /* ========== FOOTER ========== */
@@ -524,7 +995,48 @@ body {
   transition: color var(--transition-fast);
 }
 .footer a:hover { color: var(--text); }
-.footer-links { display: inline-flex; gap: 1.25rem; margin-bottom: 0.5rem; flex-wrap: wrap; justify-content: center; }
+.footer-links {
+  display: inline-flex; gap: 1.25rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap; justify-content: center;
+}
+
+/* ========== STICKY CTA ========== */
+.sticky-cta {
+  position: fixed;
+  bottom: 1.25rem; left: 50%;
+  transform: translateX(-50%) translateY(150%);
+  z-index: 150;
+  padding: 0.8rem 1.4rem;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 999px;
+  font-size: 0.9rem; font-weight: 700;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  transition: all 0.4s cubic-bezier(0.32, 0, 0.12, 1);
+  white-space: nowrap;
+  max-width: calc(100% - 2rem);
+}
+.sticky-cta.show {
+  transform: translateX(-50%) translateY(0);
+}
+.sticky-cta:hover {
+  background: var(--orange-dark);
+  transform: translateX(-50%) translateY(-2px);
+}
+.sticky-cta::before {
+  content: '';
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 8px var(--orange);
+  animation: blink 1.8s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 
 /* ========== REVEAL ========== */
 .reveal {
@@ -541,9 +1053,23 @@ body {
   .reveal { opacity: 1; transform: none; }
   .hero-scroll { animation: none; }
 }
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .longread p { font-size: 1.03rem; line-height: 1.68; }
+  .section-lead { font-size: 1.08rem; }
+  .hero-title { font-size: clamp(2rem, 9vw, 3rem); }
+  .bab-badge { font-size: 1.05rem; padding: 1.25rem 1.35rem; }
+  .pullquote { font-size: 1.3rem; padding: 1rem 0 1rem 1.25rem; }
+  .shock-line { font-size: 1.6rem; }
+  .cta-btn, .final-btn { padding: 1rem 2rem; font-size: 0.98rem; }
+}
 </style>
 </head>
 <body>
+
+<!-- ==================== PROGRESS BAR ==================== -->
+<div class="progress-bar" id="progressBar"></div>
 
 <!-- ==================== HEADER ==================== -->
 <header class="header">
@@ -555,230 +1081,606 @@ body {
 <section class="hero">
   <div class="hero-noise"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow reveal">Новая форма работы с ИИ</div>
-    <h1 class="hero-title reveal reveal-d1">АГЕНТ<span class="hero-title-dot">.</span></h1>
-    <p class="hero-subtitle reveal reveal-d2">Не чат. Сотрудник, который делает работу за тебя.</p>
-    <p class="hero-desc reveal reveal-d3">Пишет код, создаёт файлы, запускает сервисы, деплоит проекты. Ты ставишь задачу — он её делает.</p>
-    <a href="#compare" class="hero-cta reveal reveal-d3">Разобраться за 2 минуты →</a>
+    <div class="hero-eyebrow reveal">Лонгрид · 10 минут · от Егора</div>
+    <h1 class="hero-title reveal reveal-d1">Ты ещё не понял, что такое ИИ-агент.</h1>
+    <p class="hero-sub reveal reveal-d2">
+      Месяц назад мой агент <strong>за 4 дня</strong> закрыл задачу, за которую юркомпания полгода не бралась.<br>
+      Я не программист — и сейчас расскажу, почему это уже не важно.
+    </p>
+    <a href="#story-1" class="hero-cta reveal reveal-d3">Начать читать ↓</a>
   </div>
   <div class="hero-scroll">Листай ↓</div>
 </section>
 
-<!-- ==================== COMPARE ==================== -->
-<section class="section compare-section" id="compare">
-  <div class="container">
-    <div class="compare-head reveal">
-      <div class="section-label">01 — разница</div>
-      <h2 class="section-title">ChatGPT и агент — это разные вещи</h2>
-      <p class="section-sub">Звучат похоже, работают совсем не так. Сравни сам.</p>
+<!-- ==================== STORY 1 ==================== -->
+<section class="section" id="story-1">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">01 · с чего всё началось</div></div>
+    <h2 class="section-title reveal reveal-d1">Первую историю расскажу сразу. Без разгона.</h2>
+
+    <p class="reveal reveal-d2">Юркомпания, для которой я вёл корпоративное обучение. Им нужны LLM в работе — как и всем сейчас. Но есть одна штука: <strong>данные.</strong> Персональные, коммерческая тайна, внутренние документы. Просто закинуть это в ChatGPT — уволят в тот же день.</p>
+
+    <p class="reveal">Единственный вариант — <strong>анонимизировать всё перед тем, как отдать ИИ.</strong> Заменить имена, суммы, адреса, номера договоров на заглушки, а потом вернуть обратно.</p>
+
+    <p class="reveal">Звучит просто. На практике — ад.</p>
+
+    <p class="reveal">Я смотрел на это ещё полгода назад и думал: это кастомное приложение, которое должен делать отдел разработки. Полгода работы. Сотни тысяч бюджета. И никто не возьмётся, потому что задача узкая, заказчик один, окупаемость туманная. Поэтому почти все компании на это забивают. Как забили эти ребята.</p>
+
+    <p class="reveal"><strong>А теперь смотри, что было месяц назад.</strong></p>
+
+    <p class="reveal">Сажусь в один из вечеров, открываю агента. Говорю: «Собери мне инструмент для анонимизации данных, вот требования.» Два дня — работает прототип. Ещё два — допилен, упакован, задеплоен на сервер.</p>
+
+    <p class="reveal">В воскресенье я скинул ссылку заказчику. Он открыл, потыкал, написал одно сообщение:</p>
+
+    <div class="pullquote reveal">«На чём вы это сделали? Как вы это сделали за четыре дня?»</div>
+
+    <div class="story-image reveal">
+      <img src="case-anon-1.png" alt="Скриншот интерфейса анонимизатора">
+      <div class="story-image__cap">Тот самый анонимизатор. Собран за 4 дня одним человеком без написания кода.</div>
     </div>
 
-    <div class="compare-grid">
-      <div class="compare-card reveal">
-        <div class="compare-card__kind">01 · Чат</div>
-        <div class="compare-card__name">ChatGPT</div>
-        <div class="compare-card__mode">Ты спрашиваешь — он пишет текст</div>
-        <div class="compare-card__demo">
-          <div class="demo-line">
-            <span class="demo-tag demo-tag--you">ТЫ</span>
-            <span class="demo-text">Напиши код сайта-визитки</span>
-          </div>
-          <div class="demo-line">
-            <span class="demo-tag demo-tag--bot">GPT</span>
-            <span class="demo-text demo-text--muted">вот 200 строк кода, вставь в файл, потом запусти в браузере...</span>
-          </div>
-          <div class="demo-line">
-            <span class="demo-tag demo-tag--you">ТЫ</span>
-            <span class="demo-text demo-text--muted">а как запустить? а где взять домен? а почему ошибка?</span>
-          </div>
+    <p class="reveal">А я не программист. Я ставил задачи. Думал вслух. Правил ошибки. <strong>Агент делал.</strong></p>
+
+    <p class="reveal">Это был момент, когда у меня что-то переключилось в голове. Я понял: <strong>тот рубеж, о котором все говорят последние два года — пройден.</strong> Не «скоро будет», не «через пять лет», не «когда-нибудь». Уже.</p>
+
+    <p class="reveal">Приложение, за которое раньше никто не брался, сделал один человек без кода за одну рабочую неделю.</p>
+
+    <div class="bab-badge reveal">
+      Полгода разработки силами отдела → 4 дня работой одного человека.
+      <em>Полгода назад это было невозможно. Сейчас — рутина.</em>
+    </div>
+
+    <p class="reveal"><strong>Ты можешь сказать: «Ну, тебе повезло, один раз получилось».</strong></p>
+
+    <p class="reveal">Смотри дальше.</p>
+  </div>
+</section>
+
+<!-- ==================== EVOLUTION ==================== -->
+<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%);">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">02 · что изменилось</div></div>
+    <h2 class="section-title reveal reveal-d1">Чтобы понять, что случилось, нужно три картинки.</h2>
+
+    <p class="section-lead reveal reveal-d2">За последние два года ИИ прошёл три этапа. Если ты пропустил хотя бы один — вот тебе лестница. Без жаргона.</p>
+
+    <div class="ladder">
+      <div class="ladder__item reveal">
+        <div class="ladder__num">①  ЧАТ</div>
+        <div class="ladder__title">ChatGPT-3.5</div>
+        <div class="ladder__sub">Как калькулятор</div>
+        <div class="ladder__desc">Ты спрашиваешь — он отвечает. Быстро, но плоско. Если надо сложнее «напиши письмо» — ломается. Это 2023-й. Игрушка.</div>
+      </div>
+      <div class="ladder__item reveal reveal-d1">
+        <div class="ladder__num">②  REASONING</div>
+        <div class="ladder__title">o1, o3</div>
+        <div class="ladder__sub">Как стажёр</div>
+        <div class="ladder__desc">Модель, которая <strong>думает перед ответом.</strong> Берёт задачу, расписывает шаги, проверяет себя. Уровень мидла. Но всё ещё — советчик.</div>
+      </div>
+      <div class="ladder__item ladder__item--agent reveal reveal-d2">
+        <div class="ladder__num">③  АГЕНТ</div>
+        <div class="ladder__title">ИИ-агент</div>
+        <div class="ladder__sub">Как сотрудник с доступом к твоему ноуту</div>
+        <div class="ladder__desc">Думает — <strong>и делает.</strong> Пишет код. Открывает файлы. Запускает команды. Видит ошибку — чинит. Делает следующий шаг. Сам.</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      Разница между ② и ③ выглядит как маленький шаг. На самом деле это момент, когда молоток перестал быть молотком и стал плотником.
+    </div>
+
+    <p class="reveal">С этого момента работа с ИИ перестаёт быть про «подсказал → я сделал». Она становится про <strong>«поставил задачу → пришёл готовый результат».</strong></p>
+
+    <p class="reveal">Это и есть то, что произошло полгода назад. И почему моя история с юркомпанией — не везение.</p>
+  </div>
+</section>
+
+<!-- ==================== COMPARE (interactive) ==================== -->
+<section class="section compare-section">
+  <div class="compare-head reveal">
+    <div class="section-label">03 · почувствуй разницу</div>
+    <h2 class="section-title">Одна и та же задача. Два исхода.</h2>
+    <p class="section-lead">Если ты всё ещё не чувствуешь разницу — смотри.</p>
+  </div>
+
+  <div class="container">
+    <div class="chat-grid" id="chatGrid">
+      <!-- LEFT: CHAT -->
+      <div class="chat-window chat-window--gpt">
+        <div class="chat-header">
+          <span class="header-dot"></span>
+          <span class="header-title">ChatGPT</span>
+          <span class="header-kind">чат</span>
         </div>
-        <p class="compare-card__summary">Полезно. Но всё руками: копировать, править, разбираться как это поднять.</p>
+        <div class="messages" data-role="gpt">
+          <div class="msg msg--user" data-delay="300">Собери мне сайт-визитку и выложи в интернет</div>
+          <div class="msg msg--bot" data-delay="1400">Конечно. Вот HTML-разметка и CSS, вставь в файл <code>index.html</code>. Чтобы выложить — нужно:<br><br>1. Купить домен<br>2. Настроить хостинг<br>3. Залить файлы через FTP<br>4. Настроить SSL</div>
+          <div class="msg msg--user" data-delay="3000">А что такое FTP? А где купить домен?</div>
+          <div class="msg msg--bot msg--bot-muted" data-delay="4200">FTP — это File Transfer Protocol… <em>ещё 300 слов теории</em></div>
+          <div class="msg msg--user" data-delay="5600">У меня ошибка на третьей строчке. Что делать?</div>
+        </div>
+        <div class="chat-footer" data-delay="6800">
+          <span class="status-dot" style="background:var(--red-danger);"></span>
+          <span class="status-bad">Сайт не сделан · ты всё ещё разбираешься</span>
+        </div>
       </div>
 
-      <div class="compare-vs">VS</div>
-
-      <div class="compare-card compare-card--agent reveal reveal-d1">
-        <div class="compare-card__kind">02 · Агент</div>
-        <div class="compare-card__name">ИИ-агент</div>
-        <div class="compare-card__mode">Ты ставишь задачу — он её делает</div>
-        <div class="compare-card__demo">
-          <div class="demo-line">
-            <span class="demo-tag demo-tag--you">ТЫ</span>
-            <span class="demo-text">Собери сайт-визитку и выложи в интернет</span>
-          </div>
-          <div class="demo-line">
-            <span class="demo-tag demo-tag--agent">AGENT</span>
-            <span class="demo-text demo-text--muted">создаю файлы · проверяю · правлю ошибки · деплою · готово</span>
-          </div>
-          <div class="demo-line">
-            <span class="demo-tag demo-tag--agent">AGENT</span>
-            <span class="demo-text">Держи ссылку: your-site.vercel.app</span>
-          </div>
+      <!-- RIGHT: AGENT -->
+      <div class="chat-window chat-window--agent">
+        <div class="chat-header">
+          <span class="header-dot header-dot--agent"></span>
+          <span class="header-title">ИИ-агент</span>
+          <span class="header-kind">автоном</span>
         </div>
-        <p class="compare-card__summary">Работа сделана. Без кода, без разборок. Только твоя задача и результат.</p>
+        <div class="messages" data-role="agent">
+          <div class="msg msg--user" data-delay="300">Собери мне сайт-визитку и выложи в интернет</div>
+          <div class="todo" data-delay="1400">
+            <div class="todo__label">Агент → план работы</div>
+            <ul class="todo__list">
+              <li class="todo__item" data-step="0"><span class="todo__box"></span>Спроектировать структуру сайта</li>
+              <li class="todo__item" data-step="1"><span class="todo__box"></span>Сгенерировать HTML + CSS</li>
+              <li class="todo__item" data-step="2"><span class="todo__box"></span>Проверить вёрстку, починить ошибки</li>
+              <li class="todo__item" data-step="3"><span class="todo__box"></span>Задеплоить на сервер, получить ссылку</li>
+            </ul>
+          </div>
+          <div class="msg msg--agent" data-delay="6800">Готово. Держи ссылку: <strong>your-site.app</strong><br><br>Подключить твой домен? Скажи — сделаю.</div>
+        </div>
+        <div class="chat-footer" data-delay="7400">
+          <span class="status-dot" style="background:var(--orange-dark);"></span>
+          <span class="status-good">Работа сделана · ~2 минуты</span>
+        </div>
       </div>
+    </div>
+
+    <div class="replay-wrap">
+      <button class="replay-btn" id="replayBtn">↻ Запустить ещё раз</button>
+    </div>
+
+    <div class="compare-summary">
+      <div class="compare-summary__punch">Вся разница — в одном слове: <strong>делает</strong>.</div>
+      <div class="compare-summary__line">Чат даёт тебе инструкции. Агент даёт тебе сделанную работу.</div>
     </div>
   </div>
 </section>
 
-<!-- ==================== CAPS ==================== -->
-<section class="section caps-section">
-  <div class="container">
-    <div class="caps-head reveal">
-      <div class="section-label">02 — что умеет</div>
-      <h2 class="section-title">Что умеет агент</h2>
-      <p class="section-sub">Список реальных действий — не «может посоветовать», а именно «делает».</p>
+<!-- ==================== STORY 2 ==================== -->
+<section class="section">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">04 · история вторая</div></div>
+    <h2 class="section-title reveal reveal-d1">Ты можешь сказать: «У тебя был клиент и деньги. А если просто для себя?»</h2>
+
+    <p class="bucket reveal reveal-d2">Справедливо. Смотри вторую историю. Без клиента.</p>
+
+    <p class="reveal">У меня есть одна проблема — я живу в AI уже четыре года, и инфополе по теме разрослось до невыносимого. В какой-то момент я понял, что <strong>я теряюсь.</strong> Десятки каналов в Telegram, сотни статей в неделю, блоги, релизы моделей, твиттер — это не читается. Это сжирается глазами.</p>
+
+    <p class="reveal">Я сел и сказал агенту вслух: «У меня есть проблема. Мне нужно как-то собирать и фильтровать всю инфу по AI. Давай что-нибудь придумаем.»</p>
+
+    <p class="reveal">Он ответил: «Давай. Какие источники, какой формат, где храним?»</p>
+
+    <p class="reveal"><strong>И за один день мы собрали парсер.</strong></p>
+
+    <p class="reveal">Не за неделю. Не за месяц. <strong>За один день.</strong> Он обходил все сайты и блоги, которые мне важны, и складывал в базу.</p>
+
+    <p class="reveal">Мне стало мало. Я сказал: «А ещё я читаю Telegram. Давай туда тоже.» Он подключил мне авторизацию — и парсер начал ходить в мои каналы. Ещё через пару часов.</p>
+
+    <p class="reveal">Мне стало мало снова. Я сказал: «Этих новостей больше тысячи в неделю. Я физически не прочитаю. Пусть он ранжирует — что читать обязательно, что можно проскроллить, что мусор.» Бац — LLM-слой, который присваивает каждой новости приоритет.</p>
+
+    <p class="reveal">Мне снова стало мало. «Пусть он мне из топовых новостей пишет посты.» Готово.</p>
+
+    <div class="bab-badge reveal">
+      1000+ сырых новостей в неделю → готовый дайджест и черновики постов.
+      <em>Сам. Без моего участия.</em>
     </div>
 
-    <div class="caps-grid">
-      <div class="cap reveal">
-        <span class="cap__emoji">⌨️</span>
-        <div class="cap__title">Пишет код</div>
-        <div class="cap__desc">HTML, React, Python, Node.js, SQL — выбирает сам под задачу.</div>
-      </div>
-      <div class="cap reveal reveal-d1">
-        <span class="cap__emoji">📁</span>
-        <div class="cap__title">Создаёт файлы</div>
-        <div class="cap__desc">Прямо на твоём компьютере. Папки, структуру проекта — всё сам.</div>
-      </div>
-      <div class="cap reveal reveal-d2">
-        <span class="cap__emoji">🚀</span>
-        <div class="cap__title">Запускает сервисы</div>
-        <div class="cap__desc">Поднимает проект, открывает порт, показывает URL.</div>
-      </div>
-      <div class="cap reveal">
-        <span class="cap__emoji">🛰️</span>
-        <div class="cap__title">Деплоит на сервер</div>
-        <div class="cap__desc">Настраивает хостинг, домен, SSL. Пусть работает 24/7.</div>
-      </div>
-      <div class="cap reveal reveal-d1">
-        <span class="cap__emoji">🔍</span>
-        <div class="cap__title">Тестит и правит</div>
-        <div class="cap__desc">Запускает код, видит ошибку — сам находит и чинит.</div>
-      </div>
-      <div class="cap reveal reveal-d2">
-        <span class="cap__emoji">🔗</span>
-        <div class="cap__title">Подключает API</div>
-        <div class="cap__desc">Telegram, Google Sheets, базы данных — интегрирует за тебя.</div>
-      </div>
-    </div>
+    <p class="reveal">Я не писал ни одной строчки кода. Я не знаю, как устроена работа с Telegram API. Я не понимаю, как LLM вызывается из скрипта. Я знаю одно: <strong>у меня есть агент, и у меня есть проблемы.</strong></p>
+
+    <p class="reveal">Всё остальное — его забота.</p>
+
+    <p class="reveal">Это называется <strong>личный инструмент.</strong> Раньше личный инструмент мог позволить себе программист. Или тот, кто нанял программиста за 300 тысяч. Теперь — любой, у кого есть агент и полчаса свободного времени.</p>
+
+    <p class="reveal"><strong>Ты замечаешь паттерн?</strong></p>
   </div>
 </section>
 
-<!-- ==================== EXAMPLES ==================== -->
-<section class="section examples-section">
-  <div class="container">
-    <div class="examples-head reveal">
-      <div class="section-label">03 — кейсы</div>
-      <h2 class="section-title">Ты говоришь → агент делает</h2>
-      <p class="section-sub">Реальные примеры того, что можно собрать. Без технического опыта.</p>
+<!-- ==================== STORY 3 ==================== -->
+<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, var(--sun-100) 100%);">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">05 · история третья</div></div>
+    <h2 class="section-title reveal reveal-d1">А теперь то, что я до сих пор сам не могу осознать.</h2>
+
+    <p class="reveal reveal-d2">У меня есть давняя боль. Я <strong>никогда не умел вести заметки.</strong></p>
+
+    <p class="reveal">Пробовал всё. Notion, Obsidian, Todoist, Apple Notes, бумажные дневники, Bullet Journal, десятки приложений «для осознанной жизни». Всё одно — я сдаюсь через неделю. Высокий порог входа: надо что-то настроить, куда-то что-то вписать, вспомнить тег, выбрать папку. Не моё.</p>
+
+    <p class="reveal">Но мне было надо. Потому что проекты множатся, мысли теряются, люди забываются, встречи провисают, идеи уходят в воздух. <strong>Второй мозг — это не хайп. Это кислород.</strong></p>
+
+    <p class="reveal">И я подумал: <em>а почему мой второй мозг должен быть чужой программой?</em> Пусть он будет <strong>мой.</strong> Заточенный под то, как <em>я</em> думаю. Под мои проекты, мои процессы, мои форматы.</p>
+
+    <p class="reveal">Я сел с агентом и сказал: «Сделай мне систему. Проекты. Задачи. Мысли. Люди. Встречи. Я не буду кликать и выбирать. Я буду надиктовывать голосом, а ты раскладывай сам.»</p>
+
+    <p class="reveal"><strong>За два с половиной дня он собрал мне приложение.</strong></p>
+
+    <p class="reveal">Оно работает. Я надиктовываю голосом из любого места — он кладёт мысль в правильный проект. Я говорю «напомни через неделю» — оно напомнит. Я спрашиваю «что я думал про клиента Х три месяца назад» — он достаёт.</p>
+
+    <p class="reveal">И вот здесь <strong>самое странное.</strong></p>
+
+    <p class="reveal">Внутри этого приложения <strong>работает агент.</strong> Не просто LLM-запрос. Агент, который сам решает, что делать с каждой моей заметкой. Ранжирует, связывает, достаёт, строит контекст.</p>
+
+    <p class="reveal">То есть <em>я с помощью агента собрал себе агента.</em></p>
+
+    <div class="bab-badge reveal">
+      Я агентом создал агента.
+      <em>И дал этому агенту доступ к своей жизни.</em>
     </div>
 
-    <div class="examples-list">
-
-      <div class="example reveal">
-        <div class="example__task">
-          <div class="example__icon">🌐</div>
-          <div class="example__prompt">«Собери сайт-визитку с портфолио и формой связи»</div>
-        </div>
-        <div class="example__arrow">Агент делает</div>
-        <div class="example__result">Вёрстку, анимации, форму с отправкой на email, деплой на бесплатный хостинг. Получаешь рабочую ссылку.</div>
-        <div class="example__time">~20 минут</div>
-      </div>
-
-      <div class="example reveal reveal-d1">
-        <div class="example__task">
-          <div class="example__icon">🤖</div>
-          <div class="example__prompt">«Сделай Telegram-бота, который принимает заявки»</div>
-        </div>
-        <div class="example__arrow">Агент делает</div>
-        <div class="example__result">Создаёт бота, пишет логику диалога, подключает Google Sheets, выкладывает на сервер. Бот работает круглосуточно.</div>
-        <div class="example__time">~30 минут</div>
-      </div>
-
-      <div class="example reveal">
-        <div class="example__task">
-          <div class="example__icon">📊</div>
-          <div class="example__prompt">«Спарси отзывы с маркетплейса и сделай сводную таблицу»</div>
-        </div>
-        <div class="example__arrow">Агент делает</div>
-        <div class="example__result">Пишет парсер, собирает данные, анализирует тональность, выгружает в Excel. Получаешь готовый отчёт.</div>
-        <div class="example__time">~15 минут</div>
-      </div>
-
-      <div class="example reveal reveal-d1">
-        <div class="example__task">
-          <div class="example__icon">📣</div>
-          <div class="example__prompt">«Собери лендинг для нового продукта и подключи оплату»</div>
-        </div>
-        <div class="example__arrow">Агент делает</div>
-        <div class="example__result">Верстает страницу под твой бренд, встраивает платёжку, настраивает аналитику, деплоит с SSL. Принимаешь оплату в тот же день.</div>
-        <div class="example__time">~1 час</div>
-      </div>
-
-      <div class="example reveal">
-        <div class="example__task">
-          <div class="example__icon">⚡</div>
-          <div class="example__prompt">«Автоматизируй ежедневный отчёт — пусть сам шлёт в Slack»</div>
-        </div>
-        <div class="example__arrow">Агент делает</div>
-        <div class="example__result">Собирает скрипт, подключает данные из твоих таблиц, ставит на cron, настраивает отправку. Утром отчёт сам в канале.</div>
-        <div class="example__time">~25 минут</div>
-      </div>
-
-      <div class="example reveal reveal-d1">
-        <div class="example__task">
-          <div class="example__icon">🧠</div>
-          <div class="example__prompt">«Сделай чат-бота, который знает мой продукт и отвечает клиентам»</div>
-        </div>
-        <div class="example__arrow">Агент делает</div>
-        <div class="example__result">Собирает базу знаний, настраивает RAG, подключает к сайту виджетом. Клиенты получают ответы 24/7 без твоего участия.</div>
-        <div class="example__time">~1 час</div>
-      </div>
-
+    <div class="story-image reveal">
+      <img src="case-crm-1.jpg" alt="Интерфейс личной системы Life OS">
+      <div class="story-image__cap">Life OS изнутри. Голосовой ввод → агент раскладывает по сущностям сам.</div>
     </div>
+
+    <p class="reveal">Это предложение звучит как научная фантастика. Я его написал — и перечитал три раза. Потому что полгода назад это была бы шутка. Год назад — вообще повод для статьи в журнале «Наука и жизнь».</p>
+
+    <p class="reveal"><strong>Сегодня — это моя рабочая среда на неделю.</strong></p>
+
+    <p class="reveal">И вот в какой-то момент, когда я надиктовывал очередную мысль в свою же систему, я поймал себя на странном ощущении.</p>
+
+    <p class="reveal"><strong>Я понял, что изменилось.</strong></p>
+
+    <p class="reveal">И это изменение — не в инструментах. И не в агентах.</p>
+
+    <p class="reveal"><strong>Оно во мне.</strong></p>
   </div>
 </section>
 
-<!-- ==================== TIMING ==================== -->
-<section class="section timing-section">
-  <div class="timing-noise"></div>
-  <div class="container">
-    <div class="timing-inner">
-      <div class="section-label reveal">04 — почему сейчас</div>
-      <p class="timing-quote reveal reveal-d1">ИИ-агенты сейчас — это <mark>как интернет в 98-м</mark>. Освоить сегодня = быть впереди через 5 лет.</p>
+<!-- ==================== MANIFESTO ==================== -->
+<section class="section" style="background: var(--white);">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">06 · что изменилось</div></div>
+    <h2 class="section-title reveal reveal-d1">Я долго не мог сформулировать, что изменилось. А потом понял.</h2>
 
-      <div class="timing-points">
-        <div class="timing-point reveal reveal-d1">
-          <div class="timing-point__num">01</div>
-          <div class="timing-point__text">Технология зрелая: инструменты стали простыми и доступными буквально за последние месяцы.</div>
-        </div>
-        <div class="timing-point reveal reveal-d2">
-          <div class="timing-point__num">02</div>
-          <div class="timing-point__text">Конкурентов мало: большинство только что услышали про «агентов» и не знают с какой стороны подойти.</div>
-        </div>
-        <div class="timing-point reveal reveal-d1">
-          <div class="timing-point__num">03</div>
-          <div class="timing-point__text">Навык окупается мгновенно: один собранный проект экономит 50-200 тысяч на подрядчиках.</div>
-        </div>
-        <div class="timing-point reveal reveal-d2">
-          <div class="timing-point__num">04</div>
-          <div class="timing-point__text">Порог входа исчезает: не нужен код, не нужен опыт — нужно уметь ставить задачи.</div>
-        </div>
+    <p class="reveal reveal-d2">Первое, что я подумал — изменились модели. Стали умнее, глубже, контекстнее. Да, это правда. Но это не оно.</p>
+
+    <p class="reveal">Второе — изменились инструменты. Появились агенты, редакторы с ИИ, автономные сценарии. Тоже правда. Тоже не оно.</p>
+
+    <div class="pullquote reveal">Изменился я.</div>
+
+    <p class="reveal"><strong>Я перестал отказываться от проектов.</strong></p>
+
+    <p class="reveal">Раньше передо мной ставили задачу — и первая мысль была «успею / не успею», «хватит скилла / не хватит», «возьмусь / откажусь». Теперь первой мысли нет. Есть только «ок, давай разберёмся». Потому что где-то глубоко я знаю: чего бы ни потребовала задача — я найду способ с агентом.</p>
+
+    <div class="easy-list reveal">
+      <div class="easy-list__row">
+        <span class="easy-list__task">3D-модель в Blender?</span>
+        <span class="easy-list__mark">Easy</span>
+      </div>
+      <div class="easy-list__row">
+        <span class="easy-list__task">Сайт для крупного девелопера?</span>
+        <span class="easy-list__mark">Easy</span>
+      </div>
+      <div class="easy-list__row">
+        <span class="easy-list__task">Внутренняя CRM для маленькой команды?</span>
+        <span class="easy-list__mark">Easy</span>
+      </div>
+      <div class="easy-list__row">
+        <span class="easy-list__task">Автоматизация на полмиллиона в квартал?</span>
+        <span class="easy-list__mark">Easy</span>
       </div>
     </div>
+
+    <p class="reveal">Это не потому, что я стал гением. Это потому, что <strong>у меня появился второй я.</strong></p>
+
+    <hr class="divider">
+
+    <p class="reveal">Секунду. Давай остановлюсь и скажу главное.</p>
+
+    <div class="pullquote reveal">Эпоха заёба — закончилась.</div>
+
+    <p class="reveal">Та эпоха, когда ты работал как лошадь. Когда ты умирал на работе, которую разлюбил. Когда ты по выходным доделывал отчёты и потом не мог уснуть. Когда ты в понедельник утром вставал с мыслью «опять».</p>
+
+    <p class="reveal"><strong>Это закончилось.</strong></p>
+
+    <p class="reveal">Не потому что рутина исчезла. Рутина никуда не ушла — её всегда будет много. А потому что у тебя теперь есть <strong>тот, кто рутину делает вместо тебя.</strong></p>
+
+    <hr class="divider">
+
+    <p class="reveal">Смотри, как это выглядит на практике.</p>
+
+    <p class="reveal">Ты <strong>любишь продавать</strong> — продавай. Схемы, сценарии, холодные звонки, анализ воронки — всё это агент поднимет и разложит. А ты занимайся тем, что у тебя горит — коммуникацией с человеком.</p>
+
+    <p class="reveal">Ты <strong>любишь анализировать</strong> — анализируй. Сиди в данных, рой, выдвигай гипотезы. А парсить, чистить и подтягивать из пяти источников будет он.</p>
+
+    <p class="reveal">Ты <strong>любишь программировать</strong> — программируй. Только вспомни, как это было в 2012-м, когда тебе было в кайф. Вайбово, легко, без выгорания. Рутину напишет агент. Ты напишешь архитектуру.</p>
+
+    <p class="reveal"><strong>Ты занимаешься бумажками?</strong> Перестаёшь. Отчёты, сводки, письма клиентам, договоры по шаблону — забирает агент.</p>
+
+    <p class="reveal">Ты не станешь ленивым. <strong>Ты станешь лучшим в своём деле.</strong> Потому что наконец-то начнёшь делать только то, что делаешь лучше всего.</p>
+
+    <hr class="divider">
+
+    <p class="reveal"><strong>Теперь посчитай.</strong></p>
+
+    <p class="reveal">Сколько бы ты платил сотруднику, который закрывает половину твоих задач? Который ускоряет тебя в пять раз на остальном? Не болеет. Не выгорает. Не увольняется. Не просит отпуск. На связи 24/7. Понимает тебя через слово.</p>
+
+    <p class="reveal">100 тысяч в месяц? Мало. 200? Мало. Хороший специалист такого уровня стоит в полмиллиона-миллион.</p>
+
+    <p class="reveal">А агент — <strong>около 10 тысяч рублей в месяц. Сто долларов.</strong></p>
+
+    <p class="reveal">Это не опечатка. Это базовая подписка на сильную модель. Одна окупленная задача — и ты в плюсе до конца года.</p>
+
+    <div class="pullquote reveal">Вот что изменилось.</div>
   </div>
 </section>
 
-<!-- ==================== CTA ==================== -->
-<section class="cta-section">
-  <div class="cta-glow"></div>
+<!-- ==================== METR ==================== -->
+<section class="section metr-section">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">07 · и это не я один</div></div>
+    <h2 class="section-title reveal reveal-d1">Это не ощущение. Это измерили.</h2>
+
+    <p class="reveal reveal-d2">В марте 2025-го ребята из <a href="https://metr.org" target="_blank" rel="noopener">METR</a> (независимые исследователи ИИ) опубликовали странную штуку.</p>
+
+    <p class="reveal">Они измерили, <strong>как долго ИИ может делать задачу самостоятельно</strong> — и как эта длительность меняется от модели к модели.</p>
+
+    <p class="reveal">Вот что получилось:</p>
+
+    <!-- METR CHART -->
+    <div class="metr-chart reveal">
+      <div class="metr-chart__title">METR · Time horizon of autonomous AI</div>
+      <div class="metr-chart__sub">Длительность задачи, которую агент делает самостоятельно</div>
+
+      <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="График роста автономности ИИ по данным METR">
+        <!-- grid -->
+        <g stroke="#F0F0F0" stroke-width="1">
+          <line x1="60" y1="40" x2="620" y2="40" />
+          <line x1="60" y1="90" x2="620" y2="90" />
+          <line x1="60" y1="140" x2="620" y2="140" />
+          <line x1="60" y1="190" x2="620" y2="190" />
+          <line x1="60" y1="240" x2="620" y2="240" />
+        </g>
+        <!-- y labels (log scale) -->
+        <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8F8F8F">
+          <text x="55" y="44" text-anchor="end">день</text>
+          <text x="55" y="94" text-anchor="end">8 ч</text>
+          <text x="55" y="144" text-anchor="end">1 ч</text>
+          <text x="55" y="194" text-anchor="end">10 мин</text>
+          <text x="55" y="244" text-anchor="end">1 мин</text>
+        </g>
+        <!-- x labels -->
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#5C5C5C">
+          <text x="90" y="265" text-anchor="middle">2023</text>
+          <text x="230" y="265" text-anchor="middle">2024</text>
+          <text x="380" y="265" text-anchor="middle">2025</text>
+          <text x="560" y="265" text-anchor="middle">сейчас</text>
+        </g>
+
+        <!-- 50% line (orange, upper) -->
+        <path d="M 90 232 Q 160 210 230 175 T 380 115 T 560 55"
+              fill="none" stroke="#FFA000" stroke-width="3" stroke-linecap="round"/>
+        <!-- 50% points -->
+        <g fill="#FFA000">
+          <circle cx="90" cy="232" r="5" />
+          <circle cx="230" cy="175" r="5" />
+          <circle cx="380" cy="115" r="5" />
+          <circle cx="560" cy="55" r="6" stroke="#FFFFFF" stroke-width="2"/>
+        </g>
+
+        <!-- 80% line (darker, lower) -->
+        <path d="M 90 248 Q 160 232 230 205 T 380 155 T 560 100"
+              fill="none" stroke="#2B2B2B" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"/>
+        <!-- 80% points -->
+        <g fill="#2B2B2B">
+          <circle cx="90" cy="248" r="4" />
+          <circle cx="230" cy="205" r="4" />
+          <circle cx="380" cy="155" r="4" />
+          <circle cx="560" cy="100" r="5" stroke="#FFFFFF" stroke-width="2"/>
+        </g>
+
+        <!-- annotations -->
+        <g font-family="Geist, sans-serif" font-size="11" font-weight="600">
+          <text x="570" y="48" fill="#FF8F00">~12 ч</text>
+          <text x="570" y="92" fill="#2B2B2B">~4–6 ч</text>
+        </g>
+      </svg>
+
+      <div class="metr-chart__legend">
+        <div class="metr-chart__legend-item">
+          <span class="metr-chart__legend-dot" style="background:#FFA000;"></span>
+          50% надёжность · готов к риску
+        </div>
+        <div class="metr-chart__legend-item">
+          <span class="metr-chart__legend-dot" style="background:#2B2B2B;"></span>
+          80% надёжность · надо сейчас
+        </div>
+      </div>
+      <div class="metr-chart__source">По данным METR (2025). Ось Y — логарифмическая.</div>
+    </div>
+
+    <p class="reveal"><strong>Агент уже сейчас делает задачу 4–6 часов самостоятельно. С вероятностью 80%.</strong></p>
+
+    <p class="reveal">Если готов мириться с риском 50/50 — задачу на <strong>12 часов.</strong></p>
+
+    <p class="reveal">Это не прогноз. Это замеры.</p>
+
+    <p class="reveal">И главное — <strong>длительность удваивается каждые семь месяцев.</strong></p>
+
+    <div class="shock-line reveal">
+      <span>Семь.</span>
+      <span>Месяцев.</span>
+    </div>
+
+    <p class="reveal">Посчитай, где он будет через год. Если удвоение продолжится — это <strong>рабочие дни.</strong> Через два года — рабочие недели. Через три — месяцы.</p>
+
+    <hr class="divider">
+
+    <p class="reveal"><strong>Теперь мысленный эксперимент.</strong></p>
+
+    <p class="reveal">Представь: у тебя есть агент, который с вероятностью <strong>50%</strong> за два месяца автономной работы сделает тебя миллионером. Не гарантированно. 50 на 50.</p>
+
+    <p class="reveal"><strong>Сколько раз ты его запустишь?</strong></p>
+
+    <p class="reveal">Ответ очевиден. Ты запустишь его столько раз, сколько сможешь. Потому что проигрыш — это два месяца машинного времени. А выигрыш — меняет жизнь.</p>
+
+    <p class="reveal">Так вот. <strong>Мы почти там.</strong></p>
+
+    <hr class="divider">
+
+    <div class="pullquote reveal">ИИ-агенты сейчас — это как интернет в 98-м.</div>
+
+    <p class="reveal">Это было окно. Люди, которые в 1998-м вложили вечер в изучение HTML, через пять лет делали сайты для Coca-Cola. Люди, которые открыли интернет-магазин в 2000-м, через десять лет продали его за 100 миллионов. А люди, которые сказали «интернет — это несерьёзно, подождём» — ну, ты их знаешь.</p>
+
+    <p class="reveal">Агенты сегодня — это тот же момент.</p>
+
+    <p class="reveal">Технология зрелая. Инструменты доступны. Порог входа — лежит под ногами. А большинство ещё даже не поняли, <strong>что вообще происходит.</strong></p>
+
+    <p class="reveal"><strong>Это и есть твой рынок. Пока он не закрылся.</strong></p>
+  </div>
+</section>
+
+<!-- ==================== SOFT BRIDGE ==================== -->
+<div class="bridge reveal">
+  Если ты сейчас ловишь себя на мысли «я хочу это уметь» — <a href="https://t.me/agiage_bot?start=src_agents" target="_blank" rel="noopener">загляни в бот</a>, там короткая программа. Но сначала дочитай — осталась одна история и немного правды.
+</div>
+
+<!-- ==================== STORY 4 ==================== -->
+<section class="section">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">08 · история четвёртая · короткая</div></div>
+    <h2 class="section-title reveal reveal-d1">И ещё одна — про то, что я ненавижу больше всего.</h2>
+
+    <p class="section-lead reveal reveal-d2"><strong>Слайды.</strong></p>
+
+    <p class="reveal">Я часто выступаю. В компаниях, на конференциях, у заказчиков. Каждое выступление — это презентация на 150-200 слайдов.</p>
+
+    <p class="reveal">Знаешь, сколько времени я раньше тратил на одну такую презентацию? <strong>Полторы недели.</strong> Это не метафора. Это физически — две рабочие недели уходили в PowerPoint. Вручную. Каждый слайд. Каждая анимация. Каждый шрифт.</p>
+
+    <p class="reveal">Сейчас я делаю презентации <strong>по-другому.</strong></p>
+
+    <p class="reveal">Я говорю агенту, о чём хочу выступить. Он предлагает: «Давай не в PPTX. Давай в лендинге — получится живее, ты сможешь двигаться по нему как угодно, и каждый слайд будет как отдельная секция.» Я соглашаюсь.</p>
+
+    <p class="reveal"><strong>За два-три часа у меня готовая презентация.</strong> В виде мини-сайта. С анимациями, интерактивом, плавными переходами. Это не «слайды» в старом смысле — это живой лендинг, который я показываю со сцены.</p>
+
+    <p class="reveal">Нужно в PPTX (заказчик консервативный)? Агент сам делает скрины каждой секции и собирает слайды. Нужно видео для соцсетей? Записывает ролик с прокруткой, режет, выкладывает.</p>
+
+    <div class="bab-badge reveal">
+      Полторы недели в PowerPoint → два часа с агентом.
+      <em>Это примерно 50× по времени. Полсотни раз. В час.</em>
+    </div>
+
+    <p class="reveal">И теперь главная мысль, которую я не могу выкинуть из головы.</p>
+
+    <div class="pullquote reveal">У каждого человека есть своя «презентация в PowerPoint».</div>
+
+    <p class="reveal">У маркетолога — сбор отчётов по кампаниям. У юриста — выверка договоров. У HR — резюме и тесткейсы. У предпринимателя — финмодели, питч-деки, анализ конкурентов.</p>
+
+    <p class="reveal">Своя рутина, которая отжирает половину рабочей недели. Которую ты ненавидишь. Но без которой нельзя.</p>
+
+    <p class="reveal"><strong>И у неё теперь есть выход.</strong></p>
+  </div>
+</section>
+
+<!-- ==================== LOZHKA DEGTYA ==================== -->
+<section class="section degot-section">
+  <div class="longread">
+    <div class="reveal"><div class="section-label">09 · честно</div></div>
+    <h2 class="section-title reveal reveal-d1">Но это работает не с первого щелчка. И вот почему.</h2>
+
+    <p class="reveal reveal-d2">Если ты дочитал до сюда и у тебя в голове ощущение «да это магия, сейчас открою Claude и всё получится» — я должен тебя слегка осадить.</p>
+
+    <div class="pullquote reveal">Нет. Не получится.</div>
+
+    <p class="reveal">Первый раз — ты вообще не поймёшь, что происходит. Агент тебя не услышит как надо. Ты ему что-то скажешь — он сделает не то. Ты попытаешься исправить — он сломает то, что работало. Ты психанёшь и закроешь.</p>
+
+    <p class="reveal">Так у всех. <strong>Это нормально.</strong></p>
+
+    <p class="reveal">Почему у меня получается — потому что <strong>я в этом живу четыре года.</strong> Я работал с GPT-2, когда она писала с орфографическими ошибками. Я помню, как GPT-4 только научилась держать диалог. Я знаю, <em>когда</em> эта штука врёт, <em>где</em> она тупит, <em>в каких</em> задачах её нельзя оставлять одну.</p>
+
+    <p class="reveal">У меня в голове есть интуиция работы с ИИ. Она наработана за тысячи часов.</p>
+
+    <p class="reveal"><strong>А у тебя — нет.</strong> И это нормально. Никто с этой интуицией не рождается.</p>
+
+    <hr class="divider">
+
+    <p class="reveal"><strong>Есть две новости.</strong></p>
+
+    <p class="reveal"><strong>Плохая:</strong> порог входа существует. Месяц-два ты будешь биться, злиться, чувствовать себя идиотом. Это реальность.</p>
+
+    <p class="reveal"><strong>Хорошая:</strong> этот порог в десять раз ниже, чем был два года назад. И в сто раз ниже, чем любая другая технология, которая когда-либо меняла рынок.</p>
+
+    <p class="reveal">Раньше, чтобы войти в AI, нужно было идти учить Python, математику, ML, разбираться в архитектурах. Сейчас нужно уметь одно: <strong>правильно ставить задачу словами.</strong></p>
+
+    <p class="reveal">Это не «не нужно учиться». Это «учиться надо совсем другому».</p>
+
+    <hr class="divider">
+
+    <p class="reveal"><strong>И последнее.</strong></p>
+
+    <p class="reveal"><strong>Агент — не бесплатный.</strong> Это инструмент, за него надо платить. Хорошая подписка на сильную модель — <strong>около 10 тысяч рублей в месяц. Сто долларов.</strong></p>
+
+    <p class="reveal">Я понимаю, что для кого-то это цифра. Но прикинь ещё раз: сотрудник, закрывающий половину твоих задач, обойдётся в 50-100 раз дороже. И его надо искать, собеседовать, обучать, управлять.</p>
+
+    <p class="reveal">А тут ты платишь цену одного обеда в ресторане за месяц <strong>работы второго себя.</strong></p>
+
+    <div class="pullquote reveal">Это самый дешёвый найм в истории человечества.</div>
+  </div>
+</section>
+
+<!-- ==================== SOFT PITCH (CTA) ==================== -->
+<section class="section cta-section">
   <div class="cta-inner">
-    <div class="cta-eyebrow reveal">Практикум ВАЙБ от АГИ</div>
-    <h2 class="cta-title reveal reveal-d1">7 уроков — и ты работаешь с агентами</h2>
-    <p class="cta-sub reveal reveal-d2">Практика на каждом занятии. В конце у тебя свой проект на сервере, навык, который окупает практикум за одну задачу, и доступ в комьюнити.</p>
-    <a href="https://t.me/agiage_bot?start=src_agents" class="cta-btn reveal reveal-d2" target="_blank" rel="noopener">Записаться через бота →</a>
-    <div class="cta-small reveal reveal-d3">Ранняя цена до открытия продаж · 5 мест на «Персональном»</div>
+    <div class="cta-eyebrow reveal">10 · если зацепило</div>
+    <h2 class="cta-title reveal reveal-d1">Всё, что ты прочитал выше,<br>я собрал в практикум.</h2>
+
+    <p class="cta-lead reveal reveal-d2">Он называется <span class="cta-course">ВАЙБ</span>. Семь уроков. Каждый — живая практика. На первом уроке ты собираешь свой первый реальный проект: не «Hello world», а рабочую штуку, которая уже решает твою задачу.</p>
+
+    <p class="cta-lead reveal">К концу практикума у тебя есть:</p>
+
+    <ul class="cta-list reveal">
+      <li>свой <strong>проект на сервере,</strong> который работает 24/7;</li>
+      <li><strong>навык ставить задачи агенту</strong> так, чтобы он понимал с первого раза;</li>
+      <li><strong>интуиция,</strong> за какими задачами к нему идти, а за какими — нет;</li>
+      <li><strong>закрытое комьюнити</strong> с теми, кто прошёл путь вместе с тобой;</li>
+      <li>и главное — ощущение, что ты больше не в роли догоняющего.</li>
+    </ul>
+
+    <div class="tariffs reveal">
+      <div class="tariff">
+        <div class="tariff__kind">Основной</div>
+        <div class="tariff__name">В группе</div>
+        <div class="tariff__price">
+          <span class="tariff__price-now">19 999 ₽</span>
+          <span class="tariff__price-old">30 000 ₽</span>
+        </div>
+        <div class="tariff__desc">Веду группу лично. Идёшь со всеми. Домашки проверяются.</div>
+      </div>
+      <div class="tariff tariff--premium">
+        <div class="tariff__kind">Персональный</div>
+        <div class="tariff__name">Со мной в личке</div>
+        <div class="tariff__price">
+          <span class="tariff__price-now">39 999 ₽</span>
+          <span class="tariff__price-old">65 000 ₽</span>
+        </div>
+        <div class="tariff__desc">Разборы проектов, созвоны, адаптация под твою специфику.</div>
+        <div class="tariff__slots">всего 5 мест</div>
+      </div>
+    </div>
+
+    <a href="https://t.me/agiage_bot?start=src_agents" class="cta-btn reveal" target="_blank" rel="noopener">Записаться через бота →</a>
+
+    <p class="cta-guarantee reveal">Первый урок разочаровал — вернём деньги без вопросов. Мне не нужны люди, которые жалеют, что пришли.</p>
+  </div>
+</section>
+
+<!-- ==================== FINAL ==================== -->
+<section class="final-section">
+  <div class="final-inner">
+    <div class="final-lines reveal">
+      <span>Можно читать статьи про агентов ещё год.</span>
+      <span>Можно ждать, пока «технология дозреет».</span>
+      <span>Можно дождаться момента, когда эту штуку освоят все — и тогда особого преимущества не будет.</span>
+      <span>Или можно за месяц собрать своего.</span>
+    </div>
+    <a href="https://t.me/agiage_bot?start=src_agents" class="final-btn reveal reveal-d1" target="_blank" rel="noopener">Начать → @agiage_bot</a>
+    <div class="final-sign reveal reveal-d2">Егор Борисенко · АГИ · апрель 2026</div>
   </div>
 </section>
 
@@ -794,8 +1696,14 @@ body {
   <div>© 2026 АГИ · ИП Борисенко</div>
 </footer>
 
+<!-- ==================== STICKY CTA ==================== -->
+<a href="https://t.me/agiage_bot?start=src_agents" class="sticky-cta" id="stickyCta" target="_blank" rel="noopener">
+  Записаться в практикум →
+</a>
+
 <script>
 (function() {
+  // ===== reveal on scroll =====
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) {
@@ -805,6 +1713,79 @@ body {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+  // ===== compare: interactive chat animation =====
+  var grid = document.getElementById('chatGrid');
+  var replayBtn = document.getElementById('replayBtn');
+  var timers = [];
+  var started = false;
+
+  function clearAll() {
+    timers.forEach(function(t) { clearTimeout(t); });
+    timers = [];
+    grid.querySelectorAll('.msg, .todo, .chat-footer').forEach(function(el) { el.classList.remove('show'); });
+    grid.querySelectorAll('.todo__item').forEach(function(el) { el.classList.remove('running', 'done'); });
+  }
+
+  function runStory() {
+    clearAll();
+    grid.querySelectorAll('.msg, .todo').forEach(function(el) {
+      var delay = parseInt(el.dataset.delay || '0', 10);
+      timers.push(setTimeout(function() { el.classList.add('show'); }, delay));
+    });
+    grid.querySelectorAll('.chat-footer').forEach(function(el) {
+      var delay = parseInt(el.dataset.delay || '0', 10);
+      timers.push(setTimeout(function() { el.classList.add('show'); }, delay));
+    });
+    var todoStart = 1700;
+    var stepDuration = 1250;
+    var steps = grid.querySelectorAll('.todo__item');
+    steps.forEach(function(item, i) {
+      timers.push(setTimeout(function() { item.classList.add('running'); }, todoStart + i * stepDuration));
+      timers.push(setTimeout(function() {
+        item.classList.remove('running');
+        item.classList.add('done');
+      }, todoStart + i * stepDuration + stepDuration - 150));
+    });
+  }
+
+  var cio = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting && !started) {
+        started = true;
+        runStory();
+      }
+    });
+  }, { threshold: 0.3 });
+  if (grid) cio.observe(grid);
+  if (replayBtn) replayBtn.addEventListener('click', runStory);
+
+  // ===== progress bar + sticky CTA =====
+  var progressBar = document.getElementById('progressBar');
+  var stickyCta = document.getElementById('stickyCta');
+  var ctaSection = document.querySelector('.cta-section');
+
+  function onScroll() {
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var scrolled = window.scrollY;
+    var percent = docHeight > 0 ? (scrolled / docHeight) * 100 : 0;
+    if (progressBar) progressBar.style.width = percent + '%';
+
+    // sticky CTA: show after 60%, hide when CTA section is in view (avoid double)
+    if (stickyCta) {
+      var show = percent > 60;
+      if (ctaSection) {
+        var rect = ctaSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          show = false;
+        }
+      }
+      stickyCta.classList.toggle('show', show);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 })();
 </script>
 
