@@ -951,11 +951,10 @@ section[id] { scroll-margin-top: 80px; }
 .persona-grid {
   display: grid; grid-template-columns: 1fr;
   gap: 1.25rem;
-  max-width: 1200px; margin: 2.5rem auto 0;
+  max-width: 900px; margin: 2.5rem auto 0;
   padding: 0 1.5rem;
 }
 @media (min-width: 640px) { .persona-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
-@media (min-width: 1024px) { .persona-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 768px) { .persona-grid { padding: 0 3rem; } }
 @media (min-width: 1280px) { .persona-grid { padding: 0 5rem; } }
 
@@ -1645,8 +1644,6 @@ button:focus-visible {
     <p class="reveal">Остальное — его работа.</p>
 
     <p class="reveal">Раньше такое мог позволить себе только программист. Или тот, кто его нанял за триста тысяч. Теперь — любой, у кого есть полчаса времени.</p>
-
-    <p class="reveal"><strong>Ты замечаешь паттерн?</strong></p>
   </div>
 </section>
 
@@ -1659,7 +1656,7 @@ button:focus-visible {
   </div>
   <div class="longread">
     <div class="reveal"><div class="s-label">История третья</div></div>
-    <h2 class="s-title reveal reveal-delay-1">А теперь — то, что я до сих пор не могу осознать.</h2>
+    <h2 class="s-title reveal reveal-delay-1"><em>Ты замечаешь паттерн?</em><br>А теперь — то, что я до сих пор не могу осознать.</h2>
 
     <p class="reveal reveal-delay-2">У меня есть давняя боль. Я <strong>никогда не умел вести заметки.</strong></p>
 
@@ -1729,15 +1726,7 @@ button:focus-visible {
 
     <hr class="divider">
 
-    <p class="reveal">Смотри, как это выглядит на практике.</p>
-
-    <p class="reveal">Ты <strong>любишь продавать</strong> — продавай. Схемы, сценарии, холодные звонки, анализ воронки — всё это агент поднимет и разложит. А ты занимайся тем, что у тебя горит — коммуникацией с человеком.</p>
-
-    <p class="reveal">Ты <strong>любишь анализировать</strong> — анализируй. Сиди в данных, рой, выдвигай гипотезы. А парсить, чистить и подтягивать из пяти источников будет он.</p>
-
-    <p class="reveal">Ты <strong>любишь программировать</strong> — программируй. Только вспомни, как это было в 2012-м, когда тебе было в кайф. Вайбово, легко, без выгорания. Рутину напишет агент. Ты напишешь архитектуру.</p>
-
-    <p class="reveal"><strong>Ты занимаешься бумажками?</strong> Перестаёшь. Отчёты, сводки, письма клиентам, договоры по шаблону — забирает агент.</p>
+    <p class="reveal">Ты <strong>любишь то, что делаешь</strong> — делай это. Схемы, гипотезы, архитектуру, клиентов. А рутину — отчёты, сводки, парсинг, договоры по шаблону — забирает агент.</p>
 
     <p class="reveal">Ты не станешь ленивым. <strong>Ты займёшься тем, ради чего пошёл в это дело.</strong> Потому что наконец-то начнёшь делать только то, что делаешь лучше всего.</p>
   </div>
@@ -1827,17 +1816,7 @@ button:focus-visible {
 
     <p class="reveal">Посчитай, где он будет через год. Если удвоение продолжится — это <strong>рабочие дни.</strong> Через два года — рабочие недели. Через три — месяцы.</p>
 
-    <hr class="divider">
-
-    <p class="reveal"><strong>Простая математика.</strong></p>
-
-    <p class="reveal">Представь: агент с вероятностью <strong>50%</strong> за два месяца сам закроет задачу, которая меняет твою жизнь. Не гарантированно. Пополам.</p>
-
-    <p class="reveal"><strong>Сколько раз ты его запустишь?</strong></p>
-
-    <p class="reveal">Ответ очевиден. Столько раз, сколько сможешь. Потому что проигрыш — это два месяца машинного времени. А выигрыш — меняет всё.</p>
-
-    <p class="reveal">Так вот. <strong>Мы почти там.</strong></p>
+    <p class="reveal"><strong>Мы почти там.</strong></p>
 
     <hr class="divider">
 
@@ -1857,7 +1836,7 @@ button:focus-visible {
 <section class="applicability-section" id="applicability">
   <div class="longread">
     <div class="reveal"><div class="s-label">А что конкретно — тебе</div></div>
-    <h2 class="s-title reveal reveal-delay-1">У каждого — <em>своя рутина.</em> Вот что заберёт агент.</h2>
+    <h2 class="s-title reveal reveal-delay-1">Ок. Конкретно — <em>что это значит для тебя?</em></h2>
     <p class="s-desc reveal reveal-delay-2">У каждого есть задачи, на которых теряешь больше всего времени. Вот что можно поручить агенту уже сейчас — по профессиям.</p>
   </div>
 
@@ -1884,16 +1863,6 @@ button:focus-visible {
     </div>
     <div class="persona reveal reveal-delay-2">
       <div class="persona-marker">03</div>
-      <div class="persona__kind">Юрист</div>
-      <div class="persona__name">Больше практики, меньше бумаги</div>
-      <ul class="persona__tasks">
-        <li>Сравнить две версии договора и показать отличия</li>
-        <li>Извлечь данные из скан-PDF в таблицу</li>
-        <li>Шаблонизатор допсоглашений под твой стиль</li>
-      </ul>
-    </div>
-    <div class="persona reveal">
-      <div class="persona-marker">04</div>
       <div class="persona__kind">Аналитик / продакт</div>
       <div class="persona__name">Дашборды и ресёрч без недели настройки</div>
       <ul class="persona__tasks">
@@ -1902,18 +1871,8 @@ button:focus-visible {
         <li>Собрать отзывы из App Store и ранжировать по боли</li>
       </ul>
     </div>
-    <div class="persona reveal reveal-delay-1">
-      <div class="persona-marker">05</div>
-      <div class="persona__kind">HR / обучение</div>
-      <div class="persona__name">Процессы, которые раньше требовали отдел</div>
-      <ul class="persona__tasks">
-        <li>Автопроверка тестов и ДЗ с обратной связью</li>
-        <li>Подборка кандидатов по скрытым критериям</li>
-        <li>Онбординг-бот для повторяющихся вопросов</li>
-      </ul>
-    </div>
-    <div class="persona persona--self reveal reveal-delay-2">
-      <div class="persona-marker">06</div>
+    <div class="persona persona--self reveal">
+      <div class="persona-marker">04</div>
       <div class="persona__kind">А ты?</div>
       <div class="persona__name">У тебя — своя. Вспомни её прямо сейчас.</div>
       <ul class="persona__tasks">
@@ -1943,9 +1902,7 @@ button:focus-visible {
 
     <p class="reveal">Так у всех. <strong>Это нормально.</strong></p>
 
-    <p class="reveal">У меня получается потому, что я <strong>работаю с ИИ с первых версий.</strong> Помню GPT-2, когда она писала с орфографическими ошибками. Помню, как GPT-4 только научилась держать диалог. Знаю, <em>когда</em> модель врёт, <em>где</em> она тупит, <em>в каких</em> задачах её нельзя оставлять одну.</p>
-
-    <p class="reveal">В голове — интуиция, наработанная за тысячи часов.</p>
+    <p class="reveal">У меня получается потому, что я <strong>знаю, где агент врёт, где тупит, в каких задачах его нельзя оставлять одного.</strong> Это не написано в документации. Это приходит только через ошибки.</p>
 
     <p class="reveal"><strong>А у тебя — нет.</strong> И это нормально. Никто с этой интуицией не рождается.</p>
 
@@ -2028,7 +1985,6 @@ button:focus-visible {
     <div class="final-lines reveal">
       <span>Можно читать статьи про агентов ещё год.</span>
       <span>Можно ждать, пока «технология дозреет».</span>
-      <span>Можно дождаться, пока её освоят все.</span>
       <span>Или можно за месяц <em>собрать своего</em>.</span>
     </div>
     <a href="https://t.me/agiage_bot?start=src_agents" class="final-btn reveal reveal-delay-1" target="_blank" rel="noopener">Начать → @agiage_bot</a>
