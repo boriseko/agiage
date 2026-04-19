@@ -237,7 +237,7 @@ section[id] { scroll-margin-top: 80px; }
   .hero-title-big { font-size: clamp(68px, 20vw, 120px); margin-bottom: 1.25rem; letter-spacing: -0.025em; }
 }
 @media (max-width: 380px) {
-  .hero-title-big { font-size: 64px; letter-spacing: -0.02em; }
+  .hero-title-big { font-size: 56px; letter-spacing: -0.02em; }
 }
 
 .hero-fade {
@@ -415,15 +415,16 @@ section[id] { scroll-margin-top: 80px; }
 .bab-badge {
   margin: 2rem -0.5rem;
   padding: 1.4rem 1.6rem;
-  background: linear-gradient(135deg, #FFFDE7 0%, #FFF59D 50%, #FFE082 100%);
-  border: 1px solid rgba(255,160,0,0.25);
-  border-radius: 18px;
+  background: var(--white);
+  border: 1px solid rgba(255,160,0,0.3);
+  border-left: 4px solid var(--orange);
+  border-radius: 14px;
   font-size: 1.12rem;
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.01em;
   line-height: 1.4;
-  box-shadow: 0 20px 50px -20px rgba(255,140,0,0.22);
+  box-shadow: 0 20px 50px -20px rgba(255,140,0,0.18);
 }
 .bab-badge::before {
   content: '→ ';
@@ -611,9 +612,9 @@ section[id] { scroll-margin-top: 80px; }
   transition: all var(--transition);
 }
 .chat-window--agent {
-  background: linear-gradient(165deg, #FFFDE7 0%, #FFF59D 100%);
-  border-color: rgba(255,160,0,0.3);
-  box-shadow: 0 30px 80px -30px rgba(255,140,0,0.4);
+  background: var(--white);
+  border: 2px solid var(--orange);
+  box-shadow: 0 30px 80px -30px rgba(255,140,0,0.35);
 }
 .chat-header {
   padding: 1rem 1.25rem;
@@ -1008,8 +1009,9 @@ section[id] { scroll-margin-top: 80px; }
   box-shadow: 0 24px 50px -24px rgba(255,180,0,0.28), 0 2px 10px rgba(0,0,0,0.04);
 }
 .persona--self {
-  background: linear-gradient(155deg, #FFFDE7 0%, #FFF59D 100%);
-  border-color: rgba(255,160,0,0.35);
+  background: var(--white);
+  border: 2px solid var(--orange);
+  box-shadow: 0 20px 50px -20px rgba(255,140,0,0.25);
 }
 .persona__kind {
   position: relative; z-index: 1;
@@ -1146,12 +1148,12 @@ section[id] { scroll-margin-top: 80px; }
   box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 24px 60px rgba(255,160,0,0.18);
 }
 .tariff--premium {
-  border-color: rgba(255,160,0,0.5);
-  background: linear-gradient(155deg, #FFFDE7 0%, #FFF59D 100%);
+  border: 2px solid var(--orange);
+  background: var(--white);
   box-shadow:
     0 1px 0 rgba(0,0,0,0.02),
-    0 24px 60px -20px rgba(255,160,0,0.30),
-    0 -20px 140px 10px rgba(255,140,0,0.10);
+    0 24px 60px -20px rgba(255,140,0,0.35),
+    0 -20px 140px 10px rgba(255,140,0,0.12);
 }
 .tariff__kind {
   position: relative; z-index: 1;
@@ -1328,13 +1330,6 @@ section[id] { scroll-margin-top: 80px; }
 .sticky-cta:hover {
   background: var(--orange);
   transform: translateX(-50%) translateY(-2px);
-}
-.sticky-cta::before {
-  content: '';
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 0 8px var(--white);
-  opacity: 0.9;
 }
 
 /* ===================================================================
@@ -1538,7 +1533,7 @@ button:focus-visible {
         <div class="ladder-card__num">сейчас</div>
         <div class="ladder-card__title">Агент</div>
         <div class="ladder-card__sub">Думает — и делает сам</div>
-        <div class="ladder-card__desc">Не только анализирует — <strong>действует.</strong> Пишет код. Открывает файлы. Запускает программы. Видит ошибку — чинит сама. Работает часами, пока задача не решена.</div>
+        <div class="ladder-card__desc">Не только анализирует — <strong>действует.</strong> Пишет код. Открывает файлы. Запускает программы. Видит ошибку — чинит. Работает часами, пока задача не закрыта.</div>
       </div>
     </div>
 
