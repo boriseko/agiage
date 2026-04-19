@@ -146,13 +146,9 @@ section[id] { scroll-margin-top: 80px; }
 }
 @media (min-width: 768px) { .header { padding: 1rem 2rem; } }
 .header-logo {
-  font-weight: 900; font-size: 1.1rem; color: var(--black);
-  letter-spacing: -0.02em; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-}
-.header-logo::before {
-  content: ''; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--grad-warm);
+  font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em;
+  text-decoration: none; color: #444;
+  flex-shrink: 0;
 }
 .header-cta {
   padding: 0.5rem 1rem;
