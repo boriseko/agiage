@@ -550,8 +550,12 @@ section[id] { scroll-margin-top: 80px; }
   box-shadow: 0 12px 32px rgba(255,160,0,0.1), 0 2px 8px rgba(0,0,0,0.04);
 }
 .ladder-card--agent {
-  background: linear-gradient(135deg, rgba(255,245,157,0.75) 0%, rgba(255,224,130,0.55) 100%);
-  border-color: rgba(255,160,0,0.35);
+  background: linear-gradient(135deg, rgba(255,160,0,0.28) 0%, rgba(255,190,70,0.14) 100%);
+  border-color: rgba(255,140,0,0.45);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.03),
+    0 6px 20px rgba(255,140,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.8);
 }
 .ladder-card__num {
   position: relative; z-index: 1;
@@ -1369,12 +1373,30 @@ button:focus-visible {
   outline-offset: 4px;
 }
 
+@keyframes attention-wiggle {
+  0%, 7%, 24%, 31%, 100% { transform: translate3d(0,0,0) rotate(0deg); }
+  1% { transform: translate3d(-4px,0,0) rotate(-1.2deg); }
+  3% { transform: translate3d(4px,0,0) rotate(1.2deg); }
+  5% { transform: translate3d(-3px,0,0) rotate(-0.8deg); }
+  25% { transform: translate3d(-4px,0,0) rotate(-1.2deg); }
+  27% { transform: translate3d(4px,0,0) rotate(1.2deg); }
+  29% { transform: translate3d(-3px,0,0) rotate(-0.8deg); }
+}
+.wiggle-hook {
+  display: inline-block;
+  transform-origin: center;
+  animation: attention-wiggle 6s ease-in-out infinite;
+  animation-delay: 1.2s;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-big, .hero-fade, .hero-title-big, .hero-eyebrow {
     opacity: 1; transform: none; transition: none;
   }
   .hero-scroll, .blob,
   .marquee-track,
+  .wiggle-hook,
   #heroShader canvas {
     animation: none !important;
   }
@@ -1536,7 +1558,7 @@ button:focus-visible {
       </div>
     </div>
 
-    <div class="pullquote reveal">Раньше ты использовал инструмент. Теперь инструмент работает за тебя.</div>
+    <div class="pullquote reveal">Раньше ты использовал инструмент для работы. Теперь инструмент делает работу за тебя.</div>
 
     <p class="reveal">Это и есть самое важное, что произошло за последний год. Работа с искусственным интеллектом перестала быть <em>«подсказал — я сам сделал».</em> Теперь она — <strong>«поставил задачу — получил готовый результат».</strong></p>
 
@@ -1656,15 +1678,15 @@ button:focus-visible {
   </div>
   <div class="longread">
     <div class="reveal"><div class="s-label">История третья</div></div>
-    <h2 class="s-title reveal reveal-delay-1"><em>Ты замечаешь паттерн?</em><br>А теперь — то, что я до сих пор не могу осознать.</h2>
+    <h2 class="s-title reveal reveal-delay-1"><em class="wiggle-hook">Ты замечаешь паттерн?</em><br>А теперь — <em>самое забавное.</em></h2>
 
     <p class="reveal reveal-delay-2">У меня есть давняя боль. Я <strong>никогда не умел вести заметки.</strong></p>
 
     <p class="reveal">Пробовал всё. Notion, Obsidian, Todoist, Apple Notes, дневники, Bullet Journal, десятки приложений «для осознанной жизни». Сдаюсь через неделю. Высокий порог входа: надо что-то настроить, куда-то что-то вписать, вспомнить тег, выбрать папку. Не моё.</p>
 
-    <p class="reveal">Но мне было надо. Потому что проекты множатся, мысли теряются, люди забываются, встречи провисают, идеи уходят в воздух. <strong>Второй мозг — это не хайп. Это кислород.</strong></p>
+    <p class="reveal">Но мне было надо. Проекты множатся, мысли теряются, люди забываются, встречи провисают, идеи уходят в воздух. <strong>В голове это всё не помещается — нужна внешняя память. Второй мозг.</strong></p>
 
-    <p class="reveal">И я подумал: <em>а почему мой второй мозг должен быть чужой программой?</em> Пусть он будет <strong>мой.</strong> Заточенный под то, как <em>я</em> думаю. Под мои проекты, мои процессы, мои форматы.</p>
+    <p class="reveal">И я подумал: <em>а почему мой второй мозг должен быть чужой программой?</em> Пусть он будет <strong>моим.</strong> Заточенным под то, как <em>я</em> думаю. Под мои проекты, мои процессы, мои форматы.</p>
 
     <p class="reveal">Я сел с агентом и сказал: «Сделай мне систему. Проекты. Задачи. Мысли. Люди. Встречи. Я не буду кликать и выбирать. Я буду надиктовывать голосом, а ты раскладывай сам.»</p>
 
@@ -1672,7 +1694,7 @@ button:focus-visible {
 
     <p class="reveal">Работает. Надиктовываю голосом из любого места — он кладёт мысль в правильный проект. Говорю «напомни через неделю» — напомнит. Спрашиваю «что я думал про клиента Х три месяца назад» — достаёт.</p>
 
-    <p class="reveal">И здесь — <strong>самое странное.</strong></p>
+    <p class="reveal">И здесь — <strong>самое крутое.</strong></p>
 
     <p class="reveal">Внутри приложения <strong>работает агент.</strong> Не LLM-запрос — агент, который сам решает, что делать с каждой заметкой. Ранжирует, связывает, достаёт, строит контекст.</p>
 
@@ -1688,7 +1710,7 @@ button:focus-visible {
       <div class="story-image__cap">Life OS изнутри. Голосовой ввод → агент раскладывает по сущностям сам.</div>
     </div>
 
-    <p class="reveal">Это моя рабочая среда. Прямо сейчас. Полгода назад её собрать в одиночку было бы шуткой. Год назад — поводом для статьи в журнале «Наука и жизнь».</p>
+    <p class="reveal">Это моя рабочая среда. Прямо сейчас. Полгода назад собрать её в одиночку было бы тем ещё испытанием. Год назад — задачей для долгой разработки на полгода.</p>
 
     <p class="reveal">И в какой-то момент, надиктовывая очередную мысль в свою систему, я поймал странное ощущение.</p>
 
@@ -1808,7 +1830,7 @@ button:focus-visible {
 
     <p class="reveal">Это не прогноз. Это замеры.</p>
 
-    <p class="reveal">И главное — <strong>длительность удваивается каждые семь месяцев.</strong></p>
+    <p class="reveal">И главное — <strong>длительность удваивается каждые семь месяцев.</strong> Причём сам период удвоения — продолжает сокращаться.</p>
 
     <div class="shock-line reveal">
       <span>Семь.</span> <span>Месяцев.</span>
@@ -1824,7 +1846,9 @@ button:focus-visible {
 
     <p class="reveal">Тогда было окно. Люди, которые в 98-м вложили вечер в изучение HTML, через пять лет делали сайты для Coca-Cola. Остальные — не делали.</p>
 
-    <p class="reveal">Агенты сегодня — это тот же момент.</p>
+    <p class="reveal">Агенты сегодня — это тот же момент. <strong>Но с одной разницей.</strong></p>
+
+    <p class="reveal">HTML в 98-м был узкой нишей — для технарей, которые умели писать код. Агент в 2026-м — <strong>инструмент для любого</strong>: маркетолога, юриста, продакта, врача, учителя. Чтобы им управлять, не надо учить язык — надо уметь ставить задачу словами.</p>
 
     <p class="reveal">Технология зрелая. Инструменты доступны. Порог входа — лежит под ногами. А большинство ещё даже не поняли, <strong>что вообще происходит.</strong></p>
 
@@ -1846,9 +1870,9 @@ button:focus-visible {
       <div class="persona__kind">Маркетолог</div>
       <div class="persona__name">Парсинг и отчёты без рутины</div>
       <ul class="persona__tasks">
-        <li>Собрать цены, офферы и креативы конкурентов по ключевикам</li>
-        <li>Свести UTM-данные из пяти источников в один дашборд</li>
-        <li>Вычитать тысячу отзывов и разложить по тегам боли</li>
+        <li>Собрать цены, офферы и креативы конкурентов по ключевикам;</li>
+        <li>Свести UTM-данные из пяти источников в один дашборд;</li>
+        <li>Вычитать тысячу отзывов и разложить по тегам боли.</li>
       </ul>
     </div>
     <div class="persona reveal reveal-delay-1">
@@ -1856,9 +1880,9 @@ button:focus-visible {
       <div class="persona__kind">Предприниматель</div>
       <div class="persona__name">Управленческий слой на автомате</div>
       <ul class="persona__tasks">
-        <li>Собрать финмодель из выгрузки банка за час</li>
-        <li>Поднять мониторинг цен конкурентов с уведомлениями</li>
-        <li>Автоответчик на входящие заявки с квалификацией</li>
+        <li>Собрать финмодель из выгрузки банка за час;</li>
+        <li>Поднять мониторинг цен конкурентов с уведомлениями;</li>
+        <li>Автоответчик на входящие заявки с квалификацией.</li>
       </ul>
     </div>
     <div class="persona reveal reveal-delay-2">
@@ -1866,9 +1890,9 @@ button:focus-visible {
       <div class="persona__kind">Аналитик / продакт</div>
       <div class="persona__name">Дашборды и ресёрч без недели настройки</div>
       <ul class="persona__tasks">
-        <li>Дашборд из Google Sheets за час — не за спринт</li>
-        <li>A/B-отчёт с интерпретацией, а не только цифры</li>
-        <li>Собрать отзывы из App Store и ранжировать по боли</li>
+        <li>Дашборд из Google Sheets за час — не за спринт;</li>
+        <li>A/B-отчёт с интерпретацией, а не только цифры;</li>
+        <li>Собрать отзывы из App Store и ранжировать по боли.</li>
       </ul>
     </div>
     <div class="persona persona--self reveal">
@@ -1876,9 +1900,9 @@ button:focus-visible {
       <div class="persona__kind">А ты?</div>
       <div class="persona__name">У тебя — своя. Вспомни её прямо сейчас.</div>
       <ul class="persona__tasks">
-        <li>Выпиши три задачи, на которых теряешь больше всего времени</li>
-        <li>Открой агента: «Вот что у меня болит. Что можем автоматизировать?»</li>
-        <li>Через полчаса — первый рабочий прототип</li>
+        <li>Выпиши три задачи, на которых теряешь больше всего времени;</li>
+        <li>Открой агента: «Вот что у меня болит. Что можем автоматизировать?»;</li>
+        <li>Через полчаса — первый рабочий прототип.</li>
       </ul>
     </div>
   </div>
@@ -1894,7 +1918,7 @@ button:focus-visible {
     <div class="reveal"><div class="s-label">Честно</div></div>
     <h2 class="s-title reveal reveal-delay-1">Но это работает не с&nbsp;первого щелчка. Объясняю.</h2>
 
-    <p class="reveal reveal-delay-2">Если дочитал до сюда с мыслью «магия, открою Claude — всё получится» — придётся тебя осадить.</p>
+    <p class="reveal reveal-delay-2">Если дочитал досюда и думаешь «открою Claude — и всё получится», — хочу, чтобы ты заходил в это с правильными ожиданиями.</p>
 
     <div class="pullquote reveal">Нет. Не получится.</div>
 
@@ -1904,15 +1928,13 @@ button:focus-visible {
 
     <p class="reveal">У меня получается потому, что я <strong>знаю, где агент врёт, где тупит, в каких задачах его нельзя оставлять одного.</strong> Это не написано в документации. Это приходит только через ошибки.</p>
 
-    <p class="reveal"><strong>А у тебя — нет.</strong> И это нормально. Никто с этой интуицией не рождается.</p>
+    <p class="reveal">У тебя её пока нет — и <strong>не могло быть.</strong> Она набирается только на своих ошибках. Это нормально.</p>
 
     <hr class="divider">
 
-    <p class="reveal"><strong>Две новости.</strong></p>
+    <p class="reveal">Порог входа есть. Первые недели — ошибки, злость, мысль «я не понимаю, что происходит». Это проходит у всех.</p>
 
-    <p class="reveal"><strong>Плохая:</strong> порог входа есть. Месяц-два будешь биться, злиться, чувствовать себя идиотом. Так и будет.</p>
-
-    <p class="reveal"><strong>Хорошая:</strong> этот порог в десять раз ниже, чем был два года назад. И ниже, чем у любой технологии из последних двадцати лет.</p>
+    <p class="reveal">Но этот порог <strong>в десять раз ниже, чем был два года назад.</strong> И ниже, чем у любой технологии последних двадцати лет.</p>
 
     <p class="reveal">Раньше, чтобы войти в ИИ, нужно было учить Python, математику, ML, разбираться в архитектурах. Сейчас нужно другое — <strong>правильно ставить задачу словами.</strong></p>
 
@@ -1931,16 +1953,16 @@ button:focus-visible {
     <div class="reveal"><div class="cta-eyebrow">Если зацепило</div></div>
     <h2 class="cta-title reveal reveal-delay-1">Практикум <em>«ВАЙБ»</em> — семь вечеров, чтобы ты начал жить с агентом.</h2>
 
-    <p class="cta-lead reveal reveal-delay-2">На первом уроке ты собираешь <strong>свой проект.</strong> Не учебный «Hello world» — штуку, которая уже решает твою задачу.</p>
+    <p class="cta-lead reveal reveal-delay-2">Внутри практикума ты соберёшь <strong>свой проект</strong> — не учебный «Hello world», а то, что уже решает твою задачу.</p>
 
-    <p class="cta-lead reveal">К концу практикума у тебя:</p>
+    <p class="cta-lead reveal">К концу практикума ты:</p>
 
     <ul class="cta-list reveal">
-      <li><strong>Ты перестанешь отказываться от проектов</strong> — как перестал я</li>
-      <li><strong>Поставишь задачу так,</strong> чтобы агент понял с первого раза</li>
-      <li><strong>Поймёшь,</strong> за какими задачами к нему идти, а за какими — нет</li>
-      <li><strong>Свой проект на сервере</strong> — живой, не демка</li>
-      <li><strong>Закрытое комьюнити</strong> — люди, которые прошли это с тобой</li>
+      <li><strong>Перестанешь отказываться от проектов</strong> — как перестал я;</li>
+      <li><strong>Научишься ставить задачу так,</strong> чтобы агент понял с первого раза;</li>
+      <li><strong>Поймёшь,</strong> за какими задачами к нему идти, а за какими — нет;</li>
+      <li><strong>Соберёшь свой проект на сервере</strong> — живой, не демку;</li>
+      <li><strong>Войдёшь в закрытое комьюнити</strong> людей, прошедших это вместе с тобой.</li>
     </ul>
 
     <div class="pullquote reveal" style="margin: 2rem 0; color: var(--black);">Считай сам.</div>
@@ -1959,7 +1981,7 @@ button:focus-visible {
           <span class="tariff__price-now">19 999 ₽</span>
           <span class="tariff__price-old">30 000 ₽</span>
         </div>
-        <div class="tariff__desc">Веду группу лично. Идёшь со всеми. Домашки проверяются.</div>
+        <div class="tariff__desc">Веду группу лично. Идёшь со всеми.</div>
       </div>
       <div class="tariff tariff--premium">
         <div class="tariff__kind">Персональный</div>
@@ -1975,7 +1997,6 @@ button:focus-visible {
 
     <a href="https://t.me/agiage_bot?start=src_agents" class="cta-btn reveal" target="_blank" rel="noopener">Записаться через бота →</a>
 
-    <p class="cta-guarantee reveal">Первый урок разочаровал — вернём деньги без вопросов. Мне не нужны люди, которые жалеют, что пришли.</p>
   </div>
 </section>
 
@@ -1985,7 +2006,7 @@ button:focus-visible {
     <div class="final-lines reveal">
       <span>Можно читать статьи про агентов ещё год.</span>
       <span>Можно ждать, пока «технология дозреет».</span>
-      <span>Или можно за месяц <em>собрать своего</em>.</span>
+      <span>А можно <em>через семь вечеров</em> сесть читать такие статьи — <em>пока твой агент работает за тебя</em>.</span>
     </div>
     <a href="https://t.me/agiage_bot?start=src_agents" class="final-btn reveal reveal-delay-1" target="_blank" rel="noopener">Начать → @agiage_bot</a>
     <div class="final-sign reveal reveal-delay-2">Егор Борисенко · АГИ · апрель 2026</div>
