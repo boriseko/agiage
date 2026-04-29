@@ -4,11 +4,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ты ещё не понял, что такое ИИ-агент — АГИ</title>
-<meta name="description" content="Лонгрид Егора Борисенко о том, что такое ИИ-агент, зачем он тебе и почему это окно возможностей закроется через год.">
+<meta name="description" content="Лонгрид Егора Борисенко: что такое ИИ-агент, зачем он тебе и почему это окно возможностей закроется через год. 3 истории, график METR, разбор по шагам.">
+<meta name="keywords" content="ИИ-агент, AI agent, что такое агент, агенты 2026, Claude Code, Cursor, METR">
+<link rel="canonical" href="https://agiage.ru/agents.html">
 <meta property="og:title" content="Ты ещё не понял, что такое ИИ-агент">
 <meta property="og:description" content="Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась. Я не программист.">
 <meta property="og:type" content="article">
+<meta property="og:url" content="https://agiage.ru/agents.html">
+<meta property="og:image" content="https://agiage.ru/og-agents.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="АГИ">
+<meta property="article:author" content="Егор Борисенко">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ты ещё не понял, что такое ИИ-агент">
+<meta name="twitter:description" content="Месяц назад мой агент закрыл задачу, за которую юркомпания полгода не бралась.">
+<meta name="twitter:image" content="https://agiage.ru/og-agents.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Ты ещё не понял, что такое ИИ-агент",
+  "description": "Лонгрид о работе с ИИ-агентами в 2026: три истории из практики, график METR, разбор того, как агент меняет работу любого специалиста.",
+  "author": {
+    "@type": "Person",
+    "name": "Егор Борисенко",
+    "url": "https://t.me/borisenkoegor"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "АГИ",
+    "url": "https://agiage.ru"
+  },
+  "image": "https://agiage.ru/og-agents.png",
+  "inLanguage": "ru-RU",
+  "url": "https://agiage.ru/agents.html",
+  "mainEntityOfPage": "https://agiage.ru/agents.html"
+}
+</script>
 <link rel="icon" type="image/png" href="/favicon.png?v=4">
 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=4">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
@@ -445,6 +479,52 @@ section[id] { scroll-margin-top: 80px; }
   .bab-badge { margin: 2.25rem -1.5rem; padding: 1.65rem 2rem; font-size: 1.22rem; }
 }
 
+/* ==================== MID-CTA — soft offer in the middle of longread ==================== */
+.mid-cta-section {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  background: var(--white);
+}
+.mid-cta {
+  max-width: 640px; margin: 0 auto;
+  padding: clamp(1.8rem, 3.5vw, 2.4rem) clamp(1.6rem, 3vw, 2.2rem);
+  background: linear-gradient(160deg, rgba(255,213,79,0.12) 0%, rgba(255,160,0,0.06) 100%);
+  border: 1px solid rgba(255,160,0,0.28);
+  border-radius: 18px;
+  text-align: center;
+}
+.mid-cta__lead {
+  font-size: clamp(1.05rem, 1.9vw, 1.2rem);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.mid-cta__btn {
+  display: inline-block;
+  padding: 0.95rem 2rem;
+  background: var(--grad-island);
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 9999px;
+  letter-spacing: -0.01em;
+  box-shadow: 0 14px 32px -14px rgba(255,143,0,0.55);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.mid-cta__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -16px rgba(255,143,0,0.7);
+}
+.mid-cta__sub {
+  margin-top: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.mid-cta__sub em { font-style: italic; color: var(--text-light); }
+
 .callout {
   margin: 1.75rem 0;
   padding: 1.1rem 1.3rem;
@@ -765,21 +845,41 @@ section[id] { scroll-margin-top: 80px; }
 }
 .compare-summary {
   text-align: center;
-  max-width: 640px; margin: 2.5rem auto 0;
-  padding: 0 1.5rem;
+  max-width: 720px; margin: 2.5rem auto 0;
+  padding: clamp(1.6rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.2rem);
+  background: var(--grad-island);
+  border-radius: 22px;
+  box-shadow: 0 20px 50px -22px rgba(255,143,0,0.55);
+  color: #fff;
 }
 .compare-summary__punch {
   font-size: clamp(1.3rem, 2.6vw, 1.75rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--black);
-  margin-bottom: 0.6rem;
+  color: #fff;
+  margin-bottom: 0.85rem;
+  line-height: 1.25;
 }
 .compare-summary__punch em {
   font-style: normal;
-  color: var(--orange);
+  color: #fff;
+  background: rgba(255,255,255,0.18);
+  padding: 0.05em 0.35em;
+  border-radius: 6px;
 }
-.compare-summary__line { font-size: 1rem; color: var(--text-muted); line-height: 1.5; }
+.compare-summary__line {
+  font-size: clamp(1rem, 1.7vw, 1.15rem);
+  color: rgba(255,255,255,0.95);
+  line-height: 1.5;
+  font-weight: 500;
+}
+.compare-summary__line strong { color: #fff; font-weight: 700; }
+
+.metr-section { padding-bottom: clamp(0.8rem, 1.5vw, 1.4rem); }
+.kazalos-section { padding: clamp(2rem, 3.5vw, 3rem) 0 clamp(1rem, 2vw, 1.5rem); }
+.kazalos-section .longread p { margin-bottom: 0.7rem; }
+.kazalos-section .longread p:last-child { margin-bottom: 0; margin-top: 1.2rem; }
+#degot.section { padding-top: clamp(2rem, 3.5vw, 3rem); }
 
 /* ===================================================================
    STORY 2 — ORANGE ISLAND
@@ -893,6 +993,28 @@ section[id] { scroll-margin-top: 80px; }
   box-shadow: 0 0 40px 15px rgba(255,180,0,0.12);
 }
 .manifesto-section .longread { position: relative; z-index: 1; }
+.manifesto-bridge {
+  text-align: center;
+  margin: 2.5rem 0 1.5rem !important;
+  font-size: clamp(1.35rem, 2.8vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--orange-dark);
+}
+.manifesto-bridge em { font-style: italic; color: var(--black); }
+.manifesto-outro {
+  margin-top: 2.5rem !important;
+  text-align: center;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+}
+.manifesto-outro em {
+  font-style: italic;
+  color: var(--black);
+  font-weight: 700;
+}
 
 /* ===================================================================
    METR chart — now on orange island (uses .island-section styles)
@@ -1129,9 +1251,54 @@ section[id] { scroll-margin-top: 80px; }
 }
 .cta-list li strong { color: var(--black); font-weight: 700; }
 
+.tariffs-note {
+  display: flex; align-items: center; gap: 0.7rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 0.8rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 14px;
+  background: rgba(255,160,0,0.08);
+  border: 1px solid rgba(255,160,0,0.25);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+.tariffs-note__badge {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  background: var(--orange);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.tariffs-note strong { color: var(--black); font-weight: 700; }
+
+.cta-closing {
+  text-align: center;
+  font-size: clamp(1.3rem, 2.8vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--text-muted);
+  margin: 2.5rem 0 1.5rem;
+}
+.cta-closing strong {
+  display: inline-block;
+  margin-top: 0.3rem;
+  color: var(--orange-dark);
+  font-weight: 900;
+  font-size: 1.25em;
+  letter-spacing: -0.03em;
+}
+
 .tariffs {
   display: grid; gap: 1rem;
-  margin: 2.25rem 0 2rem;
+  margin: 0.8rem 0 2rem;
   grid-template-columns: 1fr;
 }
 @media (min-width: 600px) { .tariffs { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
@@ -1274,6 +1441,141 @@ section[id] { scroll-margin-top: 80px; }
   background: var(--orange-dark);
   box-shadow: 0 22px 50px rgba(255,140,0,0.4);
 }
+
+/* ===================================================================
+   FALLBACK — for the hesitant (PDF lead magnet)
+   =================================================================== */
+.fallback-section {
+  padding: clamp(56px, 8vw, 100px) 0;
+  background: #FAFAF7;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.fallback-inner {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.fallback-eyebrow {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.35rem;
+}
+.fallback-title {
+  font-size: clamp(1.55rem, 3.4vw, 2.15rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.fallback-accent { color: var(--orange-dark); }
+.fallback-desc {
+  font-size: 1.02rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 520px;
+  margin: 0 auto 2rem;
+}
+.fallback-list {
+  counter-reset: fb;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2.25rem;
+  max-width: 480px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.fallback-list li {
+  counter-increment: fb;
+  position: relative;
+  padding: 0.9rem 1rem 0.9rem 3.1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.96rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.fallback-list li::before {
+  content: counter(fb, decimal-leading-zero);
+  position: absolute;
+  left: 1rem; top: 0.95rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--orange-dark);
+  letter-spacing: 0.04em;
+}
+.fallback-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.05rem 2.15rem;
+  background: var(--white);
+  color: var(--text);
+  border: 2px solid var(--text);
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+.fallback-btn:hover {
+  background: var(--text);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.2);
+}
+.fallback-hint {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+.fallback-bridge {
+  margin-top: 2.25rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.fallback-bridge a {
+  color: var(--orange-dark);
+  font-weight: 700;
+  border-bottom: 1px solid currentColor;
+  text-decoration: none;
+}
+.fallback-bridge a:hover { color: var(--orange); }
+
+/* Inline nod to PDF inside the article body */
+.pdf-nod {
+  margin: 2rem 0;
+  padding: 1rem 1.25rem 1rem 1.15rem;
+  border-left: 3px solid var(--orange);
+  background: rgba(255,160,0,0.07);
+  border-radius: 0 12px 12px 0;
+  font-size: 0.97rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+.pdf-nod strong { color: var(--black); font-weight: 700; }
+.pdf-nod a {
+  color: var(--orange-dark);
+  font-weight: 700;
+  border-bottom: 1px solid currentColor;
+  text-decoration: none;
+}
+.pdf-nod a:hover { color: var(--orange); }
+
 .final-sign {
   margin-top: 2rem;
   font-size: 0.85rem;
@@ -1391,6 +1693,77 @@ button:focus-visible {
   will-change: transform;
 }
 
+/* ===================================================================
+   STORY 3 — word morph (rotating word like index.html hero)
+   =================================================================== */
+.story3-morph-wrap {
+  height: clamp(2.8rem, 7vw, 5rem);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  font-family: 'Geist', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--orange-dark);
+}
+.story3-morph {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+.story3-morph-item {
+  position: absolute;
+  left: 0; right: 0;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.story3-morph-item.active { opacity: 1; transform: translateY(0); }
+.story3-morph-item.out    { opacity: 0; transform: translateY(-100%); }
+
+/* ===================================================================
+   STORY 3 — inline dialog with agent
+   =================================================================== */
+.story3-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 2.25rem 0;
+  max-width: 640px;
+}
+.s3d-msg {
+  padding: 0.9rem 1.2rem;
+  border-radius: 18px;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  max-width: 88%;
+}
+.s3d-msg--me {
+  background: #F2F2F2;
+  color: #2B2B2B;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.s3d-msg--agent {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.s3d-msg--agent strong { color: #fff; font-weight: 800; }
+.s3d-msg--punch {
+  font-family: 'Geist', sans-serif;
+  font-weight: 800;
+  font-size: 1.18rem;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 600px) {
+  .s3d-msg { font-size: 0.98rem; padding: 0.8rem 1.05rem; }
+  .s3d-msg--punch { font-size: 1.08rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-big, .hero-fade, .hero-title-big, .hero-eyebrow {
     opacity: 1; transform: none; transition: none;
@@ -1446,10 +1819,10 @@ button:focus-visible {
 <section class="hero" id="hero">
   <div class="hero-shader" id="heroShader"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Лонгрид · 10&nbsp;минут чтения</div>
+    <div class="hero-eyebrow">Лонгрид + PDF-справочник · 10&nbsp;минут чтения</div>
     <div class="hero-title-big" id="heroTitle">АГЕНТ</div>
     <h1 class="hero-subtitle hero-fade hero-fade-1">ПОКА ТЫ ЧИТАЕШЬ ЭТО —<br>10 АГЕНТОВ<br>РАБОТАЮТ НА МЕНЯ</h1>
-    <p class="hero-desc hero-fade hero-fade-2">Юркомпания <strong>два года</strong> искала решение и не нашла. Я собрал его <strong>за неделю</strong>. Вот как.</p>
+    <p class="hero-desc hero-fade hero-fade-2">Юркомпания <strong>два года</strong> искала решение. Я сделал <strong>за неделю</strong>. Один. Вот как:</p>
     <a href="#story-1" class="hero-cta-btn hero-fade hero-fade-3">Начать читать</a>
   </div>
   <div class="hero-scroll">Листай ↓</div>
@@ -1484,36 +1857,36 @@ button:focus-visible {
 
     <p class="reveal">Они хотят работать с ИИ. Составлять документы. Анализировать судебную практику. Сравнивать договоры. Проверять контрагентов. Но не могут.</p>
 
-    <p class="reveal">Причина — <strong>данные.</strong> У юриста в работе имена клиентов, суммы, внутренние заметки, реквизиты, банковские выписки. Взять это и отправить в ChatGPT — запрещено. За такую утечку фирму закроют.</p>
+    <p class="reveal">Причина — <strong>данные.</strong> У юриста в работе имена клиентов, суммы, внутренние заметки, реквизиты, банковские выписки. Взять это и отправить в ChatGPT — значит нарушить NDA <em>(договор о неразглашении)</em> со всеми клиентами. А клиенты — слишком большие, чтобы терять их доверие из-за ИИ. <strong>За одну утечку — закроют.</strong></p>
 
-    <p class="reveal">Единственный путь — <strong>обезличить.</strong> Заменить имена, суммы, реквизиты на заглушки, а после ответа ИИ вернуть всё обратно.</p>
+    <p class="reveal">Свой сервер с локальной нейронкой внутри контура — <strong>крайне дорого.</strong> Железо, инфраструктура, сопровождение — миллионы.</p>
 
-    <p class="reveal">Звучит легко. На практике — невозможно.</p>
+    <p class="reveal">Остаётся один путь — <strong>обезличить.</strong> Заменить имена, суммы, реквизиты на заглушки, а после ответа ИИ вернуть всё обратно.</p>
 
-    <p class="reveal">История у всех одна: идут к разработчикам — те не берутся. Задача узкая, заказчик один, коробочного продукта нет. С нуля — сотни тысяч и месяцы работы.</p>
+    <p class="reveal">Звучит как решение. На деле — трэш. Вычитать гигантский документ, заменить каждое имя и каждую цифру, не потерять логику, выписать все замены в отдельный файл — чтобы потом <strong>провести обратную процедуру.</strong> Запара на часы ради одного запроса.</p>
+
+    <p class="reveal">Все ищут готовый инструмент. Его нет. Задача слишком узкая.</p>
+
+    <p class="reveal">Идут к разработчикам — те не берутся. Специалистов мало, задача специфичная, с нуля — это <strong>формирование целого отдела,</strong> раздувание бюджета, месяцы работы. И <strong>не факт, что на выходе будет рабочий продукт.</strong></p>
 
     <p class="reveal">И фирмы опускают руки. Работают как раньше: дольше, дороже, без ИИ.</p>
 
-    <p class="reveal">«Сколько вы с этим бьётесь?» — спрашиваю я.</p>
-
-    <div class="pullquote reveal">«Два года.»</div>
-
-    <p class="reveal">Два года. С тех пор как ChatGPT вышел для всех. Страна говорит про ИИ — они не могут. Не потому что глупые. Потому что инструмента нет.</p>
+    <p class="reveal"><strong>Два года.</strong> С тех пор как ChatGPT вышел для всех. Они очень хотят — не могут. Не потому что глупые. Потому что инструмента нет.</p>
 
     <p class="reveal"><strong>А теперь — месяц назад.</strong></p>
 
-    <p class="reveal">Я сажусь вечером. За неделю собираю этот инструмент. С нуля. Без строчки кода, которую я бы понимал.</p>
+    <p class="reveal">Сажусь за ноутбук. Пара вечеров — прототип. С нуля. Без строчки кода, которую я бы писал своими руками.</p>
 
-    <p class="reveal">Работает на их собственном сервере. <strong>Ни одна цифра наружу не уходит.</strong> Данные остаются у них. Юристы работают с ИИ — без нарушений.</p>
+    <p class="reveal">Ещё несколько дней — рабочая версия. Развёрнута на их собственном сервере, внутри контура. <strong>Ни одна цифра наружу не уходит.</strong> Данные остаются у них. Юристы грузят анонимизированные документы — без нарушений NDA.</p>
 
     <div class="story-image reveal">
-      <img src="case-anon-1.png" alt="Скриншот интерфейса инструмента">
+      <img src="case-anon-1.png" alt="Скриншот интерфейса инструмента" loading="lazy" width="3420" height="1964">
       <div class="story-image__cap">Тот самый инструмент. Один человек, неделя работы.</div>
     </div>
 
-    <p class="reveal">Через неделю я отправляю руководителю ссылку. Он открывает, проверяет всё внутри. Пишет мне одно сообщение:</p>
+    <p class="reveal">Я отправляю директору по IT ссылку. Он открывает, проверяет всё внутри. Через какое-то время пишет:</p>
 
-    <div class="pullquote reveal">«Как?»</div>
+    <div class="pullquote reveal">«Ого. Как вы это сделали?»</div>
 
     <p class="reveal">Это был момент, когда у меня что-то переключилось в голове. Я понял: <strong>тот рубеж, о котором все говорят последние два года — пройден.</strong> Не «скоро будет», не «через пять лет», не «когда-нибудь». Уже.</p>
 
@@ -1526,7 +1899,11 @@ button:focus-visible {
 
     <p class="reveal"><strong>Скажешь: «Повезло. Один раз получилось».</strong></p>
 
-    <p class="reveal">Смотри дальше.</p>
+    <div class="pullquote reveal">Нет. Не&nbsp;повезло.</div>
+
+    <p class="reveal">За последние два года в ИИ <strong>сдвинулось кое-что в самом принципе.</strong> Юркомпания — не случайность. Это следствие.</p>
+
+    <p class="reveal">Сейчас покажу — <em>что именно сдвинулось.</em> А потом — ещё две истории. Уже <strong>про меня лично.</strong></p>
   </div>
 </section>
 
@@ -1534,36 +1911,22 @@ button:focus-visible {
 <section class="section section-white">
   <div class="longread">
     <div class="reveal"><div class="s-label">Что изменилось</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Чтобы понять, что&nbsp;случилось — нужно <em>три&nbsp;картинки.</em></h2>
+    <h2 class="s-title reveal reveal-delay-1">За два года ИИ прошёл<br><em>три этапа.</em></h2>
 
-    <p class="s-desc reveal reveal-delay-2" style="margin-bottom: 1.75rem;">За два года ИИ прошёл три этапа. Пропустил — смотри.</p>
+    <p class="reveal reveal-delay-1"><strong>Сначала — не думал.</strong><br>
+    <em>2023, ChatGPT-3.5. Отвечает за секунду. Задача сложнее «напиши письмо» — ломается.</em></p>
 
-    <div class="ladder">
-      <div class="ladder-card reveal">
-        <div class="ladder-card__num">2023</div>
-        <div class="ladder-card__title">Чат</div>
-        <div class="ladder-card__sub">Быстрый ответ на простой вопрос</div>
-        <div class="ladder-card__desc">ChatGPT-3.5. Отвечает за секунду. Но как только задача сложнее «напиши письмо» — ломается. Игрушка, которая удивила мир. Всерьёз не поработаешь.</div>
-      </div>
-      <div class="ladder-card reveal reveal-delay-1">
-        <div class="ladder-card__num">2024</div>
-        <div class="ladder-card__title">Рассуждающий</div>
-        <div class="ladder-card__sub">Думает перед тем, как ответить</div>
-        <div class="ladder-card__desc">Модель o1, потом o3. Она <strong>разбирает задачу, проверяет себя, возвращается к исходнику.</strong> Ответы — уровня крепкого специалиста. Но всё ещё в роли советчика: скажет как, делать будешь сам.</div>
-      </div>
-      <div class="ladder-card ladder-card--agent reveal reveal-delay-2">
-        <div class="ladder-card__num">сейчас</div>
-        <div class="ladder-card__title">Агент</div>
-        <div class="ladder-card__sub">Думает — и делает сам</div>
-        <div class="ladder-card__desc">Не только анализирует — <strong>действует.</strong> Пишет код. Открывает файлы. Запускает программы. Видит ошибку — чинит. Работает часами, пока задача не закрыта.</div>
-      </div>
-    </div>
+    <p class="reveal reveal-delay-2"><strong>Потом — начал думать.</strong><br>
+    <em>2024–2025, o1 и o3. Разбирает задачу, проверяет себя, возвращается к исходнику. Но всё ещё советчик — делать будешь сам.</em></p>
+
+    <p class="reveal reveal-delay-2"><strong>Теперь — делает.</strong><br>
+    <em>2026. Агент. Пишет код, открывает файлы, чинит ошибки. Работает часами, пока задача не закрыта.</em></p>
 
     <div class="pullquote reveal">Раньше ты использовал инструмент для работы. Теперь инструмент делает работу за тебя.</div>
 
-    <p class="reveal">Это и есть самое важное, что произошло за последний год. Работа с искусственным интеллектом перестала быть <em>«подсказал — я сам сделал».</em> Теперь она — <strong>«поставил задачу — получил готовый результат».</strong></p>
+    <p class="reveal">Это и есть главное, что произошло за последние полгода. Работа с ИИ перестала быть <em>«подсказал — я сам сделал».</em> Теперь она — <strong>«поставил задачу — получил готовый результат».</strong></p>
 
-    <p class="reveal">Именно это случилось полгода назад. И именно поэтому история с юридической фирмой — не совпадение. Это новая норма.</p>
+    <p class="reveal">История с юридической фирмой — не случайность. Это новая норма.</p>
   </div>
 </section>
 
@@ -1571,7 +1934,7 @@ button:focus-visible {
 <section class="section compare-section">
   <div class="compare-head reveal">
     <div class="s-label">Почувствуй разницу</div>
-    <h2 class="s-title">Одна и та же задача. <em>Два исхода.</em></h2>
+    <h2 class="s-title">Одна и та же задача.<br><em>Два исхода.</em></h2>
     <p class="s-desc">Если ты всё ещё не чувствуешь разницу — смотри.</p>
   </div>
 
@@ -1606,15 +1969,19 @@ button:focus-visible {
         <div class="todo" data-delay="1400">
           <div class="todo__label">Агент → план работы</div>
           <ul class="todo__list">
-            <li class="todo__item" data-step="0"><span class="todo__box"></span>Спроектировать структуру сайта</li>
-            <li class="todo__item" data-step="1"><span class="todo__box"></span>Сгенерировать HTML + CSS</li>
-            <li class="todo__item" data-step="2"><span class="todo__box"></span>Проверить вёрстку, починить ошибки</li>
-            <li class="todo__item" data-step="3"><span class="todo__box"></span>Выложить на сервер, получить ссылку</li>
+            <li class="todo__item" data-step="0"><span class="todo__box"></span>Собрать структуру сайта</li>
+            <li class="todo__item" data-step="1"><span class="todo__box"></span>Написать HTML-разметку</li>
+            <li class="todo__item" data-step="2"><span class="todo__box"></span>Подключить стили и анимации</li>
+            <li class="todo__item" data-step="3"><span class="todo__box"></span>Проверить адаптивность на телефоне</li>
+            <li class="todo__item" data-step="4"><span class="todo__box"></span>Починить найденные баги</li>
+            <li class="todo__item" data-step="5"><span class="todo__box"></span>Поднять сервер и задеплоить</li>
+            <li class="todo__item" data-step="6"><span class="todo__box"></span>Настроить SSL и домен</li>
+            <li class="todo__item" data-step="7"><span class="todo__box"></span>Получить рабочую ссылку</li>
           </ul>
         </div>
-        <div class="msg msg--agent" data-delay="6800">Готово. Держи ссылку: <strong>your-site.app</strong><br><br>Подключить твой домен? Скажи — сделаю.</div>
+        <div class="msg msg--agent" data-delay="7500">Готово. Держи ссылку: <strong>your-site.app</strong><br><br>Подключить твой домен? Скажи — сделаю.</div>
       </div>
-      <div class="chat-footer" data-delay="7400">
+      <div class="chat-footer" data-delay="8200">
         <span class="status-dot" style="background:var(--orange-dark);"></span>
         <span class="status-good">Работа сделана · ~2 минуты</span>
       </div>
@@ -1627,7 +1994,66 @@ button:focus-visible {
 
   <div class="compare-summary reveal">
     <div class="compare-summary__punch">Вся разница — в одном слове: <em>делает</em>.</div>
-    <div class="compare-summary__line">Чат даёт инструкции. Агент даёт результат.</div>
+    <div class="compare-summary__line">Чат <strong>даёт инструкции</strong>. Агент <strong>даёт результат</strong>.</div>
+  </div>
+</section>
+
+<!-- ==================== APPLICABILITY (5 personas) ==================== -->
+<section class="applicability-section" id="applicability">
+  <div class="longread">
+    <div class="reveal"><div class="s-label">А что конкретно — тебе</div></div>
+    <p class="reveal reveal-delay-1">Скажешь: «Окей, это про сайт. А мне — маркетологу, предпринимателю, аналитику — это как применить?»</p>
+    <h2 class="s-title reveal reveal-delay-1"><em>Ровно&nbsp;так&nbsp;же.</em></h2>
+    <p class="s-desc reveal reveal-delay-2">У каждого есть задача, на которой ты теряешь больше всего времени. Вот что можно поручить агенту <strong>уже сейчас</strong> — по профессиям.</p>
+  </div>
+
+  <div class="persona-grid">
+    <div class="persona reveal">
+      <div class="persona-marker">01</div>
+      <div class="persona__kind">Маркетолог</div>
+      <div class="persona__name">Парсинг и отчёты без рутины</div>
+      <ul class="persona__tasks">
+        <li>Собрать цены, офферы и креативы конкурентов по ключевикам.</li>
+        <li>Свести UTM-данные из пяти источников в один дашборд.</li>
+        <li>Вычитать тысячу отзывов и разложить по тегам боли.</li>
+      </ul>
+    </div>
+    <div class="persona reveal reveal-delay-1">
+      <div class="persona-marker">02</div>
+      <div class="persona__kind">Предприниматель</div>
+      <div class="persona__name">Управленческий слой на автомате</div>
+      <ul class="persona__tasks">
+        <li>Собрать финмодель из выгрузки банка за час.</li>
+        <li>Поднять мониторинг цен конкурентов с уведомлениями.</li>
+        <li>Автоответчик на входящие заявки с квалификацией.</li>
+      </ul>
+    </div>
+    <div class="persona reveal reveal-delay-2">
+      <div class="persona-marker">03</div>
+      <div class="persona__kind">Аналитик / продакт</div>
+      <div class="persona__name">Дашборды и ресёрч без недели настройки</div>
+      <ul class="persona__tasks">
+        <li>Дашборд из Google Sheets за час — не за спринт.</li>
+        <li>A/B-отчёт с интерпретацией, а не только цифры.</li>
+        <li>Собрать отзывы из App Store и ранжировать по боли.</li>
+      </ul>
+    </div>
+    <div class="persona persona--self reveal">
+      <div class="persona-marker">04</div>
+      <div class="persona__kind">А ты?</div>
+      <div class="persona__name">У тебя — своя. Вспомни её прямо сейчас.</div>
+      <ul class="persona__tasks">
+        <li>Выпиши три задачи, на которых теряешь больше всего времени</li>
+        <li>Открой агента: «Вот что у меня болит. Что можем автоматизировать?»</li>
+        <li>Через полчаса — первый рабочий прототип</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="longread">
+    <div class="pdf-nod reveal">
+      В конце статьи я приготовил для тебя <strong>плотный PDF</strong> — 30+ страниц. Классификация агентов, три слоя агентного мира, реальные кейсы крупных компаний и истории провалов. Для тех, кто любит разбираться по полочкам.
+    </div>
   </div>
 </section>
 
@@ -1641,32 +2067,22 @@ button:focus-visible {
     <div class="reveal"><div class="s-label">История вторая</div></div>
     <h2 class="s-title reveal reveal-delay-1">«А если просто для себя?»</h2>
 
-    <p class="bucket reveal reveal-delay-2">Справедливо. Смотри вторую историю. Без клиента.</p>
+    <p class="reveal reveal-delay-2">Может показаться: окей, для клиентов такое делать — понятно. А мне-то это <em>зачем?</em></p>
 
-    <p class="reveal">Я в ИИ каждый день — работа такая. Десятки Telegram-каналов, сотни статей, новые модели — всё в ежедневном потоке. В какой-то момент я понял: я не читаю. Скольжу глазами по заголовкам и ничего не запоминаю.</p>
+    <p class="reveal">А вот и нет. <strong>Для самого себя это разворачивается во все стороны.</strong> И это самое лучшее, что вообще может делать агент — <em>помогать тебе.</em></p>
 
-    <p class="reveal">Сел с агентом и говорю: «Мне нужно одно место, куда всё собирается и откуда я беру только важное. Сделаем?»</p>
+    <p class="reveal">Вот пример из моей жизни. В какой-то момент новостей про ИИ стало <strong>настолько много,</strong> что я физически перестал за ними успевать. Десятки каналов, сотни статей, новые модели каждую неделю. Это было крайне трудно — я реально <em>задыхался в потоке.</em></p>
 
-    <p class="reveal">«Сделаем. Какие источники?»</p>
+    <p class="reveal">У меня проблема. Я иду к агенту: <em>«Бро, вот ситуация. Нужно парсить все данные, собирать новости — чтобы я не тратил время на вычитку. Сделаем?»</em></p>
 
-    <p class="reveal"><strong>За один вечер — рабочий парсер.</strong> Ходит по всем блогам и сайтам, которые мне нужны, складывает материалы в базу.</p>
-
-    <p class="reveal">Через пару часов добавили Telegram — парсер стал читать ещё и мои каналы.</p>
-
-    <p class="reveal">К концу следующего дня поверх всего этого заработал фильтр: агент сам решает, какие новости стоят внимания, какие можно проскроллить, а какие — шум.</p>
-
-    <p class="reveal">Ещё через день он начал писать черновики постов из того, что отобрал.</p>
+    <p class="reveal">Вечер — парсер по моим каналам. Следующий день — фильтр: агент сам решает, что стоит внимания. Ещё через день — на основе моего <em>tone&nbsp;of&nbsp;voice</em> он пишет черновики постов, которые я потом выкладываю.</p>
 
     <div class="bab-badge reveal">
-      Тысячи новостей в неделю → готовый дайджест и черновики постов.
-      <em>Сам. Без моего участия.</em>
+      Тысяча новостей в неделю → готовый дайджест и черновики в моём голосе.
+      <em>Я говорил. Он делал.</em>
     </div>
 
-    <p class="reveal">Я не написал ни одной строчки кода. Не знаю, как работает Telegram API. Не представляю, как вызывается LLM из скрипта. Всё, что у меня есть — это <strong>задача и агент.</strong></p>
-
-    <p class="reveal">Остальное — его работа.</p>
-
-    <p class="reveal">Раньше такое мог позволить себе только программист. Или тот, кто его нанял за триста тысяч. Теперь — любой, у кого есть полчаса времени.</p>
+    <p class="reveal">И этого тебе может показаться мало. <em>«Ну окей, и что?»</em> — подумаешь. <strong>Но третья история — самая крутая.</strong></p>
   </div>
 </section>
 
@@ -1679,27 +2095,42 @@ button:focus-visible {
   </div>
   <div class="longread">
     <div class="reveal"><div class="s-label">История третья</div></div>
-    <h2 class="s-title reveal reveal-delay-1"><em class="wiggle-hook">Ты замечаешь паттерн?</em><br>А теперь — <em>самое забавное.</em></h2>
+    <div class="story3-morph-wrap reveal reveal-delay-1" id="story3Morph">
+      <span class="story3-morph">
+        <span class="story3-morph-item active">Я&nbsp;сел.</span>
+        <span class="story3-morph-item">Я&nbsp;сказал.</span>
+        <span class="story3-morph-item">Он&nbsp;сделал.</span>
+        <span class="story3-morph-item">Снова.</span>
+        <span class="story3-morph-item">И&nbsp;снова.</span>
+      </span>
+    </div>
 
     <p class="reveal reveal-delay-2">У меня есть давняя боль. Я <strong>никогда не умел вести заметки.</strong></p>
 
-    <p class="reveal">Пробовал всё. Notion, Obsidian, Todoist, Apple Notes, дневники, Bullet Journal, десятки приложений «для осознанной жизни». Сдаюсь через неделю. Высокий порог входа: надо что-то настроить, куда-то что-то вписать, вспомнить тег, выбрать папку. Не моё.</p>
+    <p class="reveal">Пробовал всё. Notion, Obsidian, Todoist, Apple Notes, дневники, Bullet Journal, десятки приложений «для осознанной жизни». Сдаюсь через неделю. Нет единой структуры, непонятно какой тег выбрать, куда положить, где потом искать. <strong>Не чувствуешь, что открыл инструмент, которым будешь пользоваться всегда.</strong></p>
 
-    <p class="reveal">Но мне было надо. Проекты множатся, мысли теряются, люди забываются, встречи провисают, идеи уходят в воздух. <strong>В голове это всё не помещается — нужна внешняя память. Второй мозг.</strong></p>
+    <p class="reveal">Но вести систему <strong>критически надо.</strong> Проекты, задачи, мысли, встречи, люди — в голове всё это не помещается. Без внешней памяти я начинаю терять нити.</p>
 
-    <p class="reveal">И я подумал: <em>а почему мой второй мозг должен быть чужой программой?</em> Пусть он будет <strong>моим.</strong> Заточенным под то, как <em>я</em> думаю. Под мои проекты, мои процессы, мои форматы.</p>
+    <p class="reveal">И тут у меня щёлкает: <em>если ни одно приложение мне не подошло — значит, надо своё.</em> Заточенное под меня. А собирать его в одиночку год — треш. Но есть тот, к кому можно прийти с такой задачей <strong>без команды.</strong></p>
 
-    <p class="reveal">Я сел с агентом и сказал: «Сделай мне систему. Проекты. Задачи. Мысли. Люди. Встречи. Я не буду кликать и выбирать. Я буду надиктовывать голосом, а ты раскладывай сам.»</p>
+    <p class="reveal">Сажусь с агентом:</p>
 
-    <p class="reveal"><strong>За два с половиной дня он собрал мне приложение.</strong></p>
+    <div class="story3-dialog reveal">
+      <div class="s3d-msg s3d-msg--me">Бро, у меня такая проблема: мне не нравится ни одно приложение. Но заметки вести надо. Давай создадим мою собственную систему — под мои проекты, мои процессы, мои форматы.</div>
+      <div class="s3d-msg s3d-msg--agent"><strong>Давай.</strong> Сделаем под твои сущности: проекты, задачи, мысли, люди, встречи. Вот методология — я уже всё продумал. Скажи: делаем или нет?</div>
+      <div class="s3d-msg s3d-msg--me">Делаем. И добавь внутрь генерацию отчётов по неделе — чтоб само сводилось.</div>
+      <div class="s3d-msg s3d-msg--agent s3d-msg--punch">Базара нет, сделаю, брат.</div>
+    </div>
 
-    <p class="reveal">Работает. Надиктовываю голосом из любого места — он кладёт мысль в правильный проект. Говорю «напомни через неделю» — напомнит. Спрашиваю «что я думал про клиента Х три месяца назад» — достаёт.</p>
+    <p class="reveal"><strong>За два с половиной дня он собрал мне рабочее приложение.</strong> Не полностью идеальное — я его постепенно дорабатываю. Но оно <em>работает.</em> И я наполняю его своим контекстом, своими проектами, своей жизнью.</p>
+
+    <p class="reveal">И важный момент: я не просто скормил агенту идею. Я <strong>выдумывал логику, вёл его за собой,</strong> корректировал каждый шаг. Он делал — я направлял. Мы <em>вдвоём</em> собрали этот продукт за 0 рублей.</p>
+
+    <p class="reveal">Надиктовываю голосом из любого места — он раскладывает мысль в правильный проект сам. Говорю «напомни через неделю» — напомнит. Спрашиваю «что я думал про клиента Х три месяца назад» — достаёт.</p>
 
     <p class="reveal">И здесь — <strong>самое крутое.</strong></p>
 
-    <p class="reveal">Внутри приложения <strong>работает агент.</strong> Не LLM-запрос — агент, который сам решает, что делать с каждой заметкой. Ранжирует, связывает, достаёт, строит контекст.</p>
-
-    <p class="reveal">То есть <em>я с помощью агента собрал себе агента.</em></p>
+    <p class="reveal">Внутри приложения <strong>работает агент.</strong> Не простой LLM-запрос — агент, который сам решает, что делать с каждой заметкой. Ранжирует, связывает, достаёт, строит контекст.</p>
 
     <div class="bab-badge reveal">
       Я агентом создал агента.
@@ -1707,17 +2138,28 @@ button:focus-visible {
     </div>
 
     <div class="story-image reveal">
-      <img src="case-crm-1.jpg" alt="Интерфейс личной системы Life OS">
+      <img src="case-crm-1.jpg" alt="Интерфейс личной системы Life OS" loading="lazy" width="3420" height="1974">
       <div class="story-image__cap">Life OS изнутри. Голосовой ввод → агент раскладывает по сущностям сам.</div>
     </div>
 
-    <p class="reveal">Это моя рабочая среда. Прямо сейчас. Полгода назад собрать её в одиночку было бы тем ещё испытанием. Год назад — задачей для долгой разработки на полгода.</p>
+    <p class="reveal">Это моя рабочая среда. Прямо сейчас. Полгода назад собрать её в одиночку было бы тем ещё испытанием. Год назад — задачей для долгой разработки на полгода. За 0 рублей один человек сделать не мог.</p>
 
-    <p class="reveal">И в какой-то момент, надиктовывая очередную мысль в свою систему, я поймал странное ощущение.</p>
+    <p class="reveal">Я <strong>решил свою проблему.</strong> Тотально. За 0 рублей. За минимум времени.</p>
 
-    <p class="reveal"><strong>Что-то изменилось. Не в инструментах. Не в агентах.</strong></p>
+    <p class="reveal">И вот тут, сидя в своём приложении, <strong>я поймал странное ощущение.</strong></p>
+
+    <p class="reveal"><strong>Что-то сдвинулось. Не в инструментах. Не в агентах.</strong></p>
 
     <p class="reveal"><strong>Во мне.</strong></p>
+  </div>
+</section>
+
+<!-- ==================== MID-CTA — soft offer after Story 3 ==================== -->
+<section class="mid-cta-section">
+  <div class="mid-cta reveal">
+    <div class="mid-cta__lead">Если уже зацепило — не обязательно дочитывать.</div>
+    <a href="https://t.me/agiage_bot?start=src_agents_mid" class="mid-cta__btn" target="_blank" rel="noopener">Записаться в практикум →</a>
+    <div class="mid-cta__sub">Хочешь сначала разобраться сам — <em>листай дальше.</em> Покажу доказательства и расскажу, что тебя ждёт.</div>
   </div>
 </section>
 
@@ -1730,14 +2172,16 @@ button:focus-visible {
 
     <p class="reveal reveal-delay-2">Раньше передо мной ставили задачу — и первая мысль была «успею / не успею», «хватит скилла / не хватит», «возьмусь / откажусь». Теперь первой мысли нет. Есть только «ок, давай разберёмся». Потому что я знаю: что бы ни понадобилось — способ с агентом найдётся.</p>
 
+    <p class="reveal">За последние пару месяцев я не отказал <em>ни одной</em> задаче. Вот что ко мне прилетало:</p>
+
     <div class="easy-list reveal">
       <div class="easy-list__row"><span class="easy-list__task">3D-модель в Blender?</span><span class="easy-list__mark">Easy</span></div>
       <div class="easy-list__row"><span class="easy-list__task">Сайт для крупного девелопера?</span><span class="easy-list__mark">Easy</span></div>
       <div class="easy-list__row"><span class="easy-list__task">Внутренняя CRM для маленькой команды?</span><span class="easy-list__mark">Easy</span></div>
-      <div class="easy-list__row"><span class="easy-list__task">Автоматизация на полмиллиона в квартал?</span><span class="easy-list__mark">Easy</span></div>
+      <div class="easy-list__row"><span class="easy-list__task">Автоматизация на 200 тысяч за пару дней?</span><span class="easy-list__mark">Easy</span></div>
     </div>
 
-    <p class="reveal">Это не потому, что я стал гением. Это потому, что <strong>у меня появился второй я.</strong></p>
+    <p class="reveal">Это не потому, что я стал гением. Это потому, что <strong>у меня появился второй я</strong> — и самый лучший помощник, какого только можно нанять.</p>
 
     <div class="pullquote reveal">Эпоха заёба — закончилась.</div>
 
@@ -1747,25 +2191,36 @@ button:focus-visible {
 
     <p class="reveal">Не потому что рутина исчезла. Рутина никуда не ушла — её всегда будет много. А потому что у тебя теперь есть <strong>тот, кто рутину делает вместо тебя.</strong></p>
 
-    <hr class="divider">
+    <p class="reveal manifesto-bridge">А&nbsp;теперь — <em>про тебя.</em></p>
 
-    <p class="reveal">Ты <strong>любишь то, что делаешь</strong> — делай это. Схемы, гипотезы, архитектуру, клиентов. А рутину — отчёты, сводки, парсинг, договоры по шаблону — забирает агент.</p>
+    <p class="reveal">Наконец-то ты можешь <strong>вернуться в свою профессию</strong> — таким, каким ты хотел в неё идти.</p>
 
-    <p class="reveal">Ты не станешь ленивым. <strong>Ты займёшься тем, ради чего пошёл в это дело.</strong> Потому что наконец-то начнёшь делать только то, что делаешь лучше всего.</p>
+    <p class="reveal">Заниматься тем, <strong>что тебя зажигает.</strong> Ради чего ты вообще в это дело пошёл.</p>
+
+    <p class="reveal">Потому что агент — <strong>другое.</strong> Все технологии до этого были про «то же самое — чуть быстрее». Чуть быстрее написать. Чуть быстрее посчитать. Чуть быстрее найти.</p>
+
+    <p class="reveal">Агент — <strong>первая технология, которая просто берёт и увеличивает тебя.</strong> Твои возможности. Деньги. Проекты. Вайб.</p>
+
+    <p class="reveal">У маркетолога — плюс пять клиентов. У предпринимателя — плюс два направления. У юриста — иск, который раньше собирался неделю, теперь за час. У меня — сайт за вечер, курс за месяц, бот за выходные.</p>
+
+    <p class="reveal">Это не «помощник по задачам». Это <strong>мультипликатор всего, что ты делаешь.</strong></p>
+
+    <p class="reveal manifesto-outro">И&nbsp;нет — это <em>не только у&nbsp;меня.</em></p>
   </div>
 </section>
 
 <!-- ==================== METR — orange island ==================== -->
 <section class="section island-section metr-section" id="metr">
   <div class="longread">
-    <div class="reveal"><div class="s-label">И это не я один</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Это не ощущение. Это <em>измерили.</em></h2>
+    <div class="reveal"><div class="s-label">А&nbsp;вот и&nbsp;доказательства</div></div>
+    <p class="reveal reveal-delay-1">Скажешь: ну, <em>Егору повезло,</em> для&nbsp;него — отлично. А&nbsp;мне-то с&nbsp;чего ждать того&nbsp;же?</p>
+    <h2 class="s-title reveal reveal-delay-1">Это не ощущение.<br><em>Это измерили.</em></h2>
 
-    <p class="reveal reveal-delay-2">В марте 2025-го независимая лаборатория <a href="https://metr.org" target="_blank" rel="noopener">METR</a> — те, кто меряет способности моделей — опубликовала график.</p>
+    <p class="reveal reveal-delay-2">Независимая лаборатория <a href="https://metr.org" target="_blank" rel="noopener">METR</a> — те, кто замеряет способности моделей, — публикует график каждые пару месяцев.</p>
 
-    <p class="reveal">Они измерили, <strong>сколько времени ИИ делает задачу сам</strong> — и как эта длительность растёт от поколения к поколению.</p>
+    <p class="reveal">Они меряют <strong>одно число:</strong> сколько времени агент работает над задачей сам — от «дай совет» до «принеси результат».</p>
 
-    <p class="reveal">Получилось так:</p>
+    <p class="reveal">Смотри:</p>
 
     <div class="metr-chart reveal">
       <div class="metr-chart__title">METR · Time horizon of autonomous AI</div>
@@ -1825,91 +2280,28 @@ button:focus-visible {
       <div class="metr-chart__source">По данным METR (2025). Ось Y — логарифмическая.</div>
     </div>
 
-    <p class="reveal"><strong>Агент уже сейчас делает задачу 4–6 часов сам. С вероятностью 80%.</strong></p>
+    <p class="reveal">Вчитайся. <strong>Агент уже сейчас закрывает целый рабочий день — 4–6 часов автономной работы</strong> — с вероятностью 80%.</p>
 
-    <p class="reveal">Если готов на риск 50/50 — задачу на <strong>12 часов.</strong></p>
+    <p class="reveal">Если готов на риск 50/50 — он вытянет <strong>12 часов без паузы.</strong> Уйдёшь спать — проснёшься с готовым результатом.</p>
 
-    <p class="reveal">Это не прогноз. Это замеры.</p>
-
-    <p class="reveal">И главное — <strong>длительность удваивается каждые семь месяцев.</strong> Причём сам период удвоения — продолжает сокращаться.</p>
+    <p class="reveal">И <strong>длительность удваивается каждые семь месяцев.</strong> Причём сам период удвоения — продолжает сокращаться.</p>
 
     <div class="shock-line reveal">
       <span>Семь.</span> <span>Месяцев.</span>
     </div>
 
-    <p class="reveal">Посчитай, где он будет через год. Если удвоение продолжится — это <strong>рабочие дни.</strong> Через два года — рабочие недели. Через три — месяцы.</p>
+    <p class="reveal">Посчитай сам. Через год — рабочие дни. Через два — рабочие недели. Через три — рабочие месяцы.</p>
 
-    <p class="reveal"><strong>Мы почти там.</strong></p>
-
-    <hr class="divider">
-
-    <div class="pullquote reveal">Это как интернет в 98-м. Все уже слышали слово — но мало кто умел HTML.</div>
-
-    <p class="reveal">Тогда было окно. Люди, которые в 98-м вложили вечер в изучение HTML, через пять лет делали сайты для Coca-Cola. Остальные — не делали.</p>
-
-    <p class="reveal">Агенты сегодня — это тот же момент. <strong>Но с одной разницей.</strong></p>
-
-    <p class="reveal">HTML в 98-м был узкой нишей — для технарей, которые умели писать код. Агент в 2026-м — <strong>инструмент для любого</strong>: маркетолога, юриста, продакта, врача, учителя. Чтобы им управлять, не надо учить язык — надо уметь ставить задачу словами.</p>
-
-    <p class="reveal">Технология зрелая. Инструменты доступны. Порог входа — лежит под ногами. А большинство ещё даже не поняли, <strong>что вообще происходит.</strong></p>
-
-    <p class="reveal"><strong>Это и есть твой рынок. Пока он не закрылся.</strong></p>
+    <p class="reveal"><strong>И мы почти там.</strong></p>
   </div>
 </section>
 
-<!-- ==================== APPLICABILITY (5 personas) ==================== -->
-<section class="applicability-section" id="applicability">
+<!-- ==================== KAZALOS BY — bridge to degot ==================== -->
+<section class="section section-white kazalos-section">
   <div class="longread">
-    <div class="reveal"><div class="s-label">А что конкретно — тебе</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Ок. Конкретно — <em>что это значит для тебя?</em></h2>
-    <p class="s-desc reveal reveal-delay-2">У каждого есть задачи, на которых теряешь больше всего времени. Вот что можно поручить агенту уже сейчас — по профессиям.</p>
-  </div>
-
-  <div class="persona-grid">
-    <div class="persona reveal">
-      <div class="persona-marker">01</div>
-      <div class="persona__kind">Маркетолог</div>
-      <div class="persona__name">Парсинг и отчёты без рутины</div>
-      <ul class="persona__tasks">
-        <li>Собрать цены, офферы и креативы конкурентов по ключевикам;</li>
-        <li>Свести UTM-данные из пяти источников в один дашборд;</li>
-        <li>Вычитать тысячу отзывов и разложить по тегам боли.</li>
-      </ul>
-    </div>
-    <div class="persona reveal reveal-delay-1">
-      <div class="persona-marker">02</div>
-      <div class="persona__kind">Предприниматель</div>
-      <div class="persona__name">Управленческий слой на автомате</div>
-      <ul class="persona__tasks">
-        <li>Собрать финмодель из выгрузки банка за час;</li>
-        <li>Поднять мониторинг цен конкурентов с уведомлениями;</li>
-        <li>Автоответчик на входящие заявки с квалификацией.</li>
-      </ul>
-    </div>
-    <div class="persona reveal reveal-delay-2">
-      <div class="persona-marker">03</div>
-      <div class="persona__kind">Аналитик / продакт</div>
-      <div class="persona__name">Дашборды и ресёрч без недели настройки</div>
-      <ul class="persona__tasks">
-        <li>Дашборд из Google Sheets за час — не за спринт;</li>
-        <li>A/B-отчёт с интерпретацией, а не только цифры;</li>
-        <li>Собрать отзывы из App Store и ранжировать по боли.</li>
-      </ul>
-    </div>
-    <div class="persona persona--self reveal">
-      <div class="persona-marker">04</div>
-      <div class="persona__kind">А ты?</div>
-      <div class="persona__name">У тебя — своя. Вспомни её прямо сейчас.</div>
-      <ul class="persona__tasks">
-        <li>Выпиши три задачи, на которых теряешь больше всего времени;</li>
-        <li>Открой агента: «Вот что у меня болит. Что можем автоматизировать?»;</li>
-        <li>Через полчаса — первый рабочий прототип.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="persona-note reveal">
-    Это не гипотеза — это то, что я с клиентами делаю каждую неделю.
+    <p class="reveal">Казалось бы — садись и работай. Агент готов. Доступ есть. <strong>Один клик.</strong></p>
+    <p class="reveal"><em>Казалось бы.</em></p>
+    <p class="reveal">Сейчас объясню, <strong>почему так не будет.</strong></p>
   </div>
 </section>
 
@@ -1917,33 +2309,31 @@ button:focus-visible {
 <section class="section section-white" id="degot">
   <div class="longread">
     <div class="reveal"><div class="s-label">Честно</div></div>
-    <h2 class="s-title reveal reveal-delay-1">Но это работает не с&nbsp;первого щелчка. Объясняю.</h2>
+    <h2 class="s-title reveal reveal-delay-1">Сначала — <em>три засады.</em></h2>
 
-    <p class="reveal reveal-delay-2">Если дочитал досюда и думаешь «открою Claude — и всё получится», — хочу, чтобы ты заходил в это с правильными ожиданиями.</p>
+    <p class="reveal reveal-delay-1">У каждого, кто садится с агентом, они одинаковые. <strong>Сейчас покажу.</strong></p>
 
-    <div class="pullquote reveal">Нет. Не получится.</div>
+    <p class="reveal">Первая — <strong>установка.</strong> Скачать, поставить, подключить какие-то ключи, API <em>(что бы это ни значило).</em> Любому, кто не сидел в терминале — <strong>полмесяца только чтобы включиться.</strong></p>
 
-    <p class="reveal">Первый раз — ты не поймёшь, что происходит. Агент услышит не так. Ты скажешь — сделает не то. Попытаешься починить — сломает то, что работало. Психанёшь и закроешь.</p>
+    <p class="reveal">Вторая — <strong>диалог.</strong> Сказал — получил не то. Переспросил — получил <em>ещё более не то.</em> Психуешь, закрываешь.</p>
 
-    <p class="reveal">Так у всех. <strong>Это нормально.</strong></p>
+    <p class="reveal">Третья — <strong>уверенное враньё.</strong> Это база: каким бы умным он ни был — иногда спокойно ошибается по пустякам. Путает информацию. Что-то выдумывает. Врёт ровной интонацией. <em>А ты, доверяя, потом очень сильно облажаешься.</em> Было. И не раз.</p>
 
-    <p class="reveal">У меня получается потому, что я <strong>знаю, где агент врёт, где тупит, в каких задачах его нельзя оставлять одного.</strong> Это не написано в документации. Это приходит только через ошибки.</p>
+    <p class="reveal">После всех трёх — постепенно <strong>включается осознание:</strong> что это за инструмент и как с ним работать. На первом этапе это занимает <em>крайне много времени.</em> У большинства — три месяца. Если не сдадутся раньше.</p>
 
-    <p class="reveal">У тебя её пока нет — и <strong>не могло быть.</strong> Она набирается только на своих ошибках. Это нормально.</p>
+    <p class="reveal"><strong>Либо ты обходишь эти три засады за семь вечеров. Со мной.</strong></p>
 
-    <hr class="divider">
-
-    <p class="reveal">Порог входа есть. Первые недели — ошибки, злость, мысль «я не понимаю, что происходит». Это проходит у всех.</p>
-
-    <p class="reveal">Но этот порог <strong>в десять раз ниже, чем был два года назад.</strong> И ниже, чем у любой технологии последних двадцати лет.</p>
-
-    <p class="reveal">Раньше, чтобы войти в ИИ, нужно было учить Python, математику, ML, разбираться в архитектурах. Сейчас нужно другое — <strong>правильно ставить задачу словами.</strong></p>
-
-    <p class="reveal">Это не «не нужно учиться». Это «учиться надо другому».</p>
+    <div class="pdf-nod reveal">
+      Хочешь пройти через это <strong>подготовленным?</strong> В конце статьи тебя ждёт PDF, где эти сложности разобраны по шагам: как устроен агент, где ломается, как подстраховаться.
+    </div>
 
     <hr class="divider">
 
-    <p class="reveal">И поэтому я собрал практикум. <strong>Чтобы сократить тебе этот месяц-два битвы до семи вечеров.</strong></p>
+    <p class="reveal">И важно: <strong>ты не один идёшь.</strong></p>
+
+    <p class="reveal">Я прошёл это сам — год проб и ошибок. Ты идёшь <strong>с группой таких же, как ты.</strong> Один задаёт вопрос — ответ слышат все. Один ошибается — учатся все.</p>
+
+    <p class="reveal">Потому я и собрал это как <strong>практикум.</strong> Не курс в записи. Не лекция. Не PDF. А <em>группа, которая идёт вместе.</em></p>
   </div>
 </section>
 
@@ -1954,25 +2344,40 @@ button:focus-visible {
     <div class="reveal"><div class="cta-eyebrow">Если зацепило</div></div>
     <h2 class="cta-title reveal reveal-delay-1">Практикум <em>«ВАЙБ»</em> — семь вечеров, чтобы ты начал жить с агентом.</h2>
 
-    <p class="cta-lead reveal reveal-delay-2">Внутри практикума ты соберёшь <strong>свой проект</strong> — не учебный «Hello world», а то, что уже решает твою задачу.</p>
+    <p class="cta-lead reveal reveal-delay-2">Я три года подряд платил за подписку ChatGPT. В какой-то момент решился — купил подписку на <strong>код-агента</strong> (Claude Code). Сто долларов. Около <strong>10 тысяч в месяц.</strong></p>
+
+    <div class="pullquote reveal" style="color: var(--black);">Это перевернуло всё с ног на голову.</div>
+
+    <p class="cta-lead reveal">Дешевле, чем <strong>один рабочий день сильного специалиста.</strong> А у меня появился <strong>сотрудник.</strong> Знает почти всё. Умеет почти всё. Не болеет. Не выгорает. Не увольняется. Работает 12 часов подряд без паузы.</p>
+
+    <p class="cta-lead reveal">Я <strong>перестал отказываться от проектов.</strong> Беру то, что раньше не взял бы — не хватало времени, рук, компетенции. <strong>Теперь — хватает :)</strong></p>
+
+    <p class="cta-lead reveal"><strong>Агент — это мультипликатор денег и времени.</strong> Он возвращает тебе часы, возвращает проекты, возвращает деньги. Окупается <strong>стократно.</strong> Это <em>базовая потребность</em> — необходимая сейчас каждому.</p>
+
+    <h2 class="s-title reveal" style="margin-top: 3rem;">Первый раз в&nbsp;истории<br><em>один человек = команда.</em></h2>
+
+    <p class="cta-lead reveal">До 2025-го росли людьми. С 2026-го — <strong>агентами.</strong></p>
+
+    <hr class="divider" style="margin: 2.5rem 0;">
+
+    <p class="cta-lead reveal">Внутри практикума ты не учишься на абстрактных примерах. Ты <strong>внедряешь агента в свою реальную работу</strong> — то, что нужно тебе прямо завтра.</p>
 
     <p class="cta-lead reveal">К концу практикума ты:</p>
 
     <ul class="cta-list reveal">
-      <li><strong>Перестанешь отказываться от проектов</strong> — как перестал я;</li>
-      <li><strong>Научишься ставить задачу так,</strong> чтобы агент понял с первого раза;</li>
-      <li><strong>Поймёшь,</strong> за какими задачами к нему идти, а за какими — нет;</li>
-      <li><strong>Соберёшь свой проект на сервере</strong> — живой, не демку;</li>
+      <li><strong>Начнёшь смотреть на каждую рутину иначе</strong> — <em>«а это можно отдать?»</em> — автоматически, до того как сел её делать.</li>
+      <li><strong>Почувствуешь, что задачи закрываются легко</strong> — без заёба, без вечеров на выходных. Появляется время на то, что действительно важно.</li>
+      <li><strong>Научишься вайбить от работы</strong> — и от жизни. Главное состояние, ради которого всё это и затевалось.</li>
+      <li><strong>Научишься разговаривать с агентом</strong> — ставить задачу так, чтобы он понял с первого раза, и выбирать те, за которыми к нему вообще стоит идти.</li>
+      <li><strong>Получишь чуйку</strong> — где агент врёт, где тупит, где его нельзя оставлять одного. Ту самую, до которой обычно идут через сотни собственных ошибок.</li>
+      <li><strong>По желанию — выложишь свой инструмент на сервер.</strong> Чтобы был доступен 24/7.</li>
       <li><strong>Войдёшь в закрытое комьюнити</strong> людей, прошедших это вместе с тобой.</li>
     </ul>
 
-    <div class="pullquote reveal" style="margin: 2rem 0; color: var(--black);">Считай сам.</div>
-
-    <p class="cta-lead reveal">Сотрудник, закрывающий половину твоих задач и ускоряющий остальное в пять раз, стоит <strong>500К–1М в месяц.</strong> Не болеет, не выгорает, не увольняется.</p>
-
-    <p class="cta-lead reveal">Агент — <strong>около 10 тысяч рублей в месяц.</strong> Цена одного обеда в ресторане.</p>
-
-    <p class="cta-lead reveal">Практикум — разовый платёж, чтобы этим агентом уметь управлять.</p>
+    <div class="tariffs-note reveal">
+      <span class="tariffs-note__badge">Предзапись</span>
+      Это <strong>предзапись на первый поток.</strong> Цена зафиксирована <em>до старта</em> — дальше только вверх. Успевай.
+    </div>
 
     <div class="tariffs reveal">
       <div class="tariff">
@@ -1996,38 +2401,61 @@ button:focus-visible {
       </div>
     </div>
 
-    <a href="https://t.me/agiage_bot?start=src_agents" class="cta-btn reveal" target="_blank" rel="noopener">Записаться через бота →</a>
+    <p class="cta-closing reveal">Решайся.<br><br>Проверь — <strong>не пожалеешь.</strong> Это единственный навык, который по-настоящему нужен в&nbsp;2026-м. Всё остальное — приложится.<br><br><strong>Жизнь до&nbsp;агента. И&nbsp;после.</strong> Это две разные жизни. Я&nbsp;прожил обе — и&nbsp;не&nbsp;хочу, чтобы ты остался в&nbsp;первой.</p>
+
+    <a href="https://t.me/agiage_bot?start=src_agents_pitch" class="cta-btn reveal" target="_blank" rel="noopener">Записаться через бота →</a>
 
   </div>
 </section>
 
-<!-- ==================== FINAL ==================== -->
+<!-- ==================== FALLBACK (PDF lead magnet) ==================== -->
+<section class="fallback-section" id="fallback">
+  <div class="fallback-inner">
+    <div class="fallback-eyebrow reveal">Разобраться сам</div>
+    <h2 class="fallback-title reveal reveal-delay-1">
+      Справочник <span class="fallback-accent">по агентам</span>
+    </h2>
+    <p class="fallback-desc reveal reveal-delay-2">
+      Это не «10 промптов в телеге» и не подборка лайфхаков. Это то, к чему ты <strong>вернёшься через неделю</strong> — когда сядешь за первую задачу и забудешь, какой слой агента тебе нужен. И <strong>через месяц</strong> — когда захочешь расширить своего агента и не будешь знать, с чего начать. Настольный справочник на 30+ страниц.
+    </p>
+    <ol class="fallback-list reveal reveal-delay-3">
+      <li><strong>Что такое агент внутри</strong> — цикл «подумал → сделал → проверил → пошёл дальше». Без кода, на пальцах.</li>
+      <li><strong>Три слоя агентного мира в 2026</strong> — код-агенты (Cursor, Claude Code), готовые платформы (Lovable и компания), и свои — под задачу.</li>
+      <li><strong>Реальные кейсы</strong> — Cursor в Shopify, Claude Code у разработчиков, Devin в Goldman Sachs и Nubank, Copilot Agent в Accenture, Moderna с 750 агентами.</li>
+      <li><strong>Истории, где агенты облажались</strong> — Replit стёр прод-базу, Air Canada выдумал политику, Chevrolet продал Tahoe за $1, Klarna откатилась обратно. И три правила, которые спасают.</li>
+      <li><strong>Построй сам</strong> — мозг, руки, память и команда агентов. Или когда хватит простой API-подписки.</li>
+      <li><strong>Как оплатить из РФ</strong> — 4 способа. Когда какой выбрать.</li>
+    </ol>
+    <a href="https://t.me/agiage_bot?start=pdf_agents" class="fallback-btn reveal reveal-delay-4" target="_blank" rel="noopener">
+      Забрать PDF →
+    </a>
+
+    <p class="fallback-bridge reveal reveal-delay-5">
+      Справочник научит <strong>разбираться.</strong> Практикум — <strong>делать.</strong> Хочешь уметь — <a href="#pitch">в&nbsp;практикум</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== FINAL (sign-off) ==================== -->
 <section class="final-section">
   <div class="final-inner">
-    <div class="final-lines reveal">
-      <span>Можно читать статьи про агентов ещё год.</span>
-      <span>Можно ждать, пока «технология дозреет».</span>
-      <span>А можно <em>через семь вечеров</em> сесть читать такие статьи — <em>пока твой агент работает за тебя</em>.</span>
-    </div>
-    <a href="https://t.me/agiage_bot?start=src_agents" class="final-btn reveal reveal-delay-1" target="_blank" rel="noopener">Начать → @agiage_bot</a>
-    <div class="final-sign reveal reveal-delay-2">Егор Борисенко · АГИ · апрель 2026</div>
+    <div class="final-sign reveal">Егор Борисенко · АГИ · апрель 2026</div>
   </div>
 </section>
 
 <!-- ==================== FOOTER ==================== -->
 <footer class="footer">
-  <div class="footer-links">
-    <a href="/">На главную</a>
-    <a href="/#pricing">Тарифы</a>
-    <a href="/#faq">FAQ</a>
-    <a href="/policy.html" target="_blank">Политика ПД</a>
-    <a href="/offer.html" target="_blank">Оферта</a>
+  <div>© 2026 АГИ · ИП Борисенко Егор Тимофеевич</div>
+  <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.55;">
+    ИНН 450140217101 · ОГРНИП 326450000015144 · 16+<br>
+    <a href="oferta.html" style="color: var(--text-muted); border-bottom: 1px dotted;">Оферта</a> ·
+    <a href="policy.html" style="color: var(--text-muted); border-bottom: 1px dotted;">Политика ПД</a> ·
+    <a href="consent.html" style="color: var(--text-muted); border-bottom: 1px dotted;">Согласие</a>
   </div>
-  <div>© 2026 АГИ · ИП Борисенко</div>
 </footer>
 
 <!-- ==================== STICKY CTA ==================== -->
-<a href="https://t.me/agiage_bot?start=src_agents" class="sticky-cta" id="stickyCta" target="_blank" rel="noopener">
+<a href="https://t.me/agiage_bot?start=src_agents_sticky" class="sticky-cta" id="stickyCta" target="_blank" rel="noopener">
   Записаться в практикум →
 </a>
 
@@ -2158,7 +2586,9 @@ initOrangeShader('heroShader');
   const replayBtn = document.getElementById('replayBtn');
   if (!grid) return;
   let timers = [];
-  let started = false;
+  let inView = false;
+  const LOOP_GAP = 3500; // pause between auto-replays (ms)
+  const CYCLE_END = 8200; // ms of last footer show
 
   function clearAll() {
     timers.forEach(function(t) { clearTimeout(t); });
@@ -2178,7 +2608,7 @@ initOrangeShader('heroShader');
       timers.push(setTimeout(function() { el.classList.add('show'); }, delay));
     });
     const todoStart = 1700;
-    const stepDuration = 1250;
+    const stepDuration = 700;
     const steps = grid.querySelectorAll('.todo__item');
     steps.forEach(function(item, i) {
       timers.push(setTimeout(function() { item.classList.add('running'); }, todoStart + i * stepDuration));
@@ -2187,13 +2617,22 @@ initOrangeShader('heroShader');
         item.classList.add('done');
       }, todoStart + i * stepDuration + stepDuration - 150));
     });
+    // auto-replay while section is in view
+    timers.push(setTimeout(function() {
+      if (inView) runStory();
+    }, CYCLE_END + LOOP_GAP));
   }
 
   const cio = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
-      if (e.isIntersecting && !started) {
-        started = true;
-        runStory();
+      if (e.isIntersecting) {
+        if (!inView) {
+          inView = true;
+          runStory();
+        }
+      } else {
+        inView = false;
+        clearAll();
       }
     });
   }, { threshold: 0.3 });
@@ -2230,7 +2669,57 @@ initOrangeShader('heroShader');
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 })();
+
+/* ===================================================================
+   Story 3 — rotating word morph (mirrors index.html hero-rotate)
+   =================================================================== */
+(function() {
+  const wrap = document.getElementById('story3Morph');
+  if (!wrap) return;
+  const items = wrap.querySelectorAll('.story3-morph-item');
+  if (!items.length) return;
+
+  let current = 0;
+  let timer = null;
+
+  function tick() {
+    items[current].classList.remove('active');
+    items[current].classList.add('out');
+    const prev = current;
+    setTimeout(() => items[prev].classList.remove('out'), 600);
+    current = (current + 1) % items.length;
+    items[current].classList.add('active');
+  }
+
+  const io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        if (!timer) timer = setInterval(tick, 2200);
+      } else {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+    });
+  }, { threshold: 0.3 });
+  io.observe(wrap);
+})();
 </script>
+
+<!-- Yandex.Metrika counter (loads only after cookie consent = 'all') -->
+<script type="text/javascript">
+(function() {
+  function loadMetrika() {
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108975136', 'ym');
+    ym(108975136, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  }
+  if (localStorage.getItem('cookieConsent_v1') === 'all') {
+    loadMetrika();
+  } else {
+    window.addEventListener('cookieConsentAccepted', loadMetrika, { once: true });
+  }
+})();
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108975136" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 </body>
 </html>

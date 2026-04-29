@@ -3,15 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>АГИ — Вайб. Зарабатывай больше с помощью ИИ</title>
-<meta name="description" content="Курс для всех, кто хочет зарабатывать больше с помощью ИИ — без кода, без опыта, и с кайфом от процесса.">
-<meta property="og:title" content="АГИ — Вайб">
-<meta property="og:description" content="Зарабатывай больше с помощью ИИ — на вайбе">
+<title>АГИ — Практикум «ВАЙБ». Работа с ИИ-агентами без кода</title>
+<meta name="description" content="7 вечеров — и ты собираешь свои инструменты с ИИ-агентами. Для маркетологов, предпринимателей, продактов. Без кода, без опыта. Ведёт Егор Борисенко.">
+<meta name="keywords" content="ИИ-агенты, AI agents, обучение ИИ, практикум по ИИ, Claude Code, Cursor, без кода, агентный подход">
+<link rel="canonical" href="https://agiage.ru/">
+<meta property="og:title" content="АГИ — Практикум «ВАЙБ»">
+<meta property="og:description" content="7 вечеров с ИИ-агентами. Соберёшь свой инструмент уже на первой неделе.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://agiage.ru/">
+<meta property="og:image" content="https://agiage.ru/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="ru_RU">
-<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png?v=4">
-<link rel="shortcut icon" href="/favicon.ico?v=4">
-<link rel="apple-touch-icon" href="/favicon.png?v=4">
+<meta property="og:site_name" content="АГИ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="АГИ — Практикум «ВАЙБ»">
+<meta name="twitter:description" content="7 вечеров с ИИ-агентами. Соберёшь свой инструмент уже на первой неделе.">
+<meta name="twitter:image" content="https://agiage.ru/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Практикум «ВАЙБ»",
+  "description": "7-вечерний практикум по работе с ИИ-агентами для специалистов любых профессий. Без кода, без опыта.",
+  "provider": {
+    "@type": "Organization",
+    "name": "АГИ",
+    "url": "https://agiage.ru",
+    "sameAs": ["https://t.me/agiage_bot"]
+  },
+  "url": "https://agiage.ru",
+  "image": "https://agiage.ru/og-image.png",
+  "inLanguage": "ru-RU",
+  "courseMode": "online",
+  "educationalLevel": "Beginner",
+  "teaches": "Работа с ИИ-агентами (Claude Code, Cursor) для автоматизации задач и сборки собственных инструментов без программирования",
+  "instructor": {
+    "@type": "Person",
+    "name": "Егор Борисенко",
+    "url": "https://t.me/borisenkoegor"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "courseWorkload": "PT14H"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Основной тариф",
+      "price": "19999",
+      "priceCurrency": "RUB",
+      "availability": "https://schema.org/PreOrder"
+    },
+    {
+      "@type": "Offer",
+      "name": "Персональный тариф",
+      "price": "39999",
+      "priceCurrency": "RUB",
+      "availability": "https://schema.org/PreOrder"
+    }
+  ]
+}
+</script>
+<link rel="icon" type="image/x-icon" href="/agi-icon.ico">
+<link rel="icon" type="image/png" sizes="256x256" href="/agi-icon.png">
+<link rel="shortcut icon" href="/agi-icon.ico">
+<link rel="apple-touch-icon" sizes="256x256" href="/agi-icon.png">
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,14 +97,18 @@
   --transition-slow: 0.8s cubic-bezier(0.32, 0, 0.12, 1);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   font-family: 'Geist', -apple-system, system-ui, sans-serif;
   background: var(--white);
   color: var(--text);
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100vw;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+section[id], footer[id] {
+  scroll-margin-top: 80px;
 }
 
 /* ========== INTRO ========== */
@@ -111,30 +173,38 @@ body {
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.25rem 2rem;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
   transition: transform var(--transition), background var(--transition);
 }
 .header.scrolled { background: rgba(255,255,255,0.85); backdrop-filter: blur(20px) saturate(1.4); }
 .header-logo {
-  font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em;
+  font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em;
   text-decoration: none; color: #444;
+  flex-shrink: 0;
 }
 .header-nav {
-  display: none; gap: 2.5rem; align-items: center;
-  position: absolute; left: 50%; transform: translateX(-50%);
+  display: none;
 }
 .header-nav a {
-  text-decoration: none; color: #444; font-size: 0.9rem; font-weight: 500;
+  text-decoration: none; color: #444;
+  font-size: 0.9rem; font-weight: 500;
   transition: opacity var(--transition-fast);
 }
 .header-nav a:hover { opacity: 0.5; }
+.header-actions {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-shrink: 0;
+}
 .header-cta {
-  display: none; padding: 0.7rem 1.8rem;
+  padding: 0.5rem 1rem;
   background: var(--white); color: var(--text);
-  border-radius: 9999px; font-size: 0.95rem; font-weight: 700;
+  border-radius: 9999px; font-size: 0.82rem; font-weight: 700;
   text-decoration: none; transition: all var(--transition-fast);
   border: 2px solid rgba(0,0,0,0.08);
   box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .header-cta:hover { background: #F5F5F5; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
 .header.scrolled .header-cta {
@@ -142,10 +212,62 @@ body {
 }
 .header.scrolled .header-cta:hover { background: var(--orange-dark); border-color: var(--orange-dark); }
 
+/* Mobile burger */
+.header-burger {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; gap: 4px;
+  width: 40px; height: 40px;
+  border: none; background: rgba(255,255,255,0.65);
+  border-radius: 10px;
+  cursor: pointer; padding: 0;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+.header.scrolled .header-burger { background: rgba(0,0,0,0.05); }
+.header-burger span {
+  display: block; width: 18px; height: 2px;
+  background: #444;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.header-burger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.header-burger.is-open span:nth-child(2) { opacity: 0; }
+.header-burger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Mobile drawer menu */
+.mobile-menu {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  z-index: 999;
+  display: flex; flex-direction: column;
+  padding: 5rem 2rem 2rem;
+  opacity: 0; pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.mobile-menu.is-open {
+  opacity: 1; pointer-events: auto;
+  transform: translateY(0);
+}
+.mobile-menu a {
+  font-size: 1.75rem; font-weight: 700;
+  color: var(--text); text-decoration: none;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  letter-spacing: -0.02em;
+}
+.mobile-menu a:last-child { border-bottom: none; }
+
 @media (min-width: 768px) {
-  .header { padding: 1.25rem 3rem; }
-  .header-nav { display: flex; }
-  .header-cta { display: block; }
+  .header { padding: 1.25rem 3rem; gap: 0.5rem; }
+  .header-nav {
+    display: flex; gap: 2.5rem; align-items: center;
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .header-cta { padding: 0.7rem 1.8rem; font-size: 0.95rem; }
+  .header-burger { display: none; }
+  .mobile-menu { display: none; }
 }
 @media (min-width: 1280px) { .header { padding: 1.5rem 5rem; } }
 
@@ -181,6 +303,9 @@ body {
   margin-bottom: 2rem;
   opacity: 0;
 }
+@media (max-width: 767px) {
+  .hero-title-big { font-size: clamp(100px, 27vw, 140px); margin-bottom: 1.5rem; }
+}
 .hero-title-big.visible { opacity: 1; }
 
 /* Hero content fades in after intro lands */
@@ -195,16 +320,25 @@ body {
 .hero-fade-4 { transition-delay: 0.55s; }
 .hero-fade-5 { transition-delay: 0.7s; }
 .hero-subtitle {
-  font-size: clamp(1.2rem, 2.8vw, 2.25rem);
+  font-size: clamp(1rem, 4.2vw, 2.25rem);
   font-weight: 700; line-height: 1.2; letter-spacing: 0.05em;
   color: var(--white); max-width: 900px; margin: 0 auto 1.5rem;
-  white-space: nowrap;
+  padding: 0 0.25rem;
+}
+@media (min-width: 1024px) {
+  .hero-subtitle { white-space: nowrap; }
 }
 .hero-desc {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-size: clamp(0.95rem, 3.4vw, 1.5rem);
   color: rgba(255,255,255,0.85); max-width: 700px; margin: 0 auto;
-  line-height: 1.6; font-weight: 400; white-space: nowrap;
+  line-height: 1.55; font-weight: 400;
+  padding: 0 0.25rem;
 }
+@media (min-width: 1024px) {
+  .hero-desc { white-space: nowrap; }
+}
+.br-mobile { display: none; }
+@media (max-width: 767px) { .br-mobile { display: inline; } }
 .hero-rotate {
   margin-top: 2rem; height: 1.8em;
   overflow: hidden; position: relative;
@@ -230,6 +364,11 @@ body {
   transition: all var(--transition);
 }
 .hero-cta-btn:hover { transform: translateY(-3px) scale(1.03); background: #f5f5f5; }
+@media (max-width: 767px) {
+  .hero-desc    { font-size: 1rem; font-weight: 400; line-height: 1.55; }
+  .hero-rotate  { font-size: 1rem; font-weight: 400; line-height: 1.55; }
+  .hero-cta-btn { font-size: 1rem; font-weight: 400; padding: 0.9rem 2rem; margin-top: 2rem; }
+}
 
 /* ========== MARQUEE ========== */
 .marquee {
@@ -246,8 +385,8 @@ body {
   letter-spacing: -0.02em; padding: 0 2rem;
   flex-shrink: 0;
 }
-.marquee-white .marquee-item { color: var(--text-light); }
-.marquee-grad .marquee-item { color: rgba(255,255,255,0.6); }
+.marquee-white .marquee-item { color: #767676; }
+.marquee-grad .marquee-item { color: rgba(255,255,255,0.85); }
 .marquee-item { display: inline-flex; align-items: center; }
 .marquee-dot { opacity: 0.35; font-size: 1em; margin: 0 1em; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -470,8 +609,8 @@ body {
   transform: translateY(0);
 }
 @media (max-width: 767px) {
-  .statement { gap: 0.25rem; padding: 3rem 1.25rem; }
-  .flip-line { font-size: clamp(1.8rem, 10vw, 3.5rem); }
+  .statement { gap: 0.35rem; padding: 3rem 1rem; }
+  .flip-line { font-size: clamp(1.35rem, 6.8vw, 2.4rem); letter-spacing: -0.03em; }
 }
 
 /* ========== RESULTS BENTO ========== */
@@ -711,7 +850,64 @@ body {
   align-items: start;
 }
 @media (min-width: 1024px) {
-  .cases-stage { grid-template-columns: 1.4fr 1fr; gap: 3rem; }
+  .cases-stage {
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "screen info"
+      "screen list";
+    gap: 1.5rem 3rem;
+  }
+  .cases-screen-wrap { grid-area: screen; }
+  .cases-info        { grid-area: info; }
+  .cases-list        { grid-area: list; }
+}
+.s-desc-desktop { display: none; }
+.s-desc-mobile { display: block; }
+@media (min-width: 1024px) {
+  .s-desc-desktop { display: block; }
+  .s-desc-mobile { display: none; }
+}
+@media (max-width: 1023px) {
+  .cases-section .s-desc { margin: 0.75rem auto 1.5rem; }
+  .cases-stage {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .cases-screen-wrap { order: 1; width: 100%; align-self: stretch; }
+  .cases-info        { order: 2; width: 100%; }
+  .cases-list        { display: none; }
+  .cases-screen-dots { display: none; }
+  /* Mobile arrows — always visible */
+  .cases-screen-arrow { opacity: 0.92; }
+}
+@media (min-width: 1024px) {
+  .cases-progress { display: none; }
+}
+.cases-progress {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  padding: 0 0.25rem;
+}
+.cases-progress-label {
+  font-size: 0.82rem; font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.cases-progress-dots {
+  display: flex; gap: 0.3rem; flex: 1;
+  justify-content: flex-end;
+}
+.cases-progress-dots span {
+  display: block;
+  flex: 1; max-width: 22px; height: 3px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.25);
+  transition: background 0.25s ease;
+}
+.cases-progress-dots span.is-active {
+  background: var(--white);
 }
 
 /* LEFT — screenshot panel */
@@ -764,7 +960,9 @@ body {
   pointer-events: none;
 }
 @media (max-width: 768px) {
-  .cases-screen-arrow { opacity: 0.85; width: 38px; height: 38px; }
+  .cases-screen-arrow { opacity: 0.85; width: 44px; height: 44px; font-size: 1.4rem; }
+  .cases-screen-arrow.prev { left: 10px; }
+  .cases-screen-arrow.next { right: 10px; }
 }
 .cases-screen-img {
   position: absolute; inset: 0;
@@ -785,6 +983,11 @@ body {
   cursor: pointer;
   padding: 0;
   transition: all 0.25s ease;
+  position: relative;
+}
+.cases-screen-dots button::after {
+  content: ''; position: absolute;
+  inset: -18px -6px;
 }
 .cases-screen-dots button:hover { background: rgba(255,255,255,0.7); }
 .cases-screen-dots button.is-active {
@@ -890,6 +1093,13 @@ body {
   transform: translateX(3px);
 }
 
+/* Mobile cases — slider mode (must come after base styles to override) */
+@media (max-width: 1023px) {
+  .cases-list        { display: none; }
+  .cases-screen-dots { display: none; }
+  .cases-screen-arrow { opacity: 0.92; }
+}
+
 /* ========== PROGRAM TIMELINE ========== */
 .program-section {
   padding: clamp(60px, 8vw, 120px) 0;
@@ -905,42 +1115,73 @@ body {
   color: var(--black); line-height: 1;
 }
 
-.timeline { position: relative; margin-top: 3rem; }
+.timeline { position: relative; margin-top: 3rem; padding-left: 3.25rem; }
+@media (min-width: 768px) { .timeline { padding-left: 4.5rem; } }
+.timeline::before {
+  content: ""; position: absolute;
+  left: 1.25rem; top: 0.5rem; bottom: 0.5rem; width: 2px;
+  background: var(--border);
+  border-radius: 2px;
+}
+@media (min-width: 768px) { .timeline::before { left: 1.75rem; } }
 
-.timeline-item { position: relative; padding-bottom: 1.5rem; }
+.timeline-progress {
+  position: absolute; left: 1.25rem; top: 0.5rem; width: 2px;
+  background: linear-gradient(180deg, #FFD54F, #FFA000);
+  height: 0; z-index: 1; border-radius: 2px;
+  transition: height 0.4s ease-out;
+}
+@media (min-width: 768px) { .timeline-progress { left: 1.75rem; } }
+
+.timeline-item { position: relative; padding-bottom: 2.5rem; }
 .timeline-item:last-child { padding-bottom: 0; }
 
-/* Большая цифра ВНУТРИ карточки — никаких отдельных кругов */
+/* Круглешок-маркер ровно по центру вертикальной линии */
 .timeline-marker {
   position: absolute;
-  top: 1.5rem; left: 1.75rem;
-  font-size: 1.6rem; font-weight: 900; line-height: 1;
-  color: rgba(0,0,0,0.12);
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  transition: color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Mobile: line center = 1.25rem + 1px from .timeline left.
+     Card edge = 3.25rem from .timeline left.
+     => marker center at -2rem - 1px from card edge.
+     Marker is 44px wide, so left = center - 22px. */
+  left: calc(-2rem - 1px - 22px); top: 1.25rem;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 800; color: var(--text-light);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+  transition: background 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              color 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 2;
-  pointer-events: none;
-  background: none; border: none; box-shadow: none;
-  width: auto; height: auto; border-radius: 0;
-  display: block;
-  text-shadow: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 @media (min-width: 768px) {
-  .timeline-marker { font-size: 2rem; top: 1.75rem; left: 2.25rem; }
+  /* Desktop: line center = 1.75rem + 1px. Card edge = 4.5rem.
+     => marker center at -2.75rem - 1px from card edge.
+     Marker is 50px wide, so left = center - 25px. */
+  .timeline-marker {
+    left: calc(-2.75rem - 1px - 25px);
+    width: 50px; height: 50px; font-size: 0.9rem; top: 1.4rem;
+  }
 }
 .timeline-item.revealed .timeline-marker {
-  color: var(--orange);
-  animation: markerFade 0.6s ease-out;
+  background: linear-gradient(135deg, #FFD54F 0%, #FFA000 100%);
+  border-color: var(--orange);
+  color: var(--white);
+  box-shadow: 0 6px 18px rgba(255,160,0,0.30);
+  animation: markerPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-@keyframes markerFade {
-  0% { opacity: 0; transform: translateY(-6px); }
-  100% { opacity: 1; transform: translateY(0); }
+@keyframes markerPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .timeline-card {
   position: relative;
-  border-radius: 22px; padding: 1.5rem 2rem 1.75rem 4.5rem;
+  border-radius: 22px; padding: 1.5rem 2rem 1.75rem;
   border: 1px solid rgba(0,0,0,0.06);
   background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFB 100%);
   transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -948,7 +1189,7 @@ body {
   box-shadow: 0 1px 0 rgba(0,0,0,0.02);
 }
 @media (min-width: 768px) {
-  .timeline-card { padding: 1.75rem 2.5rem 2rem 5.5rem; }
+  .timeline-card { padding: 1.75rem 2.5rem 2rem; }
 }
 .timeline-item.revealed .timeline-card {
   opacity: 1; transform: translateX(0) translateY(0);
@@ -1118,13 +1359,15 @@ body {
 .mindset-eyebrow-wrap {
   position: absolute;
   top: -20px;
-  left: clamp(2rem, 4vw, 3.5rem);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 5;
 }
 @media (min-width: 900px) {
-  /* Centered above 280px photo column inside grid 280px 1fr with gap */
+  /* Photo is 280px wide, sits inside card padding (clamp 2-3.5rem).
+     Pill center should align with photo center → padding + 140px. */
   .mindset-eyebrow-wrap {
-    left: calc(clamp(2rem, 4vw, 3.5rem) + 80px);
+    left: calc(clamp(2rem, 4vw, 3.5rem) + 140px);
   }
 }
 .mindset-top-pill {
@@ -1272,7 +1515,7 @@ body {
   border-radius: 28px;
   padding: clamp(2rem, 4vw, 3.5rem);
   display: grid; grid-template-columns: 1fr; gap: 2rem;
-  position: relative; overflow: hidden;
+  position: relative;
   box-shadow: 0 12px 40px rgba(0,0,0,0.04);
 }
 @media (min-width: 900px) {
@@ -1318,6 +1561,33 @@ body {
   border-left: 3px solid var(--orange);
   border-radius: 0 12px 12px 0;
   font-style: italic;
+}
+.case-quote-toggle { display: none; }
+.case-quote-closer { display: none; }
+@media (max-width: 767px) {
+  .case-quote-rest {
+    display: none;
+  }
+  .case-quote-closer { display: inline; }
+  .case-quote.is-expanded .case-quote-rest { display: inline; }
+  .case-quote.is-expanded .case-quote-closer { display: none; }
+  .case-quote-toggle {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    margin-top: 0.9rem;
+    padding: 0.55rem 1rem;
+    background: var(--white);
+    color: var(--orange);
+    border: 1.5px solid rgba(255,140,0,0.4);
+    border-radius: 9999px;
+    font-size: 0.85rem; font-weight: 700; font-style: normal;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .case-quote-toggle:hover,
+  .case-quote-toggle:active {
+    background: var(--orange); color: var(--white);
+    border-color: var(--orange);
+  }
 }
 .case-arc {
   display: grid; grid-template-columns: 1fr; gap: 1rem;
@@ -1463,11 +1733,19 @@ body {
   margin-top: 1.5rem;
 }
 .worth-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--border); border: none; padding: 0;
-  cursor: pointer; transition: all 0.3s ease;
+  width: 24px; height: 24px;
+  background: transparent; border: none; padding: 0;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  position: relative;
 }
-.worth-dot.active {
+.worth-dot::before {
+  content: '';
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s ease;
+}
+.worth-dot.active::before {
   background: var(--orange); transform: scale(1.4);
 }
 
@@ -2100,13 +2378,32 @@ body {
 }
 
 /* ========== EXPERT ========== */
-#expert .s-title { margin-left: -0.03em; }
+#expert { padding-top: 0; }
+@media (max-width: 767px) {
+  #expert { padding-top: 2.5rem; }
+}
+.expert-band {
+  background: var(--orange);
+  padding: clamp(14px, 1.6vw, 22px) 0;
+  margin-bottom: clamp(40px, 5vw, 70px);
+}
+#expert .expert-band .s-title { color: var(--white); margin-bottom: 0; }
 .expert-layout {
   display: grid; grid-template-columns: 1fr; gap: 3rem;
   margin-top: 3rem;
 }
 @media (min-width: 768px) { .expert-layout { grid-template-columns: 1fr 1fr; gap: 4rem; } }
 .expert-info { display: flex; flex-direction: column; justify-content: flex-start; }
+@media (max-width: 767px) {
+  .expert-layout { gap: 1.75rem; }
+  .expert-info { display: contents; }
+  .expert-name       { order: 1; }
+  .expert-role       { order: 2; }
+  .expert-bio        { order: 3; }
+  .expert-photo-wrap { order: 4; }
+  .expert-stats      { order: 5; margin-top: 0.5rem; }
+  .expert-badges     { order: 6; margin-bottom: 0; }
+}
 .expert-name {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 800; line-height: 1.1; letter-spacing: -0.04em;
@@ -2147,11 +2444,17 @@ body {
   display: flex; gap: 0.4rem; justify-content: center;
 }
 .expert-photo-dot {
+  width: 24px; height: 24px;
+  background: transparent; border: none; cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.expert-photo-dot::before {
+  content: '';
   width: 8px; height: 8px; border-radius: 50%;
-  background: #DDD; border: none; cursor: pointer; padding: 0;
+  background: #DDD;
   transition: background 0.3s ease, transform 0.3s ease;
 }
-.expert-photo-dot.active {
+.expert-photo-dot.active::before {
   background: var(--orange); transform: scale(1.3);
 }
 /* Badges */
@@ -2508,6 +2811,9 @@ body {
 .cin-legal-entity {
   font-size: 0.95rem; color: var(--text); font-weight: 600;
 }
+.cin-legal-details {
+  font-size: 0.8rem; color: var(--text-muted); line-height: 1.55;
+}
 .cin-legal {
   display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
 }
@@ -2542,9 +2848,11 @@ body {
 .cookie-text { flex: 1; }
 .cookie-text a { color: var(--orange); text-decoration: none; border-bottom: 1px solid rgba(255,160,0,0.35); }
 .cookie-text a:hover { border-bottom-color: var(--orange); }
+.cookie-btns {
+  display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap;
+}
 .cookie-btn {
-  align-self: flex-end;
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 1.1rem;
   border-radius: 9999px; border: none;
   background: var(--text); color: var(--white);
   font-size: 0.78rem; font-weight: 600; cursor: pointer;
@@ -2552,6 +2860,11 @@ body {
   transition: background 0.2s, transform 0.2s;
 }
 .cookie-btn:hover { background: #000; transform: translateY(-1px); }
+.cookie-btn--secondary {
+  background: transparent; color: var(--text-muted);
+  border: 1px solid rgba(0,0,0,0.12);
+}
+.cookie-btn--secondary:hover { background: rgba(0,0,0,0.04); color: var(--text); }
 @media (max-width: 600px) {
   .cookie-banner { left: 0.75rem; right: 0.75rem; max-width: none; bottom: 0.75rem; }
 }
@@ -2733,10 +3046,10 @@ body {
 .film-timeline {
   display: flex; align-items: center; justify-content: center;
   gap: 0;
-  max-width: 960px; margin: 2rem auto 0; padding: 0 2rem;
+  max-width: 960px; margin: 2rem auto 0; padding: 0 1rem;
 }
 .film-step {
-  flex: 1; text-align: center; position: relative; cursor: pointer;
+  flex: 1; min-width: 0; text-align: center; position: relative; cursor: pointer;
 }
 .film-step-time {
   font-size: 0.8rem; font-weight: 700; color: var(--text-muted);
@@ -2757,9 +3070,15 @@ body {
   font-size: 0.7rem; color: var(--text-light);
 }
 .film-step-line {
-  flex: 0 0 auto; width: 40px; height: 2px;
+  flex: 0 1 40px; min-width: 8px; height: 2px;
   background: #ddd; margin: 0 -4px;
   margin-top: 0.5rem; align-self: center;
+}
+@media (max-width: 520px) {
+  .film-timeline { padding: 0 0.5rem; }
+  .film-step-time { font-size: 0.65rem; }
+  .film-step-label { font-size: 0.58rem; }
+  .film-step-line { flex: 0 1 16px; min-width: 4px; }
 }
 
 </style>
@@ -2784,16 +3103,26 @@ body {
     <a href="#pricing">Тарифы</a>
     <a href="#faq">FAQ</a>
   </nav>
-  <a href="#pricing" class="header-cta">Записаться</a>
+  <div class="header-actions">
+    <a href="#pricing" class="header-cta">Записаться</a>
+    <button type="button" class="header-burger" id="headerBurger" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#program">Программа</a>
+  <a href="#pricing">Тарифы</a>
+  <a href="#faq">FAQ</a>
+</div>
 
 <!-- ==================== HERO ==================== -->
 <section class="hero" id="hero">
   <div class="hero-shader" id="heroShader"></div>
   <div class="hero-inner">
     <div class="hero-title-big" id="heroVibe">ВАЙБ</div>
-    <h1 class="hero-subtitle hero-fade hero-fade-1">ЗАРАБАТЫВАЙ БОЛЬШЕ С ПОМОЩЬЮ ИИ</h1>
-    <p class="hero-desc hero-fade hero-fade-2">Неважно, чем ты занимаешься — ИИ усилит тебя в разы</p>
+    <h1 class="hero-subtitle hero-fade hero-fade-1">ЗАРАБАТЫВАЙ БОЛЬШЕ<br class="br-mobile"> С ПОМОЩЬЮ ИИ</h1>
+    <p class="hero-desc hero-fade hero-fade-2">Неважно, чем ты занимаешься —<br class="br-mobile"> ИИ усилит тебя в разы</p>
     <div class="hero-rotate hero-fade hero-fade-3" id="heroRotate">
       <div class="hero-rotate-item active">&bull; 7 уроков</div>
       <div class="hero-rotate-item">&bull; живые эфиры</div>
@@ -2801,7 +3130,7 @@ body {
       <div class="hero-rotate-item">&bull; без кода</div>
       <div class="hero-rotate-item">&bull; без опыта</div>
     </div>
-    <a href="#pricing" class="hero-cta-btn hero-fade hero-fade-4">Хочу на курс</a>
+    <a href="#pricing" class="hero-cta-btn hero-fade hero-fade-4">Хочу на вайб</a>
   </div>
 </section>
 
@@ -2859,7 +3188,7 @@ body {
 
 <!-- ==================== STATEMENT (Flip text) ==================== -->
 <section class="statement" id="statement">
-  <div class="flip-line" data-flip="Не курс по промптам">Не курс по промптам</div>
+  <div class="flip-line" data-flip="Не лекции по промптам">Не лекции по промптам</div>
   <div class="flip-line" data-flip="Смена мышления">Смена мышления</div>
   <div class="flip-line" data-flip="AI-First навык">AI-First навык</div>
   <div class="flip-line" data-flip="Нового поколения">Нового поколения</div>
@@ -2870,7 +3199,7 @@ body {
   <div class="s-container">
     <div class="audience-grid">
       <div class="audience-left reveal">
-        <h2 class="audience-title">Это <span class="accent">не</span> курс программирования</h2>
+        <h2 class="audience-title">Это <span class="accent">не</span> про <span class="accent">программирование</span></h2>
         <p class="audience-lead">ИИ-агент — не код, а помощник. Это новый способ работать с задачами в&nbsp;любой профессии.</p>
       </div>
       <div class="audience-right reveal reveal-delay-1">
@@ -2919,11 +3248,14 @@ body {
         <span class="mindset-top-pill">Реальный кейс</span>
       </div>
       <div class="case-avatar-wrap">
-        <div class="case-avatar"><img src="anya.jpg" alt="Аня — ИИ-креатор" loading="lazy"></div>
+        <div class="case-avatar"><img src="anya.jpg" alt="Аня — ИИ-креатор" loading="lazy" width="450" height="600"></div>
       </div>
       <div class="case-content">
         <div class="case-name">Аня <span>· ИИ-креатор, 26&nbsp;лет</span></div>
-        <div class="case-quote">«Долго не хотела переходить с&nbsp;ChatGPT на Claude — думала, это для&nbsp;разработчиков. Оказалось — нет. Это про экономию времени и&nbsp;новый подход к&nbsp;задачам.<br><br>Раньше делала 10 генераций за&nbsp;час руками. Теперь пишу один запрос на&nbsp;автоматизацию — пока агент работает, открываю следующий заказ.<br><br>Удивительно, как мало людей этим пользуется. Всего&nbsp;100$ в&nbsp;месяц — и&nbsp;работа разделилась на&nbsp;до и&nbsp;после.»</div>
+        <div class="case-quote" id="caseQuote">
+          <span class="case-quote-part case-quote-intro">«Долго не хотела переходить с&nbsp;ChatGPT на Claude — думала, это для&nbsp;разработчиков. Оказалось — нет. Это про экономию времени и&nbsp;новый подход к&nbsp;задачам.</span><span class="case-quote-rest"><br><br>Раньше делала 10 генераций за&nbsp;час руками. Теперь пишу один запрос на&nbsp;автоматизацию — пока агент работает, открываю следующий заказ.<br><br>Удивительно, как мало людей этим пользуется. Всего&nbsp;100$ в&nbsp;месяц — и&nbsp;работа разделилась на&nbsp;до и&nbsp;после.»</span><span class="case-quote-closer">»</span>
+          <button type="button" class="case-quote-toggle" id="caseQuoteToggle" aria-expanded="false">Показать полностью ↓</button>
+        </div>
         <div class="case-arc">
           <div class="arc-block">
             <div class="arc-label">Было</div>
@@ -2945,7 +3277,7 @@ body {
     <div class="ps-grid">
       <div class="ps-item reveal">
         <div class="ps-screen">
-          <img src="project-identika.png" alt="Айдентика — генератор брендированных предметов" loading="lazy">
+          <img src="project-identika.png" alt="Айдентика — генератор брендированных предметов" loading="lazy" width="3420" height="1954">
         </div>
         <div class="ps-caption">
           <span class="ps-caption-tag">Айдентика</span>
@@ -2955,7 +3287,7 @@ body {
       </div>
       <div class="ps-item reveal reveal-delay-1">
         <div class="ps-screen">
-          <img src="project-renderi.png" alt="Renderi — фотореалистичные рендеры по референсам" loading="lazy">
+          <img src="project-renderi.png" alt="Renderi — фотореалистичные рендеры по референсам" loading="lazy" width="3420" height="1500">
         </div>
         <div class="ps-caption">
           <span class="ps-caption-tag">Рендеры</span>
@@ -2975,7 +3307,7 @@ body {
   <div class="results-spiral" id="spiralContainer"></div>
   <div class="results-inner">
     <header class="results-header reveal">
-      <h2>Твой результат после курса</h2>
+      <h2>Твой результат после практикума</h2>
     </header>
 
     <div class="bento-grid">
@@ -3023,41 +3355,42 @@ body {
   <div class="s-container">
     <div class="reveal" style="text-align:center;">
       <h2 class="s-title">Реальные проекты,<br>сделанные с&nbsp;ИИ</h2>
-      <p class="s-desc">Кликай по&nbsp;проектам справа &mdash; смотри, как выглядит результат.</p>
+      <p class="s-desc s-desc-desktop">Кликай по&nbsp;проектам справа &mdash; смотри, как выглядит результат.</p>
+      <p class="s-desc s-desc-mobile">Выбери проект — смотри, как выглядит результат.</p>
     </div>
 
     <div class="cases-stage reveal reveal-delay-1">
-      <!-- LEFT: screenshot slider with arrows + dots -->
       <div class="cases-screen-wrap">
         <div class="cases-screen" id="casesScreen">
-          <img class="cases-screen-img is-active" id="casesScreenImg" src="case-content-1.png" alt="" loading="lazy">
-          <button type="button" class="cases-screen-arrow prev" id="casesPrevBtn" aria-label="Предыдущий скрин">‹</button>
-          <button type="button" class="cases-screen-arrow next" id="casesNextBtn" aria-label="Следующий скрин">›</button>
+          <img class="cases-screen-img is-active" id="casesScreenImg" src="case-content-1.png" alt="" loading="lazy" width="3420" height="1972">
+          <button type="button" class="cases-screen-arrow prev" id="casesPrevBtn" aria-label="Предыдущий">‹</button>
+          <button type="button" class="cases-screen-arrow next" id="casesNextBtn" aria-label="Следующий">›</button>
         </div>
         <div class="cases-screen-dots" id="casesScreenDots"></div>
+        <div class="cases-progress" id="casesProgress">
+          <span class="cases-progress-label"><span id="casesProgressNum">1</span> из <span id="casesProgressTotal">6</span></span>
+          <div class="cases-progress-dots" id="casesProgressDots"></div>
+        </div>
       </div>
 
-      <!-- RIGHT: project info + list -->
-      <div class="cases-side">
-        <div class="cases-info" id="casesInfo">
-          <span class="cases-info-tag" id="casesInfoTag">Контент</span>
-          <h3 class="cases-info-title" id="casesInfoTitle">Система ведения соцсетей</h3>
-          <p class="cases-info-desc" id="casesInfoDesc">Парсинг источников, автоматическое написание постов, мониторинг метрик, аналитика и планирование контента в одном месте.</p>
-          <div class="cases-info-meta">
-            <div class="cases-info-meta-item">
-              <span class="cases-meta-label">Срок</span>
-              <span class="cases-meta-value" id="casesInfoTime">3 дня</span>
-            </div>
-            <div class="cases-info-meta-item">
-              <span class="cases-meta-label">Заказчик</span>
-              <span class="cases-meta-value" id="casesInfoClient">Контент-агентство</span>
-            </div>
+      <div class="cases-info" id="casesInfo">
+        <span class="cases-info-tag" id="casesInfoTag">Контент</span>
+        <h3 class="cases-info-title" id="casesInfoTitle">Система ведения соцсетей</h3>
+        <p class="cases-info-desc" id="casesInfoDesc">Парсинг источников, автоматическое написание постов, мониторинг метрик, аналитика и планирование контента в одном месте.</p>
+        <div class="cases-info-meta">
+          <div class="cases-info-meta-item">
+            <span class="cases-meta-label">Срок</span>
+            <span class="cases-meta-value" id="casesInfoTime">3 дня</span>
+          </div>
+          <div class="cases-info-meta-item">
+            <span class="cases-meta-label">Заказчик</span>
+            <span class="cases-meta-value" id="casesInfoClient">Контент-агентство</span>
           </div>
         </div>
+      </div>
 
-        <div class="cases-list" id="casesList">
-          <!-- список рендерится из JS -->
-        </div>
+      <div class="cases-list" id="casesList">
+        <!-- список рендерится из JS -->
       </div>
     </div>
   </div>
@@ -3077,6 +3410,7 @@ body {
       <h2 class="s-title">7 уроков — и ты умеешь то,<br>что не умеет 99%</h2>
     </div>
     <div class="timeline" id="timeline">
+      <div class="timeline-progress" id="timelineProgress"></div>
 
       <div class="timeline-item">
         <div class="timeline-marker">01</div>
@@ -3109,30 +3443,30 @@ body {
       <div class="timeline-item">
         <div class="timeline-marker">03</div>
         <div class="timeline-card">
-          <h3>Техническая база: всё, чтобы твой проект работал</h3>
+          <h3>Техническая база: чтобы проект работал 24/7</h3>
           <ul>
-            <li>Простыми словами: где «живёт» проект и что нужно, чтобы он не&nbsp;пропадал, когда ты закрываешь ноутбук.</li>
-            <li>Что такое домен, хостинг, база данных — на пальцах, без жаргона. Поймёт даже тот, кто никогда не&nbsp;слышал этих слов.</li>
-            <li>Как сделать, чтобы проект был доступен с&nbsp;телефона, коллегам, клиентам — круглосуточно.</li>
-            <li>Сколько это реально стоит и&nbsp;как не&nbsp;переплатить.</li>
-            <li>Всё настраиваем руками агента — он&nbsp;разворачивает, объясняет каждый шаг, ты только подтверждаешь.</li>
+            <li>Где «живёт» проект — простыми словами.</li>
+            <li>Домен, хостинг, база — что это и зачем.</li>
+            <li>Доступ с телефона, коллегам, клиентам — круглосуточно.</li>
+            <li>Сколько стоит и как не переплатить.</li>
+            <li>Агент разворачивает сам — ты подтверждаешь.</li>
           </ul>
-          <div class="timeline-result">Понимаешь техническую базу так, будто ты в&nbsp;ней с&nbsp;детства. Проект работает без твоего участия.</div>
+          <div class="timeline-result">Проект работает без твоего участия.</div>
         </div>
       </div>
 
       <div class="timeline-item">
         <div class="timeline-marker">04</div>
         <div class="timeline-card">
-          <h3>Настраиваем агента под себя: знания, навыки, инструменты</h3>
+          <h3>Настраиваем агента под себя</h3>
           <ul>
-            <li>Как «прокачать» агента под твои задачи — дать ему контекст о&nbsp;тебе, твоей работе, клиентах, продукте. Чтобы он отвечал как родной, а&nbsp;не&nbsp;как новичок.</li>
-            <li>Готовые «надстройки» (MCP, плагины, скиллы — звучит сложно, по&nbsp;факту это просто доп. умения для агента).</li>
-            <li>Подключаем популярные сервисы — почту, заметки, диск, мессенджеры, CRM. Агент начинает в&nbsp;них работать вместо тебя.</li>
-            <li>Что включать сразу, а&nbsp;что не&nbsp;нужно — чтобы было полезно, но&nbsp;не&nbsp;запутаться.</li>
-            <li>Практика: настраиваем твоего агента прямо на&nbsp;эфире — после урока он&nbsp;уже работает как ты хочешь.</li>
+            <li>Прокачиваем агента под твои задачи и контекст.</li>
+            <li>MCP, плагины, скиллы — что это простыми словами.</li>
+            <li>Подключаем почту, заметки, диск, мессенджеры, CRM.</li>
+            <li>Что включать сразу, а что не&nbsp;нужно.</li>
+            <li>Практика: настраиваем твоего агента на&nbsp;эфире.</li>
           </ul>
-          <div class="timeline-result">У&nbsp;тебя свой агент, заточенный под твои задачи и&nbsp;твои инструменты. Не&nbsp;универсальный чат — а&nbsp;твой помощник.</div>
+          <div class="timeline-result">У тебя свой агент — заточенный под твои задачи.</div>
         </div>
       </div>
 
@@ -3267,8 +3601,8 @@ body {
   <div class="worth-lamp"><div class="worth-lamp-line"></div></div>
   <div class="worth-inner">
     <div class="reveal">
-      <h2 class="s-title">На курсе мы работаем<br>с платными ИИ-агентами</h2>
-      <p class="s-desc">Это не стоимость курса — это подписка на инструмент,<br>с которым ты будешь работать.</p>
+      <h2 class="s-title">На практикуме мы работаем<br>с платными ИИ-агентами</h2>
+      <p class="s-desc">Это не стоимость практикума — это подписка на инструмент,<br>с которым ты будешь работать.</p>
     </div>
 
     <div class="worth-stack reveal" id="worthStack">
@@ -3293,11 +3627,11 @@ body {
         <div class="worth-card-desc">Вместе с инструментом растёт и ваша ценность на рынке.</div>
       </div>
     </div>
-    <div class="worth-dots" id="worthDots">
-      <button class="worth-dot active" data-i="0"></button>
-      <button class="worth-dot" data-i="1"></button>
-      <button class="worth-dot" data-i="2"></button>
-      <button class="worth-dot" data-i="3"></button>
+    <div class="worth-dots" id="worthDots" role="tablist">
+      <button class="worth-dot active" data-i="0" aria-label="Слайд 1" type="button"></button>
+      <button class="worth-dot" data-i="1" aria-label="Слайд 2" type="button"></button>
+      <button class="worth-dot" data-i="2" aria-label="Слайд 3" type="button"></button>
+      <button class="worth-dot" data-i="3" aria-label="Слайд 4" type="button"></button>
     </div>
 
     <div class="worth-price-row reveal">
@@ -3423,17 +3757,21 @@ body {
 
 <!-- ==================== EXPERT ==================== -->
 <section class="section-white" id="expert">
-  <div class="s-container">
-    <div class="reveal">
-      <h2 class="s-title">Кто ведёт курс</h2>
+  <div class="expert-band">
+    <div class="s-container">
+      <div class="reveal">
+        <h2 class="s-title">Кто ведёт практикум</h2>
+      </div>
     </div>
+  </div>
+  <div class="s-container">
     <div class="expert-layout">
       <div class="expert-info">
         <div class="expert-name reveal">Егор Борисенко</div>
 
         <div class="expert-role reveal reveal-delay-1">
-          Ведущий специалист по ИИ, НМ-Тех<br>
-          Консультант по генеративному ИИ, УрГЮУ
+          Ведущий специалист по ИИ, НМ-Тех.<br>
+          Консультант по генеративному ИИ, УрГЮУ.
         </div>
 
         <div class="expert-bio reveal reveal-delay-1">
@@ -3466,14 +3804,14 @@ body {
       <div class="expert-photo-wrap reveal reveal-delay-2">
         <div class="expert-photo-glow"></div>
         <div class="expert-photo-slider" id="expertPhotoSlider">
-          <img src="egor-speaker.jpg" alt="Егор Борисенко — спикер" class="active" loading="lazy">
-          <img src="egor-photo-4.jpg" alt="Егор Борисенко — лауреат" loading="lazy">
-          <img src="egor-photo-8.jpg" alt="Егор Борисенко — выступление" loading="lazy">
+          <img src="egor-speaker.jpg" alt="Егор Борисенко — спикер" class="active" loading="lazy" width="640" height="640">
+          <img src="egor-photo-4.jpg" alt="Егор Борисенко — лауреат" loading="lazy" width="960" height="1280">
+          <img src="egor-photo-8.jpg" alt="Егор Борисенко — выступление" loading="lazy" width="1102" height="1378">
         </div>
-        <div class="expert-photo-dots" id="expertPhotoDots">
-          <button class="expert-photo-dot active" data-i="0"></button>
-          <button class="expert-photo-dot" data-i="1"></button>
-          <button class="expert-photo-dot" data-i="2"></button>
+        <div class="expert-photo-dots" id="expertPhotoDots" role="tablist">
+          <button class="expert-photo-dot active" data-i="0" aria-label="Фото 1" type="button"></button>
+          <button class="expert-photo-dot" data-i="1" aria-label="Фото 2" type="button"></button>
+          <button class="expert-photo-dot" data-i="2" aria-label="Фото 3" type="button"></button>
         </div>
       </div>
     </div>
@@ -3536,14 +3874,14 @@ body {
           <h3>Для каких профессий подходит?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Для всех без исключения. Предприниматели, маркетологи, дизайнеры, менеджеры, фрилансеры, юристы, преподаватели, врачи — AI усиливает любую роль и любую профессию. Неважно, чем ты занимаешься сейчас: курс одинаково работает и для тех, кто хочет автоматизировать рутину на работе, и для тех, кто запускает свой проект.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Для всех без исключения. Предприниматели, маркетологи, дизайнеры, менеджеры, фрилансеры, юристы, преподаватели, врачи — AI усиливает любую роль и любую профессию. Неважно, чем ты занимаешься сейчас: практикум одинаково работает и для тех, кто хочет автоматизировать рутину на работе, и для тех, кто запускает свой проект.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
           <h3>Нужен ли опыт в программировании?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Нет. Курс создан для людей без технического бэкграунда. Ты не будешь писать код — ты будешь управлять AI-агентом, который делает это за тебя.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Нет. Практикум создан для людей без технического бэкграунда. Ты не будешь писать код — ты будешь управлять AI-агентом, который делает это за тебя.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
@@ -3554,10 +3892,10 @@ body {
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
-          <h3>Что я смогу сделать после курса?</h3>
+          <h3>Что я смогу сделать после практикума?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Практически всё, что угодно. Если ты можешь это описать словами — ты сможешь это собрать. Автоматизация рутины, внутренние инструменты для команды, мини-сервисы под свои задачи, личные ассистенты, интеграции между системами, MVP идеи за вечер. Курс даёт не набор готовых рецептов, а универсальный навык — превращать любую идею в работающий продукт своими руками.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Практически всё, что угодно. Если ты можешь это описать словами — ты сможешь это собрать. Автоматизация рутины, внутренние инструменты для команды, мини-сервисы под свои задачи, личные ассистенты, интеграции между системами, MVP идеи за вечер. Практикум даёт не набор готовых рецептов, а универсальный навык — превращать любую идею в работающий продукт своими руками.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
@@ -3571,7 +3909,7 @@ body {
           <h3>А если у меня нет идеи для проекта?</h3>
           <svg class="faq-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </div>
-        <div class="faq-answer"><div class="faq-answer-inner">Не проблема — у нас есть готовые шаблоны проектов, с которых можно стартовать. Например, один из шаблонов — собрать своего телеграм-бота с нуля: каждый участник выходит с курса с рабочим ботом под свою задачу. Также есть шаблоны лендинга, мини-сервиса для автоматизации работы и внутреннего инструмента для команды. Каждый шаблон — это реальный проект, который ты собираешь вместе с группой и адаптируешь под себя.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Не проблема — у нас есть готовые шаблоны проектов, с которых можно стартовать. Например, один из шаблонов — собрать своего телеграм-бота с нуля: каждый участник выходит с практикума с рабочим ботом под свою задачу. Также есть шаблоны лендинга, мини-сервиса для автоматизации работы и внутреннего инструмента для команды. Каждый шаблон — это реальный проект, который ты собираешь вместе с группой и адаптируешь под себя.</div></div>
       </div>
       <div class="faq-item reveal">
         <div class="faq-question" onclick="toggleFaq(this.parentElement)">
@@ -3592,10 +3930,10 @@ body {
         <div>
           <div class="cin-brand-name">АГИ</div>
           <div class="cin-brand-tagline">Агенты <em>·</em> Без кода</div>
-          <div class="cin-brand-desc">Курс по работе с <span class="cin-hl">AI-агентами</span> для специалистов любых профессий. <span class="cin-hl">Без кода, без опыта.</span></div>
+          <div class="cin-brand-desc">Практикум по работе с <span class="cin-hl">AI-агентами</span> для специалистов любых профессий. <span class="cin-hl">Без кода, без опыта.</span></div>
         </div>
         <div>
-          <div class="cin-col-title">Курс</div>
+          <div class="cin-col-title">Практикум</div>
           <div class="cin-col-links">
             <a href="#program">Программа</a>
             <a href="#cases">Кейсы</a>
@@ -3606,9 +3944,9 @@ body {
         <div>
           <div class="cin-col-title">Контакты</div>
           <div class="cin-col-links">
-            <a href="https://t.me/agiage_bot" target="_blank">Telegram-бот</a>
+            <a href="https://t.me/agiage_bot?start=src_footer" target="_blank">Telegram-бот</a>
             <a href="mailto:agi.help@yandex.ru">agi.help@yandex.ru</a>
-            <a href="https://t.me/borisenkoegor" target="_blank">Автор курса · @borisenkoegor</a>
+            <a href="https://t.me/borisenkoegor" target="_blank">Автор практикума · @borisenkoegor</a>
           </div>
         </div>
         <div>
@@ -3623,7 +3961,12 @@ body {
       <div class="cin-divider"></div>
       <div class="cin-bottom">
         <div class="cin-copy-wrap">
-          <div class="cin-legal-entity">ИП Борисенко Е.Т.</div>
+          <div class="cin-legal-entity">ИП Борисенко Егор Тимофеевич</div>
+          <div class="cin-legal-details">
+            ИНН 450140217101 &middot; ОГРНИП 326450000015144<br>
+            124527, г. Москва, г. Зеленоград, корп. 848<br>
+            Информационная продукция 16+
+          </div>
           <div class="cin-copy">&copy; 2026 АГИ &middot; Все права защищены</div>
         </div>
         <div class="cin-legal">
@@ -3650,24 +3993,33 @@ body {
 
 <!-- Cookie banner -->
 <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Согласие на использование cookies">
-  <div class="cookie-text">Сайт использует cookies для аналитики и улучшения работы. Продолжая, вы соглашаетесь с <a href="policy.html" target="_blank">Политикой обработки ПД</a>.</div>
-  <button class="cookie-btn" id="cookieAccept" type="button">Принять</button>
+  <div class="cookie-text">Сайт использует cookies. Технические — нужны для работы сайта, аналитические — помогают улучшать продукт. Подробнее в <a href="policy.html" target="_blank">Политике обработки ПД</a>.</div>
+  <div class="cookie-btns">
+    <button class="cookie-btn cookie-btn--secondary" id="cookieReject" type="button">Только необходимые</button>
+    <button class="cookie-btn" id="cookieAccept" type="button">Принять все</button>
+  </div>
 </div>
 
 <script>
 // === Cookie banner ===
 (function() {
   const banner = document.getElementById('cookieBanner');
-  const accepted = localStorage.getItem('cookieAccepted') === '1' || localStorage.getItem('cookieOk') === '1';
-  console.log('[cookie-banner]', { element: !!banner, accepted, storage: Object.keys(localStorage) });
+  const KEY = 'cookieConsent_v1';
+  const stored = localStorage.getItem(KEY);
   if (!banner) return;
-  if (accepted) { banner.remove(); return; }
+  if (stored === 'all' || stored === 'necessary') { banner.remove(); return; }
   setTimeout(() => banner.classList.add('visible'), 500);
-  document.getElementById('cookieAccept').addEventListener('click', () => {
-    localStorage.setItem('cookieAccepted', '1');
+  function close(choice) {
+    localStorage.setItem(KEY, choice);
+    localStorage.setItem(KEY + '_at', new Date().toISOString());
     banner.classList.remove('visible');
     setTimeout(() => banner.remove(), 400);
-  });
+    if (choice === 'all') {
+      window.dispatchEvent(new Event('cookieConsentAccepted'));
+    }
+  }
+  document.getElementById('cookieAccept').addEventListener('click', () => close('all'));
+  document.getElementById('cookieReject').addEventListener('click', () => close('necessary'));
 })();
 
 // === Force scroll to top on load ===
@@ -3752,6 +4104,38 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 50) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 }, { passive: true });
+
+// === Mobile burger menu ===
+(() => {
+  const burger = document.getElementById('headerBurger');
+  const menu = document.getElementById('mobileMenu');
+  if (!burger || !menu) return;
+  const close = () => {
+    burger.classList.remove('is-open');
+    menu.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  burger.addEventListener('click', () => {
+    const opened = menu.classList.toggle('is-open');
+    burger.classList.toggle('is-open', opened);
+    burger.setAttribute('aria-expanded', opened ? 'true' : 'false');
+    document.body.style.overflow = opened ? 'hidden' : '';
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+})();
+
+// === Mindset case quote: mobile-only expand ===
+(() => {
+  const q = document.getElementById('caseQuote');
+  const btn = document.getElementById('caseQuoteToggle');
+  if (!q || !btn) return;
+  btn.addEventListener('click', () => {
+    const expanded = q.classList.toggle('is-expanded');
+    btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    btn.textContent = expanded ? 'Свернуть ↑' : 'Показать полностью ↓';
+  });
+})();
 
 // === Scroll reveal ===
 const reveals = document.querySelectorAll('.reveal');
@@ -4040,6 +4424,23 @@ function toggleFaq(item) {
     });
   }
 
+  // Mobile progress: "X из N" + track of dots per project
+  const progressNum = document.getElementById('casesProgressNum');
+  const progressTotal = document.getElementById('casesProgressTotal');
+  const progressDots = document.getElementById('casesProgressDots');
+  function renderProgress() {
+    if (progressTotal) progressTotal.textContent = PROJECTS.length;
+    if (progressNum)   progressNum.textContent = pIdx + 1;
+    if (progressDots) {
+      progressDots.innerHTML = '';
+      PROJECTS.forEach((_, i) => {
+        const s = document.createElement('span');
+        if (i === pIdx) s.className = 'is-active';
+        progressDots.appendChild(s);
+      });
+    }
+  }
+
   function setScreen(src) {
     // crossfade: keep old img active until new one loads
     const next = document.createElement('img');
@@ -4068,6 +4469,7 @@ function toggleFaq(item) {
     sIdx = 0;
     renderInfo();
     renderDots();
+    renderProgress();
     setScreen(PROJECTS[pIdx].shots[0]);
     list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
       b.classList.toggle('is-active', idx === pIdx);
@@ -4089,15 +4491,31 @@ function toggleFaq(item) {
   const prevBtn = document.getElementById('casesPrevBtn');
   const nextBtn = document.getElementById('casesNextBtn');
 
+  const isMobileCases = () => window.matchMedia('(max-width: 1023px)').matches;
+
   function goPrev() {
     stopAuto();
+    // On mobile: switch project (not screen within project)
+    if (isMobileCases()) {
+      const prev = (pIdx - 1 + PROJECTS.length) % PROJECTS.length;
+      pIdx = prev;
+      sIdx = 0;
+      renderInfo();
+      renderDots();
+      renderProgress();
+      setScreen(PROJECTS[pIdx].shots[0]);
+      list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
+        b.classList.toggle('is-active', idx === pIdx);
+      });
+      return;
+    }
     if (sIdx > 0) { selectShot(sIdx - 1); return; }
-    // на первом скрине — предыдущий проект, последний скрин
     const prev = (pIdx - 1 + PROJECTS.length) % PROJECTS.length;
     pIdx = prev;
     sIdx = PROJECTS[pIdx].shots.length - 1;
     renderInfo();
     renderDots();
+    renderProgress();
     setScreen(PROJECTS[pIdx].shots[sIdx]);
     list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
       b.classList.toggle('is-active', idx === pIdx);
@@ -4105,12 +4523,25 @@ function toggleFaq(item) {
   }
   function goNext() {
     stopAuto();
+    if (isMobileCases()) {
+      const next = (pIdx + 1) % PROJECTS.length;
+      pIdx = next; sIdx = 0;
+      renderInfo();
+      renderDots();
+      renderProgress();
+      setScreen(PROJECTS[pIdx].shots[0]);
+      list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
+        b.classList.toggle('is-active', idx === pIdx);
+      });
+      return;
+    }
     const p = PROJECTS[pIdx];
     if (sIdx + 1 < p.shots.length) { selectShot(sIdx + 1); return; }
     const next = (pIdx + 1) % PROJECTS.length;
     pIdx = next; sIdx = 0;
     renderInfo();
     renderDots();
+    renderProgress();
     setScreen(PROJECTS[pIdx].shots[0]);
     list.querySelectorAll('.case-list-btn').forEach((b, idx) => {
       b.classList.toggle('is-active', idx === pIdx);
@@ -4141,6 +4572,7 @@ function toggleFaq(item) {
   renderList();
   renderInfo();
   renderDots();
+  renderProgress();
 })();
 
 // === Audience pills: flip-clock style profession swap ===
@@ -4594,7 +5026,7 @@ gsap.registerPlugin(ScrollTrigger);
     {name:'Рейс на Бали ✈️',lines:['$ МСК → Бали','→ 15-30 июня','→ Лучшая цена: 42K','→ Бронирую...','✅ Забронировано!']},
     {name:'Свидание 🕯️',lines:['$ Ресторан: 4.8+','→ Столик на 20:00','→ Плейлист для вечера','→ Цветы заказаны','✅ Всё идеально']},
     {name:'Отмазка 🫣',lines:['$ Генерирую причину','→ «Застрял в пробке»','→ Убедительность: 94%','→ Отправляю...','✅ Прокатило']},
-    {name:'Курс AGI Age 🔥',lines:['$ Записываю на курс','→ Тариф: Персональный','→ Оплата...','→ Чат подключён','✅ Добро пожаловать!']},
+    {name:'ВАЙБ 🔥',lines:['$ Записываюсь на ВАЙБ','→ Тариф: Персональный','→ Оплата...','→ Чат подключён','✅ Добро пожаловать!']},
     {name:'Непонятная задача',lines:['$ Получил задачу','→ Пользователь сам не знает','→ Ладно, разберусь...','→ Сделал. Лучше чем просили','→ Мы отличная команда 🤝']},
     {name:'Небоскрёб 🏗️',lines:['$ Задача: построить','→ Это... физический объект','→ Я пока так не умею 😅','! Пользователь настаивает','❌ ОШИБКА — я устал :(']},
     {name:'Котики 🐱',lines:['$ Скачать 1M котиков','→ Загрузка: 34%...','→ Мяу мяу мяу','→ МЯЯЯЯУУУ','🐱🐱🐱🐱🐱🐱🐱🐱']},
@@ -5037,6 +5469,33 @@ gsap.registerPlugin(ScrollTrigger);
   margin-top: -0.35rem;
 }
 
+.enroll-contact {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem;
+}
+.enroll-contact__option {
+  position: relative;
+  padding: 0.75rem 0.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+}
+.enroll-contact__option:hover { border-color: rgba(255,140,0,0.4); }
+.enroll-contact__option input { position: absolute; opacity: 0; pointer-events: none; }
+.enroll-contact__option.is-selected {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,160,0,0.12);
+  background: rgba(255,160,0,0.04);
+}
+.enroll-contact__icon { font-size: 1.05rem; line-height: 1; }
+.enroll-contact__label {
+  font-size: 0.82rem; font-weight: 600; color: var(--text);
+  letter-spacing: -0.01em;
+}
+
 .enroll-consent {
   display: flex; align-items: flex-start; gap: 0.7rem;
   font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;
@@ -5187,7 +5646,7 @@ button.price-cta {
     <div class="enroll-modal__head">
       <div class="enroll-modal__eyebrow">Запись · ВАЙБ</div>
       <h2 id="enrollTitle">Давай знакомиться</h2>
-      <p>После записи перекинем в Telegram — там вся инфа по курсу и связь.</p>
+      <p>После записи перекинем в Telegram — там вся инфа по практикуму и связь.</p>
     </div>
 
     <form class="enroll-form" id="enrollForm" novalidate>
@@ -5225,14 +5684,40 @@ button.price-cta {
 
       <div class="enroll-hint">Достаточно email или телефон — как удобнее связаться.</div>
 
+      <div class="enroll-field" data-field="contact_channel">
+        <label>Как удобнее связаться?</label>
+        <div class="enroll-contact" role="radiogroup" aria-label="Способ связи">
+          <label class="enroll-contact__option" data-channel="telegram">
+            <input type="radio" name="contact_channel" value="telegram" checked>
+            <span class="enroll-contact__icon">✈️</span>
+            <span class="enroll-contact__label">Telegram</span>
+          </label>
+          <label class="enroll-contact__option" data-channel="email">
+            <input type="radio" name="contact_channel" value="email">
+            <span class="enroll-contact__icon">✉️</span>
+            <span class="enroll-contact__label">Email</span>
+          </label>
+          <label class="enroll-contact__option" data-channel="phone">
+            <input type="radio" name="contact_channel" value="phone">
+            <span class="enroll-contact__icon">📞</span>
+            <span class="enroll-contact__label">Телефон</span>
+          </label>
+        </div>
+      </div>
+
       <label class="enroll-consent">
         <input type="checkbox" name="consent_pd" required>
-        <span>Согласен на <a href="policy.html" target="_blank" rel="noopener">обработку персональных данных</a></span>
+        <span>Даю согласие на <a href="consent.html" target="_blank" rel="noopener">обработку персональных данных</a> для оказания услуг практикума <em>(обязательно)</em></span>
       </label>
 
       <label class="enroll-consent">
         <input type="checkbox" name="consent_offer" required>
-        <span>Принимаю условия <a href="offer.html" target="_blank" rel="noopener">оферты</a></span>
+        <span>Принимаю условия <a href="oferta.html" target="_blank" rel="noopener">оферты</a> <em>(обязательно)</em></span>
+      </label>
+
+      <label class="enroll-consent">
+        <input type="checkbox" name="consent_marketing">
+        <span>Согласен получать письма и сообщения о новых потоках, материалах и спецпредложениях <em>(опционально, можно отписаться в любой момент)</em></span>
       </label>
 
       <div class="enroll-errors" id="enrollErrors" role="alert" hidden></div>
@@ -5246,7 +5731,7 @@ button.price-cta {
     <div class="enroll-success" id="enrollSuccess" hidden>
       <div class="enroll-success__icon">🔥</div>
       <h3>Ты в списке!</h3>
-      <p>Открываю Telegram — там вся инфа по курсу.</p>
+      <p>Открываю Telegram — там вся инфа по практикуму.</p>
       <a href="#" class="enroll-success__link" id="enrollSuccessLink" target="_blank" rel="noopener">Открыть Telegram →</a>
       <div class="enroll-success__hint">Можешь закрыть это окно</div>
     </div>
@@ -5420,6 +5905,18 @@ button.price-cta {
     el.addEventListener('click', function() { setTimeout(updateTariffUI, 0); });
   });
 
+  var contactOptions = form.querySelectorAll('.enroll-contact__option');
+  function updateContactUI() {
+    contactOptions.forEach(function(el) {
+      var input = el.querySelector('input');
+      el.classList.toggle('is-selected', input.checked);
+    });
+  }
+  contactOptions.forEach(function(el) {
+    el.addEventListener('click', function() { setTimeout(updateContactUI, 0); });
+  });
+  updateContactUI();
+
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     errorsBox.hidden = true;
@@ -5431,8 +5928,12 @@ button.price-cta {
       email: (fd.get('email') || '').toString().trim() || null,
       phone: (fd.get('phone') || '').toString().trim() || null,
       tariff: (fd.get('tariff') || '').toString(),
+      contact_channel: (fd.get('contact_channel') || '').toString() || null,
       consent_pd: fd.get('consent_pd') === 'on',
       consent_offer: fd.get('consent_offer') === 'on',
+      consent_marketing: fd.get('consent_marketing') === 'on',
+      policy_version: '2026-04-26',
+      oferta_version: '2026-04-26',
       source: 'site'
     };
 
@@ -5484,8 +5985,33 @@ button.price-cta {
   });
 
   window.openEnrollModal = openModal;
+
+  try {
+    var params = new URLSearchParams(location.search);
+    var enrollParam = params.get('enroll');
+    if (enrollParam === 'standard' || enrollParam === 'personal') {
+      setTimeout(function() { openModal(enrollParam); }, 250);
+    }
+  } catch (e) {}
 })();
 </script>
+
+<!-- Yandex.Metrika counter (loads only after cookie consent = 'all') -->
+<script type="text/javascript">
+(function() {
+  function loadMetrika() {
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108975136', 'ym');
+    ym(108975136, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  }
+  if (localStorage.getItem('cookieConsent_v1') === 'all') {
+    loadMetrika();
+  } else {
+    window.addEventListener('cookieConsentAccepted', loadMetrika, { once: true });
+  }
+})();
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108975136" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 </body>
 </html>
