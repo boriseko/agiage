@@ -110,6 +110,7 @@ h1 {
   max-width: 165mm;
 }
 h1 .accent { color: var(--orange-dark); }
+h2 .accent { color: var(--orange-dark); }
 
 .lede {
   font-size: 11pt;
@@ -958,26 +959,6 @@ ul.compare-list li::before {
 }
 .legend li strong { color: var(--black); font-weight: 600; }
 
-/* release · «вуаля, действуй» bridge before CTA (page 3) */
-.release {
-  margin: 6mm 0 5mm;
-  padding: 6mm 0 0;
-  border-top: 2px solid var(--orange);
-  font-size: 14pt;
-  line-height: 1.42;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.012em;
-  max-width: 165mm;
-}
-.release strong { color: var(--orange-dark); font-weight: 700; }
-.release .next {
-  display: block;
-  margin-top: 2.5mm;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
 /* CTA — minimal warm block, page 3 */
 .cta {
   margin-top: auto;
@@ -1186,14 +1167,13 @@ ul.compare-list li::before {
       <li><span class="n">5</span><div><strong>Встроенный AI Cursor.</strong> Свой помощник, отдельно от&nbsp;Claude Code. Я&nbsp;держу его выключенным&nbsp;— Claude в&nbsp;терминале сильнее.</div></li>
     </ul>
 
-    <div class="release">
-      <strong>С этого можно начинать&nbsp;:)</strong>
-      <span class="next">Бери настоящую задачу из&nbsp;своей жизни&nbsp;— и&nbsp;смотри, как агент её&nbsp;делает.</span>
-    </div>
+    <h2>Дальше&nbsp;— <span class="accent">«ВАЙБ».</span></h2>
+    <p>Сам разобраться можно. Но&nbsp;между «открыл Cursor» и&nbsp;«использую агента каждый день» обычно проходит пара выходных, на&nbsp;которых забрасывают: что ставить, как давать задачи, почему агент сделал не&nbsp;то.</p>
+    <p>«ВАЙБ»&nbsp;— это <strong>7 вечеров со&nbsp;мной</strong>. Ставим всё тебе на&nbsp;компьютер. Берём твою настоящую задачу. <strong>Выходишь с&nbsp;рабочим агентом, который снимает часы рутины каждый день.</strong></p>
 
     <div class="cta">
-      <div class="cta-title">За&nbsp;7 вечеров&nbsp;— <strong>меньше рутины. Больше времени.</strong></div>
-      <div class="cta-desc">У&nbsp;каждого свой кейс. Кто-то автоматизирует почту и&nbsp;отчёты. Кто-то собирает первый сайт или&nbsp;телеграм-бот. Кто-то учит Claude&nbsp;Code отвечать клиентам. Кто-то разбирает горы PDF и&nbsp;таблиц. Берёшь свою задачу&nbsp;— настраиваем агента под&nbsp;неё. <strong>Получаешь помощника, который снимает с&nbsp;тебя часы каждый день.</strong></div>
+      <div class="cta-title">У&nbsp;каждого&nbsp;— свой кейс.</div>
+      <div class="cta-desc">Кто-то автоматизирует почту и&nbsp;отчёты. Кто-то собирает первый сайт или&nbsp;телеграм-бот. Кто-то учит Claude&nbsp;Code отвечать клиентам. Кто-то разбирает горы PDF и&nbsp;таблиц. <strong>Берёшь свою&nbsp;— настраиваем агента под&nbsp;неё.</strong></div>
       <a href="https://t.me/agiage_bot?start=src_leadmagnet" class="cta-btn">@agiage_bot · программа и&nbsp;цена <span class="arrow">→</span></a>
     </div>
   </div>
