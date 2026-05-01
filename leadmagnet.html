@@ -197,6 +197,33 @@ ul.dash li::before {
 }
 .hook strong { color: var(--orange-dark); font-weight: 700; }
 
+/* sell — highlighted promo block (page 2 bottom) */
+.sell {
+  margin-top: auto;
+  padding: 7mm 8mm;
+  background: linear-gradient(135deg, rgba(255,213,79,0.32) 0%, rgba(255,160,0,0.10) 100%);
+  border: 1.5px solid rgba(255,160,0,0.45);
+  border-left: 3px solid var(--orange);
+  border-radius: 3mm;
+  max-width: 165mm;
+}
+.sell-head {
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--orange-dark);
+  margin-bottom: 3mm;
+}
+.sell-text {
+  font-size: 14pt;
+  line-height: 1.38;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.012em;
+}
+.sell-text strong { color: var(--orange-dark); font-weight: 700; }
+
 /* ============== TRIO BLOCK (page 1) — strict 5-size scale ============== */
 .trio {
   margin: 4mm 0 6mm;
@@ -1124,7 +1151,10 @@ ul.compare-list li::before {
       </ol>
     </div>
 
-    <div class="hook">На&nbsp;<strong>«ВАЙБе»</strong> ставим Cursor и&nbsp;Claude Code на&nbsp;твой компьютер в&nbsp;первый вечер. На&nbsp;твоём проекте, не&nbsp;учебно.</div>
+    <div class="sell">
+      <div class="sell-head">На «ВАЙБе»</div>
+      <div class="sell-text">Ставим <strong>Cursor</strong> и&nbsp;<strong>Claude Code</strong> на&nbsp;твой компьютер в&nbsp;первый вечер.</div>
+    </div>
   </div>
   <div class="rf"><span>2 · Где открывать</span><span class="num">2 / 3</span></div>
 </article>
